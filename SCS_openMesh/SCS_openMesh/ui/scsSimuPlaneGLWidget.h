@@ -25,4 +25,5 @@ private:
 	bool drawSimplaneFlag;
 	void drawPlane();
 	void drawColorbar();
+	void LoadUniformColor(double currentVaule, Color &result);
 };

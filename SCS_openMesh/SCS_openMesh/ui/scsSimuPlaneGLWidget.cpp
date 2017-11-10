@@ -1,6 +1,6 @@
-#include "scsSimuPlaneGLWidget.h"
+ï»¿#include "scsSimuPlaneGLWidget.h"
 #include <gl/freeglut.h>
-scsSimuPlaneGLWidget::scsSimuPlaneGLWidget(QWidget *parent = 0) :scsGLWidget(parent) {
+scsSimuPlaneGLWidget::scsSimuPlaneGLWidget(QWidget *parent ) :scsGLWidget(parent) {
     horizonNum.clear();
     veticalNum.clear();
     Tmax = 100;
@@ -9,6 +9,11 @@ scsSimuPlaneGLWidget::scsSimuPlaneGLWidget(QWidget *parent = 0) :scsGLWidget(par
     sceneIsDislpay.clear();
     drawSimplaneFlag = false;
 	vis_factor_face = 1;
+}
+
+scsSimuPlaneGLWidget::~scsSimuPlaneGLWidget()
+{
+
 }
 
 void scsSimuPlaneGLWidget::setGrid(vector<int> level, vector<int> vertical) {
@@ -33,7 +38,7 @@ void scsSimuPlaneGLWidget::drawPlane() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	for (int id = 0; id<AP_EPoints.size(); id++)
 	{
-		if (sceneIsDislpay[id])  //Ñ¡ÖÐµÄÐ¡Çø²ÅÄÜÏÔÊ¾·ÂÕæ½á¹û
+		if (sceneIsDislpay[id])  //é€‰ä¸­çš„å°åŒºæ‰èƒ½æ˜¾ç¤ºä»¿çœŸç»“æžœ
 		{
 			vector<EField> &EPoint = AP_EPoints[id];
 			double emax = EPoint[0].MolStrength;
@@ -41,7 +46,7 @@ void scsSimuPlaneGLWidget::drawPlane() {
 			for (size_t m = 1; m < EPoint.size(); m++)
 			{
 
-				if (EPoint[m].pathsize> 0 || EPoint[m].Path.size()>0) //ÈôEPoint[i].pathsize == 0 ËµÃ÷£¬´Ë½ÓÊÕµãÃ»ÓÐÂ·¾¶µ½´ï£¬ÐÅºÅÇ¿¶ÈÖµÎ´Öª
+				if (EPoint[m].pathsize> 0 || EPoint[m].Path.size()>0) //è‹¥EPoint[i].pathsize == 0 è¯´æ˜Žï¼Œæ­¤æŽ¥æ”¶ç‚¹æ²¡æœ‰è·¯å¾„åˆ°è¾¾ï¼Œä¿¡å·å¼ºåº¦å€¼æœªçŸ¥
 				{
 					if (EPoint[m].MolStrength > emax)
 					{
@@ -56,7 +61,7 @@ void scsSimuPlaneGLWidget::drawPlane() {
 			//	cout<<"the minimal point id is:"<<min_id<<endl;
 			for (size_t n = 0; n < EPoint.size(); n++)
 			{
-				if (EPoint[n].pathsize == 0 && EPoint[n].Path.size() == 0) //¶ÔÓÚÃ»ÓÐÂ·¾¶µ½´ïµÄ½ÓÊÕµã£¬ÐÅºÅÇ¿¶ÈÉèÎª×îÐ¡Öµ
+				if (EPoint[n].pathsize == 0 && EPoint[n].Path.size() == 0) //å¯¹äºŽæ²¡æœ‰è·¯å¾„åˆ°è¾¾çš„æŽ¥æ”¶ç‚¹ï¼Œä¿¡å·å¼ºåº¦è®¾ä¸ºæœ€å°å€¼
 				{
 					EPoint[n].MolStrength = emin;
 				}
@@ -64,14 +69,14 @@ void scsSimuPlaneGLWidget::drawPlane() {
 			Tmax = emax;
 			Tmin = emin;
 
-			//¸üÐÂ³¡¾°µÄÊý¾Ý
+			//æ›´æ–°åœºæ™¯çš„æ•°æ®
 			minPos = EPoint[0].Position;
 			maxPos = EPoint[EPoint.size() - 1].Position;
 			updateMesh();
 			drawColorbar();
 
 			double length = emax - emin;
-			glEnable(GL_BLEND); //ÆôÓÃ»ìºÏ
+			glEnable(GL_BLEND); //å¯ç”¨æ··åˆ
 			glPushMatrix();
 			glBegin(GL_QUADS);
 
@@ -126,38 +131,38 @@ void scsSimuPlaneGLWidget::drawColorbar()
 	if (viewWidth>80) viewWidth = 80;
 	int viewheight = height() / 2;
 
-	glViewport(width() - viewWidth - 20, height() - viewheight - 20, viewWidth, viewheight);  //ÊÓ¿Ú£¨´°¿Ú£©±ä»»
-	gluOrtho2D(0, viewWidth, 0, viewheight);  //ÕýÍ¶Ó°
+	glViewport(width() - viewWidth - 20, height() - viewheight - 20, viewWidth, viewheight);  //è§†å£ï¼ˆçª—å£ï¼‰å˜æ¢
+	gluOrtho2D(0, viewWidth, 0, viewheight);  //æ­£æŠ•å½±
 
 	int cx = 0, cy = 0, cw = viewWidth / 4, ch = viewheight;
 
-	// Draw Color Bar 6ÖÖÑÕÉ« 
+	// Draw Color Bar 6ç§é¢œè‰² 
 	cy = ch;
 	ch = -ch;
 
 	glBegin(GL_QUAD_STRIP);      //
 
-	glColor3f(1.0, 0.0, 0.0);	   //ºì 
+	glColor3f(1.0, 0.0, 0.0);	   //çº¢ 
 	glVertex2i(cx + cw, cy);
 	glVertex2i(cx, cy);
 
-	glColor3f(1.0, 0.5, 0.0);	   //½Û»Æ
+	glColor3f(1.0, 0.5, 0.0);	   //æ¡”é»„
 	glVertex2i(cx + cw, cy + ch / 5);
 	glVertex2i(cx, cy + ch / 5);
 
-	glColor3f(1.0, 1.0, 0.0);	   //»Æ
+	glColor3f(1.0, 1.0, 0.0);	   //é»„
 	glVertex2i(cx + cw, cy + 2 * ch / 5);
 	glVertex2i(cx, cy + 2 * ch / 5);
 
-	glColor3f(0.0, 1.0, 0.0);	   //ÂÌ
+	glColor3f(0.0, 1.0, 0.0);	   //ç»¿
 	glVertex2i(cx + cw, cy + 3 * ch / 5);
 	glVertex2i(cx, cy + 3 * ch / 5);
 
-	glColor3f(0.0, 1.0, 1.0);	   //Çà 
+	glColor3f(0.0, 1.0, 1.0);	   //é’ 
 	glVertex2i(cx + cw, cy + 4 * ch / 5);
 	glVertex2i(cx, cy + 4 * ch / 5);
 
-	glColor3f(0.0, 0.0, 1.0);	   //À¶
+	glColor3f(0.0, 0.0, 1.0);	   //è“
 	glVertex2i(cx + cw, cy + 5 * ch / 5);
 	glVertex2i(cx, cy + 5 * ch / 5);
 
@@ -189,8 +194,8 @@ void scsSimuPlaneGLWidget::drawColorbar()
 		format = new char[30];
 
 		/*
-		º¯Êýgcvt(double number,size_t ndigits,char *buf)£¬°Ñ¸¡µãÊýnumber×ª»»³É×Ö·û´®(°üº¬Ð¡ÊýµãºÍÕý¸º·ûºÅ)£¬
-		²ÎÊýndigits±íÊ¾ÐèÏÔÊ¾µÄÎ»Êý(½ö°üº¬Êý×Ö),²¢·µ»ØÖ¸Ïò¸Ã×Ö·û´®µÄÖ¸Õëbuf
+		å‡½æ•°gcvt(double number,size_t ndigits,char *buf)ï¼ŒæŠŠæµ®ç‚¹æ•°numberè½¬æ¢æˆå­—ç¬¦ä¸²(åŒ…å«å°æ•°ç‚¹å’Œæ­£è´Ÿç¬¦å·)ï¼Œ
+		å‚æ•°ndigitsè¡¨ç¤ºéœ€æ˜¾ç¤ºçš„ä½æ•°(ä»…åŒ…å«æ•°å­—),å¹¶è¿”å›žæŒ‡å‘è¯¥å­—ç¬¦ä¸²çš„æŒ‡é’ˆbuf
 		*/
 		if (strength[i] >= -1000 && strength[i]<-100)
 		{
@@ -231,5 +236,19 @@ void scsSimuPlaneGLWidget::drawColorbar()
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
-	glViewport(0, 0, (GLint)width(), (GLint)height()); //ÊÓ¿Ú»¹Ô­ÎªÔ­Ê¼µÄÕû¸öÆÁÄ»
+	glViewport(0, 0, (GLint)width(), (GLint)height()); //è§†å£è¿˜åŽŸä¸ºåŽŸå§‹çš„æ•´ä¸ªå±å¹•
+}
+
+void scsSimuPlaneGLWidget::LoadUniformColor(double currentVaule, Color &result)
+{
+	if (currentVaule <= 0.2)
+		result = Color(0.0, currentVaule * 5, 1.0);
+	else if (currentVaule <= 0.4)
+		result = Color(0.0, 1.0, (0.4 - currentVaule) * 5);
+	else if (currentVaule <= 0.6)
+		result = Color((currentVaule - 0.4) * 5, 1.0, 0.0);
+	else if (currentVaule <= 0.8)
+		result = Color(1.0, (0.8 - currentVaule) * 2.5 + 0.5, 0.0);
+	else if (currentVaule <= 1.0)
+		result = Color(1.0, (1.0 - currentVaule) * 2.5, 0.0);
 }

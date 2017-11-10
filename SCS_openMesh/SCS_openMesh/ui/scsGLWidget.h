@@ -70,7 +70,7 @@ public:
 
 	void wheelEvent(QWheelEvent *event);
 
-	void LoadUniformColor(double currentVaule, Color &result);
+	//void LoadUniformColor(double currentVaule, Color &result);
 
 	void initializeGL();
 

@@ -122,5 +122,8 @@
     <ClInclude Include="util\vector.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="util\computationEnum.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -221,6 +221,9 @@
     <ClCompile Include="ui\scsSimuPlaneGLWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_scsGLWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Context\context.h">
@@ -325,9 +328,6 @@
     <ClInclude Include="observer\antennaObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ui\scsGLWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ui\scsSimuPlaneGLWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -369,6 +369,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ui\scsModelTable.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\scsGLWidget.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

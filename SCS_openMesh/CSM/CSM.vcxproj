@@ -163,6 +163,7 @@
     <ClInclude Include="para\modelPara.h" />
     <ClInclude Include="para\visualPara.h" />
     <ClInclude Include="util\Color.h" />
+    <ClInclude Include="util\computationEnum.h" />
     <ClInclude Include="util\EField.h" />
     <ClInclude Include="util\emxUtilityInc.h" />
     <ClInclude Include="util\stringUtil.h" />

@@ -1,10 +1,10 @@
-#include "scsGLWidget.h"
+ï»¿#include "scsGLWidget.h"
 #include <gl/freeglut.h>
 #include "util/emxUtilityInc.h"
 
 /**
   * @Method:    vertexCallback
-  * @Note:      »Øµ÷º¯Êý
+  * @Note:      å›žè°ƒå‡½æ•°
   * @Author:    Li Gen
   * @ Date:     2017/10/25
   * @Access:    public 
@@ -12,28 +12,28 @@
   * @Qualifier: 
   * @Parameter: GLvoid * vertex
 */
-void  CALLBACK vertexCallback(GLvoid *vertex)  //µã×ø±êÐÅÏ¢
+void  CALLBACK vertexCallbackFunction(GLvoid *vertex)  //ç‚¹åæ ‡ä¿¡æ¯
 {
 	const GLdouble *pointer = (GLdouble *)vertex;
-	//glColor3dv(pointer + 3);//ÔÚ´ËÉèÖÃÑÕÉ«  
+	//glColor3dv(pointer + 3);//åœ¨æ­¤è®¾ç½®é¢œè‰²  
 	glVertex3dv(pointer);
 }
-void CALLBACK beginCallback(GLenum which)
+void CALLBACK  beginCallbackFunction(GLenum which)
 {
 	glBegin(which);
 }
-void CALLBACK endCallback()
+void CALLBACK endCallbackFunction()
 {
 	glEnd();
 }
-void CALLBACK errorCallback(GLenum errorCode)
+void CALLBACK errorCallbackFunction(GLenum errorCode)
 {
 	const GLubyte *estring;
 	estring = gluErrorString(errorCode);
 	fprintf(stderr, "Tessellation Error: %s\n", estring);
 	exit(0);
 }
-void CALLBACK combineCallback(GLdouble coords[3],
+void CALLBACK combineCallbackFunction(GLdouble coords[3],
 	GLdouble *vertex_data[4],
 	GLfloat weight[4], GLdouble **dataOut)
 {
@@ -71,39 +71,39 @@ void scsGLWidget::initializeGL()
 {
 	initializeOpenGLFunctions();
 
-	////¶¨Òå²ÄÁÏÊôÐÔ
+	////å®šä¹‰ææ–™å±žæ€§
 	float mat_specular[] = { 0.3f, 0.3f, 0.3f, 0.3f };
 	float mat_shininess[] = { 100.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
 
-	//´´½¨¹âÔ´
+	//åˆ›å»ºå…‰æº
 	float light0_position[] = { m_lightPos.x, m_lightPos.y, m_lightPos.z, 0 };
 	float light0_diffuse[] = { m_lightColor.r, m_lightColor.g, m_lightColor.b, 1.0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);  //¹âÔ´Î»ÖÃ
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);  //É¢Éä¹â
-	// Ö¸¶¨»·¾³¹âµÄRGBAÇ¿¶ÈÖµ
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);  //å…‰æºä½ç½®
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);  //æ•£å°„å…‰
+	// æŒ‡å®šçŽ¯å¢ƒå…‰çš„RGBAå¼ºåº¦å€¼
 	GLfloat ambientLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	// ÉèÖÃ¹âÕÕÄ£ÐÍ£¬½«ambientLightËùÖ¸¶¨µÄRGBAÇ¿¶ÈÖµÓ¦ÓÃµ½»·¾³¹â
+	// è®¾ç½®å…‰ç…§æ¨¡åž‹ï¼Œå°†ambientLightæ‰€æŒ‡å®šçš„RGBAå¼ºåº¦å€¼åº”ç”¨åˆ°çŽ¯å¢ƒå…‰
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
-	//¶¨Òå¹âÕÕÄ£ÐÍ
+	//å®šä¹‰å…‰ç…§æ¨¡åž‹
 	glEnable(GL_LIGHTING);
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
-	glClearColor(m_backGroundColor.r, m_backGroundColor.g, m_backGroundColor.b, 0.0);   //ÉèÖÃµ±Ç°Çå³ýÑÕÉ«
-	glShadeModel(GL_SMOOTH);  //Æ½»¬×ÅÉ«
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);		// »ùÓÚÔ´ÏóËØalphaÍ¨µÀÖµµÄ°ëÍ¸Ã÷»ìºÏº¯Êý
+	glClearColor(m_backGroundColor.r, m_backGroundColor.g, m_backGroundColor.b, 0.0);   //è®¾ç½®å½“å‰æ¸…é™¤é¢œè‰²
+	glShadeModel(GL_SMOOTH);  //å¹³æ»‘ç€è‰²
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);		// åŸºäºŽæºè±¡ç´ alphaé€šé“å€¼çš„åŠé€æ˜Žæ··åˆå‡½æ•°
 
-	glEnable(GL_CULL_FACE);//ÌÞ³ý±³Ãæ
+	glEnable(GL_CULL_FACE);//å‰”é™¤èƒŒé¢
 }
 
 void scsGLWidget::paintGL()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  //ÓÃÉè¶¨µÄµ±Ç°Çå³ýÖµÇå³ýÖ¸¶¨µÄ»º³åÇø
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  //ç”¨è®¾å®šçš„å½“å‰æ¸…é™¤å€¼æ¸…é™¤æŒ‡å®šçš„ç¼“å†²åŒº
 	m_camera.setupModelMatrix();
 	drawCoordinates();
 }
@@ -134,10 +134,10 @@ void scsGLWidget::updateMesh()
 	Vector3d dist = maxPos - minPos;
 	m_groundCenter = (minPos + maxPos) * .5;
 	m_groundCenter.z = minPos.z;
-	m_dGroundWidth = Max(dist.x, dist.y) * 5;  //Ê¹³¡¾°ºÍ±³¾°µÄ±ÈÀýÏÔÊ¾Ç¡µ±£¬±³¾°¿í¶ÈÊÇMax(dist.x, dist.y) µÄ5±¶
+	m_dGroundWidth = Max(dist.x, dist.y) * 5;  //ä½¿åœºæ™¯å’ŒèƒŒæ™¯çš„æ¯”ä¾‹æ˜¾ç¤ºæ°å½“ï¼ŒèƒŒæ™¯å®½åº¦æ˜¯Max(dist.x, dist.y) çš„5å€
 }
 
-//Êó±ê¸ú×ÙÊÂ¼þ
+//é¼ æ ‡è·Ÿè¸ªäº‹ä»¶
 void scsGLWidget::mousePressEvent(QMouseEvent *event)
 {
 	lastPos = event->pos();
@@ -161,7 +161,7 @@ void scsGLWidget::mouseMoveEvent(QMouseEvent *event)
 	{
 		m_camera.mouseMove(event->pos().x(), event->pos().y());
 		updateGL();
-	}else if (event->buttons() & Qt::MidButton)  //Ö§³ÖÍ¼ÐÎÒÆ¶¯¹¦ÄÜ
+	}else if (event->buttons() & Qt::MidButton)  //æ”¯æŒå›¾å½¢ç§»åŠ¨åŠŸèƒ½
 	{
 		m_camera.setModelTranslate(event->pos().x() - lastPos.x(), event->pos().y() - lastPos.y());
 		lastPos = event->pos();
@@ -176,19 +176,19 @@ void scsGLWidget::mouseReleaseEvent(QMouseEvent *event)
 
 }
 
-//Í¨¹ýÊó±ê¹öÂÖÊµÏÖÍ¼ÐÎËõ·Å
+//é€šè¿‡é¼ æ ‡æ»šè½®å®žçŽ°å›¾å½¢ç¼©æ”¾
 void scsGLWidget::wheelEvent(QWheelEvent *event)
 {
 	double zoomValue = 1.3;
-	//event->delta()µ±Êó±ê»¬ÂÖÔÚ¹ö¶¯Ê±ÓÃÓÚ·µ»Ø»¬¶¯µÄ¾àÀë£¬¸ÃÖµµÈÓÚÊó±êÐý×ª½Ç¶ÈµÄ8±¶¡£
-	if ((event->delta()) > 0)   //ÕýÊýÖµ±íÊ¾»¬ÂÖÏà¶ÔÓÚÓÃ»§ÔÚÏòÇ°»¬¶¯
+	//event->delta()å½“é¼ æ ‡æ»‘è½®åœ¨æ»šåŠ¨æ—¶ç”¨äºŽè¿”å›žæ»‘åŠ¨çš„è·ç¦»ï¼Œè¯¥å€¼ç­‰äºŽé¼ æ ‡æ—‹è½¬è§’åº¦çš„8å€ã€‚
+	if ((event->delta()) > 0)   //æ­£æ•°å€¼è¡¨ç¤ºæ»‘è½®ç›¸å¯¹äºŽç”¨æˆ·åœ¨å‘å‰æ»‘åŠ¨
 		m_camera.zoomIn(zoomValue);
-	else if ((event->delta()) < 0)  //¸ºÊýÖµ±íÊ¾»¬ÂÖÏà¶ÔÓÚÓÃ»§ÊÇÏòºó»¬¶¯µÄ¡£
+	else if ((event->delta()) < 0)  //è´Ÿæ•°å€¼è¡¨ç¤ºæ»‘è½®ç›¸å¯¹äºŽç”¨æˆ·æ˜¯å‘åŽæ»‘åŠ¨çš„ã€‚
 		m_camera.zoomOut(zoomValue);
 	updateGL();
 }
 
-//»æÖÆ×ø±êÖá
+//ç»˜åˆ¶åæ ‡è½´
 void scsGLWidget::drawCoordinates()
 {
 	GLUquadricObj* quadratic = gluNewQuadric();
@@ -210,7 +210,7 @@ void scsGLWidget::drawCoordinates()
 	glViewport(0, 0, ww + 20, (GLint)ww + 20);
 	glOrtho(-24, 24, -24, 24, -24, 24);
 
-	//»­×ø±êÖá
+	//ç”»åæ ‡è½´
 	glMultMatrixd(m_camera.getRotateMatrix());
 	glColor3f(1.0, 0.0, 0.0);
 	gluCylinder(quadratic, 1.0f, 1.0f, 12.0f, 32, 32);
@@ -240,7 +240,7 @@ void scsGLWidget::drawCoordinates()
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 
-	glViewport(0, 0, (GLint)width(), (GLint)height());  //ÊÓ¿Ú»¹Ô­ÎªÔ­Ê¼µÄÕû¸öÆÁÄ»
+	glViewport(0, 0, (GLint)width(), (GLint)height());  //è§†å£è¿˜åŽŸä¸ºåŽŸå§‹çš„æ•´ä¸ªå±å¹•
 	glDisable(GL_BLEND);
 	gluDeleteQuadric(quadratic);
 }
