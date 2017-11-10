@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindowClass</class>
+ <widget class="QMainWindow" name="MainWindowClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>864</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1024</width>
+    <height>768</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>SCS</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget_Dispaly">
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::South</enum>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="GLWidget" name="ModelView">
+       <attribute name="title">
+        <string>模型场景</string>
+       </attribute>
+      </widget>
+      <widget class="GLWidget" name="simuArea">
+       <attribute name="title">
+        <string>仿真场景</string>
+       </attribute>
+      </widget>
+      <widget class="GLWidget" name="simuPlane">
+       <attribute name="title">
+        <string>仿真面</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFILE">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="separator"/>
+    <addaction name="action_matFile"/>
+    <addaction name="separator"/>
+    <addaction name="action_3"/>
+    <addaction name="action_obj"/>
+    <addaction name="separator"/>
+    <addaction name="action_json"/>
+    <addaction name="separator"/>
+    <addaction name="action_saveLocal"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuMesh">
+    <property name="title">
+     <string>Mesh</string>
+    </property>
+    <addaction name="action_6"/>
+    <addaction name="action_startMesh"/>
+    <addaction name="separator"/>
+    <addaction name="action_9"/>
+    <addaction name="separator"/>
+    <addaction name="action_GenerateModelPara"/>
+   </widget>
+   <widget class="QMenu" name="menuComputer">
+    <property name="title">
+     <string>Computer</string>
+    </property>
+    <addaction name="computerOption"/>
+    <addaction name="separator"/>
+    <addaction name="action_loadPlugin"/>
+    <addaction name="action_deletePlugin"/>
+    <addaction name="separator"/>
+    <addaction name="action_run"/>
+   </widget>
+   <widget class="QMenu" name="menuVisualize">
+    <property name="title">
+     <string>Visualize</string>
+    </property>
+    <addaction name="action_ShowAll"/>
+    <addaction name="action_localscene"/>
+    <addaction name="separator"/>
+    <addaction name="action_SaveSimuPlane"/>
+    <addaction name="action_loadSimuPlane"/>
+    <addaction name="separator"/>
+    <addaction name="action_showPoint"/>
+    <addaction name="action_showLine"/>
+    <addaction name="action_showFace"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+   </widget>
+   <addaction name="menuFILE"/>
+   <addaction name="menuMesh"/>
+   <addaction name="menuComputer"/>
+   <addaction name="menuVisualize"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_showPoint"/>
+   <addaction name="action_showLine"/>
+   <addaction name="action_showFace"/>
+   <addaction name="action_loadPlugin"/>
+   <addaction name="action_run"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget_outputLog">
+   <property name="minimumSize">
+    <size>
+     <width>147</width>
+     <height>187</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>日志</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <widget class="QTextBrowser" name="textBrowser"/>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="progressBar">
+         <property name="value">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_outline">
+   <property name="minimumSize">
+    <size>
+     <width>256</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>目录</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <widget class="QTreeWidget" name="treeWidget_project">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>200</height>
+        </size>
+       </property>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::TopDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="scs_GUI::scsTreeWidget" name="dockWidgetContents_3">
+    <property name="styleSheet">
+     <string notr="true">*{
+    border-style: outset;
+    border-width: 5px;
+
+    border-color: beige;
+}</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget_Property">
+   <property name="minimumSize">
+    <size>
+     <width>220</width>
+     <height>200</height>
+    </size>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>属性</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6">
+    <layout class="QVBoxLayout" name="verticalLayout_4"/>
+   </widget>
+  </widget>
+  <action name="action">
+   <property name="text">
+    <string>新建</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>导入室外场景</string>
+   </property>
+  </action>
+  <action name="action_saveLocal">
+   <property name="text">
+    <string>保存局部场景</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>剖分参数</string>
+   </property>
+  </action>
+  <action name="action_startMesh">
+   <property name="text">
+    <string>剖分</string>
+   </property>
+  </action>
+  <action name="action_9">
+   <property name="text">
+    <string>材料选项</string>
+   </property>
+  </action>
+  <action name="computerOption">
+   <property name="text">
+    <string>选项</string>
+   </property>
+  </action>
+  <action name="action_8">
+   <property name="text">
+    <string>场点</string>
+   </property>
+  </action>
+  <action name="action_11">
+   <property name="text">
+    <string>仿真参数</string>
+   </property>
+  </action>
+  <action name="action_ShowAll">
+   <property name="text">
+    <string>整体场景展示</string>
+   </property>
+  </action>
+  <action name="action_obj">
+   <property name="text">
+    <string>导入obj模型</string>
+   </property>
+  </action>
+  <action name="action_matFile">
+   <property name="text">
+    <string>导入材料文件</string>
+   </property>
+  </action>
+  <action name="action_localscene">
+   <property name="text">
+    <string>仿真区域展示</string>
+   </property>
+  </action>
+  <action name="action_loadPlugin">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/pluginInsert.ico</normaloff>Resources/pluginInsert.ico</iconset>
+   </property>
+   <property name="text">
+    <string>加载算法</string>
+   </property>
+  </action>
+  <action name="action_deletePlugin">
+   <property name="text">
+    <string>卸载算法</string>
+   </property>
+  </action>
+  <action name="action_run">
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/run.ico</normaloff>Resources/run.ico</iconset>
+   </property>
+   <property name="text">
+    <string>计算</string>
+   </property>
+  </action>
+  <action name="action_json">
+   <property name="text">
+    <string>快速导入场景(.json)</string>
+   </property>
+  </action>
+  <action name="action_SaveSimuPlane">
+   <property name="text">
+    <string>保存仿真面</string>
+   </property>
+  </action>
+  <action name="action_loadSimuPlane">
+   <property name="text">
+    <string>导入仿真面</string>
+   </property>
+  </action>
+  <action name="action_showPoint">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/point.ico</normaloff>Resources/point.ico</iconset>
+   </property>
+   <property name="text">
+    <string>显示点</string>
+   </property>
+  </action>
+  <action name="action_showLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/line.ico</normaloff>Resources/line.ico</iconset>
+   </property>
+   <property name="text">
+    <string>显示线</string>
+   </property>
+  </action>
+  <action name="action_showFace">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>Resources/face.ico</normaloff>Resources/face.ico</iconset>
+   </property>
+   <property name="text">
+    <string>显示面</string>
+   </property>
+  </action>
+  <action name="action_GenerateModelPara">
+   <property name="text">
+    <string>生成计算参数</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GLWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">glWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>scs_GUI::scsTreeWidget</class>
+   <extends>QWidget</extends>
+   <header>./ui/tree/scsTreeWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
+ <connections/>
+</ui>
