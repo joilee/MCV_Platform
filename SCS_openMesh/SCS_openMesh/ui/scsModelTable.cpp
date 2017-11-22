@@ -62,7 +62,7 @@ void scsModelTable::clearLocalItem()
 void scsModelTable::update(visualModelItem*a)
 {
 	cout << "ModelTable 接收到更新的信号" << endl;
-	if (a->getFlag()[0]!="")
+	if (!a->isCityEmpty())
 	{
 	//	cout << this->rowCount() << " " << this->columnCount() << endl;
 	//	this->setItem(0, 1, new QTableWidgetItem(a->getBuildingNum()));
@@ -80,7 +80,7 @@ void scsModelTable::update(visualModelItem*a)
 		clearCityItem();
 	}
 
-	if (a->getFlag()[1] != "")
+	if (!a->isLocalSceneEmpty())
 	{
 		this->setItem(8, 1, new QTableWidgetItem(QString::number(a->getLocalFaceNum())));
 		this->setItem(9, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[0], 0, 'f', 3)));

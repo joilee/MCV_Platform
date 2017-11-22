@@ -1,4 +1,15 @@
 <RCC>
-    <qresource prefix="MainWindow">
+    <qresource prefix="/MainWindow">
+        <file>Resources/scatter.ico</file>
+        <file>Resources/face.ico</file>
+        <file>Resources/line.ico</file>
+        <file>Resources/pluginInsert.ico</file>
+        <file>Resources/point.ico</file>
+        <file>Resources/run.ico</file>
+        <file>Resources/echarts/echarts.js</file>
+        <file>Resources/echarts/index.html</file>
+        <file>Resources/echarts/jquery.js</file>
+        <file>Resources/echarts/qwebchannel.js</file>
+        <file>Resources/echarts/require.js</file>
     </qresource>
 </RCC>

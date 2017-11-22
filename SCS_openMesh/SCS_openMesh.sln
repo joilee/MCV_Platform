@@ -31,8 +31,8 @@ Global
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.Build.0 = Release|x64
-		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|Mixed Platforms.ActiveCfg = Debug|x64
+		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|Mixed Platforms.Build.0 = Debug|x64
 		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|Win32.Build.0 = Debug|Win32
 		{8874FB13-2EE6-44BF-A290-14BB2D6B83AE}.Debug|x64.ActiveCfg = Debug|x64
@@ -54,6 +54,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = msvc2013_64
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

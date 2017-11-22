@@ -2,6 +2,7 @@
 #define COMPUTE_PARA
 #include "../Antenna/antenna.h"
 #include "../Antenna/receiver.h"
+#include "../util/computationEnum.h"
 class ComputePara
 {
 public:
@@ -23,9 +24,10 @@ public:
 	double RT_radius;//采样球半径
 	double RT_BeamNum;//beam数量
 
-
+	//@Deprecated  使用枚举类代替
 	bool no_simplane;
-
+	//计算方式 枚举类
+	ComputationEnum computeEnum;
 
 	//
 	vector<Site> Sites;  //多个小区

@@ -7,9 +7,12 @@
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QListWidget>
+#include <QRadioButton>
+#include <QButtonGroup>
 #include <string>
 #include <QComboBox>
 #include "../../observer/antennaObserver.h"
+#include "../observer/modelObserver.h"
 using namespace std;
 /************************************************************************/
 /* 
@@ -47,20 +50,19 @@ public:
 		void openTransAntenna_ParamFile();
 };
 
-class fieldpoint:public QWidget
+//仿真区域点设置界面
+class fieldpoint :public QWidget, public modelObserver
 {
 	Q_OBJECT
 public:
 	fieldpoint(QWidget* parent=0);
 	QPushButton * loadReceieverPointFile;
+	void update(visualModelItem*a);
 private:
 	//数据
 	//场景的范围，单位为m
-//	double fieldXmin,fieldXmax,fieldYmin,fieldYmax,fieldZmin,fieldZmax;
 
-
-
-	string RecePoint;
+	QString RecePointFilePath;
 
 	//左上角x，左上角y
 	double leftupX,leftupY;
@@ -74,6 +76,20 @@ private:
 	QLineEdit* leftupXinput,*leftupYinput;
 	QLineEdit* rightbottomXinput,*rightbottomYinput;
 	QLineEdit* Precisioninput,*Altitudeinput;
+	//计算模式选择
+	QButtonGroup *simuModeGroup;
+	QRadioButton *rangeRadioButton;
+	QRadioButton *pointRadioButton;
+	QRadioButton *customRadioButton;
+
+private slots:
+	void computingModeButtonsToggled(int, bool);
+	void openNo_SimplaneReceiverFile();
+private:
+	void enableRangeMode(bool flag);
+	void enablePointMode(bool flag);
+	void enableCustomMode(bool flag);
+
 public:
 	//获得参数
 	void getFieldPoint(double &lx,double &ly,double &rx,double &ry,double &pre,double &alti);

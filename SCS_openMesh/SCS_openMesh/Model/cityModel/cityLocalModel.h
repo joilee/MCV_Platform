@@ -125,10 +125,6 @@ public:
     /*
     @brief ¼Ì³Ð¸¸ÀàµÄº¯Êý
     */
-    string name;
-    inline string  getName() {
-        return name;
-    }
     void  draw(vector<bool> mode);
     void initDraw();
 };

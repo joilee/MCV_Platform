@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.2
+** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -58,6 +58,7 @@ public:
     QAction *action_showLine;
     QAction *action_showFace;
     QAction *action_GenerateModelPara;
+    QAction *action_scatter;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget_Dispaly;
@@ -158,6 +159,11 @@ public:
         action_showFace->setIcon(icon4);
         action_GenerateModelPara = new QAction(MainWindowClass);
         action_GenerateModelPara->setObjectName(QStringLiteral("action_GenerateModelPara"));
+        action_scatter = new QAction(MainWindowClass);
+        action_scatter->setObjectName(QStringLiteral("action_scatter"));
+        QIcon icon5;
+        icon5.addFile(QStringLiteral(":/MainWindow/Resources/scatter.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_scatter->setIcon(icon5);
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -318,6 +324,7 @@ public:
         menuVisualize->addAction(action_showLine);
         menuVisualize->addAction(action_showFace);
         menuVisualize->addSeparator();
+        menuVisualize->addAction(action_scatter);
         mainToolBar->addAction(action_showPoint);
         mainToolBar->addAction(action_showLine);
         mainToolBar->addAction(action_showFace);
@@ -334,41 +341,42 @@ public:
 
     void retranslateUi(QMainWindow *MainWindowClass)
     {
-        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "SCS", Q_NULLPTR));
-        action->setText(QApplication::translate("MainWindowClass", "\346\226\260\345\273\272", Q_NULLPTR));
-        action_3->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\345\256\244\345\244\226\345\234\272\346\231\257", Q_NULLPTR));
-        action_saveLocal->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\345\261\200\351\203\250\345\234\272\346\231\257", Q_NULLPTR));
-        action_6->setText(QApplication::translate("MainWindowClass", "\345\211\226\345\210\206\345\217\202\346\225\260", Q_NULLPTR));
-        action_startMesh->setText(QApplication::translate("MainWindowClass", "\345\211\226\345\210\206", Q_NULLPTR));
-        action_9->setText(QApplication::translate("MainWindowClass", "\346\235\220\346\226\231\351\200\211\351\241\271", Q_NULLPTR));
-        computerOption->setText(QApplication::translate("MainWindowClass", "\351\200\211\351\241\271", Q_NULLPTR));
-        action_8->setText(QApplication::translate("MainWindowClass", "\345\234\272\347\202\271", Q_NULLPTR));
-        action_11->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\217\202\346\225\260", Q_NULLPTR));
-        action_ShowAll->setText(QApplication::translate("MainWindowClass", "\346\225\264\344\275\223\345\234\272\346\231\257\345\261\225\347\244\272", Q_NULLPTR));
-        action_obj->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245obj\346\250\241\345\236\213", Q_NULLPTR));
-        action_matFile->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\346\235\220\346\226\231\346\226\207\344\273\266", Q_NULLPTR));
-        action_localscene->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\214\272\345\237\237\345\261\225\347\244\272", Q_NULLPTR));
-        action_loadPlugin->setText(QApplication::translate("MainWindowClass", "\345\212\240\350\275\275\347\256\227\346\263\225", Q_NULLPTR));
-        action_deletePlugin->setText(QApplication::translate("MainWindowClass", "\345\215\270\350\275\275\347\256\227\346\263\225", Q_NULLPTR));
-        action_run->setText(QApplication::translate("MainWindowClass", "\350\256\241\347\256\227", Q_NULLPTR));
-        action_json->setText(QApplication::translate("MainWindowClass", "\345\277\253\351\200\237\345\257\274\345\205\245\345\234\272\346\231\257(.json)", Q_NULLPTR));
-        action_SaveSimuPlane->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\344\273\277\347\234\237\351\235\242", Q_NULLPTR));
-        action_loadSimuPlane->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\344\273\277\347\234\237\351\235\242", Q_NULLPTR));
-        action_showPoint->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\347\202\271", Q_NULLPTR));
-        action_showLine->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\347\272\277", Q_NULLPTR));
-        action_showFace->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\351\235\242", Q_NULLPTR));
-        action_GenerateModelPara->setText(QApplication::translate("MainWindowClass", "\347\224\237\346\210\220\350\256\241\347\256\227\345\217\202\346\225\260", Q_NULLPTR));
-        tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(ModelView), QApplication::translate("MainWindowClass", "\346\250\241\345\236\213\345\234\272\346\231\257", Q_NULLPTR));
-        tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuArea), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\234\272\346\231\257", Q_NULLPTR));
-        tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuPlane), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242", Q_NULLPTR));
-        menuFILE->setTitle(QApplication::translate("MainWindowClass", "File", Q_NULLPTR));
-        menuMesh->setTitle(QApplication::translate("MainWindowClass", "Mesh", Q_NULLPTR));
-        menuComputer->setTitle(QApplication::translate("MainWindowClass", "Computer", Q_NULLPTR));
-        menuVisualize->setTitle(QApplication::translate("MainWindowClass", "Visualize", Q_NULLPTR));
-        menuAbout->setTitle(QApplication::translate("MainWindowClass", "About", Q_NULLPTR));
-        dockWidget_outputLog->setWindowTitle(QApplication::translate("MainWindowClass", "\346\227\245\345\277\227", Q_NULLPTR));
-        dockWidget_outline->setWindowTitle(QApplication::translate("MainWindowClass", "\347\233\256\345\275\225", Q_NULLPTR));
-        dockWidget_Property->setWindowTitle(QApplication::translate("MainWindowClass", "\345\261\236\346\200\247", Q_NULLPTR));
+        MainWindowClass->setWindowTitle(QApplication::translate("MainWindowClass", "SCS", 0));
+        action->setText(QApplication::translate("MainWindowClass", "\346\226\260\345\273\272", 0));
+        action_3->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\345\256\244\345\244\226\345\234\272\346\231\257", 0));
+        action_saveLocal->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\345\261\200\351\203\250\345\234\272\346\231\257", 0));
+        action_6->setText(QApplication::translate("MainWindowClass", "\345\211\226\345\210\206\345\217\202\346\225\260", 0));
+        action_startMesh->setText(QApplication::translate("MainWindowClass", "\345\211\226\345\210\206", 0));
+        action_9->setText(QApplication::translate("MainWindowClass", "\346\235\220\346\226\231\351\200\211\351\241\271", 0));
+        computerOption->setText(QApplication::translate("MainWindowClass", "\351\200\211\351\241\271", 0));
+        action_8->setText(QApplication::translate("MainWindowClass", "\345\234\272\347\202\271", 0));
+        action_11->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\217\202\346\225\260", 0));
+        action_ShowAll->setText(QApplication::translate("MainWindowClass", "\346\225\264\344\275\223\345\234\272\346\231\257\345\261\225\347\244\272", 0));
+        action_obj->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245obj\346\250\241\345\236\213", 0));
+        action_matFile->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\346\235\220\346\226\231\346\226\207\344\273\266", 0));
+        action_localscene->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\214\272\345\237\237\345\261\225\347\244\272", 0));
+        action_loadPlugin->setText(QApplication::translate("MainWindowClass", "\345\212\240\350\275\275\347\256\227\346\263\225", 0));
+        action_deletePlugin->setText(QApplication::translate("MainWindowClass", "\345\215\270\350\275\275\347\256\227\346\263\225", 0));
+        action_run->setText(QApplication::translate("MainWindowClass", "\350\256\241\347\256\227", 0));
+        action_json->setText(QApplication::translate("MainWindowClass", "\345\277\253\351\200\237\345\257\274\345\205\245\345\234\272\346\231\257(.json)", 0));
+        action_SaveSimuPlane->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\344\273\277\347\234\237\351\235\242", 0));
+        action_loadSimuPlane->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\344\273\277\347\234\237\351\235\242", 0));
+        action_showPoint->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\347\202\271", 0));
+        action_showLine->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\347\272\277", 0));
+        action_showFace->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\351\235\242", 0));
+        action_GenerateModelPara->setText(QApplication::translate("MainWindowClass", "\347\224\237\346\210\220\346\250\241\345\236\213\345\217\202\346\225\260", 0));
+        action_scatter->setText(QApplication::translate("MainWindowClass", "\346\216\245\346\224\266\347\202\271\346\225\243\347\202\271\345\233\276", 0));
+        tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(ModelView), QApplication::translate("MainWindowClass", "\346\250\241\345\236\213\345\234\272\346\231\257", 0));
+        tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuArea), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\234\272\346\231\257", 0));
+        tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuPlane), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242", 0));
+        menuFILE->setTitle(QApplication::translate("MainWindowClass", "File", 0));
+        menuMesh->setTitle(QApplication::translate("MainWindowClass", "Mesh", 0));
+        menuComputer->setTitle(QApplication::translate("MainWindowClass", "Computer", 0));
+        menuVisualize->setTitle(QApplication::translate("MainWindowClass", "Visualize", 0));
+        menuAbout->setTitle(QApplication::translate("MainWindowClass", "About", 0));
+        dockWidget_outputLog->setWindowTitle(QApplication::translate("MainWindowClass", "\346\227\245\345\277\227", 0));
+        dockWidget_outline->setWindowTitle(QApplication::translate("MainWindowClass", "\347\233\256\345\275\225", 0));
+        dockWidget_Property->setWindowTitle(QApplication::translate("MainWindowClass", "\345\261\236\346\200\247", 0));
     } // retranslateUi
 
 };

@@ -18,6 +18,8 @@
 #include "Model/cityModel/cityModelFactory.h"
 #include "scsModelTable.h"
 
+#include "ui/scatterWidget/scatterWidget.h"
+
 
 
 class QAction; 
@@ -46,7 +48,7 @@ private slots:
 	void loadAllFile(QString _name,QStringList _v,QStringList _h,QString _p);
 	void showAll();  
 	void showLocal();
-	void openNo_SimplaneReceiverFile();
+	void showScatterWidget();
 	void loadObj();
 	void setMaterial();
 	void open_material();
@@ -80,7 +82,7 @@ private:
 	computerOptionDialog* M_computeroptionDialog;
 
 	meshOptionDialog *mod;
-
+	scatterWidget *scatter;
 	scsModelTable* modelTable;
 	//内部变量
  private:

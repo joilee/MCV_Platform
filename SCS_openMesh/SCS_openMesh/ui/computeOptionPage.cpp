@@ -180,6 +180,65 @@ void emitSource::update(visualAntennaItem*a)
 
 }
 
+void fieldpoint::computingModeButtonsToggled(int id, bool flag)
+{
+	//根据选中的button，设置计算类型
+	int mode = simuModeGroup->checkedId();
+	globalContext *globalCtx = globalContext::GetInstance();
+	globalCtx->cptManager->setCptCatagory(mode);
+	qDebug("id = %d, status = %d, tmp = %d", id, flag, mode);
+	switch (id)
+	{
+	case 1:
+		enableRangeMode(flag);
+		break;
+	case 2:
+		enablePointMode(flag);
+		break;
+	case 3:
+		enableCustomMode(flag);
+		break;
+	default:
+		break;
+	}
+}
+
+void fieldpoint::openNo_SimplaneReceiverFile()
+{
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开非仿真面设置的接收点文件"), "./", QStringLiteral("csv 非仿真面接收点文件 (*.csv)"));
+	if (path.isEmpty())
+		return;
+	globalContext *globalCtx = globalContext::GetInstance();
+	if (!globalCtx->modelManager->checkCityExist())
+	{
+		QMessageBox::warning(this, QStringLiteral("发射天线设置"), QStringLiteral("请先加载场景"));
+		return;
+	}
+	globalCtx->cptManager->openNo_simplaneReceiver(path.toStdString());
+	filePath->setText(path);
+
+	return;
+}
+
+void fieldpoint::enableRangeMode(bool flag)
+{
+	leftupXinput->setEnabled(flag);
+	leftupYinput->setEnabled(flag);
+	rightbottomXinput->setEnabled(flag);
+	rightbottomYinput->setEnabled(flag);
+}
+
+void fieldpoint::enablePointMode(bool flag)
+{
+	filePath->setEnabled(flag);
+	loadReceieverPointFile->setEnabled(flag);
+}
+
+void fieldpoint::enableCustomMode(bool flag)
+{
+
+}
+
 void fieldpoint::getFieldPoint(double &lx,double &ly,double &rx,double &ry,double &pre,double &alti)
 {
 	lx=leftupXinput->text().toDouble();
@@ -189,10 +248,10 @@ void fieldpoint::getFieldPoint(double &lx,double &ly,double &rx,double &ry,doubl
 	pre=Precisioninput->text().toDouble();
 	alti=Altitudeinput->text().toDouble();
 }
-fieldpoint::fieldpoint(QWidget* parent)
+fieldpoint::fieldpoint(QWidget* parent) :modelObserver("scFieldPointRange"), QWidget(parent)
 {
 	//初始化成员变量
-	RecePoint="";
+	RecePointFilePath="";
 	leftupX=0;
 	leftupY=0;
 	rightbottomX=0;
@@ -202,49 +261,32 @@ fieldpoint::fieldpoint(QWidget* parent)
 
 	//布局
 	QGroupBox *firstgroupbox=new QGroupBox(QStringLiteral("仿真区域（单位：m）"));
-	//QLabel* label1=new QLabel(QStringLiteral("场景（Xmin，Xmax）"));
-	//QLabel* label2=new QLabel(QStringLiteral("场景（Ymin，Ymax）"));
-	//QLabel* label3=new QLabel(QStringLiteral("场景（Zmin，Zmax）"));
+	rangeRadioButton = new QRadioButton(QStringLiteral("仿真面计算"));
+	pointRadioButton = new QRadioButton(QStringLiteral("接收点计算"));
+	customRadioButton = new QRadioButton(QStringLiteral("自定义计算"));
+	simuModeGroup = new QButtonGroup(this);
+	simuModeGroup->addButton(rangeRadioButton,1);
+	simuModeGroup->addButton(pointRadioButton,2);
+	simuModeGroup->addButton(customRadioButton,3);
+	rangeRadioButton->setChecked(true);
 
-	//Xmin=new QLineEdit;
-	//Xmin->setText(0);
-	//Xmax=new QLineEdit;
-	//Xmax->setText(0);
-	//Ymin=new QLineEdit;
-	//Ymin->setText(0);
-	//Ymax=new QLineEdit;
-	//Ymax->setText(0);
-	//Zmin=new QLineEdit;
-	//Zmin->setText(0);
-	//Zmax=new QLineEdit;
-	//Zmax->setText(0);
 
-	/*QHBoxLayout *h1=new QHBoxLayout;
-	h1->addWidget(label1);
-	h1->addWidget(Xmin);
-	h1->addWidget(Xmax);
-
-	QHBoxLayout *h2=new QHBoxLayout;
-	h2->addWidget(label2);
-	h2->addWidget(Ymin);
-	h2->addWidget(Ymax);
-
-	QHBoxLayout *h3=new QHBoxLayout;
-	h3->addWidget(label3);
-	h3->addWidget(Zmin);
-	h3->addWidget(Zmax);*/
-
+	//h4属于接收点模式
 	QLabel* label4=new QLabel(QStringLiteral("导入非仿真面接收点位置"));
 	QHBoxLayout *h4=new QHBoxLayout;
 	filePath=new QLineEdit;
+	filePath->setReadOnly(true);
 	loadReceieverPointFile=new QPushButton(QStringLiteral("导入"));
 	h4->addWidget(label4);
 	h4->addWidget(filePath);
 	h4->addWidget(loadReceieverPointFile);
 
+	//h5属于仿真面模式
 	QLabel* label5=new QLabel(QStringLiteral("左上角（X，Y）"));
 	leftupXinput=new QLineEdit;
 	leftupYinput=new QLineEdit;
+	leftupXinput->setReadOnly(true);
+	leftupYinput->setReadOnly(true);
 	QHBoxLayout *h5=new QHBoxLayout;
 	h5->addWidget(label5);
 	h5->addWidget(leftupXinput);
@@ -253,6 +295,8 @@ fieldpoint::fieldpoint(QWidget* parent)
 	QLabel* label6=new QLabel(QStringLiteral("右下角（X，Y）"));
 	rightbottomXinput=new QLineEdit;
 	rightbottomYinput=new QLineEdit;
+	rightbottomXinput->setReadOnly(true);
+	rightbottomYinput->setReadOnly(true);
 	QHBoxLayout*h6=new QHBoxLayout;
 	h6->addWidget(label6);
 	h6->addWidget(rightbottomXinput);
@@ -271,12 +315,13 @@ fieldpoint::fieldpoint(QWidget* parent)
 	h8->addWidget(Altitudeinput);
 
 	QVBoxLayout *total=new QVBoxLayout;
-	/*total->addLayout(h1);
-	total->addLayout(h2);
-	total->addLayout(h3);*/
-	total->addLayout(h4);
+	total->addWidget(rangeRadioButton);
 	total->addLayout(h5);
 	total->addLayout(h6);
+
+	total->addWidget(pointRadioButton);
+	total->addLayout(h4);
+
 	total->addLayout(h7);
 	total->addLayout(h8);
 
@@ -292,6 +337,33 @@ fieldpoint::fieldpoint(QWidget* parent)
 	rightbottomYinput->setText("0");
 	Precisioninput->setText("5");
 	Altitudeinput->setText("5");
+
+	connect(simuModeGroup, SIGNAL(buttonToggled(int, bool)), this, SLOT(computingModeButtonsToggled(int, bool)));
+	connect(loadReceieverPointFile, SIGNAL(clicked()), this, SLOT(openNo_SimplaneReceiverFile()));
+
+	enableCustomMode(false);
+	enablePointMode(false);
+	enableRangeMode(true);
+
+}
+
+void fieldpoint::update(visualModelItem*a)
+{
+	//判断局部场景是否存在
+	if (!a->isLocalSceneEmpty())//存在
+	{
+		leftupXinput->setText(QString("%1").arg(a->getlocalMin()[0], 0, 'f', 3));
+		leftupYinput->setText(QString("%1").arg(a->getlocalMax()[1], 0, 'f', 3));
+		rightbottomXinput->setText(QString("%1").arg(a->getlocalMax()[0], 0, 'f', 3));
+		rightbottomYinput->setText(QString("%1").arg(a->getlocalMax()[1], 0, 'f', 3));
+	}
+	else
+	{
+		leftupXinput->setText("0");
+		leftupYinput->setText("0");
+		rightbottomXinput->setText("0");
+		rightbottomYinput->setText("0");
+	}
 }
 
 simuArgument::simuArgument(QWidget* parent)

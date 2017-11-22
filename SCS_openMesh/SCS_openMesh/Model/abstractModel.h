@@ -7,9 +7,11 @@ class abstractModel
 {
 public:
 	abstractModel();
+	string name;
 	virtual ~abstractModel();
 
-	virtual string  getName();
+	string getName(){ return name; };
+	void setName(string _name){ name = _name; };
 	void virtual draw(vector<bool> mode);
 	void virtual initDraw();
 private:

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'outdoorFile.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.2
+** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -201,23 +201,23 @@ public:
 
     void retranslateUi(QDialog *outdoorFile)
     {
-        outdoorFile->setWindowTitle(QApplication::translate("outdoorFile", "Dialog", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("outdoorFile", "\345\267\245\347\250\213\345\220\215", Q_NULLPTR));
-        label->setText(QApplication::translate("outdoorFile", "\345\234\260\345\233\276\345\220\215", Q_NULLPTR));
-        groupBox_3->setTitle(QApplication::translate("outdoorFile", "\345\257\274\345\205\245\345\273\272\347\255\221\347\211\251\346\226\207\344\273\266", Q_NULLPTR));
-        checkBox_2->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", Q_NULLPTR));
-        buildingButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", Q_NULLPTR));
-        pushButton_deleteV->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", Q_NULLPTR));
-        groupBox_4->setTitle(QApplication::translate("outdoorFile", "\345\257\274\345\205\245\345\273\272\347\255\221\347\211\251\351\253\230\345\272\246\346\226\207\344\273\266", Q_NULLPTR));
-        checkBox_4->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", Q_NULLPTR));
-        heightButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", Q_NULLPTR));
-        pushButton_deleteH->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", Q_NULLPTR));
-        groupBox_2->setTitle(QApplication::translate("outdoorFile", "\345\257\274\345\205\245\346\265\267\346\213\224\346\226\207\344\273\266", Q_NULLPTR));
-        checkBox_3->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", Q_NULLPTR));
-        altitudeButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", Q_NULLPTR));
-        pushButton_deleteP->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", Q_NULLPTR));
-        pushButton_LoadFile->setText(QApplication::translate("outdoorFile", "OK", Q_NULLPTR));
-        pushButton_cancel->setText(QApplication::translate("outdoorFile", "Cancel", Q_NULLPTR));
+        outdoorFile->setWindowTitle(QApplication::translate("outdoorFile", "Dialog", 0));
+        groupBox->setTitle(QApplication::translate("outdoorFile", "\345\267\245\347\250\213\345\220\215", 0));
+        label->setText(QApplication::translate("outdoorFile", "\345\234\260\345\233\276\345\220\215", 0));
+        groupBox_3->setTitle(QApplication::translate("outdoorFile", "\345\257\274\345\205\245\345\273\272\347\255\221\347\211\251\346\226\207\344\273\266", 0));
+        checkBox_2->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", 0));
+        buildingButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", 0));
+        pushButton_deleteV->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", 0));
+        groupBox_4->setTitle(QApplication::translate("outdoorFile", "\345\257\274\345\205\245\345\273\272\347\255\221\347\211\251\351\253\230\345\272\246\346\226\207\344\273\266", 0));
+        checkBox_4->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", 0));
+        heightButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", 0));
+        pushButton_deleteH->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", 0));
+        groupBox_2->setTitle(QApplication::translate("outdoorFile", "\345\257\274\345\205\245\346\265\267\346\213\224\346\226\207\344\273\266", 0));
+        checkBox_3->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", 0));
+        altitudeButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", 0));
+        pushButton_deleteP->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", 0));
+        pushButton_LoadFile->setText(QApplication::translate("outdoorFile", "OK", 0));
+        pushButton_cancel->setText(QApplication::translate("outdoorFile", "Cancel", 0));
     } // retranslateUi
 
 };

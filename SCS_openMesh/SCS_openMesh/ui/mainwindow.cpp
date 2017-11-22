@@ -17,7 +17,31 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-
+	if (scatter!=nullptr)
+	{
+		delete scatter;
+		scatter = nullptr;
+	}
+	if (mod!=nullptr)
+	{
+		delete mod;
+		mod = nullptr;
+	}
+	if (modelTable!=nullptr)
+	{
+		delete modelTable;
+		modelTable = nullptr;
+	}
+	if (M_computeroptionDialog!=nullptr)
+	{
+		delete M_computeroptionDialog;
+		M_computeroptionDialog = nullptr;
+	}
+	if (M_outdoorFileDialog!=nullptr)
+	{
+		delete M_outdoorFileDialog;
+		M_outdoorFileDialog = nullptr;
+	}
 }
 
 void MainWindow::init()
@@ -28,7 +52,7 @@ void MainWindow::init()
 	M_computeroptionDialog=new computerOptionDialog(this);
 
 	mod=new meshOptionDialog(this);
-
+	scatter = new scatterWidget(this);
 	//将表格嵌入到dockwidget
 	modelTable = new scsModelTable;
 	modelTable->showMaximized();
@@ -36,6 +60,7 @@ void MainWindow::init()
 
 	globalContext *gctx = globalContext::GetInstance();
 	gctx->modelManager->getModelSubject()->attach(modelTable);
+	gctx->modelManager->getModelSubject()->attach(M_computeroptionDialog->fp);
 	gctx->cptManager->getSubject()->attach(M_computeroptionDialog->es);
 	//场景数据初始化
 
@@ -103,7 +128,6 @@ void MainWindow::createActions()
 	connect(ui.action_6, SIGNAL(triggered()), this, SLOT(setMeshOption()));
 	connect(ui.action_startMesh, SIGNAL(triggered()), this, SLOT(meshAll()));
 	connect(ui.action_saveLocal, SIGNAL(triggered()), this, SLOT(saveLocalScene()));
-	connect(M_computeroptionDialog->fp->loadReceieverPointFile, SIGNAL(clicked()), this, SLOT(openNo_SimplaneReceiverFile()));
 	connect(ui.action_loadPlugin, SIGNAL(triggered()), this, SLOT(loadPlugin()));
 	connect(ui.action_run, SIGNAL(triggered()), this, SLOT(run()));
 	connect(ui.action_json, SIGNAL(triggered()), this, SLOT(quickLoadJson()));
@@ -111,6 +135,7 @@ void MainWindow::createActions()
 	connect(ui.action_showLine, SIGNAL(triggered(bool)), this, SLOT(setDrawLineMode(bool)));
 	connect(ui.action_showFace, SIGNAL(triggered(bool)), this, SLOT(setDrawFaceMode(bool)));
 	connect(ui.action_GenerateModelPara, SIGNAL(triggered()), this, SLOT(generateModelPara()));
+	connect(ui.action_scatter, SIGNAL(triggered()), this, SLOT(showScatterWidget()));
 }
 
 void MainWindow::generateModelPara()
@@ -251,27 +276,6 @@ void MainWindow::setModelName(int index,QString name)
 }
 
 
-
-
-
-
-
-void MainWindow::openNo_SimplaneReceiverFile()
-{
-	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开非仿真面设置的接收点文件"), "./", QStringLiteral("csv 非仿真面接收点文件 (*.csv)"));
-	if (path.isEmpty())
-		return;
-	globalContext *globalCtx = globalContext::GetInstance();
-	if (!globalCtx->modelManager->checkCityExist())
-	{
-		QMessageBox::warning(this, QStringLiteral("发射天线设置"), QStringLiteral("请先加载场景"));
-		return;
-	}
-	globalCtx->cptManager->openNo_simplaneReceiver(path.toStdString());
-	return;
-}
-
-
 /************************************************************************/
 /*    展示全部场景                                                                                       */
 /************************************************************************/
@@ -283,6 +287,11 @@ void MainWindow::showAll()
 void MainWindow::showLocal()
 {
 	
+}
+
+void MainWindow::showScatterWidget()
+{
+	scatter->show();
 }
 
 /************************************************************************/
@@ -311,7 +320,7 @@ void MainWindow::meshAll()
 		return;
 	}
 
-	Vector3d center;
+	vector< Vector3d> center;
 	double range;
 	//要不要加一个判断，防止错误？
 	if (mod->inputFlag)

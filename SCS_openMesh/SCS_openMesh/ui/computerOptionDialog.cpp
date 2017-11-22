@@ -92,6 +92,17 @@ void computerOptionDialog::changePage(QListWidgetItem *current, QListWidgetItem 
 	return;
 }
 
+
+
+/**
+  * @Method:    getPara
+  * @Note:        获取C模块的参数,确保对话框的参数设置传递到全局中
+  * @Author:    Li Gen
+  * @ Date:     2017/11/13
+  * @Access:    public 
+  * @Returns:   void
+  * @Qualifier:
+*/
 void computerOptionDialog::getPara()
 {
 	if (!checkSiteAndAnte())
@@ -104,6 +115,7 @@ void computerOptionDialog::getPara()
 	tmp->phi=es->getAngle();
 	fp->getFieldPoint(tmp->leftUpX, tmp->leftUpY, tmp->rightDownX, tmp->rightDownY, tmp->precision, tmp->altitude);
 	sa->getSimuArgu(tmp->reflectNumPara, tmp->refractNumPara, tmp->diffractionNumPara, tmp->isDiffractionPara, tmp->transIndex, tmp->RT_sample, tmp->RT_radius, tmp->RT_BeamNum);
+	//根据计算类型(仿真面,或者接受点,或者自定义,来确定设置哪一类参数)
 	QMessageBox::information(this, QStringLiteral("计算参数"), QStringLiteral("参数设置成功"), QMessageBox::Yes , QMessageBox::Yes);
 }
 

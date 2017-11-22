@@ -115,6 +115,7 @@
     <addaction name="action_showLine"/>
     <addaction name="action_showFace"/>
     <addaction name="separator"/>
+    <addaction name="action_scatter"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -400,7 +401,16 @@
   </action>
   <action name="action_GenerateModelPara">
    <property name="text">
-    <string>生成计算参数</string>
+    <string>生成模型参数</string>
+   </property>
+  </action>
+  <action name="action_scatter">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/MainWindow/Resources/scatter.ico</normaloff>:/MainWindow/Resources/scatter.ico</iconset>
+   </property>
+   <property name="text">
+    <string>接收点散点图</string>
    </property>
   </action>
  </widget>

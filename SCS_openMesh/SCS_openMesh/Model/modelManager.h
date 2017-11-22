@@ -41,7 +41,7 @@ public:
 	@note 当城市场景不存在时候，返回异常
 	@since 5/14/2017
 	*/
-	bool generateLocalModel(Vector3d center,double range);
+	bool generateLocalModel(vector< Vector3d> center,double range);
 
 	/*
 	@brief 返回私有变量
@@ -104,6 +104,7 @@ public:
 	// Qualifier:
 	//************************************
 	void setModelPara();
+
 private:
 
 	map<string, abstractModel*> modelMap;

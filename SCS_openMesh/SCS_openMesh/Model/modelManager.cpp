@@ -2,6 +2,7 @@
 #include "cityModel/cityModel.h"
 #include <QDebug>
 #include <iostream>
+#include <QMessageBox>
 ModelManager::ModelManager()
 {
 	matManager = new scsMaterialManager;
@@ -79,9 +80,11 @@ void ModelManager::loadCityModel(string path)
 	
 }
 
-bool ModelManager::generateLocalModel(Vector3d center, double range)
+bool ModelManager::generateLocalModel(vector<Vector3d> center, double range)
 {
 	//目前只针对遇到的第一个城市场景操作，如果没有，则退出，返回false
+
+	//step1 找到大的城市场景 这是全局唯一的
 	map<string, abstractModel*>::iterator it = modelMap.begin();
 	cityModel * city = NULL;
 	while (it != modelMap.end())
@@ -96,14 +99,23 @@ bool ModelManager::generateLocalModel(Vector3d center, double range)
 	}
 	if (city == NULL)
 	{
+		QMessageBox::critical(NULL, QStringLiteral("模型"), QStringLiteral("没有城市场景！请重新读入！"), QMessageBox::Yes, QMessageBox::Yes);
 		return false;
 	}
-	abstractModel * localModel = cityFac->loadModel(center, range, city);
-	cout << "success: 局部模型已经构造！" << endl;
-	insertModel(localModel);
+	cout << "去除局部场景模型" << endl;
+	cout << "开始生成新场景,共" << center.size() << "个场景" << endl;
+	for (int i = 0; i < center.size();i++)//依次添加模型
+	{
+		abstractModel * localModel = cityFac->loadModel(center[i], range, city);
+		string oldName = localModel->getName();
+		oldName.append("_ID_").append(std::to_string(i));
+		insertModel(localModel);
+		cout << "success: 局部模型已经构造！" << endl;
+		
+		cityLocalModel *tmp = dynamic_cast<cityLocalModel*>(localModel);
+		//tmp->writeToObj();
+	}
 	drawTriangleScene = true;
-	cityLocalModel *tmp = dynamic_cast<cityLocalModel*>(localModel);
-	tmp->writeToObj();
 	return true;
 }
 void ModelManager::sendNewState()
@@ -120,11 +132,7 @@ void ModelManager::sendNewState()
 			int concave = city->getCity()->getConcaveNum();
 			Vector3d MinPos = city->getCity()->getMinPoint();
 			Vector3d MaxPos = city->getCity()->getMaxPoint();
-			m_subject->visItem->setBuildingNum(cityNum);
-			m_subject->visItem->setConcaveNum(concave);
-			m_subject->visItem->setcityMax(MaxPos);
-			m_subject->visItem->setcityMin(MinPos);
-			m_subject->visItem->modelList[0] = city->getName();
+			m_subject->visItem->addCity(cityNum, concave, MinPos, MaxPos,city->getName());
 			break;
 		}
 		it++;
@@ -138,10 +146,7 @@ void ModelManager::sendNewState()
 			int num = tmp->getTriangleNum();
 			Vector3d minPs = tmp->getMin();
 			Vector3d maxPs = tmp->getMax();
-			m_subject->visItem->setlocalMin(minPs);
-			m_subject->visItem->setlocalMax(maxPs);
-			m_subject->visItem->setLocalFaceNum(num);
-			m_subject->visItem->modelList[1] = tmp->getName();
+			m_subject->visItem->addLocalScene(num, minPs, maxPs, tmp->getName());
 			break;
 		}
 		it++;

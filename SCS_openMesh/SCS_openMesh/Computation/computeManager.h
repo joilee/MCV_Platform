@@ -47,6 +47,32 @@ public:
 	*/
 	bool checkPara();
 
+	/**
+	  * @Method:    setCptCatagory
+	  * @Note: 	
+	  * @Author:    Li Gen
+	  * @ Date:     2017/11/17
+	  * @Access:    public 
+	  * @Returns:   void
+	  * @Qualifier:
+	  * @Parameter: ComputationEnum ce
+	*/
+	void setCptCatagory(ComputationEnum ce);
+
+	void setCptCatagory(int mode);
+
+	/**
+	  * @Method:    getSitePosition
+	  * @Note: 	根据数组中的下标id获取小区的位置。通常是返回第一个cell的位置,id从0开始计数
+	  * @Author:    Li Gen
+	  * @ Date:     2017/11/22
+	  * @Access:    public 
+	  * @Returns:   Vector3d
+	  * @Qualifier:
+	  * @Parameter: int id
+	*/
+	Vector3d getSitePosition(int id);
+
 	antennaSubject * getSubject(){ return subject; }
 private:
 	ComputePara* cptPara;

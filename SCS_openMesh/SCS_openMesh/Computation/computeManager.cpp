@@ -33,6 +33,27 @@ bool computeManager::checkPara()
 	return true;
 }
 
+void computeManager::setCptCatagory(ComputationEnum ce)
+{
+	cptPara->computeEnum = ce;
+}
+
+void computeManager::setCptCatagory(int mode)
+{
+	cptPara->computeEnum = static_cast<ComputationEnum>(mode);
+	cout <<"计算类型"<< static_cast<int>(cptPara->computeEnum)<<endl;
+}
+
+Vector3d computeManager::getSitePosition(int id)
+{
+	if (id>=cptPara->Sites.size())
+	{
+		QMessageBox::critical(NULL, QStringLiteral("错误"), QStringLiteral("获取Site位置出错，数组下标超出范围！"));
+	}
+	Vector3d res=cptPara->Sites[id].Site_Antennas[0].position;
+	return res;
+}
+
 void computeManager::openTransAntennas_DirGain(QStringList paths)
 {
 	for (int i = 0; i < cptPara->Sites.size(); i++)
