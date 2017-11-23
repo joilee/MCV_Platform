@@ -140,6 +140,7 @@
     <ClCompile Include="material\scsMaterial.cpp" />
     <ClCompile Include="mesh\IO_obj.cpp" />
     <ClCompile Include="mesh\Mesh.cpp" />
+    <ClCompile Include="para\baseModel.cpp" />
     <ClCompile Include="para\computePara.cpp" />
     <ClCompile Include="para\modelPara.cpp" />
     <ClCompile Include="para\visualPara.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="mesh\Mesh.h" />
     <ClInclude Include="mesh\meshStruct.h" />
     <ClInclude Include="mesh\point.h" />
+    <ClInclude Include="para\baseModel.h" />
     <ClInclude Include="para\computePara.h" />
     <ClInclude Include="para\modelPara.h" />
     <ClInclude Include="para\visualPara.h" />

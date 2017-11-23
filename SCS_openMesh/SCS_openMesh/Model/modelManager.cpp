@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <iostream>
 #include <QMessageBox>
+#include <memory>
 ModelManager::ModelManager()
 {
 	matManager = new scsMaterialManager;
@@ -215,14 +216,38 @@ cityModel  *ModelManager:: getFirstCity()
 
 void ModelManager:: setModelPara()
 {
-	cityLocalModel *tmp = getFirstLocal();
-	modelPara->setCityScene(tmp->getScene());
-	modelPara->setSceneRange(tmp->getRange());
+	map<string, abstractModel*>::iterator it = modelMap.begin();
+	modelPara->clearModel();
+	int count=0;
+	while (it != modelMap.end())
+	{
+		if (typeid(*(it->second)) == typeid(cityLocalModel))
+		{
+			cityLocalModel*tmp= dynamic_cast<cityLocalModel*>(it->second);
+			BaseModel* tmpBase = new BaseModel();
+			std::shared_ptr<cityScene> tmpScene(tmp->getScene());
+			tmpBase->setCityScene(tmpScene);
+
+			tmpBase->setSceneRange(tmp->getRange());
+
+			std::shared_ptr<MESH> tmpMesh(tmp->getMesh());
+			tmpBase->setGround_Mesh(tmpMesh);
+
+			tmpBase->setVertices(tmp->getVertices());
+			tmpBase->setFaces(tmp->getFaces());
+			tmpBase->setNormals(tmp->getNF());
+			tmpBase->setEachFaceMaterial(tmp->getF_material());
+			tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
+
+			modelPara->addModel(tmpBase);
+			count++;
+		}
+		it++;
+	}
 	modelPara->setMaterialVector(matManager->getMaterialVector());
-	modelPara->setGround_Mesh(tmp->getMesh());
-	modelPara->setVertices(tmp->getVertices());
-	modelPara->setFaces(tmp->getFaces());
-	modelPara->setNormals(tmp->getNF());
-	modelPara->setEachFaceMaterial(tmp->getF_material());
-	modelPara->setApEdgeList(tmp->getScene()->getAPEdge());
+	cout << "设置模型参数成功" << endl;
+	QString s(QStringLiteral("模型参数加载成功,共有"));
+	s.append(QString::number(count)).append(QStringLiteral("个站点。"));
+
+	QMessageBox::information(NULL, QStringLiteral("模型参数"), s);
 }

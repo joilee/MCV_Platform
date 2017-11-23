@@ -60,6 +60,9 @@
     <ClCompile Include="util\stringUtil.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="para\baseModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Antenna\antenna.h">
@@ -123,6 +126,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="util\computationEnum.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="para\baseModel.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

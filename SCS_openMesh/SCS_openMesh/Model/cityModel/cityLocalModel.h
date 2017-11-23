@@ -6,7 +6,7 @@
 #include <mesh/point.h>
 #include <util/Color.h>
 #include <gl/freeglut.h>
-
+#include <memory>
 #define meshLength 10
 
 using namespace  std;
@@ -76,7 +76,7 @@ public:
     cityScene *getScene() {
         return scene;
     }
-    MESH_PTR getMesh() {
+	MESH_PTR getMesh() {
         return ground_pMesh;
     }
 
@@ -117,9 +117,9 @@ private:
     cityScene *scene;
     vector<vector<double> >normalMatrix;
     vector<vector<int> > cannyPoint;
-    MESH meshCTX;
+
     MESH_PTR ground_pMesh;
-    //
+    
     GLuint showWireList;
 public:
     /*

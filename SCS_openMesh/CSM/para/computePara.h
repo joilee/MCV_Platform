@@ -30,7 +30,7 @@ public:
 	ComputationEnum computeEnum;
 
 	//
-	vector<Site> Sites;  //多个小区
+	vector<Site> Sites;  //多个基站
 
 	vector<no_simplaneReceiver> No_SimPlanePoint; //非仿真面设置的接收点信息
 

@@ -258,7 +258,7 @@ void cityLocalModel::loadLocalGround(Vector3d center, double range, cityScene* s
 
     //2.获取特征点数量，以便于初始化网格
     int  totalVer = countFeaturePoint(meshLength, localRow, localCol, cannyPoint);
-    ground_pMesh = &meshCTX;
+	ground_pMesh = new MESH;
     InitMesh(ground_pMesh, totalVer);
 
     //3,根据已经获得的特征点，构建三角网格
