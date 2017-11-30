@@ -2,7 +2,7 @@
 #include <QHeaderView>
 #include <sstream>  
 
-scsModelTable::scsModelTable(QWidget* a ) :modelObserver("scsModelTable"), QTableWidget(a)
+scsModelTable::scsModelTable(QWidget* a ) :LocalModelObserver("scsModelTable"),modelObserver("scsModelTable"), QTableWidget(a)
 {
 	//QWidget::showMaximized();
 //	this = new QTableWidget(this);
@@ -59,10 +59,31 @@ void scsModelTable::clearLocalItem()
 	this->setItem(14, 1, new QTableWidgetItem(QString("")));
 }
 
+
+void scsModelTable::updateLocal(LocalModelItem*a)
+{
+	cout << "ModelTable 接收到局部更新的信号" << endl;
+	if (a->needUpdate())
+	{
+		this->setItem(8, 1, new QTableWidgetItem(QString::number(a->getLocalFaceNum())));
+		this->setItem(9, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[0], 0, 'f', 3)));
+		this->setItem(10, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMax()[0], 0, 'f', 3)));
+		this->setItem(11, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[1], 0, 'f', 3)));
+		this->setItem(12, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMax()[1], 0, 'f', 3)));
+		this->setItem(13, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[2], 0, 'f', 3)));
+		this->setItem(14, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMax()[2], 0, 'f', 3)));
+	}
+	else
+	{
+		clearLocalItem();
+	}
+	this->show();
+	cout << "ModelTable局部数据已经更新" << endl;
+}
 void scsModelTable::update(visualModelItem*a)
 {
-	cout << "ModelTable 接收到更新的信号" << endl;
-	if (!a->isCityEmpty())
+	cout << "ModelTable 接收到城市场景更新的信号" << endl;
+	if (a->needUpdate())
 	{
 	//	cout << this->rowCount() << " " << this->columnCount() << endl;
 	//	this->setItem(0, 1, new QTableWidgetItem(a->getBuildingNum()));
@@ -80,20 +101,6 @@ void scsModelTable::update(visualModelItem*a)
 		clearCityItem();
 	}
 
-	if (!a->isLocalSceneEmpty())
-	{
-		this->setItem(8, 1, new QTableWidgetItem(QString::number(a->getLocalFaceNum())));
-		this->setItem(9, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[0], 0, 'f', 3)));
-		this->setItem(10, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMax()[0], 0, 'f', 3)));
-		this->setItem(11, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[1], 0, 'f', 3)));
-		this->setItem(12, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMax()[1], 0, 'f', 3)));
-		this->setItem(13, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMin()[2], 0, 'f', 3)));
-		this->setItem(14, 1, new QTableWidgetItem(QString("%1").arg(a->getlocalMax()[2], 0, 'f', 3)));
-	}
-	else
-	{
-		clearLocalItem();
-	}
 	this->show();
-	cout << "ModelTable数据已经更新" << endl;
+	cout << "ModelTable全局数据已经更新" << endl;
 }

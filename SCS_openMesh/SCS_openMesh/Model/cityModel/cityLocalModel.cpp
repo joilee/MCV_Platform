@@ -512,7 +512,8 @@ cityLocalModel::cityLocalModel(Vector3d  AP_position, double  LocalRange, citySc
     range = LocalRange;
     MaxPos = Vector3d(DBL_MIN, DBL_MIN, DBL_MIN);
     MinPos = Vector3d(DBL_MAX, DBL_MAX, DBL_MAX);
-    name = _name + "_Local_Model";
+    name = _name;
+	id = atoi(_name.c_str());
     scene = new cityScene(AP_position,LocalRange,cityAll);
     loadLocalGround(AP_position, LocalRange, scene);
     cout << "Info: 地面场景构建完成" << endl;

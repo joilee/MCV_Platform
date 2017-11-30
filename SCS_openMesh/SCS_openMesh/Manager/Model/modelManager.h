@@ -1,10 +1,9 @@
 #pragma  once
 
-#include "abstractModel.h"
-#include "abstractModelFactory.h"
-#include  "cityModel/cityModelFactory.h"
-#include  "../observer/modelSubject.h"
-#include <para/modelPara.h>
+
+#include  "../../observer/modelSubject.h"
+#include "observer/LocalModelSubject.h"
+#include "Container/ModelContainer.h"
 #include "../Material/materialManager.h"
 #include <map>
 class ModelManager
@@ -41,19 +40,22 @@ public:
 	@note 当城市场景不存在时候，返回异常
 	@since 5/14/2017
 	*/
-	bool generateLocalModel(vector< Vector3d> center,double range);
+	bool generateLocalModel(vector< Vector3d> center, vector<int> siteName, double range);
 
 	/*
 	@brief 返回私有变量
 	*/
 	modelSubject *getModelSubject(){ return m_subject; }
 
+	LocalModelSubject * getLocalSubject(){ return m_local_subject; }
 	/* 
-	@brief 将最新的状态发送到相应的观察者
+	@brief 将模型名称和城市场景数据发送到相应的观察者
 	@return void
-	@note 现在只支持一个城市场景和一个局部场景存在。即map中有多个场景时，只针对遍历时候第一个遇到的有效
+	@note 推送建筑物数据
 	*/
 	void sendNewState();
+
+	void sendLocalStateByID(int id);
 
 	/*
 	@brief 检测局部模型是否存在，即是否有可以存在的计算的模型
@@ -107,17 +109,17 @@ public:
 
 private:
 
-	map<string, abstractModel*> modelMap;
+	
 	cityModelFactory *cityFac;
 	modelSubject * m_subject;
-
+	LocalModelSubject * m_local_subject;
 	//场景透明度
 	double transparency;
 	bool drawTriangleScene; //局部三角形文件场景绘制flag
 
 	//
 	ModelPara * modelPara;
-
+	ModelContainer *modelContainer;
 public:
 	scsMaterialManager * matManager;
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../visualData/visualModelItem.h"
+#include "../visualData/LocalModelItem.h"
 using namespace std;
 
 /*
@@ -8,14 +8,14 @@ using namespace std;
 */
 
 //³éÏó¹Û²ìÕß
-class modelObserver
+class LocalModelObserver
 {
 public:
-	modelObserver(string name)
+	LocalModelObserver(string name)
 	{
 		this->name = name;
 	}
 	string getName(){ return name; }
 	string name;
-	virtual void update(visualModelItem*a) = 0;
+	virtual void updateLocal(LocalModelItem*a) = 0;
 };

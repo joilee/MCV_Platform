@@ -16,6 +16,7 @@ public:
 	~meshOptionDialog();
 public:
 	vector<Vector3d> center;//sites可能有多个
+	vector<int> siteName;
 	double range;
 	bool inputFlag;
 

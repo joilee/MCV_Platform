@@ -113,6 +113,7 @@ cityModel::~cityModel()
 void cityModel::LoadModel(string _name, vector<string> _v, vector<string> _h, string _p)
 {
 	name = _name;
+	
 	if (_v.empty()) 
 	{
 		QMessageBox::warning(NULL, QStringLiteral("文件导入"), QStringLiteral("请先导入建筑物二维信息文件"));
@@ -131,6 +132,7 @@ void cityModel::LoadModel(string _name, vector<string> _v, vector<string> _h, st
 	DWORD start_time = GetTickCount();
 	city = new cityScene(_v, _h, _p);
 	DWORD end_time = GetTickCount();
+	id = DEFAULT_MODEL_ID;
 	cout << "Info: "<<name<<"城市场面导入完成" << endl;
 	cout << "Info: " << "模型导入共耗时" << (end_time - start_time)  << "ms" << endl;
 

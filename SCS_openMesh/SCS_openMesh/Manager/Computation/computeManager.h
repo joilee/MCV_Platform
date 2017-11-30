@@ -1,6 +1,6 @@
 #pragma  once
-#include <para/computePara.h>
-#include "../observer/antennaSubject.h"
+#include "Container/SitesContainer.h"
+#include "../../observer/antennaSubject.h"
 #include <QString>
 
 /*
@@ -39,7 +39,7 @@ public:
 	/*
 	@brief 返回小区的引用
 	*/
-	vector<Site> &getSite();
+	vector<Site*> getSite();
 	
 	/*
 	@brief 检查计算参数是否都已经存在
@@ -73,8 +73,11 @@ public:
 	*/
 	Vector3d getSitePosition(int id);
 
+	SitesContainer* getContainer();
+
 	antennaSubject * getSubject(){ return subject; }
 private:
+	SitesContainer* sitesContainer;
 	ComputePara* cptPara;
 	antennaSubject *subject;
 	bool siteFlag, antennaFlag, noSimFlag;

@@ -60,7 +60,8 @@ void MainWindow::init()
 
 	globalContext *gctx = globalContext::GetInstance();
 	gctx->modelManager->getModelSubject()->attach(modelTable);
-	gctx->modelManager->getModelSubject()->attach(M_computeroptionDialog->fp);
+	gctx->modelManager->getLocalSubject()->attach(M_computeroptionDialog->fp);
+	gctx->modelManager->getLocalSubject()->attach(modelTable);
 	gctx->cptManager->getSubject()->attach(M_computeroptionDialog->es);
 	//场景数据初始化
 
@@ -321,6 +322,7 @@ void MainWindow::meshAll()
 	}
 
 	vector< Vector3d> center;
+	vector<int> siteID;
 	double range;
 	//要不要加一个判断，防止错误？
 	if (mod->inputFlag)
@@ -332,7 +334,7 @@ void MainWindow::meshAll()
 		outputLog(QStringLiteral("没有设置剖分参数"));
 		return;
 	}
-	gctx->modelManager->generateLocalModel(center, range);
+	gctx->modelManager->generateLocalModel(center,siteID, range);
 }
 
 

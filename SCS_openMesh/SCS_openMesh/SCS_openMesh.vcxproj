@@ -68,7 +68,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Computation\computeManager.cpp" />
+    <ClCompile Include="Container\ModelContainer.cpp" />
+    <ClCompile Include="Container\SitesContainer.cpp" />
+    <ClCompile Include="observer\LocalModelSubject.cpp" />
+    <ClCompile Include="Manager\Computation\computeManager.cpp" />
     <ClCompile Include="Context\context.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_computeOptionPage.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -175,15 +178,16 @@
     <ClCompile Include="geometry\emxVertex.cpp" />
     <ClCompile Include="geometry\SphereBeam.cpp" />
     <ClCompile Include="glWidget.cpp" />
+    <ClCompile Include="Manager\Id\ModelIdManager.cpp" />
     <ClCompile Include="io\io_simuPlane.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Material\materialManager.cpp" />
+    <ClCompile Include="Manager\Material\materialManager.cpp" />
     <ClCompile Include="Model\abstractModel.cpp" />
     <ClCompile Include="Model\abstractModelFactory.cpp" />
     <ClCompile Include="Model\cityModel\cityLocalModel.cpp" />
     <ClCompile Include="Model\cityModel\cityModelFactory.cpp" />
     <ClCompile Include="Model\cityModel\cityModel.cpp" />
-    <ClCompile Include="Model\modelManager.cpp" />
+    <ClCompile Include="Manager\Model\modelManager.cpp" />
     <ClCompile Include="observer\antennaSubject.cpp" />
     <ClCompile Include="observer\modelSubject.cpp" />
     <ClCompile Include="ui\computeOptionPage.cpp" />
@@ -207,10 +211,11 @@
     <ClCompile Include="util\Quaternion.cpp" />
     <ClCompile Include="visualData\visualAntennaItem.cpp" />
     <ClCompile Include="visualData\visualModelItem.cpp" />
-    <ClCompile Include="visualManager.cpp" />
+    <ClCompile Include="Manager\visualManager\visualManager.cpp" />
+    <ClCompile Include="visualData\LocalModelItem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Computation\computeManager.h">
+    <CustomBuild Include="Manager\Computation\computeManager.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
@@ -418,7 +423,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </AdditionalInputs>
     </CustomBuild>
-    <CustomBuild Include="Material\materialManager.h">
+    <CustomBuild Include="Manager\Material\materialManager.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
@@ -675,7 +680,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </AdditionalInputs>
     </CustomBuild>
-    <CustomBuild Include="Model\modelManager.h">
+    <CustomBuild Include="Manager\Model\modelManager.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
@@ -1005,10 +1010,16 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Container\ModelContainer.h" />
+    <ClInclude Include="Container\SitesContainer.h" />
     <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />
     <ClInclude Include="GeneratedFiles\ui_scatterDialog.h" />
+    <ClInclude Include="observer\LocalModelSubject.h" />
+    <ClInclude Include="Manager\Id\ModelIdManager.h" />
+    <ClInclude Include="observer\LocalModelObserver.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="visualManager.h" />
+    <ClInclude Include="Manager\visualManager\visualManager.h" />
+    <ClInclude Include="visualData\LocalModelItem.h" />
     <CustomBuild Include="ui\scatterWidget\scatterWidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing scatterWidget.h...</Message>

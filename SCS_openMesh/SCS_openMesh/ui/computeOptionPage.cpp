@@ -248,7 +248,7 @@ void fieldpoint::getFieldPoint(double &lx,double &ly,double &rx,double &ry,doubl
 	pre=Precisioninput->text().toDouble();
 	alti=Altitudeinput->text().toDouble();
 }
-fieldpoint::fieldpoint(QWidget* parent) :modelObserver("scFieldPointRange"), QWidget(parent)
+fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange"), QWidget(parent)
 {
 	//初始化成员变量
 	RecePointFilePath="";
@@ -347,10 +347,10 @@ fieldpoint::fieldpoint(QWidget* parent) :modelObserver("scFieldPointRange"), QWi
 
 }
 
-void fieldpoint::update(visualModelItem*a)
+void fieldpoint::updateLocal(LocalModelItem*a)
 {
 	//判断局部场景是否存在
-	if (!a->isLocalSceneEmpty())//存在
+	if (a->needUpdate())//存在
 	{
 		leftupXinput->setText(QString("%1").arg(a->getlocalMin()[0], 0, 'f', 3));
 		leftupYinput->setText(QString("%1").arg(a->getlocalMax()[1], 0, 'f', 3));

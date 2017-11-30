@@ -12,7 +12,7 @@
 #include <string>
 #include <QComboBox>
 #include "../../observer/antennaObserver.h"
-#include "../observer/modelObserver.h"
+#include "../observer/LocalModelObserver.h"
 using namespace std;
 /************************************************************************/
 /* 
@@ -51,13 +51,13 @@ public:
 };
 
 //仿真区域点设置界面
-class fieldpoint :public QWidget, public modelObserver
+class fieldpoint :public QWidget, public LocalModelObserver
 {
 	Q_OBJECT
 public:
 	fieldpoint(QWidget* parent=0);
 	QPushButton * loadReceieverPointFile;
-	void update(visualModelItem*a);
+	void updateLocal(LocalModelItem*a);
 private:
 	//数据
 	//场景的范围，单位为m

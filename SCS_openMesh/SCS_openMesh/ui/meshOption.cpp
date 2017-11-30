@@ -27,6 +27,7 @@ void meshOptionDialog::onOkbutton() {
     if (modelNum==ModelNum::SINGLE_MODEL) {
         if (centerXLE->text().isEmpty() || centerYLE->text().isEmpty() || centerZLE->text().isEmpty() || rangeLE->text().isEmpty()) {
             QMessageBox::critical(this, QStringLiteral("输入"), QStringLiteral("中心点或者范围输入为空，请重新输入"), QMessageBox::Yes, QMessageBox::Yes);
+			inputFlag = false;
             return;
         }
         double x = centerXLE->text().toDouble();
@@ -39,19 +40,23 @@ void meshOptionDialog::onOkbutton() {
     } else if (modelNum==ModelNum::MULTI_MODEL) {
         if (rangeLE->text().isEmpty()) {
             QMessageBox::critical(this, QStringLiteral("输入"), QStringLiteral("范围输入为空，请重新输入"), QMessageBox::Yes, QMessageBox::Yes);
+			inputFlag = false;
             return;
         }
         //将site的数据全部加入到center中
         globalContext *globalCtx = globalContext::GetInstance();
-		int len = globalCtx->cptManager->getComputationPara()->Sites.size();
+		siteName.clear();
+		int len = globalCtx->cptManager->getContainer()->getSitesSize();
         if ( len!= 0) {
 			center.clear();
             for (int i = 0; i < len; i++) {
-				center.push_back(globalCtx->cptManager->getSitePosition(i));
+				center = globalCtx->cptManager->getContainer()->getSitesPosition();
+				siteName = globalCtx->cptManager->getContainer()->getIDs();
             }
         } else {
             QMessageBox::critical(this, QStringLiteral("基站"), QStringLiteral("基站为空，请导入站点文件"), QMessageBox::Yes, QMessageBox::Yes);
         }
+		inputFlag = true;
     }
 	QString s;
 	s.append(QStringLiteral("成功添加"));
@@ -119,15 +124,15 @@ void meshOptionDialog::onRefreshButton() {
 
     if (globalCtx->cptManager->getComputationPara()->Sites.size()!=0) {
         cbo_XYZ->blockSignals(true);
-        std::vector<Site> &tmpSite = globalCtx->cptManager->getSite();
+        std::vector<Site*> tmpSite = globalCtx->cptManager->getSite();
         cbo_XYZ->clear();
         cbo_XYZ->addItem(QStringLiteral("自定义"));
         for(int i=0; i<tmpSite.size(); i++) {
             stringstream stream;
-            stream<<tmpSite[i].Site_Name;
+            stream<<tmpSite[i]->Site_Name;
             string tmp=stream.str();
             QString sitename=QString::fromStdString(tmp);
-            cbo_XYZ->addItem(QStringLiteral("小区")+sitename);
+            cbo_XYZ->addItem("Site"+sitename);
         }
         cbo_XYZ->blockSignals(false);
     }
@@ -137,17 +142,20 @@ void meshOptionDialog::dynamicLoadSite(int index) {
         centerXLE->setReadOnly(false);
         centerYLE->setReadOnly(false);
         centerZLE->setReadOnly(false);
+		siteName.clear();
+		siteName.push_back(1);
         return;
     } else {
         globalContext *globalCtx=globalContext::GetInstance();
-        std::vector<Site> &tmpSite = globalCtx->cptManager->getSite();
-        Vector3d AP_postion=tmpSite[index-1].Site_Antennas[0].position;
+		Vector3d AP_postion = globalCtx->cptManager->getSitePosition(index - 1);
         centerXLE->setText(QString::number(AP_postion.x));
         centerYLE->setText(QString::number(AP_postion.y,'g',7));
         centerZLE->setText(QString::number(AP_postion.z));
         centerXLE->setReadOnly(true);
         centerYLE->setReadOnly(true);
         centerZLE->setReadOnly(true);
+		siteName.clear();
+		siteName.push_back(globalCtx->cptManager->getContainer()->getSiteIDByOrder(index-1));//fron int to QString
     }
     return;
 }

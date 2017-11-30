@@ -23,7 +23,7 @@ public:
 	@brief 调用局部场景的构造函数
 	*/
 	/************************************************************************/
-	abstractModel *loadModel(Vector3d center, double range, cityModel * cModel);
+	abstractModel *loadModel(Vector3d center,int siteID, double range, cityModel * cModel);
 private:
 };
 

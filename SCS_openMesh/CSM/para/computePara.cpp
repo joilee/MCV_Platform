@@ -26,5 +26,5 @@ ComputePara::ComputePara()
 
 ComputePara::~ComputePara()
 {
-	 vector<Site>().swap(Sites);
+	Sites.erase(Sites.begin(), Sites.end());
 }

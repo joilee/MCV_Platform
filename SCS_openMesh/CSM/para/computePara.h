@@ -3,6 +3,8 @@
 #include "../Antenna/antenna.h"
 #include "../Antenna/receiver.h"
 #include "../util/computationEnum.h"
+#include <map>
+#include <string>
 class ComputePara
 {
 public:
@@ -30,7 +32,7 @@ public:
 	ComputationEnum computeEnum;
 
 	//
-	vector<Site> Sites;  //多个基站
+	std::map<int,Site> Sites ;  //多个基站
 
 	vector<no_simplaneReceiver> No_SimPlanePoint; //非仿真面设置的接收点信息
 

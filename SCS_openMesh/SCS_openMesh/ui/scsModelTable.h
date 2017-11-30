@@ -2,13 +2,15 @@
 #include <QtGui> 
 #include <QTableWidget>
 #include "../observer/modelObserver.h"
-class scsModelTable :public QTableWidget, public modelObserver
+#include "observer/LocalModelObserver.h"
+class scsModelTable :public QTableWidget, public modelObserver,public LocalModelObserver
 {
 	Q_OBJECT
 public:
 	scsModelTable(QWidget* a=NULL);
 	~scsModelTable();
 	void update(visualModelItem*a);
+	void updateLocal(LocalModelItem*a);
 private:
 	 //*table;
 	void clearCityItem();

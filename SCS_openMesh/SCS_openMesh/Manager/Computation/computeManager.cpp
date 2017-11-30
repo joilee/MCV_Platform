@@ -1,10 +1,11 @@
 #include "computeManager.h"
-#include "../Context/context.h"
+#include "../../Context/context.h"
 #include <fstream>
 #include <QMessageBox>
 #include <util/stringUtil.h>
 computeManager::computeManager()
 {
+	sitesContainer = new SitesContainer;
 	cptPara = new ComputePara;
 	subject = new antennaSubject;
 	siteFlag = false;
@@ -16,6 +17,7 @@ computeManager::~computeManager()
 {
 	delete cptPara;
 	delete subject;
+	delete sitesContainer;
 }
 
 bool computeManager::checkPara()
@@ -46,22 +48,24 @@ void computeManager::setCptCatagory(int mode)
 
 Vector3d computeManager::getSitePosition(int id)
 {
-	if (id>=cptPara->Sites.size())
-	{
-		QMessageBox::critical(NULL, QStringLiteral("错误"), QStringLiteral("获取Site位置出错，数组下标超出范围！"));
-	}
-	Vector3d res=cptPara->Sites[id].Site_Antennas[0].position;
-	return res;
+	return sitesContainer->getSitePositionById(id);
+}
+
+SitesContainer* computeManager::getContainer()
+{
+	return sitesContainer;
 }
 
 void computeManager::openTransAntennas_DirGain(QStringList paths)
 {
-	for (int i = 0; i < cptPara->Sites.size(); i++)
+	vector<int> SiteIDs = sitesContainer->getIDs();
+	for (int i = 0; i <SiteIDs.size(); i++)
 	{
-		for (int j = 0; j < cptPara->Sites[i].Site_Antennas.size(); j++)
+		//第i个站点，有3个cell
+		for (int j = 0; j <sitesContainer->getAntennasSize(SiteIDs[i]); j++)
 		{
 			//对每个site中每个cell从批量导入的方向增益文件中找到匹配的增益文件
-			string cell_name = cptPara->Sites[i].Site_Antennas[j].Cell_Name + ".txt";
+			string cell_name = sitesContainer->getSiteByID(SiteIDs[i])->Site_Antennas[j].Cell_Name + ".txt";
 			for (int path_id = 0; path_id < paths.size(); path_id++)
 			{
 				string path = paths[path_id].toStdString();
@@ -92,7 +96,7 @@ void computeManager::openTransAntennas_DirGain(QStringList paths)
 						getline(infile, str);
 						istringstream linestream2(str);
 						linestream2 >> str_flag;
-						cptPara->Sites[i].Site_Antennas[j].initial_Gain = atof(str_flag.c_str());
+						sitesContainer->setInitialGain(SiteIDs[i], j, atof(str_flag.c_str()));
 						getline(infile, str);
 						getline(infile, str);
 						getline(infile, str);
@@ -104,7 +108,7 @@ void computeManager::openTransAntennas_DirGain(QStringList paths)
 						vector<double> antenna_property(3); // V_angle  H_angle  attenuation
 						antenna_property[0] = atof(str_flag.c_str());
 						linestream3 >> antenna_property[1] >> antenna_property[2];
-						cptPara->Sites[i].Site_Antennas[j].direction_Gain.push_back(antenna_property);
+						sitesContainer->addDirectionGain(SiteIDs[i], j, antenna_property);
 						linestream3.str("");
 					}
 					infile.close();
@@ -159,7 +163,10 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 {
 	if (path.isEmpty())
 		return;
-	cptPara->Sites.clear();
+
+	sitesContainer->clear();
+
+	//准备读取
 	ifstream infile((path.toStdString()).c_str(), ios::in | ios::_Nocreate);
 	if (!infile)
 	{
@@ -209,25 +216,11 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 			cout << "error : 天线文件读取错误。已返回！" << endl;
 			return;
 		}	
+
+
 		//针对新获得的cell，检测是否存在一个已知的site中，如果是，则插入，否则新建
-		bool newsite = true;   //是否需要新建一个site
 		int current_sitename = stof(SiteName.c_str());
-		for (int i = 0; i < cptPara->Sites.size(); i++)
-		{
-			if (current_sitename == cptPara->Sites[i].Site_Name)
-			{
-				newsite = false;
-				cptPara->Sites[i].Site_Antennas.push_back(new_antenna);
-				break;
-			}
-		}
-		if (newsite)//如果是新的小区
-		{
-			Site new_site;
-			new_site.Site_Name = current_sitename;
-			new_site.Site_Antennas.push_back(new_antenna);
-			cptPara->Sites.push_back(new_site);
-		}
+		sitesContainer->addAntenna(new_antenna, current_sitename);
 		subject->AntennaItem->addSite(current_sitename, CellName);
 	}
 	infile.close();
@@ -236,16 +229,7 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 	siteFlag = true;
 }
 
-vector<Site> & computeManager::getSite()
+vector<Site*>  computeManager::getSite()
 {
-	if (cptPara->Sites.size()!=0)
-	{
-		return cptPara->Sites;
-	}
-	else
-	{
-		//是不是不能返回局部变量的引用
-		cptPara->Sites.clear();
-		return  cptPara->Sites;
-	}
+	return sitesContainer->getAllSites();
 }

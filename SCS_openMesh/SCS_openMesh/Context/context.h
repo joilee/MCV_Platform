@@ -7,8 +7,8 @@
 #include "para/computePara.h"
 #include "para/visualPara.h"
 
-#include "../Model/modelManager.h"
-#include "../Computation/computeManager.h"
+#include "../Manager/Model/modelManager.h"
+#include "../Manager/Computation/computeManager.h"
 
 /************************************************************************/
 /* 单例模式                                                                     */
