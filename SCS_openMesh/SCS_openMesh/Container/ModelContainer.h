@@ -24,6 +24,7 @@ public:
 	cityLocalModel * getFirstLocal();
 	cityLocalModel * getLocalModelByID(int id);
 	bool isCityExist();
+	bool isLocalIDExist(int id);
 	cityModel* getFirstCity();
 
 	//·µ»ØËùÓÐid

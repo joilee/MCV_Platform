@@ -28,7 +28,7 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <glWidget.h>
-#include "./ui/tree/scsTreeWidget.h"
+#include "scsLocalModelGLWidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -63,7 +63,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget_Dispaly;
     GLWidget *ModelView;
-    GLWidget *simuArea;
+    scsLocalModelGLWidget *simuArea;
     GLWidget *simuPlane;
     QMenuBar *menuBar;
     QMenu *menuFILE;
@@ -83,8 +83,6 @@ public:
     QWidget *dockWidgetContents_2;
     QVBoxLayout *verticalLayout_5;
     QTreeWidget *treeWidget_project;
-    QDockWidget *dockWidget;
-    scs_GUI::scsTreeWidget *dockWidgetContents_3;
     QDockWidget *dockWidget_Property;
     QWidget *dockWidgetContents_6;
     QVBoxLayout *verticalLayout_4;
@@ -177,7 +175,7 @@ public:
         ModelView = new GLWidget();
         ModelView->setObjectName(QStringLiteral("ModelView"));
         tabWidget_Dispaly->addTab(ModelView, QString());
-        simuArea = new GLWidget();
+        simuArea = new scsLocalModelGLWidget();
         simuArea->setObjectName(QStringLiteral("simuArea"));
         tabWidget_Dispaly->addTab(simuArea, QString());
         simuPlane = new GLWidget();
@@ -260,19 +258,6 @@ public:
 
         dockWidget_outline->setWidget(dockWidgetContents_2);
         MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_outline);
-        dockWidget = new QDockWidget(MainWindowClass);
-        dockWidget->setObjectName(QStringLiteral("dockWidget"));
-        dockWidget->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::TopDockWidgetArea);
-        dockWidgetContents_3 = new scs_GUI::scsTreeWidget();
-        dockWidgetContents_3->setObjectName(QStringLiteral("dockWidgetContents_3"));
-        dockWidgetContents_3->setStyleSheet(QLatin1String("*{\n"
-"    border-style: outset;\n"
-"    border-width: 5px;\n"
-"\n"
-"    border-color: beige;\n"
-"}"));
-        dockWidget->setWidget(dockWidgetContents_3);
-        MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget);
         dockWidget_Property = new QDockWidget(MainWindowClass);
         dockWidget_Property->setObjectName(QStringLiteral("dockWidget_Property"));
         dockWidget_Property->setMinimumSize(QSize(220, 200));
@@ -333,7 +318,7 @@ public:
 
         retranslateUi(MainWindowClass);
 
-        tabWidget_Dispaly->setCurrentIndex(2);
+        tabWidget_Dispaly->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindowClass);

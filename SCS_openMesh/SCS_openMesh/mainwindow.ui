@@ -33,14 +33,14 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="GLWidget" name="ModelView">
        <attribute name="title">
         <string>模型场景</string>
        </attribute>
       </widget>
-      <widget class="GLWidget" name="simuArea">
+      <widget class="scsLocalModelGLWidget" name="simuArea">
        <attribute name="title">
         <string>仿真场景</string>
        </attribute>
@@ -220,24 +220,6 @@
       </widget>
      </item>
     </layout>
-   </widget>
-  </widget>
-  <widget class="QDockWidget" name="dockWidget">
-   <property name="allowedAreas">
-    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::TopDockWidgetArea</set>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>1</number>
-   </attribute>
-   <widget class="scs_GUI::scsTreeWidget" name="dockWidgetContents_3">
-    <property name="styleSheet">
-     <string notr="true">*{
-    border-style: outset;
-    border-width: 5px;
-
-    border-color: beige;
-}</string>
-    </property>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidget_Property">
@@ -423,9 +405,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>scs_GUI::scsTreeWidget</class>
+   <class>scsLocalModelGLWidget</class>
    <extends>QWidget</extends>
-   <header>./ui/tree/scsTreeWidget.h</header>
+   <header>scsLocalModelGLWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -128,9 +128,19 @@ bool ModelManager::checkLocalExist()
 	return modelContainer->isLocalExist();
 }
 
+bool ModelManager::checkLocalExistByID(int id)
+{
+	return modelContainer->isLocalIDExist(id);
+}
+
 cityLocalModel *ModelManager::getFirstLocal()
 {
 	return modelContainer->getFirstLocal();
+}
+
+cityLocalModel * ModelManager::getLocalModelByID(int id)
+{
+	return modelContainer->getLocalModelByID(id);
 }
 
 cityModel  *ModelManager:: getFirstCity()

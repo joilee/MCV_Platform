@@ -125,6 +125,16 @@ bool ModelContainer::isCityExist()
 	return false;
 }
 
+bool ModelContainer::isLocalIDExist(int id)
+{
+	auto it = modelMap.find(id);
+	if (it != modelMap.end() && (typeid(*(it->second)) == typeid(cityLocalModel)))
+	{
+		return true;
+	}
+	return false;
+}
+
 cityModel* ModelContainer::getFirstCity()
 {
 	auto it = modelMap.begin();

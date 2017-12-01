@@ -64,17 +64,19 @@ public:
 	*/
 	bool checkLocalExist();
 
+	bool checkLocalExistByID(int id);
+
 	/*
 	@brief  返回局部模型
 	@return cityLocalModel
 	@note  根据map遍历返回第一个局部模型，如果没有返回NULL
 	*/
 	cityLocalModel * getFirstLocal();
-
+	cityLocalModel * getLocalModelByID(int id);
 	/*
 	@brief 检测全局模型是否存在，即是否有可以剖分的模型
 	*/
-	bool ModelManager::checkCityExist();
+	bool checkCityExist();
 
 	/*
 	@brief 返回第一个城市模型

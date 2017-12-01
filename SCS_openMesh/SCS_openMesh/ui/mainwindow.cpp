@@ -160,17 +160,17 @@ void MainWindow::generateCptpara()
 void MainWindow::setDrawPointMode(bool flag)
 {
 	//用二进制表达状态
-	ui.simuArea->drawLocalPoint = flag;
+	ui.simuArea->setPoint(flag);
 }
 void MainWindow::setDrawLineMode(bool flag)
 {
 	//用二进制表达状态
-	ui.simuArea->drawLocalLine= flag;
+	ui.simuArea->setLine(flag);
 }
 void MainWindow::setDrawFaceMode(bool flag)
 {
 	//用二进制表达状态
-	ui.simuArea->drawLocalFace = flag;
+	ui.simuArea->setFace(flag);
 }
 
 void MainWindow::saveSimuPlane()
@@ -200,7 +200,7 @@ void MainWindow::loadSimuPlane()
 	globalContext *globalCtx=globalContext::GetInstance();
 	loadSimuPlaneResult(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->veticalNum,globalCtx->visualPara->horizonNum ,path);
 	ui.simuPlane->setSimPlane(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->horizonNum,globalCtx->visualPara->veticalNum);
-	ui.simuArea->setSimPlane(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->horizonNum,globalCtx->visualPara->veticalNum);
+	//ui.simuArea->setSimPlane(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->horizonNum,globalCtx->visualPara->veticalNum);
 	outputLog(QStringLiteral("显示结果"));
 }
 
