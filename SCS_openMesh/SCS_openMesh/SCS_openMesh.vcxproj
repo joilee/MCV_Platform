@@ -1020,6 +1020,7 @@
     <ClInclude Include="observer\LocalModelObserver.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Manager\visualManager\visualManager.h" />
+    <ClInclude Include="ui\catalogWidget\temp.h" />
     <ClInclude Include="ui\scsLocalModelGLWidget.h" />
     <ClInclude Include="visualData\LocalModelItem.h" />
     <CustomBuild Include="ui\scatterWidget\scatterWidget.h">
