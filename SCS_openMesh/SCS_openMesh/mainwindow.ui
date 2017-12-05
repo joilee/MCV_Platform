@@ -205,19 +205,7 @@
    <widget class="QWidget" name="dockWidgetContents_2">
     <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
-      <widget class="QTreeWidget" name="treeWidget_project">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>200</height>
-        </size>
-       </property>
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
-      </widget>
+      <widget class="catalogWidget" name="catalog" native="true"/>
      </item>
     </layout>
    </widget>
@@ -408,6 +396,12 @@
    <class>scsLocalModelGLWidget</class>
    <extends>QWidget</extends>
    <header>scsLocalModelGLWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>catalogWidget</class>
+   <extends>QWidget</extends>
+   <header>catalogWidget/catalogwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

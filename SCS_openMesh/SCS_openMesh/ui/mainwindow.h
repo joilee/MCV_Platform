@@ -19,6 +19,7 @@
 #include "scsModelTable.h"
 
 #include "ui/scatterWidget/scatterWidget.h"
+#include "catalogWidget/catalogWidget.h"
 
 
 
@@ -73,10 +74,10 @@ private:
 	//内部界面控件
 private:
 	Ui::MainWindowClass ui;
-	QTreeWidgetItem* modelTW;
+	/*QTreeWidgetItem* modelTW;
 	QTreeWidgetItem* computeTW;
 	QTreeWidgetItem* visualTW;
-
+*/
 
 	outdoorFileDialog*  M_outdoorFileDialog;
 	computerOptionDialog* M_computeroptionDialog;
@@ -105,5 +106,8 @@ private:
 
 	 void init();
 	 void createActions();
+
+private:
+	catalogWidget * catalog;
 };
 #endif // MAINWINDOW_H

@@ -278,6 +278,15 @@
     <ClCompile Include="ui\scsLocalModelGLWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ui\catalogWidget\catalogWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\catalogWidget\catalogItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\catalogWidget\catalogTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="glWidget.h">
@@ -500,6 +509,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\scsLocalModelGLWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\catalogWidget\catalogWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\catalogWidget\catalogItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\catalogWidget\catalogTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -48,7 +48,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;freeglutd.lib;Qt5Helpd.lib;Qt5WebChanneld.lib;Qt5WebEngineCored.lib;Qt5WebEngineWidgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;freeglut.lib;Qt5Helpd.lib;Qt5WebChanneld.lib;Qt5WebEngineCored.lib;Qt5WebEngineWidgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -190,6 +190,9 @@
     <ClCompile Include="Manager\Model\modelManager.cpp" />
     <ClCompile Include="observer\antennaSubject.cpp" />
     <ClCompile Include="observer\modelSubject.cpp" />
+    <ClCompile Include="ui\catalogWidget\catalogItem.cpp" />
+    <ClCompile Include="ui\catalogWidget\catalogTree.cpp" />
+    <ClCompile Include="ui\catalogWidget\catalogWidget.cpp" />
     <ClCompile Include="ui\computeOptionPage.cpp" />
     <ClCompile Include="ui\computerOptionDialog.cpp" />
     <ClCompile Include="ui\InfoPage.cpp" />
@@ -952,9 +955,6 @@
     <ProjectReference Include="..\CSM\CSM.vcxproj">
       <Project>{8874fb13-2ee6-44bf-a290-14bb2d6b83ae}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\RaysimPlugin\RaysimPlugin.vcxproj">
-      <Project>{d7449727-6177-40e3-b8e4-fafbfe4ea197}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Resources\scatter.ico">
@@ -1020,7 +1020,9 @@
     <ClInclude Include="observer\LocalModelObserver.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Manager\visualManager\visualManager.h" />
-    <ClInclude Include="ui\catalogWidget\temp.h" />
+    <ClInclude Include="ui\catalogWidget\catalogItem.h" />
+    <ClInclude Include="ui\catalogWidget\catalogTree.h" />
+    <ClInclude Include="ui\catalogWidget\catalogWidget.h" />
     <ClInclude Include="ui\scsLocalModelGLWidget.h" />
     <ClInclude Include="visualData\LocalModelItem.h" />
     <CustomBuild Include="ui\scatterWidget\scatterWidget.h">

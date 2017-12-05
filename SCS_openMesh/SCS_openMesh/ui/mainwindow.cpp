@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.setupUi(this);
 	init();
 	createActions();
+
+	catalog = new catalogWidget();
+	catalog->addItem(0, "model");
 }
 
 MainWindow::~MainWindow()
@@ -70,13 +73,16 @@ void MainWindow::init()
 	
 
 	//左侧目录
-	ui.treeWidget_project->setHeaderLabels(QStringList()<<QStringLiteral("项目")<<QStringLiteral("属性")); 
+	/*ui.treeWidget_project->setHeaderLabels(QStringList()<<QStringLiteral("项目")<<QStringLiteral("属性")); 
 	modelTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("模型"));
 	computeTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("电磁算法"));
 	visualTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("可视化"));
 	ui.treeWidget_project->addTopLevelItem(modelTW);
 	ui.treeWidget_project->addTopLevelItem(computeTW);
-	ui.treeWidget_project->addTopLevelItem(visualTW);
+	ui.treeWidget_project->addTopLevelItem(visualTW);*/
+
+	 ui.catalog->setHeaderText();
+	
 
 	ui.progressBar->setRange(0,100);
 
@@ -271,9 +277,9 @@ void MainWindow::setModelName(int index,QString name)
 		 columItemList<<QStringLiteral("局部场景")<<name;
 	 }
 	 
-	 child=new QTreeWidgetItem(columItemList);
+	/* child=new QTreeWidgetItem(columItemList);
 	 QTreeWidgetItem* temp=ui.treeWidget_project->itemAt(0,0);
-	 temp->addChild(child);
+	 temp->addChild(child);*/
 }
 
 
