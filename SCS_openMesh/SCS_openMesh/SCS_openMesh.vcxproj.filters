@@ -281,11 +281,8 @@
     <ClCompile Include="ui\catalogWidget\catalogWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ui\catalogWidget\catalogItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\catalogWidget\catalogTree.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -459,6 +456,9 @@
     <CustomBuild Include="Manager\Computation\computeManager.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\face.ico">
@@ -509,15 +509,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\scsLocalModelGLWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\catalogWidget\catalogWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\catalogWidget\catalogItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\catalogWidget\catalogTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

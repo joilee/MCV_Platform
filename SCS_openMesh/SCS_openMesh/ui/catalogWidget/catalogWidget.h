@@ -1,31 +1,34 @@
-#ifndef CATALOGWIDGET_H
-#define CATALOGWIDGET_H
+#ifndef CATALOGTREE_H
+#define CATALOGTREE_H
 
 #include <QTreeWidget>
-#include <QMenu>
-#include <QAction>
-#include <QString>
-#include "catalogTree.h"
 #include <string>
-//#include <QContextMenuEvent>
+#include <QTreeWidgetItem>
+#include <QMenu>
+#include <QContextMenuEvent>
 
 using namespace std;
 
-class catalogWidget : public QTreeWidget
+class catalogWidget :public QTreeWidget
 {
+	Q_OBJECT
 public:
 	catalogWidget(QWidget *parent = 0);
 	~catalogWidget();
-
-	void setHeaderText();
-
-	void addItem(int flag, string text);
-
+	
 	void addParentMenu();
 	void addChildMenu();
+	void contextMenuEvent(QContextMenuEvent *event);
+
+	private slots:
+	void addModel();
+	void deleteModel();
 
 private:
-	catalogTree * tree;
+	QTreeWidgetItem * mItem;
+	QTreeWidgetItem * cItem;
+	QTreeWidgetItem * vItem;
+	QStringList modelName;
 };
 
 #endif

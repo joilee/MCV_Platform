@@ -26,8 +26,8 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "catalogWidget/catalogWidget.h"
 #include <glWidget.h>
+#include "catalogWidget/catalogwidget.h"
 #include "scsLocalModelGLWidget.h"
 
 QT_BEGIN_NAMESPACE

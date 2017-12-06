@@ -14,8 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
 	init();
 	createActions();
 
-	catalog = new catalogWidget();
-	catalog->addItem(0, "model");
+	//catalog = new catalogWidget();
 }
 
 MainWindow::~MainWindow()
@@ -80,9 +79,6 @@ void MainWindow::init()
 	ui.treeWidget_project->addTopLevelItem(modelTW);
 	ui.treeWidget_project->addTopLevelItem(computeTW);
 	ui.treeWidget_project->addTopLevelItem(visualTW);*/
-
-	 ui.catalog->setHeaderText();
-	
 
 	ui.progressBar->setRange(0,100);
 
