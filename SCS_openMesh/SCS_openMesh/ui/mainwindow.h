@@ -17,6 +17,7 @@
 #include "Model/cityModel/cityModel.h"
 #include "Model/cityModel/cityModelFactory.h"
 #include "scsModelTable.h"
+#include "catalogWidget/catalogWidget.h"
 
 #include "ui/scatterWidget/scatterWidget.h"
 
@@ -83,6 +84,7 @@ private:
 	meshOptionDialog *mod;
 	scatterWidget *scatter;
 	scsModelTable* modelTable;
+	catalogWidget * catalog;
 	//内部变量
  private:
 	 QString material_path;

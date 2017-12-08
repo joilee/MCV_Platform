@@ -90,6 +90,8 @@ void ModelManager::sendNewState()
 		Vector3d MaxPos = box[1];
 		m_subject->visItem->setFlag(true);
 		m_subject->visItem->addCity(cityNum, concave, MinPos, MaxPos);
+		m_subject->visItem->setName(modelContainer->getNames());
+		m_subject->visItem->setModelID(modelContainer->getIDs());
 	}
 	else
 	{

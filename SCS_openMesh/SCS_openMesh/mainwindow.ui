@@ -203,11 +203,7 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QVBoxLayout" name="verticalLayout_5">
-     <item>
-      <widget class="catalogWidget" name="catalog" native="true"/>
-     </item>
-    </layout>
+    <layout class="QVBoxLayout" name="verticalLayout_5"/>
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidget_Property">
@@ -396,12 +392,6 @@
    <class>scsLocalModelGLWidget</class>
    <extends>QWidget</extends>
    <header>scsLocalModelGLWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>catalogWidget</class>
-   <extends>QWidget</extends>
-   <header>catalogWidget/catalogwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -5,7 +5,7 @@
 #include <QJsonObject>
 
 catalogWidget::catalogWidget(QWidget *parent)
-:QTreeWidget()
+:modelObserver("catalogWidget"),QTreeWidget(parent)
 {
 
 	this->setHeaderLabels(QStringList() << QStringLiteral("项目") << QStringLiteral("属性"));
@@ -64,6 +64,7 @@ void catalogWidget::addChildMenu()
 	QAction * deleteModelAction = new QAction(tr("delete"), this);
 	menu->addAction(deleteModelAction);
 	connect(deleteModelAction, SIGNAL(triggered()), this, SLOT(deleteModel()));
+
 	menu->exec(QCursor::pos());
 }
 
@@ -125,24 +126,14 @@ void catalogWidget::addModel()
 		}
 	}
 
-	//在treewidget中显示模型名
-
-	for (int i = 0; i < modelName.size(); i++)
-	{
-		if (modelName.at(i) == _name)
-		{
-			cout << "Info: 该模型已经存在！" << endl;
-			return;
-		}
-	}
-	modelName.append(_name);
-	QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
-	modelChildItem->setText(0, _name);
-	mItem->addChild(modelChildItem);
-
 	globalContext *gctx = globalContext::GetInstance();
 	gctx->modelManager->loadCityModel(path.toStdString());
 	gctx->modelManager->matManager->addMatertial(_m.toStdString());
+
+	//在treewidget中显示模型名
+	QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
+	modelChildItem->setText(0, _name);
+	mItem->addChild(modelChildItem);
 }
 
 void catalogWidget::deleteModel()
@@ -154,15 +145,20 @@ void catalogWidget::deleteModel()
 		delete item;
 		globalContext *gctx = globalContext::GetInstance();
 		gctx->modelManager->deleteModel(name);
-
-		for (int i = 0; i < modelName.size(); i++)
-		{
-			if (modelName[i].toStdString() == name)
-			{
-				modelName.removeAt(i);
-				break;
-			}
-		}
 	}
 }
 
+void catalogWidget::update(visualModelItem * a)
+{
+	cout << "Catalog 接收到局部更新的信号" << endl;
+	if (a->needUpdate())
+	{
+		for (int i = 0; i < a->getName().size(); i++)
+		{
+			QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
+			modelChildItem->setText(0, QString::fromStdString(a->getName().at(i)));
+			mItem->addChild(modelChildItem);
+		}
+	}
+
+}

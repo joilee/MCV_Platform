@@ -6,19 +6,23 @@
 #include <QTreeWidgetItem>
 #include <QMenu>
 #include <QContextMenuEvent>
+#include "observer/modelObserver.h"
+#include "observer/LocalModelObserver.h"
 
 using namespace std;
 
-class catalogWidget :public QTreeWidget
+class catalogWidget :public QTreeWidget, public modelObserver
 {
 	Q_OBJECT
 public:
-	catalogWidget(QWidget *parent = 0);
+	catalogWidget(QWidget *parent = NULL);
 	~catalogWidget();
 	
 	void addParentMenu();
 	void addChildMenu();
 	void contextMenuEvent(QContextMenuEvent *event);
+
+	void update(visualModelItem * a);
 
 	private slots:
 	void addModel();
@@ -28,7 +32,6 @@ private:
 	QTreeWidgetItem * mItem;
 	QTreeWidgetItem * cItem;
 	QTreeWidgetItem * vItem;
-	QStringList modelName;
 };
 
 #endif

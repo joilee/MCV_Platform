@@ -27,7 +27,6 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <glWidget.h>
-#include "catalogWidget/catalogwidget.h"
 #include "scsLocalModelGLWidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -82,7 +81,6 @@ public:
     QDockWidget *dockWidget_outline;
     QWidget *dockWidgetContents_2;
     QVBoxLayout *verticalLayout_5;
-    catalogWidget *catalog;
     QDockWidget *dockWidget_Property;
     QWidget *dockWidgetContents_6;
     QVBoxLayout *verticalLayout_4;
@@ -247,11 +245,6 @@ public:
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        catalog = new catalogWidget(dockWidgetContents_2);
-        catalog->setObjectName(QStringLiteral("catalog"));
-
-        verticalLayout_5->addWidget(catalog);
-
         dockWidget_outline->setWidget(dockWidgetContents_2);
         MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_outline);
         dockWidget_Property = new QDockWidget(MainWindowClass);

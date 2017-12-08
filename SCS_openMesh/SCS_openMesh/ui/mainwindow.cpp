@@ -72,6 +72,10 @@ void MainWindow::init()
 	
 
 	//左侧目录
+	 catalog = new catalogWidget;
+	 ui.dockWidget_outline->setWidget(catalog);
+	 gctx->modelManager->getModelSubject()->attach(catalog);
+
 	/*ui.treeWidget_project->setHeaderLabels(QStringList()<<QStringLiteral("项目")<<QStringLiteral("属性")); 
 	modelTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("模型"));
 	computeTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("电磁算法"));
