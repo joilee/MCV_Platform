@@ -278,6 +278,9 @@
     <ClCompile Include="ui\scsLocalModelGLWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Container\EFieldContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="glWidget.h">
@@ -500,6 +503,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\scsLocalModelGLWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Container\EFieldContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

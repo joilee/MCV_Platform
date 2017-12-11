@@ -145,6 +145,7 @@
     <ClCompile Include="para\modelPara.cpp" />
     <ClCompile Include="para\visualPara.cpp" />
     <ClCompile Include="util\Color.cpp" />
+    <ClCompile Include="util\EField.cpp" />
     <ClCompile Include="util\stringUtil.cpp" />
   </ItemGroup>
   <ItemGroup>

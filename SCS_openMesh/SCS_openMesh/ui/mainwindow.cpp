@@ -373,7 +373,7 @@ void MainWindow::run()
 			outputLog(QStringLiteral("开始运行计算函数"));	
 			pluginTemp->runAlgorithm(gctx->modelManager->getModelPara(),gctx->cptManager->getComputationPara(),gctx->visualPara);
 		    outputLog(QStringLiteral("结束计算"));
-			ui.simuPlane->setSimPlane(gctx->visualPara->vis_AP_EFieldArrays,gctx->visualPara->horizonNum,gctx->visualPara->veticalNum);
+			gctx->
 			outputLog(QStringLiteral("显示结果"));
 		}
 	}
