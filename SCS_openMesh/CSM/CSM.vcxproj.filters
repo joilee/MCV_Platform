@@ -63,6 +63,9 @@
     <ClCompile Include="para\baseModel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="util\EField.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Antenna\antenna.h">

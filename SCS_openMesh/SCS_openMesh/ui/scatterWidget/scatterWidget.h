@@ -3,6 +3,7 @@
 #include <QtWidgets/QWidget>
 #include "GeneratedFiles/ui_scatterDialog.h"
 #include "Document.h"
+#include "util/EField.h"
 class scatterWidget : public QDialog
 {
 	Q_OBJECT
@@ -35,8 +36,15 @@ private slots:
 	  * @Qualifier:
 	*/
 	void showResult();
+
+	void setSourceEField(vector<EField>& _placePoint);
 private:
 	Ui::scatterDialog *ui;
 	Document m_content;
 	QJsonArray dataArray;
+
+	//data
+	vector<EField> placePoint;//计算的站点数据
+	vector<EField> testPoint;//实测数据
+	void initData();
 };
