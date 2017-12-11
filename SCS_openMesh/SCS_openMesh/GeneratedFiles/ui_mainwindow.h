@@ -24,7 +24,6 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <glWidget.h>
@@ -82,7 +81,6 @@ public:
     QDockWidget *dockWidget_outline;
     QWidget *dockWidgetContents_2;
     QVBoxLayout *verticalLayout_5;
-    QTreeWidget *treeWidget_project;
     QDockWidget *dockWidget_Property;
     QWidget *dockWidgetContents_6;
     QVBoxLayout *verticalLayout_4;
@@ -247,15 +245,6 @@ public:
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
-        treeWidget_project = new QTreeWidget(dockWidgetContents_2);
-        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
-        __qtreewidgetitem->setText(0, QStringLiteral("1"));
-        treeWidget_project->setHeaderItem(__qtreewidgetitem);
-        treeWidget_project->setObjectName(QStringLiteral("treeWidget_project"));
-        treeWidget_project->setMinimumSize(QSize(0, 200));
-
-        verticalLayout_5->addWidget(treeWidget_project);
-
         dockWidget_outline->setWidget(dockWidgetContents_2);
         MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_outline);
         dockWidget_Property = new QDockWidget(MainWindowClass);

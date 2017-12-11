@@ -17,9 +17,9 @@
 #include "Model/cityModel/cityModel.h"
 #include "Model/cityModel/cityModelFactory.h"
 #include "scsModelTable.h"
+#include "catalogWidget/catalogWidget.h"
 
 #include "ui/scatterWidget/scatterWidget.h"
-
 
 
 class QAction; 
@@ -73,10 +73,10 @@ private:
 	//内部界面控件
 private:
 	Ui::MainWindowClass ui;
-	QTreeWidgetItem* modelTW;
+	/*QTreeWidgetItem* modelTW;
 	QTreeWidgetItem* computeTW;
 	QTreeWidgetItem* visualTW;
-
+*/
 
 	outdoorFileDialog*  M_outdoorFileDialog;
 	computerOptionDialog* M_computeroptionDialog;
@@ -84,6 +84,7 @@ private:
 	meshOptionDialog *mod;
 	scatterWidget *scatter;
 	scsModelTable* modelTable;
+	catalogWidget * catalog;
 	//内部变量
  private:
 	 QString material_path;
@@ -105,5 +106,6 @@ private:
 
 	 void init();
 	 void createActions();
+
 };
 #endif // MAINWINDOW_H

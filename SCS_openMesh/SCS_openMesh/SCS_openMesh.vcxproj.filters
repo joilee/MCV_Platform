@@ -278,6 +278,12 @@
     <ClCompile Include="ui\scsLocalModelGLWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ui\catalogWidget\catalogWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
     <ClCompile Include="Container\EFieldContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -451,6 +457,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Manager\Computation\computeManager.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
