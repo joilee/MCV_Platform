@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Container\EFieldContainer.cpp" />
     <ClCompile Include="Container\ModelContainer.cpp" />
     <ClCompile Include="Container\SitesContainer.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp" />
@@ -1010,6 +1011,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Container\EFieldContainer.h" />
     <ClInclude Include="Container\ModelContainer.h" />
     <ClInclude Include="Container\SitesContainer.h" />
     <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />

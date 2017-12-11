@@ -9,20 +9,15 @@
 
 #include "../Manager/Model/modelManager.h"
 #include "../Manager/Computation/computeManager.h"
-
+#include "Manager/visualManager/visualManager.h"
 /************************************************************************/
 /* 单例模式                                                                     */
 /************************************************************************/
 class globalContext {
 public:
-
-    //
-
-    //ComputePara* cptPara;
-    visPara *visualPara;
-
     ModelManager * modelManager;
     computeManager * cptManager;
+	VisualManager * visualManager;
 
     ~globalContext();
     static globalContext*GetInstance() {

@@ -24,7 +24,10 @@ scatterWidget::scatterWidget(QWidget *parent) :QDialog(parent), ui(new Ui::scatt
 	channel->registerObject(QStringLiteral("content"), &m_content);
 	page->setWebChannel(channel);
 	ui->preview->setUrl(QUrl("qrc:/MainWindow/Resources/echarts/index.html"));
+	initData();
 }
+
+
 
 scatterWidget::~scatterWidget()
 {
@@ -65,4 +68,15 @@ void scatterWidget::openTestFile()
 void scatterWidget::showResult()
 {
 
+}
+
+void scatterWidget::setSourceEField(vector<EField> &_placePoint)
+{
+	placePoint = _placePoint;
+}
+
+void scatterWidget::initData()
+{
+	placePoint.clear();
+	testPoint.clear();
 }

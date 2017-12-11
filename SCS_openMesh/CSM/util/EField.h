@@ -3,7 +3,7 @@
 #include "vector.h"
 #include <complex>
 #include <vector>
-
+#include <map>
 #define MinMol -1000
 class Field_Path
 {
@@ -41,5 +41,44 @@ public:
 	double HorizontalDis;  //接收点和发射源之间水平距离
 	double LosDis; //接收点和发射源之间的直达距离
 	EField(): pathsize(0),MolStrength(0.0),EFieldAll(Vector3cd(0, 0, 0)),In_or_Out(1){}
+	EField(const EField& a)
+	{
+		Position = a.Position;
+		Path = a.Path;
+		pathsize = a.pathsize;
+		MolStrength = a.MolStrength;
+		EFieldAll = a.EFieldAll;
+		In_or_Out = a.In_or_Out;
+		HorizontalDis = a.HorizontalDis;
+		LosDis = a.LosDis;
+	}
+
 };
+
+
+/*
+保存每个Cell得到的结果数据，
+*/
+class Cell_Data
+{
+public:
+	vector<EField*> efildVec;//一维数据
+	int pci;//站点id
+	string cell_name;
+	Cell_Data(int PCI);
+	~Cell_Data();
+};
+
+class Site_Data
+{
+public:
+	Site_Data(int id);
+	~Site_Data();
+	int siteID;
+	map<int, Cell_Data*> cellsMap;
+private:
+	void init();
+};
+
+
 #endif
