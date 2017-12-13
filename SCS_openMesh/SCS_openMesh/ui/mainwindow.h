@@ -59,14 +59,11 @@ private slots:
 	void deletePlugin();
 	void run();
 	void quickLoadJson();
-	void saveSimuPlane();
-	void loadSimuPlane();
 	void setDrawPointMode(bool);
 	void setDrawLineMode(bool);
 	void setDrawFaceMode(bool);
 	void generateModelPara();
-	void generateCptpara();
-
+	void saveAllResult();
 private:
 	void load_Material(string path);
 

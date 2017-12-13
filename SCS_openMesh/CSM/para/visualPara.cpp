@@ -2,10 +2,10 @@
 
 visPara::visPara()
 {
-	vis_AP_EFieldArrays.clear();
+	
 }
 
 visPara::~visPara()
 {
-	
+	simuResult.swap(map<int, Site_Data*>());
 }

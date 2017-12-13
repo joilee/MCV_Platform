@@ -73,6 +73,15 @@ public:
 	*/
 	Vector3d getSitePosition(int id);
 
+	/**
+	  * @Method:    transferContainerToPara
+	  * @Note: 	将站点数据传入参数中，准备用来计算
+	  * @Author:    Li Gen
+	  * @ Date:     2017/12/12
+	  * @Returns:   void
+	*/
+	void transferContainerToPara();
+
 	SitesContainer* getContainer();
 
 	antennaSubject * getSubject(){ return subject; }
@@ -80,6 +89,8 @@ private:
 	SitesContainer* sitesContainer;
 	ComputePara* cptPara;
 	antennaSubject *subject;
-	bool siteFlag, antennaFlag, noSimFlag;
+	bool siteFlag;//是否读取天线
+	bool antennaFlag;//是否读取增益
+	bool noSimFlag;
 };
 

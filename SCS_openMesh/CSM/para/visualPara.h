@@ -11,10 +11,7 @@ public:
 
 	//存储仿真结果
 	map<int,Site_Data *> simuResult;
-
-	//存储计算类型
-	ComputationEnum comEnum;
-
+	double runTime;
 
 protected:
 

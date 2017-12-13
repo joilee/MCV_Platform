@@ -22,11 +22,14 @@ void Site_Data::init()
 	cellsMap.swap(emptyMap);
 }
 
-Cell_Data::Cell_Data(int PCI)
+Cell_Data::Cell_Data(int PCI, string name )
 {
 	pci = PCI;
-	cell_name = "";
+	cell_name = name;
 	efildVec.clear();
+	row = 0;
+	col = 0;
+	pricision = 0;
 }
 
 Cell_Data::~Cell_Data()

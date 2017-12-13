@@ -65,7 +65,10 @@ public:
 	vector<EField*> efildVec;//一维数据
 	int pci;//站点id
 	string cell_name;
-	Cell_Data(int PCI);
+	int row;//y轴方向的跨度
+	int col;//x轴方向的跨度
+	int pricision;//地图精度 一般是5m
+	Cell_Data(int PCI,string name="");
 	~Cell_Data();
 };
 
@@ -75,6 +78,7 @@ public:
 	Site_Data(int id);
 	~Site_Data();
 	int siteID;
+	//一个站点下面，有多个cell，每个cell有独特的pci标识
 	map<int, Cell_Data*> cellsMap;
 private:
 	void init();

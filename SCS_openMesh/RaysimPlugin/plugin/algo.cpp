@@ -250,8 +250,8 @@ void SetEFieldPoint(vector<EField>  &EFieldArray, Vector3d AP_position, double L
 		QMessageBox::warning(NULL, QStringLiteral("接收处预测点分布"), QStringLiteral("请输入合适的分布精度"));
 		return;
 	}
-	int width = (int)((Left_Up_Y - Right_Down_Y)/Precetion);
-	int length = (int)((Right_Down_X - Left_Up_X)/Precetion);
+	int width = (int)((Left_Up_Y - Right_Down_Y)/Precetion);//row
+	int length = (int)((Right_Down_X - Left_Up_X)/Precetion);//col
 
 	cout<<"width: "<<width<<"  length: "<<length<<endl;
 	int num = length * width;

@@ -25,11 +25,12 @@ bool computeManager::checkPara()
 	if (antennaFlag==false)
 	{
 		cout << "error: 没有天线增益文件" << endl;
+		QMessageBox::warning(nullptr, QStringLiteral("天线参数"), QStringLiteral("缺少天线增益文件"));
 		return false;
 	}
 	if (siteFlag==false)
 	{
-		cout << "error:没有小区文件" << endl;
+		QMessageBox::warning(nullptr, QStringLiteral("天线参数"), QStringLiteral("缺少站点site文件"));
 		return false;
 	}
 	return true;
@@ -49,6 +50,11 @@ void computeManager::setCptCatagory(int mode)
 Vector3d computeManager::getSitePosition(int id)
 {
 	return sitesContainer->getSitePositionById(id);
+}
+
+void computeManager::transferContainerToPara()
+{
+	cptPara->Sites = sitesContainer->getSitesMap();
 }
 
 SitesContainer* computeManager::getContainer()

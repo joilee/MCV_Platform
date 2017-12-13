@@ -6,6 +6,7 @@
 #include "io/io_simuPlane.h"
 #include <QObject>
 #include <util/stringUtil.h>
+#include <QProgressDialog>
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -13,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.setupUi(this);
 	init();
 	createActions();
-
-	//catalog = new catalogWidget();
 }
 
 MainWindow::~MainWindow()
@@ -55,6 +54,7 @@ void MainWindow::init()
 
 	mod=new meshOptionDialog(this);
 	scatter = new scatterWidget(this);
+
 	//将表格嵌入到dockwidget
 	modelTable = new scsModelTable;
 	modelTable->showMaximized();
@@ -65,25 +65,13 @@ void MainWindow::init()
 	gctx->modelManager->getLocalSubject()->attach(M_computeroptionDialog->fp);
 	gctx->modelManager->getLocalSubject()->attach(modelTable);
 	gctx->cptManager->getSubject()->attach(M_computeroptionDialog->es);
+
+	catalog = new catalogWidget;
+	ui.dockWidget_outline->setWidget(catalog);
+	gctx->modelManager->getModelSubject()->attach(catalog);
 	//场景数据初始化
-
-
 	 plugin_file_path="";
 	
-
-	//左侧目录
-	 catalog = new catalogWidget;
-	 ui.dockWidget_outline->setWidget(catalog);
-	 gctx->modelManager->getModelSubject()->attach(catalog);
-
-	/*ui.treeWidget_project->setHeaderLabels(QStringList()<<QStringLiteral("项目")<<QStringLiteral("属性")); 
-	modelTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("模型"));
-	computeTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("电磁算法"));
-	visualTW = new QTreeWidgetItem(QStringList()<<QStringLiteral("可视化"));
-	ui.treeWidget_project->addTopLevelItem(modelTW);
-	ui.treeWidget_project->addTopLevelItem(computeTW);
-	ui.treeWidget_project->addTopLevelItem(visualTW);*/
-
 	ui.progressBar->setRange(0,100);
 
 	//设置对话框的默认数据
@@ -143,6 +131,7 @@ void MainWindow::createActions()
 	connect(ui.action_showFace, SIGNAL(triggered(bool)), this, SLOT(setDrawFaceMode(bool)));
 	connect(ui.action_GenerateModelPara, SIGNAL(triggered()), this, SLOT(generateModelPara()));
 	connect(ui.action_scatter, SIGNAL(triggered()), this, SLOT(showScatterWidget()));
+	connect(ui.action_saveResult, SIGNAL(triggered()), this, SLOT(saveAllResult()));
 }
 
 void MainWindow::generateModelPara()
@@ -157,10 +146,56 @@ void MainWindow::generateModelPara()
 	outputLog(QStringLiteral("success: 生成模型参数成功！"));
 }
 
-void MainWindow::generateCptpara()
+/**
+  * @Method:    saveAllResult
+  * @Note: 	保存所有仿真文件
+  * @Author:    Li Gen
+  * @ Date:     2017/12/13
+  * @Returns:   void
+*/
+void MainWindow::saveAllResult()
 {
-	globalContext *globalCtx = globalContext::GetInstance();
+	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("选择保存文件夹"),
+		"C:",QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
 
+	globalContext *globalCtx = globalContext::GetInstance();
+	EFieldContainer* visualDataContainer = globalCtx->visualManager->getContainer();
+	if (!visualDataContainer->isDataExist())
+	{
+		qDebug<< "error: no simulation data" << endl;
+		QMessageBox::warning(this, "Error", QStringLiteral("error: 没有仿真结果文件"));
+		return;
+	}
+
+	vector<int> siteIDs = visualDataContainer->getAllSiteID();
+
+	QProgressDialog process(this);
+	process.setLabelText(QStringLiteral("保存仿真文件中"));
+	process.setRange(0, siteIDs.size());
+	process.setModal(true);
+	process.setCancelButtonText(tr("cancel"));
+	process.setValue(0);
+
+	for (int i = 0; i < siteIDs.size(); i++)
+	{
+		vector<int> pcis = visualDataContainer->getPCIsBySiteID(siteIDs[i]);
+		for (int j = 0; j < pcis.size(); j++)
+		{
+			QString filePath = dir.append("_Site").append(QString::number(siteIDs[i])).append("_Cell");
+			filePath.append(QString::number(pcis[j])).append(".json");
+			globalCtx->visualManager->saveCellFile(filePath, pcis[j], siteIDs[i]);
+			qDebug << "save cell success ! the pci is" << pcis[j] << endl;
+		}
+
+		process.setValue(i + 1);
+		if (process.wasCanceled())
+		{
+			break;
+		}
+		qDebug << "------------save Site success!  site id " << siteIDs[i] << "-----------------" << endl;
+	}
+
+	return;
 }
 
 void MainWindow::setDrawPointMode(bool flag)
@@ -179,36 +214,8 @@ void MainWindow::setDrawFaceMode(bool flag)
 	ui.simuArea->setFace(flag);
 }
 
-void MainWindow::saveSimuPlane()
-{
-	QString filepath=QFileDialog::getSaveFileName(this,QStringLiteral("保存为"),"",tr("*.sp"));
-	if (filepath.isEmpty())
-	{
-		outputLog(QStringLiteral("获取保存路径失败！"));
-		return;
-	}
-	globalContext *globalCtx=globalContext::GetInstance();
-	if (globalCtx->visualPara->vis_AP_EFieldArrays.size()==0)
-	{
-		outputLog(QStringLiteral("没有仿真面生成！"));
-		return;	
-	}
-	saveSimuPlaneResult(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->veticalNum,globalCtx->visualPara->horizonNum,filepath.toStdString());
-}
-void MainWindow::loadSimuPlane()
-{
-	QString path = QFileDialog::getOpenFileName(this,QStringLiteral("打开仿真面文件"),"./",QStringLiteral("sp 仿真面文件 (*.sp)"));
-	if (path.isEmpty())
-	{
-		outputLog(QStringLiteral("仿真面路径错误！"));
-		return;
-	}
-	globalContext *globalCtx=globalContext::GetInstance();
-	loadSimuPlaneResult(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->veticalNum,globalCtx->visualPara->horizonNum ,path);
-	ui.simuPlane->setSimPlane(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->horizonNum,globalCtx->visualPara->veticalNum);
-	//ui.simuArea->setSimPlane(globalCtx->visualPara->vis_AP_EFieldArrays,globalCtx->visualPara->horizonNum,globalCtx->visualPara->veticalNum);
-	outputLog(QStringLiteral("显示结果"));
-}
+
+
 
 void MainWindow::saveLocalScene()
 {
@@ -277,9 +284,9 @@ void MainWindow::setModelName(int index,QString name)
 		 columItemList<<QStringLiteral("局部场景")<<name;
 	 }
 	 
-	/* child=new QTreeWidgetItem(columItemList);
+	 child=new QTreeWidgetItem(columItemList);
 	 QTreeWidgetItem* temp=ui.treeWidget_project->itemAt(0,0);
-	 temp->addChild(child);*/
+	 temp->addChild(child);
 }
 
 
@@ -377,9 +384,9 @@ void MainWindow::run()
 		if (pluginTemp)
 		{
 			outputLog(QStringLiteral("开始运行计算函数"));	
-			pluginTemp->runAlgorithm(gctx->modelManager->getModelPara(),gctx->cptManager->getComputationPara(),gctx->visualPara);
+			pluginTemp->runAlgorithm(gctx->modelManager->getModelPara(),gctx->cptManager->getComputationPara(),gctx->visualManager->getVisualPara());
 		    outputLog(QStringLiteral("结束计算"));
-			gctx->
+			gctx->visualManager->setContainerData();
 			outputLog(QStringLiteral("显示结果"));
 		}
 	}

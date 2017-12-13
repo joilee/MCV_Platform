@@ -5,6 +5,13 @@
 #include "../util/computationEnum.h"
 #include <map>
 #include <string>
+
+
+/************************************************************************/
+/* 计算参数
+严禁修改该类中的值
+*/
+/************************************************************************/
 class ComputePara
 {
 public:
@@ -32,7 +39,7 @@ public:
 	ComputationEnum computeEnum;
 
 	//
-	std::map<int,Site> Sites ;  //多个基站
+	std::map<int,Site*> Sites ;  //多个基站
 
 	vector<no_simplaneReceiver> No_SimPlanePoint; //非仿真面设置的接收点信息
 

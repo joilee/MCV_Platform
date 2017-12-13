@@ -15,6 +15,18 @@ EFieldContainer::~EFieldContainer()
 	}
 }
 
+bool EFieldContainer::isDataExist()
+{
+	if (eFieldData.size()==0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 bool EFieldContainer::isSiteExist(int id)
 {
 	auto it = eFieldData.find(id);
@@ -157,6 +169,62 @@ void EFieldContainer::addCellData(Cell_Data* a, int siteID)
 		eFieldData[siteID]->cellsMap.insert(make_pair(a->pci, a));
 	}
 
+}
+
+std::vector<int> EFieldContainer::getAllSiteID()
+{
+	vector<int> res;
+	auto it = eFieldData.begin();
+	while (it!=eFieldData.end())
+	{
+		res.push_back(it->first);
+	}
+}
+
+std::vector<int> EFieldContainer::getPCIsBySiteID(int siteID)
+{
+	if (isSiteExist(siteID))
+	{
+		vector<int> res;
+		Site_Data * sd = getSiteDataByID(siteID);
+		auto it = sd->cellsMap.begin();
+		while (it!=sd->cellsMap.end())
+		{
+			res.push_back(it->first);
+			it++;
+		}
+		return res;
+	}
+	else
+	{
+		return vector<int>();
+	}
+}
+
+int EFieldContainer::getSiteIDByPCI(int pci)
+{
+	if (isPCIExist(pci))
+	{
+		auto it = eFieldData.begin();
+		bool flag = false;
+		for (; it != eFieldData.end(); it++)
+		{
+			auto it2 = it->second->cellsMap.find(pci);
+			if (it2 != it->second->cellsMap.end())
+			{
+				flag = true;
+				return it->first;
+			}
+		}
+		if (flag == false)
+		{
+			return -1;
+		}
+	}
+	else
+	{
+		return -1;
+	}
 }
 
 void EFieldContainer::setMeasuredData(Cell_Data *a)

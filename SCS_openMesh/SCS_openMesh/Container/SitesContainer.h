@@ -53,7 +53,7 @@ public:
 
 	vector<Vector3d> getSitesPosition();
 
-
+	map<int, Site*> getSitesMap();
 private:
 	std::map<int, Site*> Sites;  //¶à¸ö»ùÕ¾
 };

@@ -1,3 +1,4 @@
+#pragma  once
 #include "../visualData/visualAntennaItem.h"
 #include <set>
 class antennaObserver;

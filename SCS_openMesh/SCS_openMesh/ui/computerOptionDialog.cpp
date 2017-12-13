@@ -12,7 +12,7 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 	fp=new fieldpoint;
 	sa=new simuArgument;
 	 QPushButton *closeButton = new QPushButton(tr("Close"));
-	 okButton=new QPushButton(tr("Update"));
+	 okButton = new QPushButton(QStringLiteral("生成算法参数"));
 	 okButton->setToolTip(QStringLiteral("更新参数"));
 	 check = new QPushButton(tr("Check"));
 	 check->setToolTip(QStringLiteral("检查参数是否完整"));
@@ -72,12 +72,9 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 
 bool computerOptionDialog::checkSiteAndAnte()
 {
-	if (es->siteflag==false||es->gainFlag==false)
-	{
-		QMessageBox::warning(this, QStringLiteral("天线参数"), QStringLiteral("缺少天线或者小区数据，请导入"));
-		return false;
-	}
-	return true;
+	globalContext *gctx = globalContext::GetInstance();
+
+	return gctx->cptManager->checkPara();
 }
 
 void computerOptionDialog::changePage(QListWidgetItem *current, QListWidgetItem *previous)
@@ -115,6 +112,9 @@ void computerOptionDialog::getPara()
 	tmp->phi=es->getAngle();
 	fp->getFieldPoint(tmp->leftUpX, tmp->leftUpY, tmp->rightDownX, tmp->rightDownY, tmp->precision, tmp->altitude);
 	sa->getSimuArgu(tmp->reflectNumPara, tmp->refractNumPara, tmp->diffractionNumPara, tmp->isDiffractionPara, tmp->transIndex, tmp->RT_sample, tmp->RT_radius, tmp->RT_BeamNum);
+
+	gctx->cptManager->transferContainerToPara();
+
 	//根据计算类型(仿真面,或者接受点,或者自定义,来确定设置哪一类参数)
 	QMessageBox::information(this, QStringLiteral("计算参数"), QStringLiteral("参数设置成功"), QMessageBox::Yes , QMessageBox::Yes);
 }

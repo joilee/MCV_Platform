@@ -19,6 +19,7 @@ public:
 	~EFieldContainer();
 
 	//仿真数据
+	bool isDataExist();
 	bool isSiteExist(int id);
 	bool isPCIExist(int pciValue);
 	Site_Data* getSiteDataByID(int id);
@@ -31,6 +32,12 @@ public:
 	void addSiteData(Site_Data* a);
 	void addNewSite(int siteID);
 	void addCellData(Cell_Data* a, int siteID);
+
+	vector<int> getAllSiteID();
+	
+	vector<int> getPCIsBySiteID(int siteID);
+
+	int getSiteIDByPCI(int pci);
 
 	//实测数据
 	void setMeasuredData(Cell_Data *a);

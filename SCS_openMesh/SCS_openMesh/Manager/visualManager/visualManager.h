@@ -2,6 +2,7 @@
 #include <para/visualPara.h>
 #include <Container/EFieldContainer.h>
 #include <QString>
+#include "observer/SiteCellSubject.h"
 /*
 可视化管理
 1.散点图展示
@@ -22,11 +23,36 @@ public:
 	  * @Author:    Li Gen
 	  * @ Date:     2017/12/10
 	  * @Returns:   void
-	  * @Parameter: visPara * a
+	  * @Parameter: 
 	*/
-	void setContainerData(visPara * a);
+	void setContainerData();
 
+	visPara* getVisualPara();
+
+	/**
+	  * @Method:    sendSiteCellName
+	  * @Note: 	发送数据 观察者模式
+	  * @Author:    Li Gen
+	  * @ Date:     2017/12/12
+	  * @Returns:   void
+	*/
+	void sendSiteCellName();
+
+	/**
+	  * @Method:    saveCellFile
+	  * @Note: 	cell数据导出
+	  * @Author:    Li Gen
+	  * @ Date:     2017/12/12
+	  * @Returns:   void
+	*/
+	void saveCellFile(QString dir, int pci,int siteID);
+
+	void saveAllCellsFile(QString baseFilePath);
+
+	EFieldContainer *getContainer();
 private:
 	EFieldContainer * visContainer;
+	visPara * para;
+	SiteCellSubject *m_SiteCellSubject;
 };
 

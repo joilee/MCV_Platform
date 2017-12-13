@@ -3,11 +3,9 @@
 
 globalContext::globalContext()
 {
-
-	visualPara=new visPara;
 	modelManager = new ModelManager;
 	cptManager = new computeManager;
-	
+	visualManager = new VisualManager;
 }
 
 globalContext::~globalContext()

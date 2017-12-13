@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>864</height>
+    <height>768</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -78,6 +78,8 @@
     <addaction name="separator"/>
     <addaction name="action_saveLocal"/>
     <addaction name="separator"/>
+    <addaction name="action_saveResult"/>
+    <addaction name="action_loadResult"/>
    </widget>
    <widget class="QMenu" name="menuMesh">
     <property name="title">
@@ -107,9 +109,6 @@
     </property>
     <addaction name="action_ShowAll"/>
     <addaction name="action_localscene"/>
-    <addaction name="separator"/>
-    <addaction name="action_SaveSimuPlane"/>
-    <addaction name="action_loadSimuPlane"/>
     <addaction name="separator"/>
     <addaction name="action_showPoint"/>
     <addaction name="action_showLine"/>
@@ -377,6 +376,16 @@
    </property>
    <property name="text">
     <string>接收点散点图</string>
+   </property>
+  </action>
+  <action name="action_saveResult">
+   <property name="text">
+    <string>保存仿真数据</string>
+   </property>
+  </action>
+  <action name="action_loadResult">
+   <property name="text">
+    <string>导入仿真数据</string>
    </property>
   </action>
  </widget>

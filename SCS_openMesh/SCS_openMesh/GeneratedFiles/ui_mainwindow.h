@@ -58,6 +58,8 @@ public:
     QAction *action_showFace;
     QAction *action_GenerateModelPara;
     QAction *action_scatter;
+    QAction *action_saveResult;
+    QAction *action_loadResult;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget_Dispaly;
@@ -89,7 +91,7 @@ public:
     {
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QStringLiteral("MainWindowClass"));
-        MainWindowClass->resize(1024, 864);
+        MainWindowClass->resize(1024, 768);
         MainWindowClass->setMinimumSize(QSize(1024, 768));
         action = new QAction(MainWindowClass);
         action->setObjectName(QStringLiteral("action"));
@@ -160,6 +162,10 @@ public:
         QIcon icon5;
         icon5.addFile(QStringLiteral(":/MainWindow/Resources/scatter.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_scatter->setIcon(icon5);
+        action_saveResult = new QAction(MainWindowClass);
+        action_saveResult->setObjectName(QStringLiteral("action_saveResult"));
+        action_loadResult = new QAction(MainWindowClass);
+        action_loadResult->setObjectName(QStringLiteral("action_loadResult"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -276,6 +282,8 @@ public:
         menuFILE->addSeparator();
         menuFILE->addAction(action_saveLocal);
         menuFILE->addSeparator();
+        menuFILE->addAction(action_saveResult);
+        menuFILE->addAction(action_loadResult);
         menuMesh->addAction(action_6);
         menuMesh->addAction(action_startMesh);
         menuMesh->addSeparator();
@@ -290,9 +298,6 @@ public:
         menuComputer->addAction(action_run);
         menuVisualize->addAction(action_ShowAll);
         menuVisualize->addAction(action_localscene);
-        menuVisualize->addSeparator();
-        menuVisualize->addAction(action_SaveSimuPlane);
-        menuVisualize->addAction(action_loadSimuPlane);
         menuVisualize->addSeparator();
         menuVisualize->addAction(action_showPoint);
         menuVisualize->addAction(action_showLine);
@@ -340,6 +345,8 @@ public:
         action_showFace->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\351\235\242", 0));
         action_GenerateModelPara->setText(QApplication::translate("MainWindowClass", "\347\224\237\346\210\220\346\250\241\345\236\213\345\217\202\346\225\260", 0));
         action_scatter->setText(QApplication::translate("MainWindowClass", "\346\216\245\346\224\266\347\202\271\346\225\243\347\202\271\345\233\276", 0));
+        action_saveResult->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\344\273\277\347\234\237\346\225\260\346\215\256", 0));
+        action_loadResult->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\344\273\277\347\234\237\346\225\260\346\215\256", 0));
         tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(ModelView), QApplication::translate("MainWindowClass", "\346\250\241\345\236\213\345\234\272\346\231\257", 0));
         tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuArea), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\234\272\346\231\257", 0));
         tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuPlane), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242", 0));

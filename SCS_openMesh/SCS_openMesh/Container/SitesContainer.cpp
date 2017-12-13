@@ -184,3 +184,8 @@ std::vector<Vector3d> SitesContainer::getSitesPosition()
 	return res;
 }
 
+std::map<int, Site*> SitesContainer::getSitesMap()
+{
+	return Sites;
+}
+
