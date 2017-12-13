@@ -25,6 +25,11 @@ void Site_Item::addCell(int siteID, int cell_PCI, string cell_Name)
 	return;
 }
 
+bool Site_Item::needUpdate()
+{
+	return updateFlag;
+}
+
 Cell_Item_Vector::Cell_Item_Vector()
 {
 	vec.clear();

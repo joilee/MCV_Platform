@@ -43,6 +43,13 @@ public:
 	*/
 	int getSiteIDByOrder(int num);
 
+	/**
+	  * @Method:    getIDs
+	  * @Note: 	获取所有站点的id
+	  * @Author:    Li Gen
+	  * @ Date:     2017/12/13
+	  * @Returns:   std::vector<int>
+	*/
 	vector<int> getIDs();
 
 	Site* getSiteByID(int id);
@@ -51,6 +58,13 @@ public:
 
 	Vector3d getSitePositionById(int id);
 
+	/**
+	  * @Method:    getSitesPosition
+	  * @Note: 	获取所有站点的位置
+	  * @Author:    Li Gen
+	  * @ Date:     2017/12/13
+	  * @Returns:   std::vector<Vector3d>
+	*/
 	vector<Vector3d> getSitesPosition();
 
 	map<int, Site*> getSitesMap();

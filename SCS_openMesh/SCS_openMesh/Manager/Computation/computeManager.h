@@ -1,8 +1,9 @@
 #pragma  once
 #include "Container/SitesContainer.h"
 #include "../../observer/antennaSubject.h"
+#include "observer/PluginSubject.h"
 #include <QString>
-
+#include <QtPlugin>
 /*
 	算法管理
 	1.参数的导入，更改
@@ -85,12 +86,23 @@ public:
 	SitesContainer* getContainer();
 
 	antennaSubject * getSubject(){ return subject; }
+
+	void setPluginPath(QString path);
+
+	QString getPluginPath();
+
+	PluginSubject * getPluginSubject();
+
+	void sendPluginNewState();
 private:
 	SitesContainer* sitesContainer;
 	ComputePara* cptPara;
 	antennaSubject *subject;
+	PluginSubject *m_pluginSubject;
 	bool siteFlag;//是否读取天线
 	bool antennaFlag;//是否读取增益
 	bool noSimFlag;
+
+	QString pluginPath;
 };
 

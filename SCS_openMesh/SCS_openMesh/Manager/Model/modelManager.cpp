@@ -72,7 +72,7 @@ bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteN
 	{
 		abstractModel * localModel = cityFac->loadModel(center[i], siteName[i],range, city);
 		insertModel(localModel);
-		cout << "success: 第"<<i<<"个局部模型已经构造！" << endl;
+		cout << "success: 第"<<i+1<<"个局部模型已经构造！" << endl;
 		//cityLocalModel *tmp = dynamic_cast<cityLocalModel*>(localModel);
 		//tmp->writeToObj();
 	}

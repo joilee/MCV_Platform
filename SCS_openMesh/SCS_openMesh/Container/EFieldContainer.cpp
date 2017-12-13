@@ -179,6 +179,7 @@ std::vector<int> EFieldContainer::getAllSiteID()
 	{
 		res.push_back(it->first);
 	}
+	return res;
 }
 
 std::vector<int> EFieldContainer::getPCIsBySiteID(int siteID)

@@ -47,8 +47,6 @@ public:
 	*/
 	void saveCellFile(QString dir, int pci,int siteID);
 
-	void saveAllCellsFile(QString baseFilePath);
-
 	EFieldContainer *getContainer();
 private:
 	EFieldContainer * visContainer;

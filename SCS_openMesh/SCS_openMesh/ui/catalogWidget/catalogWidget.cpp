@@ -5,21 +5,21 @@
 #include <QJsonObject>
 
 catalogWidget::catalogWidget(QWidget *parent)
-:modelObserver("catalogWidget"),QTreeWidget(parent)
+:ComputePluginObserver("catalogWidgetForPlugin"), modelObserver("catalogWidget"),QTreeWidget(parent)
 {
 
-	this->setHeaderLabels(QStringList() << QStringLiteral("项目") << QStringLiteral("属性"));
+	this->setHeaderLabels(QStringList() << QStringLiteral("项目"));
 	
 	mItem = new QTreeWidgetItem();
-	mItem->setText(0, "M");
+	mItem->setText(0, "Model");
 	this->addTopLevelItem(mItem);
 
 	cItem = new QTreeWidgetItem();
-	cItem->setText(0, "C");
+	cItem->setText(0, "Computation");
 	this->addTopLevelItem(cItem);
 
 	vItem = new QTreeWidgetItem();
-	vItem->setText(0, "V");
+	vItem->setText(0, "Visualization");
 	this->addTopLevelItem(vItem);
 	
 }
@@ -33,21 +33,22 @@ void catalogWidget::addParentMenu()
 	QTreeWidgetItem *item = this->currentItem();
 	if (item == NULL) return;
 
-	if (item->text(0) == "M")
+	if (item->text(0) == "Model")
 	{
-		QAction * addModelAction = new QAction(tr("add"),this);
+		QAction * addModelAction = new QAction(QStringLiteral("导入城市场景"),this);
 		menu->addAction(addModelAction);
 		connect(addModelAction, SIGNAL(triggered()), this, SLOT(addModel()));
 	}
-	if (item->text(0) == "C")
+	if (item->text(0) == "Computation")
 	{
-		QAction * addModelAction1 = new QAction(tr("add1"), this);
-		menu->addAction(addModelAction1);
+		QAction * addPluginAction= new QAction(QStringLiteral("导入插件"), this);
+		menu->addAction(addPluginAction);
+		connect(addPluginAction, SIGNAL(triggered()), this, SLOT(addCptPlugin()));
 	}
-	if (item->text(0) == "V")
+	if (item->text(0) == "Visualization")
 	{
-		QAction * addModelAction2 = new QAction(tr("add2"), this);
-		menu->addAction(addModelAction2);
+		//QAction * addModelAction2 = new QAction(tr("add2"), this);
+		//menu->addAction(addModelAction2);
 	}
 	menu->exec(QCursor::pos());
 }
@@ -73,6 +74,16 @@ void catalogWidget::contextMenuEvent(QContextMenuEvent *event)
 	this->addParentMenu();
 	this->addChildMenu();
 	event->accept();
+}
+
+void catalogWidget::deleleItemsUnderItem(QTreeWidgetItem * a)
+{
+	while (a->childCount() != 0)
+	{
+		QTreeWidgetItem * item = a->child(0);
+		a->removeChild(item);
+	}
+	return;
 }
 
 void catalogWidget::addModel()
@@ -131,9 +142,9 @@ void catalogWidget::addModel()
 	gctx->modelManager->matManager->addMatertial(_m.toStdString());
 
 	//在treewidget中显示模型名
-	QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
+	/*QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
 	modelChildItem->setText(0, _name);
-	mItem->addChild(modelChildItem);
+	mItem->addChild(modelChildItem);*/
 }
 
 void catalogWidget::deleteModel()
@@ -148,11 +159,19 @@ void catalogWidget::deleteModel()
 	}
 }
 
+void catalogWidget::addCptPlugin()
+{
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("导入计算插件"), "./", QStringLiteral("动态链接库 (*.dll)"));
+	globalContext *gctx = globalContext::GetInstance();
+	gctx->cptManager->setPluginPath(path);
+}
+
 void catalogWidget::update(visualModelItem * a)
 {
 	cout << "Catalog 接收到局部更新的信号" << endl;
 	if (a->needUpdate())
 	{
+		deleleItemsUnderItem(mItem);
 		for (int i = 0; i < a->getName().size(); i++)
 		{
 			QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
@@ -160,5 +179,25 @@ void catalogWidget::update(visualModelItem * a)
 			mItem->addChild(modelChildItem);
 		}
 	}
+	else
+	{
+		deleleItemsUnderItem(mItem);
+	}
 
+}
+
+void catalogWidget::updatePluginInfo(VisualPluginItem* a)
+{
+	cout << "Catalog 接收到plugin更新的信号" << endl;
+	if (a->itemExist())
+	{
+		deleleItemsUnderItem(cItem);
+		QTreeWidgetItem *pluginChildItem = new QTreeWidgetItem();
+		pluginChildItem->setText(0, a->getPluginName());
+		cItem->addChild(pluginChildItem);
+	}
+	else
+	{
+		deleleItemsUnderItem(cItem);
+	}
 }

@@ -28,7 +28,7 @@ private slots:
 public:
 	void createActions();
 	void setTheLayout();
-	void getValue(vector<Vector3d> &_center,double &_range);
+	void getValue(vector<Vector3d> &_center,vector<int> &siteID,double &_range);
 	void enableSingleMode(bool flag);
 	void enableMultiMode(bool flag);
 	QButtonGroup * meshModeGroup;
@@ -48,7 +48,7 @@ public:
 	enum ModelNum
 	{
 		SINGLE_MODEL=1,
-		MULTI_MODEL=2
+		MULTI_MODEL,
 	} modelNum;
 
 private:

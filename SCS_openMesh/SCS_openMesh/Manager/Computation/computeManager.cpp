@@ -3,11 +3,13 @@
 #include <fstream>
 #include <QMessageBox>
 #include <util/stringUtil.h>
+#include <QFileInfo>
 computeManager::computeManager()
 {
 	sitesContainer = new SitesContainer;
 	cptPara = new ComputePara;
 	subject = new antennaSubject;
+	m_pluginSubject = new PluginSubject;
 	siteFlag = false;
 	antennaFlag = false;
 	noSimFlag = false;
@@ -60,6 +62,46 @@ void computeManager::transferContainerToPara()
 SitesContainer* computeManager::getContainer()
 {
 	return sitesContainer;
+}
+
+void computeManager::setPluginPath(QString path)
+{
+	pluginPath = path;
+	sendPluginNewState();
+}
+
+
+QString computeManager::getPluginPath()
+{
+	return pluginPath;
+}
+
+PluginSubject * computeManager::getPluginSubject()
+{
+	return m_pluginSubject;
+}
+
+void computeManager::sendPluginNewState()
+{
+	if (pluginPath!=NULL)
+	{
+		QFileInfo f(pluginPath);
+		if (f.isFile())
+		{
+			m_pluginSubject->item->setPluginName(f.baseName());
+			m_pluginSubject->item->setFlag(true);
+		}
+		else
+		{
+			m_pluginSubject->item->setFlag(false);;
+		}
+		
+	}
+	else
+	{
+		m_pluginSubject->item->setFlag(false);
+	}
+	m_pluginSubject->notify();
 }
 
 void computeManager::openTransAntennas_DirGain(QStringList paths)

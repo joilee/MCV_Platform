@@ -3,7 +3,6 @@
 #include <QInputDialog>
 #include <QTextStream>
 #include "Antenna/receiver.h"
-#include "io/io_simuPlane.h"
 #include <QObject>
 #include <util/stringUtil.h>
 #include <QProgressDialog>
@@ -69,8 +68,7 @@ void MainWindow::init()
 	catalog = new catalogWidget;
 	ui.dockWidget_outline->setWidget(catalog);
 	gctx->modelManager->getModelSubject()->attach(catalog);
-	//场景数据初始化
-	 plugin_file_path="";
+	gctx->cptManager->getPluginSubject()->attach(catalog);
 	
 	ui.progressBar->setRange(0,100);
 
@@ -118,8 +116,6 @@ void MainWindow::createActions()
 	connect(ui.action_obj, SIGNAL(triggered()), this, SLOT(loadObj()));
 	connect(ui.action_9, SIGNAL(triggered()), this, SLOT(setMaterial()));
 	connect(ui.action_matFile, SIGNAL(triggered()), this, SLOT(open_material()));
-	connect(ui.action_SaveSimuPlane, SIGNAL(triggered()), this, SLOT(saveSimuPlane()));
-	connect(ui.action_loadSimuPlane, SIGNAL(triggered()), this, SLOT(loadSimuPlane()));
 	connect(ui.action_6, SIGNAL(triggered()), this, SLOT(setMeshOption()));
 	connect(ui.action_startMesh, SIGNAL(triggered()), this, SLOT(meshAll()));
 	connect(ui.action_saveLocal, SIGNAL(triggered()), this, SLOT(saveLocalScene()));
@@ -155,6 +151,7 @@ void MainWindow::generateModelPara()
 */
 void MainWindow::saveAllResult()
 {
+	
 	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("选择保存文件夹"),
 		"C:",QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
 
@@ -162,7 +159,7 @@ void MainWindow::saveAllResult()
 	EFieldContainer* visualDataContainer = globalCtx->visualManager->getContainer();
 	if (!visualDataContainer->isDataExist())
 	{
-		qDebug<< "error: no simulation data" << endl;
+		qDebug()<< "error: no simulation data" << endl;
 		QMessageBox::warning(this, "Error", QStringLiteral("error: 没有仿真结果文件"));
 		return;
 	}
@@ -184,7 +181,7 @@ void MainWindow::saveAllResult()
 			QString filePath = dir.append("_Site").append(QString::number(siteIDs[i])).append("_Cell");
 			filePath.append(QString::number(pcis[j])).append(".json");
 			globalCtx->visualManager->saveCellFile(filePath, pcis[j], siteIDs[i]);
-			qDebug << "save cell success ! the pci is" << pcis[j] << endl;
+			qDebug ()<< "save cell success ! the pci is" << pcis[j] << endl;
 		}
 
 		process.setValue(i + 1);
@@ -192,7 +189,7 @@ void MainWindow::saveAllResult()
 		{
 			break;
 		}
-		qDebug << "------------save Site success!  site id " << siteIDs[i] << "-----------------" << endl;
+		qDebug() << "------------save Site success!  site id " << siteIDs[i] << "-----------------" << endl;
 	}
 
 	return;
@@ -271,24 +268,6 @@ void MainWindow::outputLog(QString source)
 	ui.textBrowser->append(source);
 }
 
-//index==0为城市场景 index==1为obj
-void MainWindow::setModelName(int index,QString name)
-{
-	 QTreeWidgetItem *child;  
-	 QStringList columItemList;
-	 if (index==0)
-	 {
-		 columItemList<<QStringLiteral("城市场景")<<name;
-	 }else if (index==1)
-	 {
-		 columItemList<<QStringLiteral("局部场景")<<name;
-	 }
-	 
-	 child=new QTreeWidgetItem(columItemList);
-	 QTreeWidgetItem* temp=ui.treeWidget_project->itemAt(0,0);
-	 temp->addChild(child);
-}
-
 
 /************************************************************************/
 /*    展示全部场景                                                                                       */
@@ -340,7 +319,7 @@ void MainWindow::meshAll()
 	//要不要加一个判断，防止错误？
 	if (mod->inputFlag)
 	{
-		mod->getValue(center, range);
+		mod->getValue(center,siteID,range);
 	}
 	else
 	{
@@ -357,13 +336,15 @@ void MainWindow::meshAll()
 
 void MainWindow::loadPlugin()
 {
-	plugin_file_path = QFileDialog::getOpenFileName(this,QStringLiteral("加载算法插件"),"./dll_plugins/","*.dll");  
-	if (!plugin_file_path.isEmpty())
+	globalContext *gctx = globalContext::GetInstance();
+	QString path = QFileDialog::getOpenFileName(this,QStringLiteral("加载算法插件"),"./dll_plugins/","*.dll");  
+	if (!path.isEmpty())
 	{
-		outputLog(QStringLiteral("插件加载成功"));
+		gctx->cptManager->setPluginPath(path);
+		outputLog(QStringLiteral("插件路径设置成功"));
 	}else
 	{
-		outputLog(QStringLiteral("插件加载失败"));
+		outputLog(QStringLiteral("插件路径设置失败"));
 	}
 }
 
@@ -375,9 +356,10 @@ void MainWindow::deletePlugin()
 void MainWindow::run()
 {
 	QObject* object ;
+	globalContext *gctx = globalContext::GetInstance();
+	QString  plugin_file_path = gctx->cptManager->getPluginPath();
 	QPluginLoader loader( plugin_file_path); 
 
-	globalContext *gctx=globalContext::GetInstance();
 	if ((object=loader.instance())!=NULL)
 	{
 		ComputeInterface * pluginTemp=qobject_cast<ComputeInterface*>(object);

@@ -59,6 +59,7 @@ public:
 
 	void addCell(int siteID, int cell_PCI, string cell_Name);
 
+	bool needUpdate();
 private:
 	map<int, Cell_Item_Vector*> siteCell;
 	bool updateFlag;

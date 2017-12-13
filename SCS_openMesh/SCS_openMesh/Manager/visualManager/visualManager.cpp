@@ -147,30 +147,6 @@ void VisualManager::saveCellFile(QString dir,int pci,int siteID)
 	return;
 }
 
-void VisualManager::saveAllCellsFile(QString baseFilePath)
-{
-	if (!visContainer->isDataExist())
-	{
-		cout << "error: 没有仿真结果文件" << endl;
-		return;
-	}
-	vector<int> siteIDs = visContainer->getAllSiteID();
-
-	for (int i=0; i < siteIDs.size();i++)
-	{
-		vector<int> pcis = visContainer->getPCIsBySiteID(siteIDs[i]);
-		for (int j = 0; j < pcis.size();j++)
-		{
-			QString filePath = baseFilePath.append("_Site").append(QString::number(siteIDs[i])).append("_Cell");
-			filePath.append(QString::number(pcis[j])).append(".json");
-			saveCellFile(filePath, pcis[j], siteIDs[i]);
-			qDebug << "保存 cell文件成功 cell id" << pcis[j] << endl;
-		}
-		qDebug << "------------保存站点成功 site id " << siteIDs[i] << "-----------------" << endl;
-	}
-
-}
-
 EFieldContainer * VisualManager::getContainer()
 {
 	return visContainer;

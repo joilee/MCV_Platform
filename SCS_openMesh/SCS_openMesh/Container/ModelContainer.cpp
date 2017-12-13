@@ -1,6 +1,7 @@
 #include "ModelContainer.h"
 ModelContainer::ModelContainer()
 {
+	modelMap.clear();
 }
 
 ModelContainer::~ModelContainer()
@@ -79,7 +80,6 @@ bool ModelContainer::isLocalExist()
 		{
 			return true;
 		}
-		it++;
 	}
 	return false;
 }

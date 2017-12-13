@@ -5,9 +5,10 @@
 #include <QRegExpValidator>
 #include "Context/context.h"
 #include <QMessageBox>
-void meshOptionDialog::getValue(vector<Vector3d> &_center,double &_range) {
+void meshOptionDialog::getValue(vector<Vector3d> &_center,vector<int>&siteID,double &_range) {
     _center=center;
     _range=range;
+	siteID = siteName;
 }
 
 void meshOptionDialog::enableSingleMode(bool flag) {
@@ -24,8 +25,10 @@ void meshOptionDialog::enableMultiMode(bool flag) {
 }
 
 void meshOptionDialog::onOkbutton() {
-    if (modelNum==ModelNum::SINGLE_MODEL) {
-        if (centerXLE->text().isEmpty() || centerYLE->text().isEmpty() || centerZLE->text().isEmpty() || rangeLE->text().isEmpty()) {
+    if (modelNum==ModelNum::SINGLE_MODEL) 
+	{
+        if (centerXLE->text().isEmpty() || centerYLE->text().isEmpty() || centerZLE->text().isEmpty() || rangeLE->text().isEmpty())
+		{
             QMessageBox::critical(this, QStringLiteral("输入"), QStringLiteral("中心点或者范围输入为空，请重新输入"), QMessageBox::Yes, QMessageBox::Yes);
 			inputFlag = false;
             return;
@@ -37,8 +40,11 @@ void meshOptionDialog::onOkbutton() {
         center.clear();
         center.push_back(Vector3d(x, y, z));
         inputFlag = true;
-    } else if (modelNum==ModelNum::MULTI_MODEL) {
-        if (rangeLE->text().isEmpty()) {
+    }
+	else if (modelNum==ModelNum::MULTI_MODEL) 
+	{
+        if (rangeLE->text().isEmpty()) 
+		{
             QMessageBox::critical(this, QStringLiteral("输入"), QStringLiteral("范围输入为空，请重新输入"), QMessageBox::Yes, QMessageBox::Yes);
 			inputFlag = false;
             return;
@@ -47,13 +53,15 @@ void meshOptionDialog::onOkbutton() {
         globalContext *globalCtx = globalContext::GetInstance();
 		siteName.clear();
 		int len = globalCtx->cptManager->getContainer()->getSitesSize();
-        if ( len!= 0) {
+        if ( len!= 0)
+		{
 			center.clear();
-            for (int i = 0; i < len; i++) {
-				center = globalCtx->cptManager->getContainer()->getSitesPosition();
-				siteName = globalCtx->cptManager->getContainer()->getIDs();
-            }
-        } else {
+			center = globalCtx->cptManager->getContainer()->getSitesPosition();
+			siteName = globalCtx->cptManager->getContainer()->getIDs();
+
+        } 
+		else 
+		{
             QMessageBox::critical(this, QStringLiteral("基站"), QStringLiteral("基站为空，请导入站点文件"), QMessageBox::Yes, QMessageBox::Yes);
         }
 		inputFlag = true;
@@ -100,7 +108,7 @@ meshOptionDialog::meshOptionDialog(QWidget *parent): QDialog(parent) {
     singleModelMode->setChecked(true);
     this->setTheLayout();
 
-
+	modelNum = ModelNum::SINGLE_MODEL;
     createActions();
 }
 
@@ -143,11 +151,14 @@ void meshOptionDialog::dynamicLoadSite(int index) {
         centerYLE->setReadOnly(false);
         centerZLE->setReadOnly(false);
 		siteName.clear();
-		siteName.push_back(1);
+		siteName.push_back(-1);//一般不会没有站点信息，所以这里赋值为-1
         return;
-    } else {
+    } 
+	else
+	{
         globalContext *globalCtx=globalContext::GetInstance();
-		Vector3d AP_postion = globalCtx->cptManager->getSitePosition(index - 1);
+		int siteID = globalCtx->cptManager->getContainer()->getSiteIDByOrder(index-1);
+		Vector3d AP_postion = globalCtx->cptManager->getSitePosition(siteID);
         centerXLE->setText(QString::number(AP_postion.x));
         centerYLE->setText(QString::number(AP_postion.y,'g',7));
         centerZLE->setText(QString::number(AP_postion.z));
@@ -155,7 +166,7 @@ void meshOptionDialog::dynamicLoadSite(int index) {
         centerYLE->setReadOnly(true);
         centerZLE->setReadOnly(true);
 		siteName.clear();
-		siteName.push_back(globalCtx->cptManager->getContainer()->getSiteIDByOrder(index-1));//fron int to QString
+		siteName.push_back(globalCtx->cptManager->getContainer()->getSiteIDByOrder(index-1));//from int to QString
     }
     return;
 }

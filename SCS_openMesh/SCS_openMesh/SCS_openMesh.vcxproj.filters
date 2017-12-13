@@ -293,6 +293,12 @@
     <ClCompile Include="visualData\visualResultItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="visualData\visualPluginItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="observer\PluginSubject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="glWidget.h">
@@ -536,6 +542,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="observer\SiteCellObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="observer\PluginObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="visualData\visualPluginItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="observer\PluginSubject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

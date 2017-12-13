@@ -71,7 +71,9 @@
     <ClCompile Include="Container\EFieldContainer.cpp" />
     <ClCompile Include="Container\ModelContainer.cpp" />
     <ClCompile Include="Container\SitesContainer.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="observer\LocalModelSubject.cpp" />
     <ClCompile Include="Manager\Computation\computeManager.cpp" />
     <ClCompile Include="Context\context.cpp" />
@@ -192,6 +194,7 @@
     <ClCompile Include="Manager\Model\modelManager.cpp" />
     <ClCompile Include="observer\antennaSubject.cpp" />
     <ClCompile Include="observer\modelSubject.cpp" />
+    <ClCompile Include="observer\PluginSubject.cpp" />
     <ClCompile Include="observer\SiteCellSubject.cpp" />
     <ClCompile Include="ui\catalogWidget\catalogWidget.cpp" />
     <ClCompile Include="ui\computeOptionPage.cpp" />
@@ -218,6 +221,7 @@
     <ClCompile Include="visualData\visualModelItem.cpp" />
     <ClCompile Include="Manager\visualManager\visualManager.cpp" />
     <ClCompile Include="visualData\LocalModelItem.cpp" />
+    <ClCompile Include="visualData\visualPluginItem.cpp" />
     <ClCompile Include="visualData\visualResultItem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1022,10 +1026,13 @@
     <ClInclude Include="observer\LocalModelSubject.h" />
     <ClInclude Include="Manager\Id\ModelIdManager.h" />
     <ClInclude Include="observer\LocalModelObserver.h" />
+    <ClInclude Include="observer\PluginObserver.h" />
+    <ClInclude Include="observer\PluginSubject.h" />
     <ClInclude Include="observer\SiteCellObserver.h" />
     <ClInclude Include="observer\SiteCellSubject.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Manager\visualManager\visualManager.h" />
+    <ClInclude Include="visualData\visualPluginItem.h" />
     <ClInclude Include="visualData\visualResultItem.h" />
     <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing catalogWidget.h</Message>

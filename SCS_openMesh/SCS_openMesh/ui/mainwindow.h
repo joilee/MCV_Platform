@@ -37,8 +37,6 @@ public:
 
 
 public:
-	emxModel* getEmxModel();
-	void setModelName(int id,QString name);//设置treewidget中的名字
 	void outputLog(QString source);
 	void setProgress(int value);
 
@@ -70,10 +68,6 @@ private:
 	//内部界面控件
 private:
 	Ui::MainWindowClass ui;
-	/*QTreeWidgetItem* modelTW;
-	QTreeWidgetItem* computeTW;
-	QTreeWidgetItem* visualTW;
-*/
 
 	outdoorFileDialog*  M_outdoorFileDialog;
 	computerOptionDialog* M_computeroptionDialog;
@@ -87,20 +81,11 @@ private:
 	 QString material_path;
 
 	 /************************************************************************/
-	 /* 整个场景 建筑物                                                                     */
-	 /************************************************************************/
-
-	 /************************************************************************/
 	 /* 局部场景 三角面片                                                                     */
 	 /************************************************************************/
 	 QString objName;
 	 QString OBJFile_path;
  
-	 /************************************************************************/
-	 /* plugin 参数                                                                     */
-	 /************************************************************************/
-	 QString plugin_file_path;
-
 	 void init();
 	 void createActions();
 
