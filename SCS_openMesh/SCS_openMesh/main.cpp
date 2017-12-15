@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	int delayTime =0.5;
 	QElapsedTimer timer;
 	timer.start();
-	while (timer.elapsed() < (delayTime * 1000))
+	while (timer.elapsed() < (delayTime * 500))
 	{
 		a.processEvents();
 	}

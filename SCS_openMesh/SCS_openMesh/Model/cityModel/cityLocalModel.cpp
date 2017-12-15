@@ -63,13 +63,6 @@ Pot cityLocalModel::get_Normal(Pot p1, Pot p2, Pot p3) {
 
 }
 
-void cityLocalModel::clearVandF() {
-    V.clear();
-    F.clear();
-    f_materialId.clear();
-    NF.clear();
-}
-
 
 void cityLocalModel::generateBuildingMesh() {
     vector<Building>  local_Buildings = scene->getTotal_Building();
@@ -510,6 +503,7 @@ void cityLocalModel::getAdjPoint(vector<Pot> &adjPoints,int i,int j) {
 /************************************************************************/
 cityLocalModel::cityLocalModel(Vector3d  AP_position, double  LocalRange, cityScene* cityAll,string _name) {
     range = LocalRange;
+	fileType = ModelType::CITY_LOCAL;
     MaxPos = Vector3d(DBL_MIN, DBL_MIN, DBL_MIN);
     MinPos = Vector3d(DBL_MAX, DBL_MAX, DBL_MAX);
     name = _name;

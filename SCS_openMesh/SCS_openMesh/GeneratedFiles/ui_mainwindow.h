@@ -14,12 +14,18 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDockWidget>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
@@ -83,16 +89,46 @@ public:
     QDockWidget *dockWidget_outline;
     QWidget *dockWidgetContents_2;
     QVBoxLayout *verticalLayout_5;
-    QDockWidget *dockWidget_Property;
+    QDockWidget *dockWidget_ShowPanel;
     QWidget *dockWidgetContents_6;
     QVBoxLayout *verticalLayout_4;
+    QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_3;
+    QGridLayout *gridLayout;
+    QLabel *label;
+    QSpacerItem *horizontalSpacer;
+    QSlider *horizontalSlider_Scene_Alpha;
+    QLabel *label_2;
+    QSpacerItem *horizontalSpacer_2;
+    QSlider *horizontalSlider_Plane_Alpha;
+    QGroupBox *groupBox_2;
+    QGroupBox *groupBox_3;
+    QWidget *layoutWidget;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_5;
+    QLineEdit *lineEdit_SimuPlane_siteID_2;
+    QLabel *label_6;
+    QLineEdit *lineEdit_SimuPlane_PCI_2;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_3;
+    QLineEdit *lineEdit_SimuPlane_siteID;
+    QLabel *label_4;
+    QLineEdit *lineEdit_SimuPlane_PCI;
+    QGroupBox *groupBox_4;
+    QWidget *layoutWidget_2;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *label_7;
+    QLineEdit *lineEdit_ModelID;
+    QDockWidget *dockWidget_Property;
+    QWidget *dockWidgetContents_4;
 
     void setupUi(QMainWindow *MainWindowClass)
     {
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QStringLiteral("MainWindowClass"));
-        MainWindowClass->resize(1024, 768);
-        MainWindowClass->setMinimumSize(QSize(1024, 768));
+        MainWindowClass->resize(1280, 892);
+        MainWindowClass->setMinimumSize(QSize(1280, 800));
         action = new QAction(MainWindowClass);
         action->setObjectName(QStringLiteral("action"));
         action_3 = new QAction(MainWindowClass);
@@ -174,6 +210,11 @@ public:
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         tabWidget_Dispaly = new QTabWidget(centralWidget);
         tabWidget_Dispaly->setObjectName(QStringLiteral("tabWidget_Dispaly"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(tabWidget_Dispaly->sizePolicy().hasHeightForWidth());
+        tabWidget_Dispaly->setSizePolicy(sizePolicy);
         tabWidget_Dispaly->setBaseSize(QSize(0, 100));
         tabWidget_Dispaly->setTabPosition(QTabWidget::South);
         ModelView = new GLWidget();
@@ -191,7 +232,7 @@ public:
         MainWindowClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindowClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1024, 23));
+        menuBar->setGeometry(QRect(0, 0, 1280, 23));
         menuFILE = new QMenu(menuBar);
         menuFILE->setObjectName(QStringLiteral("menuFILE"));
         menuMesh = new QMenu(menuBar);
@@ -253,18 +294,193 @@ public:
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
         dockWidget_outline->setWidget(dockWidgetContents_2);
         MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_outline);
-        dockWidget_Property = new QDockWidget(MainWindowClass);
-        dockWidget_Property->setObjectName(QStringLiteral("dockWidget_Property"));
-        dockWidget_Property->setMinimumSize(QSize(220, 200));
-        dockWidget_Property->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea);
+        dockWidget_ShowPanel = new QDockWidget(MainWindowClass);
+        dockWidget_ShowPanel->setObjectName(QStringLiteral("dockWidget_ShowPanel"));
+        dockWidget_ShowPanel->setMinimumSize(QSize(220, 200));
+        dockWidget_ShowPanel->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea);
         dockWidgetContents_6 = new QWidget();
         dockWidgetContents_6->setObjectName(QStringLiteral("dockWidgetContents_6"));
         verticalLayout_4 = new QVBoxLayout(dockWidgetContents_6);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        dockWidget_Property->setWidget(dockWidgetContents_6);
-        MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_Property);
+        groupBox = new QGroupBox(dockWidgetContents_6);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        verticalLayout_3 = new QVBoxLayout(groupBox);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        label = new QLabel(groupBox);
+        label->setObjectName(QStringLiteral("label"));
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer, 0, 1, 1, 1);
+
+        horizontalSlider_Scene_Alpha = new QSlider(groupBox);
+        horizontalSlider_Scene_Alpha->setObjectName(QStringLiteral("horizontalSlider_Scene_Alpha"));
+        horizontalSlider_Scene_Alpha->setMaximum(100);
+        horizontalSlider_Scene_Alpha->setPageStep(10);
+        horizontalSlider_Scene_Alpha->setOrientation(Qt::Horizontal);
+        horizontalSlider_Scene_Alpha->setTickPosition(QSlider::TicksAbove);
+
+        gridLayout->addWidget(horizontalSlider_Scene_Alpha, 0, 2, 1, 1);
+
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+
+        horizontalSpacer_2 = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout->addItem(horizontalSpacer_2, 1, 1, 1, 1);
+
+        horizontalSlider_Plane_Alpha = new QSlider(groupBox);
+        horizontalSlider_Plane_Alpha->setObjectName(QStringLiteral("horizontalSlider_Plane_Alpha"));
+        horizontalSlider_Plane_Alpha->setMaximum(100);
+        horizontalSlider_Plane_Alpha->setOrientation(Qt::Horizontal);
+        horizontalSlider_Plane_Alpha->setTickPosition(QSlider::TicksAbove);
+
+        gridLayout->addWidget(horizontalSlider_Plane_Alpha, 1, 2, 1, 1);
+
+
+        verticalLayout_3->addLayout(gridLayout);
+
+
+        verticalLayout_4->addWidget(groupBox);
+
+        groupBox_2 = new QGroupBox(dockWidgetContents_6);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_3 = new QGroupBox(groupBox_2);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        groupBox_3->setGeometry(QRect(0, 0, 238, 73));
+        layoutWidget = new QWidget(groupBox_3);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(20, 30, 164, 22));
+        horizontalLayout_3 = new QHBoxLayout(layoutWidget);
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
+        label_5 = new QLabel(layoutWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+
+        horizontalLayout_3->addWidget(label_5);
+
+        lineEdit_SimuPlane_siteID_2 = new QLineEdit(layoutWidget);
+        lineEdit_SimuPlane_siteID_2->setObjectName(QStringLiteral("lineEdit_SimuPlane_siteID_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(lineEdit_SimuPlane_siteID_2->sizePolicy().hasHeightForWidth());
+        lineEdit_SimuPlane_siteID_2->setSizePolicy(sizePolicy1);
+        lineEdit_SimuPlane_siteID_2->setMaximumSize(QSize(51, 16777215));
+        lineEdit_SimuPlane_siteID_2->setReadOnly(true);
+
+        horizontalLayout_3->addWidget(lineEdit_SimuPlane_siteID_2);
+
+        label_6 = new QLabel(layoutWidget);
+        label_6->setObjectName(QStringLiteral("label_6"));
+
+        horizontalLayout_3->addWidget(label_6);
+
+        lineEdit_SimuPlane_PCI_2 = new QLineEdit(layoutWidget);
+        lineEdit_SimuPlane_PCI_2->setObjectName(QStringLiteral("lineEdit_SimuPlane_PCI_2"));
+        sizePolicy1.setHeightForWidth(lineEdit_SimuPlane_PCI_2->sizePolicy().hasHeightForWidth());
+        lineEdit_SimuPlane_PCI_2->setSizePolicy(sizePolicy1);
+        lineEdit_SimuPlane_PCI_2->setMaximumSize(QSize(51, 16777215));
+        lineEdit_SimuPlane_PCI_2->setReadOnly(true);
+
+        horizontalLayout_3->addWidget(lineEdit_SimuPlane_PCI_2);
+
+        widget = new QWidget(groupBox_2);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(20, 30, 164, 22));
+        horizontalLayout_2 = new QHBoxLayout(widget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        label_3 = new QLabel(widget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        horizontalLayout_2->addWidget(label_3);
+
+        lineEdit_SimuPlane_siteID = new QLineEdit(widget);
+        lineEdit_SimuPlane_siteID->setObjectName(QStringLiteral("lineEdit_SimuPlane_siteID"));
+        sizePolicy1.setHeightForWidth(lineEdit_SimuPlane_siteID->sizePolicy().hasHeightForWidth());
+        lineEdit_SimuPlane_siteID->setSizePolicy(sizePolicy1);
+        lineEdit_SimuPlane_siteID->setMaximumSize(QSize(51, 16777215));
+        lineEdit_SimuPlane_siteID->setReadOnly(true);
+
+        horizontalLayout_2->addWidget(lineEdit_SimuPlane_siteID);
+
+        label_4 = new QLabel(widget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        horizontalLayout_2->addWidget(label_4);
+
+        lineEdit_SimuPlane_PCI = new QLineEdit(widget);
+        lineEdit_SimuPlane_PCI->setObjectName(QStringLiteral("lineEdit_SimuPlane_PCI"));
+        sizePolicy1.setHeightForWidth(lineEdit_SimuPlane_PCI->sizePolicy().hasHeightForWidth());
+        lineEdit_SimuPlane_PCI->setSizePolicy(sizePolicy1);
+        lineEdit_SimuPlane_PCI->setMaximumSize(QSize(51, 16777215));
+        lineEdit_SimuPlane_PCI->setReadOnly(true);
+
+        horizontalLayout_2->addWidget(lineEdit_SimuPlane_PCI);
+
+
+        verticalLayout_4->addWidget(groupBox_2);
+
+        groupBox_4 = new QGroupBox(dockWidgetContents_6);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        layoutWidget_2 = new QWidget(groupBox_4);
+        layoutWidget_2->setObjectName(QStringLiteral("layoutWidget_2"));
+        layoutWidget_2->setGeometry(QRect(20, 30, 164, 22));
+        horizontalLayout_4 = new QHBoxLayout(layoutWidget_2);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        label_7 = new QLabel(layoutWidget_2);
+        label_7->setObjectName(QStringLiteral("label_7"));
+
+        horizontalLayout_4->addWidget(label_7);
+
+        lineEdit_ModelID = new QLineEdit(layoutWidget_2);
+        lineEdit_ModelID->setObjectName(QStringLiteral("lineEdit_ModelID"));
+        sizePolicy1.setHeightForWidth(lineEdit_ModelID->sizePolicy().hasHeightForWidth());
+        lineEdit_ModelID->setSizePolicy(sizePolicy1);
+        lineEdit_ModelID->setMaximumSize(QSize(51, 16777215));
+        lineEdit_ModelID->setReadOnly(true);
+
+        horizontalLayout_4->addWidget(lineEdit_ModelID);
+
+
+        verticalLayout_4->addWidget(groupBox_4);
+
+        dockWidget_ShowPanel->setWidget(dockWidgetContents_6);
+        MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_ShowPanel);
+        dockWidget_Property = new QDockWidget(MainWindowClass);
+        dockWidget_Property->setObjectName(QStringLiteral("dockWidget_Property"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(dockWidget_Property->sizePolicy().hasHeightForWidth());
+        dockWidget_Property->setSizePolicy(sizePolicy2);
+        dockWidget_Property->setMinimumSize(QSize(200, 200));
+        dockWidget_Property->setBaseSize(QSize(0, 200));
+        dockWidget_Property->setFeatures(QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable);
+        dockWidget_Property->setAllowedAreas(Qt::RightDockWidgetArea|Qt::TopDockWidgetArea);
+        dockWidgetContents_4 = new QWidget();
+        dockWidgetContents_4->setObjectName(QStringLiteral("dockWidgetContents_4"));
+        dockWidget_Property->setWidget(dockWidgetContents_4);
+        MainWindowClass->addDockWidget(static_cast<Qt::DockWidgetArea>(2), dockWidget_Property);
 
         menuBar->addAction(menuFILE->menuAction());
         menuBar->addAction(menuMesh->menuAction());
@@ -312,7 +528,7 @@ public:
 
         retranslateUi(MainWindowClass);
 
-        tabWidget_Dispaly->setCurrentIndex(1);
+        tabWidget_Dispaly->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindowClass);
@@ -357,7 +573,21 @@ public:
         menuAbout->setTitle(QApplication::translate("MainWindowClass", "About", 0));
         dockWidget_outputLog->setWindowTitle(QApplication::translate("MainWindowClass", "\346\227\245\345\277\227", 0));
         dockWidget_outline->setWindowTitle(QApplication::translate("MainWindowClass", "\347\233\256\345\275\225", 0));
-        dockWidget_Property->setWindowTitle(QApplication::translate("MainWindowClass", "\345\261\236\346\200\247", 0));
+        dockWidget_ShowPanel->setWindowTitle(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\217\257\350\247\206\345\214\226\350\256\276\347\275\256", 0));
+        groupBox->setTitle(QApplication::translate("MainWindowClass", "\351\200\217\346\230\216\345\272\246", 0));
+        label->setText(QApplication::translate("MainWindowClass", "\345\234\272\346\231\257\351\200\217\346\230\216\345\272\246", 0));
+        label_2->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242\351\200\217\346\230\216\345\272\246", 0));
+        groupBox_2->setTitle(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242", 0));
+        groupBox_3->setTitle(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242", 0));
+        label_5->setText(QApplication::translate("MainWindowClass", "Site", 0));
+        label_6->setText(QApplication::translate("MainWindowClass", "PCI", 0));
+        lineEdit_SimuPlane_PCI_2->setText(QString());
+        label_3->setText(QApplication::translate("MainWindowClass", "Site", 0));
+        label_4->setText(QApplication::translate("MainWindowClass", "PCI", 0));
+        lineEdit_SimuPlane_PCI->setText(QString());
+        groupBox_4->setTitle(QApplication::translate("MainWindowClass", "\346\250\241\345\236\213", 0));
+        label_7->setText(QApplication::translate("MainWindowClass", "\346\250\241\345\236\213ID", 0));
+        dockWidget_Property->setWindowTitle(QApplication::translate("MainWindowClass", "\346\250\241\345\236\213\345\261\236\346\200\247", 0));
     } // retranslateUi
 
 };

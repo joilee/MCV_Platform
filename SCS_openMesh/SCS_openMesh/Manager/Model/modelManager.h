@@ -28,6 +28,10 @@ public:
 	void  deleteModel(string name);
 
 	/*
+	@brief 在map中删除模型，根据模型id
+	*/
+	void deleteModel(int id);
+	/*
 	@brief 载入城市模型
 	*/
 	void loadCityModel(string path);
@@ -109,15 +113,26 @@ public:
 	//************************************
 	void setModelPara();
 
+	bool getWholeModelFlag();
+
+	void setWholeModelFlag(bool a);
+
+	void setLocalShowID(int id);
 private:
 
 	
 	cityModelFactory *cityFac;
 	modelSubject * m_subject;
 	LocalModelSubject * m_local_subject;
+
+	//将要展示的局部模型，整体模型只要指定显示与否
+	bool drawTriangleScene; //局部三角形文件场景绘制flag
+	int LocalModelID_SHOW;
+	bool wholeModel_Flag;
+
 	//场景透明度
 	double transparency;
-	bool drawTriangleScene; //局部三角形文件场景绘制flag
+
 
 	//
 	ModelPara * modelPara;

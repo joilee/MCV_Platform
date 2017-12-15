@@ -19,6 +19,8 @@ public:
 	void  deleteModel(string name);
 	void  deleteModel(int id);
 	bool  isLocalExist();
+	bool  isLocalType(int id);
+	bool  isWholeType(int id);
 	int getModelSize(){ return modelMap.size(); }
 
 	cityLocalModel * getFirstLocal();

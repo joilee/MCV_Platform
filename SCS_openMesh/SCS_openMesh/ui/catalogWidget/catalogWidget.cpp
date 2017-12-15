@@ -11,15 +11,15 @@ catalogWidget::catalogWidget(QWidget *parent)
 	this->setHeaderLabels(QStringList() << QStringLiteral("项目"));
 	
 	mItem = new QTreeWidgetItem();
-	mItem->setText(0, "Model");
+	mItem->setText(0, MODEL_ITEM);
 	this->addTopLevelItem(mItem);
 
 	cItem = new QTreeWidgetItem();
-	cItem->setText(0, "Computation");
+	cItem->setText(0, CPT_ITEM);
 	this->addTopLevelItem(cItem);
 
 	vItem = new QTreeWidgetItem();
-	vItem->setText(0, "Visualization");
+	vItem->setText(0, VIS_ITEM);
 	this->addTopLevelItem(vItem);
 	
 }
@@ -33,22 +33,21 @@ void catalogWidget::addParentMenu()
 	QTreeWidgetItem *item = this->currentItem();
 	if (item == NULL) return;
 
-	if (item->text(0) == "Model")
+	if (item->text(0) == MODEL_ITEM)
 	{
 		QAction * addModelAction = new QAction(QStringLiteral("导入城市场景"),this);
 		menu->addAction(addModelAction);
 		connect(addModelAction, SIGNAL(triggered()), this, SLOT(addModel()));
 	}
-	if (item->text(0) == "Computation")
+	if (item->text(0) == CPT_ITEM)
 	{
 		QAction * addPluginAction= new QAction(QStringLiteral("导入插件"), this);
 		menu->addAction(addPluginAction);
 		connect(addPluginAction, SIGNAL(triggered()), this, SLOT(addCptPlugin()));
 	}
-	if (item->text(0) == "Visualization")
+	if (item->text(0) == VIS_ITEM)
 	{
-		//QAction * addModelAction2 = new QAction(tr("add2"), this);
-		//menu->addAction(addModelAction2);
+
 	}
 	menu->exec(QCursor::pos());
 }
@@ -62,9 +61,17 @@ void catalogWidget::addChildMenu()
 		return;
 
 	//暂时只写了模型板块
-	QAction * deleteModelAction = new QAction(tr("delete"), this);
-	menu->addAction(deleteModelAction);
-	connect(deleteModelAction, SIGNAL(triggered()), this, SLOT(deleteModel()));
+	if (item->parent()->text(0)==MODEL_ITEM)
+	{
+		QAction * deleteModelAction = new QAction(tr("delete"), this);
+		menu->addAction(deleteModelAction);
+		connect(deleteModelAction, SIGNAL(triggered()), this, SLOT(deleteModel()));
+
+		QAction *showModelAction = new QAction(tr("show"), this);
+		menu->addAction(showModelAction);
+		connect(showModelAction, SIGNAL(triggered()), this, SLOT( ));
+	}
+
 
 	menu->exec(QCursor::pos());
 }
@@ -141,19 +148,27 @@ void catalogWidget::addModel()
 	gctx->modelManager->loadCityModel(path.toStdString());
 	gctx->modelManager->matManager->addMatertial(_m.toStdString());
 
-	//在treewidget中显示模型名
-	/*QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
-	modelChildItem->setText(0, _name);
-	mItem->addChild(modelChildItem);*/
 }
 
 void catalogWidget::deleteModel()
 {
 	QTreeWidgetItem *item = this->currentItem();
-	if (item->parent() != NULL)
+	if (item->parent()!=NULL&&item->parent()->text(0)==MODEL_ITEM)
 	{
 		string name = (item->text(0)).toStdString();
-		delete item;
+		//delete item;
+		globalContext *gctx = globalContext::GetInstance();
+		gctx->modelManager->deleteModel(name);
+	}
+}
+
+void catalogWidget::showModel()
+{
+	QTreeWidgetItem *item = this->currentItem();
+	if (item->parent() != NULL&&item->parent()->text(0) == MODEL_ITEM)
+	{
+		string name = (item->text(0)).toStdString();
+		int id = (item->text(1)).toInt();
 		globalContext *gctx = globalContext::GetInstance();
 		gctx->modelManager->deleteModel(name);
 	}
@@ -176,6 +191,7 @@ void catalogWidget::update(visualModelItem * a)
 		{
 			QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
 			modelChildItem->setText(0, QString::fromStdString(a->getName().at(i)));
+			modelChildItem->setText(1, QString::number(a->getID().at(i)));
 			mItem->addChild(modelChildItem);
 		}
 	}

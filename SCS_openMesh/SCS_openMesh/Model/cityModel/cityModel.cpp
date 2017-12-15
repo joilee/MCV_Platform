@@ -102,6 +102,7 @@ cityModel::cityModel(string jsonFile)
 	if (flag1&&flag2&&flag3&&flag4&&flag5)
 	{
 		LoadModel(_name.toStdString(), vv, hh,_p.toStdString());
+		fileType = ModelType::CITY;
 	}
 }
 

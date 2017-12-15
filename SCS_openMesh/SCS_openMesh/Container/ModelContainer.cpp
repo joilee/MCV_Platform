@@ -76,7 +76,35 @@ bool ModelContainer::isLocalExist()
 	auto it = modelMap.begin();
 	for (; it != modelMap.end();it++)
 	{
-		if (typeid(*(it->second)) == typeid(cityLocalModel)) 
+		if (isLocalType(it->first)) 
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ModelContainer::isLocalType(int id)
+{
+	auto it = modelMap.find(id);
+	if (it!=modelMap.end())
+	{
+		ModelType a= it->second->getType();
+		if (a==ModelType::CITY_LOCAL||a==ModelType::OBJ_LOCAL)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ModelContainer::isWholeType(int id)
+{
+	auto it = modelMap.find(id);
+	if (it != modelMap.end())
+	{
+		ModelType a = it->second->getType();
+		if (a == ModelType::CITY || a == ModelType::OBJ)
 		{
 			return true;
 		}
@@ -89,7 +117,7 @@ cityLocalModel * ModelContainer::getFirstLocal()
 	auto it = modelMap.begin();
 	while (it!=modelMap.end())
 	{
-		if (typeid(*(it->second)) == typeid(cityLocalModel))
+		if (isLocalType(it->first))
 		{
 			return dynamic_cast<cityLocalModel*>(it->second);
 		}

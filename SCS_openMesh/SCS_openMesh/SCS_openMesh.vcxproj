@@ -74,6 +74,8 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Model\abstractModel\abstractGlobalModel.cpp" />
+    <ClCompile Include="Model\abstractModel\abstractLocalModel.cpp" />
     <ClCompile Include="observer\LocalModelSubject.cpp" />
     <ClCompile Include="Manager\Computation\computeManager.cpp" />
     <ClCompile Include="Context\context.cpp" />
@@ -186,8 +188,8 @@
     <ClCompile Include="io\io_simuPlane.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager\Material\materialManager.cpp" />
-    <ClCompile Include="Model\abstractModel.cpp" />
-    <ClCompile Include="Model\abstractModelFactory.cpp" />
+    <ClCompile Include="Model\abstractModel\abstractModel.cpp" />
+    <ClCompile Include="Model\abstractModel\abstractModelFactory.cpp" />
     <ClCompile Include="Model\cityModel\cityLocalModel.cpp" />
     <ClCompile Include="Model\cityModel\cityModelFactory.cpp" />
     <ClCompile Include="Model\cityModel\cityModel.cpp" />
@@ -449,7 +451,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </AdditionalInputs>
     </CustomBuild>
-    <CustomBuild Include="Model\abstractModel.h">
+    <CustomBuild Include="Model\abstractModel\abstractModel.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
@@ -465,7 +467,7 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </AdditionalInputs>
     </CustomBuild>
-    <CustomBuild Include="Model\abstractModelFactory.h">
+    <CustomBuild Include="Model\abstractModel\abstractModelFactory.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
@@ -1023,6 +1025,9 @@
     <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />
     <ClInclude Include="GeneratedFiles\ui_saveResultDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_scatterDialog.h" />
+    <ClInclude Include="Model\abstractModel\abstractGlobalModel.h" />
+    <ClInclude Include="Model\abstractModel\abstractLocalModel.h" />
+    <ClInclude Include="Model\ModelType.h" />
     <ClInclude Include="observer\LocalModelSubject.h" />
     <ClInclude Include="Manager\Id\ModelIdManager.h" />
     <ClInclude Include="observer\LocalModelObserver.h" />

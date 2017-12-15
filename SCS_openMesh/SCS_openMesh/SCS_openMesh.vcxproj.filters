@@ -143,9 +143,6 @@
     <ClCompile Include="Model\cityModel\cityModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\abstractModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_scsTree.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -181,9 +178,6 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_scsTreeWidget.cpp">
       <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\abstractModelFactory.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\cityModel\cityModelFactory.cpp">
       <Filter>Source Files</Filter>
@@ -299,6 +293,18 @@
     <ClCompile Include="observer\PluginSubject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\abstractModel\abstractModelFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\abstractModel\abstractModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\abstractModel\abstractGlobalModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\abstractModel\abstractLocalModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="glWidget.h">
@@ -376,12 +382,6 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="GLHelper\MeshGLEnv.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\abstractModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\abstractModelFactory.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="observer\antennaObserver.h">
@@ -477,6 +477,12 @@
     <CustomBuild Include="saveResultDialog.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="Model\abstractModel\abstractModelFactory.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Model\abstractModel\abstractModel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\face.ico">
@@ -551,6 +557,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="observer\PluginSubject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\abstractModel\abstractLocalModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\abstractModel\abstractGlobalModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

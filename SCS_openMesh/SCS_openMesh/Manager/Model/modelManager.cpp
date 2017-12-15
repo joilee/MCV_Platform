@@ -14,6 +14,7 @@ ModelManager::ModelManager()
 	modelContainer = new ModelContainer;
 	transparency = 1;
 	drawTriangleScene = false;
+	wholeModel_Flag = true;
 }
 
 ModelManager::~ModelManager()
@@ -44,6 +45,13 @@ void ModelManager::deleteModel(abstractModel* model)
 void ModelManager::deleteModel(string name)
 {
 	modelContainer->deleteModel(name);
+	cout << "Info: 容器中模型数量为" << modelContainer->getModelSize() << endl;
+	sendNewState();
+}
+
+void ModelManager::deleteModel(int id)
+{
+	modelContainer->deleteModel(id);
 	cout << "Info: 容器中模型数量为" << modelContainer->getModelSize() << endl;
 	sendNewState();
 }
@@ -124,6 +132,24 @@ bool ModelManager::checkCityExist()
 	return modelContainer->isCityExist();
 }
 
+
+bool ModelManager::getWholeModelFlag()
+{
+	return wholeModel_Flag;
+}
+
+void ModelManager::setWholeModelFlag(bool a)
+{
+	wholeModel_Flag = a;
+}
+
+void ModelManager::setLocalShowID(int id)
+{
+	if (modelContainer->isLocalIDExist(id))
+	{
+
+	}
+}
 
 bool ModelManager::checkLocalExist()
 {

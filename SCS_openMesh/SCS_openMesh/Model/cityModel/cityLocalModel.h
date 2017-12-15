@@ -1,5 +1,5 @@
 #pragma  once
-#include "../abstractModel.h"
+#include "Model/abstractModel/abstractLocalModel.h"
 #include <cityModule/cityScene.h>
 #include <mesh/meshStruct.h>
 #include <util/vector.h>
@@ -15,45 +15,19 @@ using namespace  std;
 	@brief 局部场景类
 	@note 包含局部建筑物和局部地面。不同于纯三角面元，在算法计算中需要建筑物的棱边，必须要指明建筑物。
 	*/
-class cityLocalModel :public abstractModel {
+class cityLocalModel :public  abstractLocalModel {
 public:
     cityLocalModel(Vector3d center, double range, cityScene* cityAll, string _name);
     ~cityLocalModel();
-    int getTriangleNum() {
-        return F.size();
-    }
-    inline Vector3d getMin() {
-        return MinPos;
-    }
-    inline Vector3d getMax() {
-        return MaxPos;
-    }
-    inline vector<Vector3d>& getVertices() {
-        return V;
-    }
-    inline std::vector<Vector3i>& getFaces() {
-        return F;
-    }
-    inline std::vector<Vector3d>&getNF() {
-        return NF;
-    }
-    inline vector<int> &getF_material() {
-        return f_materialId;
-    }
-
+ 
     /*
     @brief 输出obj文件
     */
     void writeToObj();
 
 private:
-    std::vector<Vector3d> V;					// vertices
-    std::vector<Vector3i> F;					// faces
-    std::vector<Vector3d> NF;					 // normals of faces
-    /*std::vector<Vector3d> Vn;                 // normals of vertices*/
-    std::vector<int>f_materialId;                //the material of face,面片对应的材料编号
     std::vector<vector<GLfloat> > faceColor;//每个面的颜色
-    void clearVandF();
+
 
     Color uniformColor;//统一颜色
     double uniform_alpha;
@@ -66,7 +40,6 @@ private:
     */
     void generateBuildingMesh();
 
-    int range;
 
 public:
     /*
@@ -80,16 +53,7 @@ public:
         return ground_pMesh;
     }
 
-    //************************************
-    // Method:    getRange
-    // FullName:  cityLocalModel::getRange
-    // Access:    public 
-    // Returns:   int
-    // Qualifier:
-    //************************************
-    int getRange() {
-        return range;
-    }
+
 private:
 
     //************************************
