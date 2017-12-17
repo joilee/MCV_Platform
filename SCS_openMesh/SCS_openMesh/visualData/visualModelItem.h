@@ -16,25 +16,32 @@ public:
 	visualModelItem();
 	~visualModelItem();
 
-	bool needUpdate(){ return updateData; }
-	void setFlag(bool a){ updateData = a; }
+	bool cityNeedUpdate(){ return updateCityData; }
+	bool localNeedUpdate(){ return updateLocalData; }
+	void setGlobalFlag(bool a){ updateCityData = a; }
+	void setLocalFlag(bool a){ updateLocalData = a; }
 
 	inline int getBuildingNum(){ return buildingNum; }
 	inline int getConcaveNum(){ return concaveBuilding; }
 	inline Vector3d getcityMin(){ return cityMin; }
 	inline Vector3d getcityMax(){ return cityMax; }
 
-	inline vector<string> getName(){ return modelName; }
-	inline vector<int> getID(){ return modelID; }
+	inline vector<string> getGlobalName(){ return globalModelName; }
+	inline vector<int> getGlobalID(){ return globalModelID; }
+
+	inline vector<string> getLocalName(){ return localModelName; }
+	inline vector<int> getLocalModelID(){ return localModelID; }
 
 	void setBuildingNum(int a){ buildingNum=a; }
 	void setConcaveNum(int a){  concaveBuilding=a; }
 	 void setcityMin(Vector3d a){  cityMin=a; }
 	 void setcityMax(Vector3d a){ cityMax=a; }
 
-	 void setModelID(vector<int> a){ modelID = a; }
-	 void setName(vector<string> a){ modelName = a; }
+	 void setGlobalModelID(vector<int> a){ globalModelID = a; }
+	 void setGlobalName(vector<string> a){ globalModelName = a; }
 	
+	 void setLocalModelID(vector<int> a){ localModelID = a; }
+	 void setLocalModelName(vector<string>a){ localModelName = a; }
 
 
 	 //增加城市数据
@@ -47,10 +54,12 @@ private:
 	int concaveBuilding;
 	Vector3d cityMin;
 	Vector3d cityMax;
-	vector<int> modelID;
-	vector<string> modelName;
-	bool updateData;
-
+	vector<int> globalModelID;
+	vector<string> globalModelName;
+	vector<int> localModelID;
+	vector<string> localModelName;
+	bool updateCityData;
+	bool updateLocalData;
 
 
 };

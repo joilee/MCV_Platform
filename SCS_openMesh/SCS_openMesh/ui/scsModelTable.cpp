@@ -83,7 +83,7 @@ void scsModelTable::updateLocal(LocalModelItem*a)
 void scsModelTable::update(visualModelItem*a)
 {
 	cout << "ModelTable 接收到城市场景更新的信号" << endl;
-	if (a->needUpdate())
+	if (a->cityNeedUpdate())
 	{
 	//	cout << this->rowCount() << " " << this->columnCount() << endl;
 	//	this->setItem(0, 1, new QTableWidgetItem(a->getBuildingNum()));

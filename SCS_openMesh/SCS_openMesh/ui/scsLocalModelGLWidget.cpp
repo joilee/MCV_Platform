@@ -6,7 +6,7 @@ scsLocalModelGLWidget::scsLocalModelGLWidget(QWidget *parent /*= 0*/) :scsGLWidg
 {
 	LocalModelID = -111;
 	materials.clear();
-	defaultMaterial = -1;
+	defaultMaterial = 10;
 	drawLocalPoint = false;;
 	drawLocalLine = false;
 	drawLocalFace = false;
@@ -15,6 +15,11 @@ scsLocalModelGLWidget::scsLocalModelGLWidget(QWidget *parent /*= 0*/) :scsGLWidg
 scsLocalModelGLWidget::~scsLocalModelGLWidget()
 {
 
+}
+
+void scsLocalModelGLWidget::setModelAlpha(int a)
+{
+	modelAlpha =( (double)a )/ 100.0;
 }
 
 void scsLocalModelGLWidget::drawLocalScene()
@@ -27,7 +32,7 @@ void scsLocalModelGLWidget::drawLocalScene()
 	mode.push_back(drawLocalPoint);
 	mode.push_back(drawLocalLine);
 	mode.push_back(drawLocalFace);
-	globalCtx->modelManager->getLocalModelByID(LocalModelID)->draw(mode);
+	globalCtx->modelManager->getLocalModelByID(LocalModelID)->draw(mode,modelAlpha);
 }
 
 void scsLocalModelGLWidget::paintGL()
@@ -36,8 +41,10 @@ void scsLocalModelGLWidget::paintGL()
 
 	m_camera.setupModelMatrix();
 
-	globalContext *globalCtx = globalContext::GetInstance();
+	drawCoordinates();
 
+	globalContext *globalCtx = globalContext::GetInstance();
+	LocalModelID = globalCtx->modelManager->getLocalShowID();
 	if (globalCtx->modelManager->checkLocalExistByID(LocalModelID))
 	{
 		glEnable(GL_BLEND);

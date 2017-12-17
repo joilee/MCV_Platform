@@ -128,6 +128,8 @@ void MainWindow::createActions()
 	connect(ui.action_GenerateModelPara, SIGNAL(triggered()), this, SLOT(generateModelPara()));
 	connect(ui.action_scatter, SIGNAL(triggered()), this, SLOT(showScatterWidget()));
 	connect(ui.action_saveResult, SIGNAL(triggered()), this, SLOT(saveAllResult()));
+	connect(ui.horizontalSlider_Scene_Alpha, SIGNAL(valueChanged(int)), this, SLOT(setModelAlpha(int)));
+	connect(catalog, SIGNAL(modelID_ShowChanged(int)), this, SLOT(setShowLineEdit(int)));
 }
 
 void MainWindow::generateModelPara()
@@ -193,6 +195,16 @@ void MainWindow::saveAllResult()
 	}
 
 	return;
+}
+
+void MainWindow::setShowLineEdit(int id)
+{
+	ui.lineEdit_ModelID->setText(QString::number(id));
+}
+
+void MainWindow::setModelAlpha(int a)
+{
+	ui.simuArea->setModelAlpha(a);
 }
 
 void MainWindow::setDrawPointMode(bool flag)

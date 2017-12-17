@@ -532,7 +532,7 @@ void cityLocalModel::initDraw() {
     double last_time, material_time,this_time;
 
     //统一透明度和统一的颜色
-    uniform_alpha = globalCtx->modelManager->getAlpha();
+	uniform_alpha = 1;
     int defaultID = globalCtx->modelManager->matManager->getDefaultMaterial();
     int index = globalCtx->modelManager->matManager->getVectorIndexFromID(defaultID);
     uniformColor = globalCtx->modelManager->matManager->getColor(index);
@@ -619,7 +619,7 @@ void cityLocalModel:: writeToObj() {
     fout.close();
 }
 
-void cityLocalModel::draw(vector<bool> mode) {
+void cityLocalModel::draw(vector<bool> mode,double alpha) {
     if (mode[0]) { //draw vertice
 
     }
@@ -642,7 +642,7 @@ void cityLocalModel::draw(vector<bool> mode) {
         // enable and specify pointers to vertex arrays
         glEnableClientState(GL_NORMAL_ARRAY);;
         glEnableClientState(GL_VERTEX_ARRAY);
-        glColor4f(uniformColor.r/256.0,uniformColor.g/256.0, uniformColor.b/256.0, uniform_alpha);
+        glColor4f(uniformColor.r/256.0,uniformColor.g/256.0, uniformColor.b/256.0, alpha);
         glNormalPointer(GL_FLOAT, 0, &normals[0]);
         glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);

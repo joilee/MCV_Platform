@@ -109,7 +109,7 @@ public:
     QLineEdit *lineEdit_SimuPlane_siteID_2;
     QLabel *label_6;
     QLineEdit *lineEdit_SimuPlane_PCI_2;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label_3;
     QLineEdit *lineEdit_SimuPlane_siteID;
@@ -398,20 +398,20 @@ public:
 
         horizontalLayout_3->addWidget(lineEdit_SimuPlane_PCI_2);
 
-        widget = new QWidget(groupBox_2);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(20, 30, 164, 22));
-        horizontalLayout_2 = new QHBoxLayout(widget);
+        layoutWidget1 = new QWidget(groupBox_2);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(20, 30, 164, 22));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        label_3 = new QLabel(widget);
+        label_3 = new QLabel(layoutWidget1);
         label_3->setObjectName(QStringLiteral("label_3"));
 
         horizontalLayout_2->addWidget(label_3);
 
-        lineEdit_SimuPlane_siteID = new QLineEdit(widget);
+        lineEdit_SimuPlane_siteID = new QLineEdit(layoutWidget1);
         lineEdit_SimuPlane_siteID->setObjectName(QStringLiteral("lineEdit_SimuPlane_siteID"));
         sizePolicy1.setHeightForWidth(lineEdit_SimuPlane_siteID->sizePolicy().hasHeightForWidth());
         lineEdit_SimuPlane_siteID->setSizePolicy(sizePolicy1);
@@ -420,12 +420,12 @@ public:
 
         horizontalLayout_2->addWidget(lineEdit_SimuPlane_siteID);
 
-        label_4 = new QLabel(widget);
+        label_4 = new QLabel(layoutWidget1);
         label_4->setObjectName(QStringLiteral("label_4"));
 
         horizontalLayout_2->addWidget(label_4);
 
-        lineEdit_SimuPlane_PCI = new QLineEdit(widget);
+        lineEdit_SimuPlane_PCI = new QLineEdit(layoutWidget1);
         lineEdit_SimuPlane_PCI->setObjectName(QStringLiteral("lineEdit_SimuPlane_PCI"));
         sizePolicy1.setHeightForWidth(lineEdit_SimuPlane_PCI->sizePolicy().hasHeightForWidth());
         lineEdit_SimuPlane_PCI->setSizePolicy(sizePolicy1);
@@ -528,7 +528,7 @@ public:
 
         retranslateUi(MainWindowClass);
 
-        tabWidget_Dispaly->setCurrentIndex(2);
+        tabWidget_Dispaly->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindowClass);

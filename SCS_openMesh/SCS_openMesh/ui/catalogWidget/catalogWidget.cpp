@@ -8,11 +8,15 @@ catalogWidget::catalogWidget(QWidget *parent)
 :ComputePluginObserver("catalogWidgetForPlugin"), modelObserver("catalogWidget"),QTreeWidget(parent)
 {
 
-	this->setHeaderLabels(QStringList() << QStringLiteral("项目"));
+	this->setHeaderLabels(QStringList() << QStringLiteral("项目")<< QStringLiteral("属性"));
 	
-	mItem = new QTreeWidgetItem();
-	mItem->setText(0, MODEL_ITEM);
-	this->addTopLevelItem(mItem);
+	mGlobalItem = new QTreeWidgetItem();
+	mGlobalItem->setText(0, CITY_VIEW);
+	this->addTopLevelItem(mGlobalItem);
+
+	mLocalItem = new QTreeWidgetItem();
+	mLocalItem->setText(0, MODEL_ITEM);
+	this->addTopLevelItem(mLocalItem);
 
 	cItem = new QTreeWidgetItem();
 	cItem->setText(0, CPT_ITEM);
@@ -33,7 +37,7 @@ void catalogWidget::addParentMenu()
 	QTreeWidgetItem *item = this->currentItem();
 	if (item == NULL) return;
 
-	if (item->text(0) == MODEL_ITEM)
+	if (item->text(0) == CITY_VIEW)
 	{
 		QAction * addModelAction = new QAction(QStringLiteral("导入城市场景"),this);
 		menu->addAction(addModelAction);
@@ -58,7 +62,11 @@ void catalogWidget::addChildMenu()
 	QTreeWidgetItem *item = this->currentItem();
 
 	if (item->parent() == NULL)
+	{
+		cout << "error:no parent in treeWidget" << endl;
 		return;
+	}
+
 
 	//暂时只写了模型板块
 	if (item->parent()->text(0)==MODEL_ITEM)
@@ -69,7 +77,7 @@ void catalogWidget::addChildMenu()
 
 		QAction *showModelAction = new QAction(tr("show"), this);
 		menu->addAction(showModelAction);
-		connect(showModelAction, SIGNAL(triggered()), this, SLOT( ));
+		connect(showModelAction, SIGNAL(triggered()), this, SLOT(showModel()));
 	}
 
 
@@ -156,9 +164,8 @@ void catalogWidget::deleteModel()
 	if (item->parent()!=NULL&&item->parent()->text(0)==MODEL_ITEM)
 	{
 		string name = (item->text(0)).toStdString();
-		//delete item;
 		globalContext *gctx = globalContext::GetInstance();
-		gctx->modelManager->deleteModel(name);
+		gctx->modelManager->deleteLocalModel(name);
 	}
 }
 
@@ -170,7 +177,8 @@ void catalogWidget::showModel()
 		string name = (item->text(0)).toStdString();
 		int id = (item->text(1)).toInt();
 		globalContext *gctx = globalContext::GetInstance();
-		gctx->modelManager->deleteModel(name);
+		gctx->modelManager->setLocalShowID(id);
+		emit(modelID_ShowChanged(id));
 	}
 }
 
@@ -184,22 +192,37 @@ void catalogWidget::addCptPlugin()
 void catalogWidget::update(visualModelItem * a)
 {
 	cout << "Catalog 接收到局部更新的信号" << endl;
-	if (a->needUpdate())
+	if (a->cityNeedUpdate())
 	{
-		deleleItemsUnderItem(mItem);
-		for (int i = 0; i < a->getName().size(); i++)
+		deleleItemsUnderItem(mGlobalItem);
+		for (int i = 0; i < a->getGlobalName().size(); i++)
 		{
 			QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
-			modelChildItem->setText(0, QString::fromStdString(a->getName().at(i)));
-			modelChildItem->setText(1, QString::number(a->getID().at(i)));
-			mItem->addChild(modelChildItem);
+			modelChildItem->setText(0, QString::fromStdString(a->getGlobalName().at(i)));
+			modelChildItem->setText(1, QString::number(a->getGlobalID().at(i)));
+			mGlobalItem->addChild(modelChildItem);
 		}
 	}
 	else
 	{
-		deleleItemsUnderItem(mItem);
+		deleleItemsUnderItem(mGlobalItem);
 	}
 
+	if (a->localNeedUpdate())
+	{
+		deleleItemsUnderItem(mLocalItem);
+		for (int i =0 ; i < a->getLocalName().size();i++)
+		{
+			QTreeWidgetItem *modelChildItem = new QTreeWidgetItem();
+			modelChildItem->setText(0, QString::fromStdString(a->getLocalName().at(i)));
+			modelChildItem->setText(1, QString::number(a->getLocalModelID().at(i)));
+			mLocalItem->addChild(modelChildItem);
+		}
+	}
+	else
+	{
+		deleleItemsUnderItem(mLocalItem);
+	}
 }
 
 void catalogWidget::updatePluginInfo(VisualPluginItem* a)

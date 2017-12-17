@@ -1,15 +1,18 @@
 #pragma once
 
-#include "abstractModel.h"
-
-class abstractGlobalModel
+#include "Model/abstractModel/abstractModel.h"
+#include <util/vector.h>
+class abstractGlobalModel:public abstractModel
 {
 public:
 	abstractGlobalModel();
-	~abstractGlobalModel();
-	void virtual draw(vector<bool> mode);
-	void virtual initDraw();
-	virtual double getAltitude(double x, double y);
+	virtual ~abstractGlobalModel();
+
+	virtual double getAltitude(double x, double y)=0;
+	virtual Vector3d getMinPoint()=0;
+	virtual Vector3d getMaxPoint()=0;
+	virtual int getBuildingSize()=0;
+	virtual int getConcaveSize()=0;
 private:
 
 };

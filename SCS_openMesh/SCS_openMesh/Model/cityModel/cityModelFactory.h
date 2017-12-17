@@ -1,13 +1,13 @@
 ﻿#pragma  once
 
-#include "../abstractModelFactory.h"
+#include "Model/abstractGlobalModel/abstractGlobalModelFactory.h"
 #include "cityModel.h"
-#include "cityLocalModel.h"
+
 #include <string>
 
 using namespace std;
 
-class cityModelFactory :public abstractModelFactory
+class cityModelFactory :public abstractGlobalModelFactory
 {
 public:
 	cityModelFactory();
@@ -16,14 +16,8 @@ public:
 	/*
 	@brief 调用城市场景的构造函数 
 	*/
-	abstractModel *loadModel(string path);
+	abstractGlobalModel *loadModel(string path);
 
-	/************************************************************************/
-	/* 
-	@brief 调用局部场景的构造函数
-	*/
-	/************************************************************************/
-	abstractModel *loadModel(Vector3d center,int siteID, double range, cityModel * cModel);
 private:
 };
 

@@ -120,8 +120,7 @@ void GLWidget::paintGL()
 		m_camera.setupModelMatrix();
 		globalContext *globalCtx = globalContext::GetInstance();
 		
-		if (globalCtx->modelManager->drawLocalFlag())
-		{
+
 			glEnable(GL_BLEND);
 			glEnable(GL_LIGHTING);
 			glEnable(GL_LIGHT0);
@@ -131,7 +130,7 @@ void GLWidget::paintGL()
 			glDisable(GL_LIGHTING);
 			glDisable(GL_LIGHT0);
 			glDisable(GL_BLEND);
-		}
+		
 		if (drawVectorScene)
 		{
 			drawAllScene();
@@ -142,11 +141,7 @@ void GLWidget::paintGL()
 		}
 
 		drawCoordinates();
-		if (globalCtx->modelManager->drawLocalFlag())
-		{
-			//glutSwapBuffers();
-			glFlush();
-		}
+
 		
 }
 
@@ -270,7 +265,7 @@ void GLWidget::drawLocalScene(){
 	mode.push_back(drawLocalPoint);
 	mode.push_back(drawLocalLine);
 	mode.push_back(drawLocalFace);
-	globalCtx->modelManager->getFirstLocal()->draw(mode);
+	globalCtx->modelManager->getFirstLocal()->draw(mode,1);
 }
 
 void GLWidget::updateMesh()

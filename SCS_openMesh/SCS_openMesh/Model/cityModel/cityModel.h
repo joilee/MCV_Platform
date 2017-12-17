@@ -1,15 +1,20 @@
 #pragma once
-#include "../abstractModel.h"
+#include "Model/abstractGlobalModel/abstractGlobalModel.h"
 #include <cityModule/cityScene.h>
 
 
-class cityModel :public abstractModel
+class cityModel :public abstractGlobalModel
 {
 public:
 	cityModel(string jsonPath);
 	~cityModel();
-	void draw(vector<bool> mode);
+	void draw(vector<bool> mode,double alpha);
 	void initDraw();
+	double getAltitude(double x, double y);
+	Vector3d getMinPoint();
+	 Vector3d getMaxPoint();
+	 int getBuildingSize();
+	 int getConcaveSize();
 	inline cityScene* getCity(){ return city; }
 private:
 

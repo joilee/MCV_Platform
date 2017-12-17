@@ -1,6 +1,6 @@
 #pragma once
 
-#include "abstractModel.h"
+#include "Model/abstractModel/abstractModel.h"
 #include <util/vector.h>
 #include <mesh/point.h>
 #include <util/Color.h>
@@ -11,7 +11,7 @@ class abstractLocalModel:public abstractModel
 {
 public:
 	abstractLocalModel();
-	~abstractLocalModel();
+	virtual ~abstractLocalModel();
 
 	int getTriangleNum() {
 		return F.size();
@@ -52,13 +52,9 @@ public:
 	/*
 	@brief  局部场景成员函数 获得所在位置的海拔
 	*/
-	virtual double getAltitude(double x, double y);
+	virtual double getAltitude(double x, double y)=0;
 public:
-	/*
-	@brief 继承父类的函数
-	*/
-	virtual void  draw(vector<bool> mode);
-	virtual void initDraw();
+
 
 };
 

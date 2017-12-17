@@ -10,7 +10,7 @@
 #include "observer/LocalModelObserver.h"
 #include "observer/PluginObserver.h"
 using namespace std;
-
+#define CITY_VIEW "City"
 #define MODEL_ITEM "Model"
 #define CPT_ITEM "Computation"
 #define  VIS_ITEM "Visualization"
@@ -49,8 +49,13 @@ public:
 	void deleteModel();
 	void showModel();
 	void addCptPlugin();
+
+	signals:
+	void modelID_ShowChanged(int id);
+
 private:
-	QTreeWidgetItem * mItem;
+	QTreeWidgetItem * mGlobalItem;
+	QTreeWidgetItem * mLocalItem;
 	QTreeWidgetItem * cItem;
 	QTreeWidgetItem * vItem;
 };

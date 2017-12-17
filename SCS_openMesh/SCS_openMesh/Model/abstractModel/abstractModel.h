@@ -26,7 +26,7 @@ public:
 	ModelType getType(){ return fileType; }
 	string getName(){ return name; };
 	void setName(string _name){ name = _name; };
-	void virtual draw(vector<bool> mode);
+	void virtual draw(vector<bool> mode,double alpha);
 	void virtual initDraw();
 private:
 

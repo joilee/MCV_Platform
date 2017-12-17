@@ -1,8 +1,11 @@
 #pragma  once
 #include <map>
-#include "../../Model/abstractModel.h"
-#include "../../Model/abstractModelFactory.h"
-#include  "../../Model/cityModel/cityModelFactory.h"
+#include "Model/abstractModel/abstractModel.h"
+#include "Model/cityModel/cityLocalModel.h"
+#include "Model/cityModel/cityModel.h"
+#include "Model/cityModel/cityLocalModelFactory.h"
+#include "Model/cityModel/cityModelFactory.h"
+
 #include <para/modelPara.h>
 #define NO_LOCAL_MODEL_ID -1111
 
@@ -14,26 +17,35 @@ public:
 	~ModelContainer();
 
 public:
-	void  insertModel(abstractModel* model);
-	void  deleteModel(abstractModel* model);
-	void  deleteModel(string name);
-	void  deleteModel(int id);
+	void  insertGlobalModel(abstractGlobalModel* model);
+	void  insertLocalModel(abstractLocalModel* model);
+
+	void  deleteGlobalModel(abstractGlobalModel* model);
+	void  deleteGlobalModel(string name);
+	void  deleteGlobalModel(int id);
+
+	void  deletelocalModel(abstractLocalModel* model);
+	void  deletelocalModel(string name);
+	void  deletelocalModel(int id);
+
 	bool  isLocalExist();
 	bool  isLocalType(int id);
 	bool  isWholeType(int id);
-	int getModelSize(){ return modelMap.size(); }
+	int getGlobalModelSize(){ return globalMap.size(); }
+	int  getLocalModelSize(){ return localMap.size(); }
 
-	cityLocalModel * getFirstLocal();
-	cityLocalModel * getLocalModelByID(int id);
+	abstractLocalModel * getFirstLocal();
+	abstractLocalModel  * getLocalModelByID(int id);
 	bool isCityExist();
 	bool isLocalIDExist(int id);
-	cityModel* getFirstCity();
+	abstractGlobalModel* getFirstCity();
 
 	//返回所有id
-	vector<int> getIDs();
-	vector<int> getLocalCityModelID();
+	vector<int> getGlobalIDs();
+	vector<int> getLocalModelID();
 	//返回所有名称
-	vector<string> getNames();
+	vector<string> getGlobalNames();
+	vector<string> getlocalNames();
 
 	vector<Vector3d> getCityBoundingBox();
 	int getCityBuildingNum();
@@ -41,7 +53,8 @@ public:
 	int getLocalFaceNum(int id=NO_LOCAL_MODEL_ID);
 	vector<Vector3d> getLocalBountdingBox(int id = NO_LOCAL_MODEL_ID);
 private:
-	map<int, abstractModel*> modelMap;
+	map<int, abstractLocalModel*> localMap;
+	map<int, abstractGlobalModel*>globalMap;
 };
 
 

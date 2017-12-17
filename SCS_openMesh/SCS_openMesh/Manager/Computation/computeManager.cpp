@@ -243,7 +243,7 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 		double x = atof(str_x.c_str());
 		double y = atof(str_y.c_str());
 		//从全局中获取
-		double z = atof(height.c_str()) + globalCtx->modelManager->getFirstCity()->getCity()->getAltitude(x, y);
+		double z = atof(height.c_str()) + globalCtx->modelManager->getFirstCity()->getAltitude(x, y);
 
 		TransAntenna new_antenna;
 		new_antenna.Cell_Name = CellName;

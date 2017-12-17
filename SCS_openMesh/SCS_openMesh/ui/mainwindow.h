@@ -12,8 +12,8 @@
 #include <QtWidgets/QMessageBox>
 #include "Context/context.h"
 
-#include "Model/abstractModel.h"
-#include "Model/abstractModelFactory.h"
+#include "Model/abstractModel/abstractModel.h"
+#include "Model/abstractModel/abstractModelFactory.h"
 #include "Model/cityModel/cityModel.h"
 #include "Model/cityModel/cityModelFactory.h"
 #include "scsModelTable.h"
@@ -62,6 +62,8 @@ private slots:
 	void setDrawFaceMode(bool);
 	void generateModelPara();
 	void saveAllResult();
+	void setShowLineEdit(int);
+	void setModelAlpha(int);
 private:
 	void load_Material(string path);
 

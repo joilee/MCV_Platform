@@ -138,7 +138,7 @@ void cityModel::LoadModel(string _name, vector<string> _v, vector<string> _h, st
 	cout << "Info: " << "模型导入共耗时" << (end_time - start_time)  << "ms" << endl;
 
 }
-void cityModel:: draw(vector<bool> mode)
+void cityModel:: draw(vector<bool> mode,double alpha)
 {
 
 }
@@ -146,4 +146,29 @@ void cityModel:: draw(vector<bool> mode)
 void cityModel::initDraw()
 {
 
+}
+
+double cityModel::getAltitude(double x, double y)
+{
+	return city->getAltitude(x, y);
+}
+
+Vector3d cityModel::getMinPoint()
+{
+	return city->getMinPoint();
+}
+
+Vector3d cityModel::getMaxPoint()
+{
+	return city->getMaxPoint();
+}
+
+int cityModel::getBuildingSize()
+{
+	return city->getBuildingSize();
+}
+
+int cityModel::getConcaveSize()
+{
+	return city->getConcaveNum();
 }

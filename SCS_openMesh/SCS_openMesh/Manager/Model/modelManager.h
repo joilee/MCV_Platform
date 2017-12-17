@@ -6,6 +6,8 @@
 #include "Container/ModelContainer.h"
 #include "../Material/materialManager.h"
 #include <map>
+
+
 class ModelManager
 {
 public:
@@ -15,22 +17,45 @@ public:
 	/*
 	@brief 在map中插入模型
 	*/
-	void  insertModel(abstractModel* model);
+	void  insertGlobalModel(abstractGlobalModel* model);
 
 	/*
 	@brief 在map中删除模型，根据模型指针
 	*/
-	void  deleteModel(abstractModel* model);
+	void  deleteGlobalModel(abstractGlobalModel* model);
 
 	/*
 	@brief 在map中删除模型，根据模型独一无二的名字
 	*/
-	void  deleteModel(string name);
+	void  deleteGLobalModel(string name);
 
 	/*
 	@brief 在map中删除模型，根据模型id
 	*/
-	void deleteModel(int id);
+	void deleteGlobalModel(int id);
+
+
+	/*
+	@brief 在map中插入模型
+	*/
+	void  insertLocalModel(abstractLocalModel* model);
+
+	/*
+	@brief 在map中删除模型，根据模型指针
+	*/
+	void  deleteLocalModel(abstractLocalModel* model);
+
+	/*
+	@brief 在map中删除模型，根据模型独一无二的名字
+	*/
+	void  deleteLocalModel(string name);
+
+	/*
+	@brief 在map中删除模型，根据模型id
+	*/
+	void deleteLocalModel(int id);
+
+
 	/*
 	@brief 载入城市模型
 	*/
@@ -53,14 +78,17 @@ public:
 
 	LocalModelSubject * getLocalSubject(){ return m_local_subject; }
 	/* 
-	@brief 将模型名称和城市场景数据发送到相应的观察者
+	@brief 将城市模型名称和城市场景数据发送到相应的观察者
 	@return void
 	@note 推送建筑物数据
 	*/
-	void sendNewState();
+	void getGlobalNewState();
+
+	void getLocalNewState();
 
 	void sendLocalStateByID(int id);
 
+	void sendAllModelName();
 	/*
 	@brief 检测局部模型是否存在，即是否有可以存在的计算的模型
 	@return bool
@@ -75,8 +103,8 @@ public:
 	@return cityLocalModel
 	@note  根据map遍历返回第一个局部模型，如果没有返回NULL
 	*/
-	cityLocalModel * getFirstLocal();
-	cityLocalModel * getLocalModelByID(int id);
+	abstractLocalModel * getFirstLocal();
+	abstractLocalModel * getLocalModelByID(int id);
 	/*
 	@brief 检测全局模型是否存在，即是否有可以剖分的模型
 	*/
@@ -85,17 +113,7 @@ public:
 	/*
 	@brief 返回第一个城市模型
 	*/
-	cityModel * getFirstCity();
-
-	/*
-	@brief 返回不透明度
-	*/
-	inline double getAlpha(){ return transparency; }
-
-	/*
-	@brief 是否要绘制局部场景
-	*/
-	inline bool drawLocalFlag(){ return drawTriangleScene; }
+	abstractGlobalModel * getFirstCity();
 
 	/*
 	@brief 返回计算所需要的模型参数
@@ -113,25 +131,27 @@ public:
 	//************************************
 	void setModelPara();
 
+	/*
+	@brief 是否要绘制城市场景
+	*/
 	bool getWholeModelFlag();
 
 	void setWholeModelFlag(bool a);
 
 	void setLocalShowID(int id);
+
+	int getLocalShowID();
 private:
 
-	
+	cityLocalModelFactory *localFac;
 	cityModelFactory *cityFac;
+
 	modelSubject * m_subject;
 	LocalModelSubject * m_local_subject;
 
-	//将要展示的局部模型，整体模型只要指定显示与否
-	bool drawTriangleScene; //局部三角形文件场景绘制flag
+	//将要展示的局部模型
 	int LocalModelID_SHOW;
-	bool wholeModel_Flag;
 
-	//场景透明度
-	double transparency;
 
 
 	//

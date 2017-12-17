@@ -1,5 +1,5 @@
 #pragma  once
-#include "Model/abstractModel/abstractLocalModel.h"
+#include "Model/abstractLocalModel/abstractLocalModel.h"
 #include <cityModule/cityScene.h>
 #include <mesh/meshStruct.h>
 #include <util/vector.h>
@@ -89,7 +89,7 @@ public:
     /*
     @brief ¼Ì³Ð¸¸ÀàµÄº¯Êý
     */
-    void  draw(vector<bool> mode);
+    void  draw(vector<bool> mode,double alpha);
     void initDraw();
 };
 

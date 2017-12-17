@@ -1,34 +1,49 @@
-#include "ModelContainer.h"
+ï»¿#include "ModelContainer.h"
 ModelContainer::ModelContainer()
 {
-	modelMap.clear();
+	localMap.clear();
+	globalMap.clear();
 }
 
 ModelContainer::~ModelContainer()
 {
 }
 
-void ModelContainer::insertModel(abstractModel* model)
+void ModelContainer::insertGlobalModel(abstractGlobalModel* model)
 {
 	int id = model->getID();
-	auto it = modelMap.find(id);
-	if (it!=modelMap.end())
+	auto it = globalMap.find(id);
+	if (it != globalMap.end())
 	{
-		cout << "error: Model ÒÑ¾­´æÔÚ£¬ÇëÖØĞÂ¼ì²éÕ¾µãÎÄ¼şµÄSiteName×Ö¶Î£¬ÖØ¸´×Ö¶ÎÎª" << id << ". ²åÈëÊ§°Ü£¬ÒÑ¾­ÍË³ö";
+		cout << "error: Model å·²ç»å­˜åœ¨ï¼Œè¯·é‡æ–°æ£€æŸ¥ç«™ç‚¹æ–‡ä»¶çš„SiteNameå­—æ®µï¼Œé‡å¤å­—æ®µä¸º" << id << ". æ’å…¥å¤±è´¥ï¼Œå·²ç»é€€å‡º";
 		return;
 	}
-	modelMap.insert(make_pair(id, model));
+	globalMap.insert(make_pair(id, model));
 }
 
-void ModelContainer::deleteModel(abstractModel* model)
+
+
+void ModelContainer::insertLocalModel(abstractLocalModel* model)
 {
-	auto it = modelMap.begin();
-	for (; it != modelMap.end();)
+	int id = model->getID();
+	auto it = localMap.find(id);
+	if (it != localMap.end())
+	{
+		cout << "error: Model å·²ç»å­˜åœ¨ï¼Œè¯·é‡æ–°æ£€æŸ¥ç«™ç‚¹æ–‡ä»¶çš„SiteNameå­—æ®µï¼Œé‡å¤å­—æ®µä¸º" << id << ". æ’å…¥å¤±è´¥ï¼Œå·²ç»é€€å‡º";
+		return;
+	}
+	localMap.insert(make_pair(id, model));
+}
+
+void ModelContainer::deleteGlobalModel(abstractGlobalModel* model)
+{
+	auto it = globalMap.begin();
+	for (; it !=globalMap.end();)
 	{
 		if (it->second == model)
 		{
-			modelMap.erase(it++);
-			cout << "success: Model ÒÑ¾­É¾³ı" << endl;
+			globalMap.erase(it++);
+			cout << "success: Model å·²ç»åˆ é™¤" << endl;
 			return;
 		}
 		else
@@ -36,19 +51,19 @@ void ModelContainer::deleteModel(abstractModel* model)
 			it++;
 		}
 	}
-	cout << "Info: ÈİÆ÷ÖĞÄ£ĞÍÊıÁ¿Îª" << modelMap.size() << endl;
+	cout << "Info: åŸå¸‚å®¹å™¨ä¸­æ¨¡å‹æ•°é‡ä¸º" << globalMap.size() << endl;
 	return;
 }
 
-void ModelContainer::deleteModel(string name)
+void ModelContainer::deleteGlobalModel(string name)
 {
-	auto it = modelMap.begin();
-	for (; it != modelMap.end();)
+	auto it = globalMap.begin();
+	for (; it !=globalMap.end();)
 	{
 		if (it->second->getName() == name)
 		{
-			modelMap.erase(it++);
-			cout << "success: Model ÒÑ¾­É¾³ı" << endl;
+			globalMap.erase(it++);
+			cout << "success: Model å·²ç»åˆ é™¤" << endl;
 			return;
 		}
 		else
@@ -56,38 +71,92 @@ void ModelContainer::deleteModel(string name)
 			it++;
 		}
 	}
-	cout << "Info: ÈİÆ÷ÖĞÄ£ĞÍÊıÁ¿Îª" << modelMap.size() << endl;
+	cout << "Info: åŸå¸‚å®¹å™¨ä¸­æ¨¡å‹æ•°é‡ä¸º" <<globalMap.size() << endl;
 	return;
 }
 
-void ModelContainer::deleteModel(int id)
+
+void ModelContainer::deleteGlobalModel(int id)
 {
-	auto it = modelMap.find(id);
-	if (it!=modelMap.end())
+	auto it =globalMap.find(id);
+	if (it != globalMap.end())
 	{
-		modelMap.erase(it);
-		cout << "success: Model ÒÑ¾­É¾³ı ,idÊÇ" <<id<< endl;
+		globalMap.erase(it);
+		cout << "success: Model å·²ç»åˆ é™¤ ,idæ˜¯" << id << endl;
+	}
+	return;
+}
+
+
+
+void ModelContainer::deletelocalModel(abstractLocalModel* model)
+{
+	auto it = localMap.begin();
+	for (; it != localMap.end();)
+	{
+		if (it->second == model)
+		{
+			localMap.erase(it++);
+			cout << "success: Model å·²ç»åˆ é™¤" << endl;
+			return;
+		}
+		else
+		{
+			it++;
+		}
+	}
+	cout << "Info: å±€éƒ¨å®¹å™¨ä¸­æ¨¡å‹æ•°é‡ä¸º" << globalMap.size() << endl;
+	return;
+}
+
+void ModelContainer::deletelocalModel(string name)
+{
+	auto it = localMap.begin();
+	for (; it != localMap.end();)
+	{
+		if (it->second->getName() == name)
+		{
+			localMap.erase(it++);
+			cout << "success:å±€éƒ¨ Model å·²ç»åˆ é™¤" << endl;
+			return;
+		}
+		else
+		{
+			it++;
+		}
+	}
+	cout << "Info: å±€éƒ¨å®¹å™¨ä¸­æ¨¡å‹æ•°é‡ä¸º" << globalMap.size() << endl;
+	return;
+
+}
+
+void ModelContainer::deletelocalModel(int id)
+{
+	auto it = localMap.find(id);
+	if (it != localMap.end())
+	{
+		localMap.erase(it);
+		cout << "success: å±€éƒ¨ Model å·²ç»åˆ é™¤ ,idæ˜¯" << id << endl;
 	}
 	return;
 }
 
 bool ModelContainer::isLocalExist()
 {
-	auto it = modelMap.begin();
-	for (; it != modelMap.end();it++)
+	if (localMap.size()>0)
 	{
-		if (isLocalType(it->first)) 
-		{
-			return true;
-		}
+		return true;
 	}
-	return false;
+	else
+	{
+		return false;
+	}
 }
 
 bool ModelContainer::isLocalType(int id)
 {
-	auto it = modelMap.find(id);
-	if (it!=modelMap.end())
+	auto it = localMap.find(id);
+	if (it!=localMap.end())
 	{
 		ModelType a= it->second->getType();
 		if (a==ModelType::CITY_LOCAL||a==ModelType::OBJ_LOCAL)
@@ -100,8 +169,8 @@ bool ModelContainer::isLocalType(int id)
 
 bool ModelContainer::isWholeType(int id)
 {
-	auto it = modelMap.find(id);
-	if (it != modelMap.end())
+	auto it = globalMap.find(id);
+	if (it != globalMap.end())
 	{
 		ModelType a = it->second->getType();
 		if (a == ModelType::CITY || a == ModelType::OBJ)
@@ -112,76 +181,65 @@ bool ModelContainer::isWholeType(int id)
 	return false;
 }
 
-cityLocalModel * ModelContainer::getFirstLocal()
+abstractLocalModel * ModelContainer::getFirstLocal()
 {
-	auto it = modelMap.begin();
-	while (it!=modelMap.end())
+	if (localMap.size()>0)
 	{
-		if (isLocalType(it->first))
-		{
-			return dynamic_cast<cityLocalModel*>(it->second);
-		}
-		it++;
+		auto it = localMap.begin();
+		return it->second;
 	}
 	return nullptr;
 }
 
-cityLocalModel * ModelContainer::getLocalModelByID(int id)
+abstractLocalModel * ModelContainer::getLocalModelByID(int id)
 {
-	auto it = modelMap.find(id);
-	if (it!=modelMap.end())
+	auto it = localMap.find(id);
+	if (it!=localMap.end())
 	{
-		if (typeid(*(it->second)) == typeid(cityLocalModel))
-		{
-			return dynamic_cast<cityLocalModel*>(it->second);
-		}
+		return it->second;
 	}
 	return nullptr;
 }
 
 bool ModelContainer::isCityExist()
 {
-	auto it = modelMap.begin();
-	while (it!=modelMap.end())
+	if (globalMap.size()>0)
 	{
-		if (typeid(*(it->second)) == typeid(cityModel))
-		{
-			return true;
-		}
-		it++;
+		return true;
 	}
-	return false;
+	else
+	{
+		return false;
+	}
 }
 
 bool ModelContainer::isLocalIDExist(int id)
 {
-	auto it = modelMap.find(id);
-	if (it != modelMap.end() && (typeid(*(it->second)) == typeid(cityLocalModel)))
+	auto it = localMap.find(id);
+	if (it !=localMap.end())
 	{
 		return true;
 	}
 	return false;
 }
 
-cityModel* ModelContainer::getFirstCity()
+abstractGlobalModel* ModelContainer::getFirstCity()
 {
-	auto it = modelMap.begin();
-	while (it != modelMap.end())
+	if (globalMap.size()>0)
 	{
-		if (typeid(*(it->second)) == typeid(cityModel))
-		{
-			return  dynamic_cast<cityModel*>(it->second);
-		}
-		it++;
+		auto it = globalMap.begin();
+		return it->second;
 	}
+	
+
 	return nullptr;
 }
 
-std::vector<int> ModelContainer::getIDs()
+std::vector<int> ModelContainer::getGlobalIDs()
 {
-	auto it = modelMap.begin();
+	auto it = globalMap.begin();
 	vector<int> res;
-	while (it!=modelMap.end())
+	while (it != globalMap.end())
 	{
 		res.push_back(it->first);
 		it++;
@@ -189,26 +247,37 @@ std::vector<int> ModelContainer::getIDs()
 	return res;
 }
 
-std::vector<int> ModelContainer::getLocalCityModelID()
+
+
+std::vector<int> ModelContainer::getLocalModelID()
 {
-	auto it = modelMap.begin();
+	auto it = localMap.begin();
 	vector<int> res;
-	while (it != modelMap.end())
+	while (it != localMap.end())
 	{
-		if (typeid(*(it->second)) == typeid(cityLocalModel))
-		{
-			res.push_back(it->first);
-		}
+	    res.push_back(it->first);
 		it++;
 	}
 	return res;
 }
 
-std::vector<std::string> ModelContainer::getNames()
+std::vector<std::string> ModelContainer::getGlobalNames()
 {
-	auto it = modelMap.begin();
+	auto it = globalMap.begin();
 	vector<string> res;
-	while (it != modelMap.end())
+	while (it != globalMap.end())
+	{
+		res.push_back(it->second->getName());
+		it++;
+	}
+	return res;
+}
+
+std::vector<std::string> ModelContainer::getlocalNames()
+{
+	auto it = localMap.begin();
+	vector<string> res;
+	while (it != localMap.end())
 	{
 		res.push_back(it->second->getName());
 		it++;
@@ -217,45 +286,45 @@ std::vector<std::string> ModelContainer::getNames()
 }
 
 
+
+
 /**
   * @Method:    getCityBoundingBox
-  * @Note: 	»ñµÃ×îĞ¡×î´óµÄboundingbox,Èç¹û²»´æÔÚ·µ»Ø¿Õ
+  * @Note: 	è·å¾—æœ€å°æœ€å¤§çš„boundingbox,å¦‚æœä¸å­˜åœ¨è¿”å›ç©º
   * @Author:    Li Gen
   * @ Date:     2017/11/29
   * @Returns:   std::vector<Vector3d>
 */
 std::vector<Vector3d> ModelContainer::getCityBoundingBox()
 {
-	cityModel* model = getFirstCity();
+	abstractGlobalModel* model = getFirstCity();
 	vector<Vector3d> res;
 	if (model!=nullptr)
 	{
-		res.push_back(model->getCity()->getMinPoint());
-		res.push_back(model->getCity()->getMaxPoint());
+		res.push_back(model->getMinPoint());
+		res.push_back(model->getMaxPoint());
 	}
 	return res;
 }
 
 int ModelContainer::getCityBuildingNum()
 {
-	cityModel* model = getFirstCity();
-	int res = 0;
-	if (model!=nullptr)
+	if (globalMap.size() > 0)
 	{
-		res = model->getCity()->getBuildingSize();
+		abstractGlobalModel* model = getFirstCity();
+		return model->getBuildingSize();
 	}
-	return res;
+	return 0;
 }
 
 int ModelContainer::getCityConcaveNum()
 {
-	cityModel* model = getFirstCity();
-	int res = 0;
-	if (model != nullptr)
+	if (globalMap.size()>0)
 	{
-		res = model->getCity()->getConcaveNum();
+		abstractGlobalModel* model = getFirstCity();
+		return model->getConcaveSize();
 	}
-	return res;
+	return 0;
 }
 
 int ModelContainer::getLocalFaceNum(int id/*=NO_MODEL_ID*/)
@@ -264,7 +333,7 @@ int ModelContainer::getLocalFaceNum(int id/*=NO_MODEL_ID*/)
 	{
 		return -1;
 	}
-	cityLocalModel *tmp = getLocalModelByID(id);
+	abstractLocalModel*tmp = getLocalModelByID(id);
 	if (tmp==nullptr)
 	{
 		return -1;
@@ -279,7 +348,7 @@ std::vector<Vector3d> ModelContainer::getLocalBountdingBox(int id /*= NO_MODEL_I
 	{
 		return res;
 	}
-	cityLocalModel *tmp = getLocalModelByID(id);
+	abstractLocalModel *tmp = getLocalModelByID(id);
 	if (tmp == nullptr)
 	{
 		return res;

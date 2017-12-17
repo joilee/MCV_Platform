@@ -19,6 +19,9 @@ public:
 	void setPoint(bool a){ drawLocalPoint = a; }
 	void setLine(bool a){ drawLocalLine = a; }
 	void setFace(bool a){ drawLocalFace = a; }
+
+	void setModelAlpha(int a);
+
 private:
 	//材料信息
 	vector<scsMaterial> materials;
@@ -28,7 +31,7 @@ private:
 	bool drawLocalFace;
 
 	int LocalModelID;
-
+	double modelAlpha;
 	void drawLocalScene();//局部信息，只有三角面片
 
 	void paintGL();

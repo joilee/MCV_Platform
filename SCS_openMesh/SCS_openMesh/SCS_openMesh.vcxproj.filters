@@ -143,42 +143,6 @@
     <ClCompile Include="Model\cityModel\cityModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scsTree.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scsTree.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\tree\scsTree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scsTreeItem.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scsTreeItem.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\tree\scsTreeItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scsModelTree.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\tree\scsModelTree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scsModelTree.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\tree\scsTreeWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scsTreeWidget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scsTreeWidget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
     <ClCompile Include="Model\cityModel\cityModelFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -299,10 +263,13 @@
     <ClCompile Include="Model\abstractModel\abstractModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\abstractModel\abstractGlobalModel.cpp">
+    <ClCompile Include="Model\abstractGlobalModel\abstractGlobalModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model\abstractModel\abstractLocalModel.cpp">
+    <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -330,18 +297,6 @@
     </CustomBuild>
     <CustomBuild Include="mainwindow.ui" />
     <CustomBuild Include="outdoorFile.ui" />
-    <CustomBuild Include="ui\tree\scsTree.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\tree\scsTreeItem.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\tree\scsModelTree.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\tree\scsTreeWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="ui\scsModelTable.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -562,10 +517,19 @@
     <ClInclude Include="Model\ModelType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\abstractModel\abstractLocalModel.h">
+    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model\abstractModel\abstractGlobalModel.h">
+    <ClInclude Include="Model\abstractLocalModel\abstractLocalModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\cityModel\cityLocalModelFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,7 +9,7 @@ abstractModel::~abstractModel()
 {
 }
 
-void abstractModel::draw(vector<bool> mode)
+void abstractModel::draw(vector<bool> mode,double alpha)
 {
 
 }

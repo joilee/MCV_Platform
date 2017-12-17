@@ -9,12 +9,11 @@ ModelManager::ModelManager()
 	matManager = new scsMaterialManager;
 	modelPara = new ModelPara;
 	cityFac = new cityModelFactory;
+	localFac = new cityLocalModelFactory;
 	m_subject = new modelSubject;
 	m_local_subject = new LocalModelSubject;
 	modelContainer = new ModelContainer;
-	transparency = 1;
-	drawTriangleScene = false;
-	wholeModel_Flag = true;
+	LocalModelID_SHOW = -1111;
 }
 
 ModelManager::~ModelManager()
@@ -29,38 +28,70 @@ ModelManager::~ModelManager()
 	delete m_subject;
 }
 
-void ModelManager::insertModel(abstractModel* model)
+void ModelManager::insertGlobalModel(abstractGlobalModel* model)
 {
-	modelContainer->insertModel(model);
-	cout << "success: 模型已插入至容器" << endl;
-
-	sendNewState();
-}
-void ModelManager::deleteModel(abstractModel* model)
-{
-	modelContainer->deleteModel(model);
-	cout << "Info: 容器中模型数量为" << modelContainer->getModelSize() << endl;
-	sendNewState();
-}
-void ModelManager::deleteModel(string name)
-{
-	modelContainer->deleteModel(name);
-	cout << "Info: 容器中模型数量为" << modelContainer->getModelSize() << endl;
-	sendNewState();
+	modelContainer->insertGlobalModel(model);
+	cout << "success: 城市模型已插入至容器" << endl;
+	sendAllModelName();
 }
 
-void ModelManager::deleteModel(int id)
+void ModelManager::deleteGlobalModel(abstractGlobalModel* model)
 {
-	modelContainer->deleteModel(id);
-	cout << "Info: 容器中模型数量为" << modelContainer->getModelSize() << endl;
-	sendNewState();
+	modelContainer->deleteGlobalModel(model);
+	cout << "Info: 容器中模型数量为" << modelContainer->getGlobalModelSize() << endl;
+	sendAllModelName();
+}
+
+
+void ModelManager::deleteGlobalModel(int id)
+{
+	modelContainer->deleteGlobalModel(id);
+	cout << "Info: 容器中模型数量为" << modelContainer->getGlobalModelSize() << endl;
+	sendAllModelName();
+}
+
+void ModelManager::insertLocalModel(abstractLocalModel* model)
+{
+	modelContainer->insertLocalModel(model);
+	cout << "Info: 容器中模型数量为" << modelContainer->getLocalModelSize() << endl;
+	sendAllModelName();
+}
+
+void ModelManager::deleteGLobalModel(string name)
+{
+	modelContainer->deleteGlobalModel(name);
+	cout << "Info: 容器中模型数量为" << modelContainer->getGlobalModelSize() << endl;
+	sendAllModelName();
+}
+
+
+
+void ModelManager::deleteLocalModel(abstractLocalModel* model)
+{
+	modelContainer->deletelocalModel(model);
+	cout << "Info: 容器中模型数量为" << modelContainer->getLocalModelSize() << endl;
+	sendAllModelName();
+}
+
+void ModelManager::deleteLocalModel(string name)
+{
+	modelContainer->deletelocalModel(name);
+	cout << "Info: 容器中模型数量为" << modelContainer->getLocalModelSize() << endl;
+	sendAllModelName();
+}
+
+void ModelManager::deleteLocalModel(int id)
+{
+	modelContainer->deletelocalModel(id);
+	cout << "Info: 容器中模型数量为" << modelContainer->getLocalModelSize() << endl;
+	sendAllModelName();
 }
 
 void ModelManager::loadCityModel(string path)
 {
-	abstractModel * tmp=cityFac->loadModel(path);
+	abstractGlobalModel * tmp=cityFac->loadModel(path);
 	cout << "success: 模型已经读入" << endl; 
-	insertModel(tmp);
+	insertGlobalModel(tmp);
 }
 
 bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteName,double range)
@@ -68,7 +99,7 @@ bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteN
 	//目前只针对遇到的第一个城市场景操作，如果没有，则退出，返回false
 
 	//step1 找到大的城市场景 这是全局唯一的
-	cityModel * city = modelContainer->getFirstCity();
+	abstractGlobalModel * city = modelContainer->getFirstCity();
 
 	if (city ==nullptr)
 	{
@@ -76,18 +107,20 @@ bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteN
 		return false;
 	}
 	cout << "开始生成新场景,共" << center.size() << "个场景" << endl;
-	for (int i = 0; i < center.size();i++)//依次添加模型
+	if (city->getType()==ModelType::CITY)
 	{
-		abstractModel * localModel = cityFac->loadModel(center[i], siteName[i],range, city);
-		insertModel(localModel);
-		cout << "success: 第"<<i+1<<"个局部模型已经构造！" << endl;
-		//cityLocalModel *tmp = dynamic_cast<cityLocalModel*>(localModel);
-		//tmp->writeToObj();
+		for (int i = 0; i < center.size(); i++)//依次添加模型
+		{
+			abstractLocalModel * localModel = localFac->loadModel(center[i], siteName[i], range, (cityModel*)city);
+			insertLocalModel(localModel);
+			cout << "success: 第" << i + 1 << "个局部模型已经构造！" << endl;
+		}
 	}
-	drawTriangleScene = true;
+
 	return true;
 }
-void ModelManager::sendNewState()
+
+void ModelManager::getGlobalNewState()
 {
 	if (modelContainer->isCityExist())
 	{
@@ -96,23 +129,37 @@ void ModelManager::sendNewState()
 		vector<Vector3d> box = modelContainer->getCityBoundingBox();
 		Vector3d MinPos = box[0];
 		Vector3d MaxPos = box[1];
-		m_subject->visItem->setFlag(true);
+		m_subject->visItem->setGlobalFlag(true);
 		m_subject->visItem->addCity(cityNum, concave, MinPos, MaxPos);
-		m_subject->visItem->setName(modelContainer->getNames());
-		m_subject->visItem->setModelID(modelContainer->getIDs());
+		m_subject->visItem->setGlobalName(modelContainer->getGlobalNames());
+		m_subject->visItem->setGlobalModelID(modelContainer->getGlobalIDs());
 	}
 	else
 	{
-		m_subject->visItem->setFlag(false);
+		m_subject->visItem->setGlobalFlag(false);
 	}
-	
-	m_subject->notify();
+
+}
+
+
+void ModelManager::getLocalNewState()
+{
+	if (modelContainer->isLocalExist())
+	{
+		m_subject->visItem->setLocalFlag(true);
+		m_subject->visItem->setLocalModelID(modelContainer->getLocalModelID());
+		m_subject->visItem->setLocalModelName(modelContainer->getlocalNames());
+	}
+	else
+	{
+		m_subject->visItem->setLocalFlag(false);
+	}
 }
 
 void ModelManager::sendLocalStateByID(int id)
 {
 
-		cityLocalModel * tmp = modelContainer->getLocalModelByID(id);
+		abstractLocalModel * tmp = modelContainer->getLocalModelByID(id);
 		if ((tmp)!=nullptr)
 		{
 			int faceNum = modelContainer->getLocalFaceNum(id);
@@ -127,28 +174,32 @@ void ModelManager::sendLocalStateByID(int id)
 		m_local_subject->notify();
 }
 
+void ModelManager::sendAllModelName()
+{
+	getGlobalNewState();
+	getLocalNewState();
+
+	m_subject->notify();
+}
+
 bool ModelManager::checkCityExist()
 {
 	return modelContainer->isCityExist();
 }
 
 
-bool ModelManager::getWholeModelFlag()
-{
-	return wholeModel_Flag;
-}
-
-void ModelManager::setWholeModelFlag(bool a)
-{
-	wholeModel_Flag = a;
-}
 
 void ModelManager::setLocalShowID(int id)
 {
 	if (modelContainer->isLocalIDExist(id))
 	{
-
+		LocalModelID_SHOW = id;
 	}
+}
+
+int ModelManager::getLocalShowID()
+{
+	return LocalModelID_SHOW;
 }
 
 bool ModelManager::checkLocalExist()
@@ -161,48 +212,54 @@ bool ModelManager::checkLocalExistByID(int id)
 	return modelContainer->isLocalIDExist(id);
 }
 
-cityLocalModel *ModelManager::getFirstLocal()
+abstractLocalModel *ModelManager::getFirstLocal()
 {
 	return modelContainer->getFirstLocal();
 }
 
-cityLocalModel * ModelManager::getLocalModelByID(int id)
+abstractLocalModel * ModelManager::getLocalModelByID(int id)
 {
 	return modelContainer->getLocalModelByID(id);
 }
 
-cityModel  *ModelManager:: getFirstCity()
+abstractGlobalModel  *ModelManager:: getFirstCity()
 {
 	return modelContainer->getFirstCity();
 }
 
 void ModelManager:: setModelPara()
 {
-	vector<int> ids = modelContainer->getLocalCityModelID();
+	vector<int> ids = modelContainer->getLocalModelID();
 	
 	modelPara->clearModel();
 	int count=0;
 
 	for (int i = 0; i < ids.size();i++)
 	{
-		cityLocalModel*tmp = modelContainer->getLocalModelByID(ids[i]);
-		BaseModel* tmpBase = new BaseModel();
-		std::shared_ptr<cityScene> tmpScene(tmp->getScene());
-		tmpBase->setCityScene(tmpScene);
+		abstractLocalModel*tmpModel = modelContainer->getLocalModelByID(ids[i]);
+		if (tmpModel->getType()==ModelType::CITY_LOCAL)
+		{
+			cityLocalModel *tmp = (cityLocalModel*)tmpModel;
 
-		tmpBase->setSceneRange(tmp->getRange());
+			BaseModel* tmpBase = new BaseModel();
+			std::shared_ptr<cityScene> tmpScene(tmp->getScene());
+			tmpBase->setCityScene(tmpScene);
 
-		std::shared_ptr<MESH> tmpMesh(tmp->getMesh());
-		tmpBase->setGround_Mesh(tmpMesh);
+			tmpBase->setSceneRange(tmp->getRange());
 
-		tmpBase->setVertices(tmp->getVertices());
-		tmpBase->setFaces(tmp->getFaces());
-		tmpBase->setNormals(tmp->getNF());
-		tmpBase->setEachFaceMaterial(tmp->getF_material());
-		tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
+			std::shared_ptr<MESH> tmpMesh(tmp->getMesh());
+			tmpBase->setGround_Mesh(tmpMesh);
 
-		modelPara->addModel(tmpBase);
-		count++;
+			tmpBase->setVertices(tmp->getVertices());
+			tmpBase->setFaces(tmp->getFaces());
+			tmpBase->setNormals(tmp->getNF());
+			tmpBase->setEachFaceMaterial(tmp->getF_material());
+			tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
+
+			modelPara->addModel(tmpBase);
+			count++;
+		}
+		
 	}
 
 	modelPara->setMaterialVector(matManager->getMaterialVector());

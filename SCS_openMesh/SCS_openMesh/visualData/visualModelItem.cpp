@@ -7,7 +7,8 @@ visualModelItem::visualModelItem()
 	cityMin = Vector3d(0, 0, 0);
 	cityMax = Vector3d(0, 0, 0);
 
-	updateData= false;
+	updateCityData=false;
+	updateLocalData=false;
 
 }
 
