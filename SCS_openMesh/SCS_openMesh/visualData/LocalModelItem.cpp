@@ -17,6 +17,7 @@ LocalModelItem::~LocalModelItem()
 void LocalModelItem::addLocalScene(int faceNum, Vector3d minBox, Vector3d maxBox)
 {
 	setLocalFaceNum(faceNum);
+	cout << "just debug" << endl;
 	setlocalMin(minBox);
 	setlocalMax(maxBox);
 }

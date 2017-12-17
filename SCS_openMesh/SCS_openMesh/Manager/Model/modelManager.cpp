@@ -194,7 +194,9 @@ void ModelManager::setLocalShowID(int id)
 	if (modelContainer->isLocalIDExist(id))
 	{
 		LocalModelID_SHOW = id;
+		sendLocalStateByID(id);
 	}
+
 }
 
 int ModelManager::getLocalShowID()

@@ -198,7 +198,11 @@ abstractLocalModel * ModelContainer::getLocalModelByID(int id)
 	{
 		return it->second;
 	}
-	return nullptr;
+	else
+	{
+		return nullptr;
+	}
+
 }
 
 bool ModelContainer::isCityExist()

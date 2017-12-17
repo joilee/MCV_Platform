@@ -77,7 +77,6 @@ private:
 
     //地面模型数组
     //vector<Building> local_Buildings;
-    Vector3d MaxPos, MinPos;
     cityScene *scene;
     vector<vector<double> >normalMatrix;
     vector<vector<int> > cannyPoint;
