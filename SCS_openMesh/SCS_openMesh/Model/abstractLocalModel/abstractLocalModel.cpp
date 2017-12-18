@@ -16,8 +16,8 @@ void abstractLocalModel::clearVandF()
 	F.clear();
 	f_materialId.clear();
 	NF.clear();
-	MinPos = Vector3d(0, 0, 0);
-	MaxPos = Vector3d(0, 0, 0);
+	MinPos = Vector3d(DBL_MAX, DBL_MAX, DBL_MAX);
+	MaxPos = Vector3d(DBL_MIN, DBL_MIN, DBL_MIN);
 }
 
 

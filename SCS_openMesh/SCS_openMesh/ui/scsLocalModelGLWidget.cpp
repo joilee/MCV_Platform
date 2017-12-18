@@ -25,8 +25,8 @@ void scsLocalModelGLWidget::setModelAlpha(int a)
 void scsLocalModelGLWidget::drawLocalScene()
 {
 	globalContext *globalCtx = globalContext::GetInstance();
-	minPos = Min(minPos, globalCtx->modelManager->getLocalModelByID(LocalModelID)->getMin());
-	maxPos = Max(maxPos, globalCtx->modelManager->getLocalModelByID(LocalModelID)->getMax());
+	minPos = globalCtx->modelManager->getLocalModelByID(LocalModelID)->getMin();
+	maxPos = globalCtx->modelManager->getLocalModelByID(LocalModelID)->getMax();
 	updateMesh();
 	vector<bool> mode;
 	mode.push_back(drawLocalPoint);

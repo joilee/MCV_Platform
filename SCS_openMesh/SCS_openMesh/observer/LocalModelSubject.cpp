@@ -3,6 +3,7 @@
 
 LocalModelSubject::LocalModelSubject()
 {
+	visItem = new LocalModelItem;
 }
 
 
