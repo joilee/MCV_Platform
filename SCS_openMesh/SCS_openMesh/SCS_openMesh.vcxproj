@@ -71,6 +71,7 @@
     <ClCompile Include="Container\EFieldContainer.cpp" />
     <ClCompile Include="Container\ModelContainer.cpp" />
     <ClCompile Include="Container\SitesContainer.cpp" />
+    <ClCompile Include="Correction\MearsuredData.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -182,6 +183,7 @@
     <ClCompile Include="ui\mainwindow.cpp" />
     <ClCompile Include="ui\meshOption.cpp" />
     <ClCompile Include="ui\outdoorFile.cpp" />
+    <ClCompile Include="ui\scatterWidget\correctWidget.cpp" />
     <ClCompile Include="ui\scatterWidget\Document.cpp" />
     <ClCompile Include="ui\scatterWidget\scatterWidget.cpp" />
     <ClCompile Include="ui\scsGLWidget.cpp" />
@@ -955,6 +957,8 @@
     <ClInclude Include="Container\EFieldContainer.h" />
     <ClInclude Include="Container\ModelContainer.h" />
     <ClInclude Include="Container\SitesContainer.h" />
+    <ClInclude Include="Correction\MearsuredData.h" />
+    <ClInclude Include="GeneratedFiles\ui_correctionWidget.h" />
     <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />
     <ClInclude Include="GeneratedFiles\ui_saveResultDialog.h" />
     <ClInclude Include="GeneratedFiles\ui_scatterDialog.h" />
@@ -973,6 +977,7 @@
     <ClInclude Include="observer\SiteCellSubject.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Manager\visualManager\visualManager.h" />
+    <ClInclude Include="ui\scatterWidget\correctWidget.h" />
     <ClInclude Include="visualData\visualPluginItem.h" />
     <ClInclude Include="visualData\visualResultItem.h" />
     <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
@@ -1043,6 +1048,18 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="saveResultDialog.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="correctionWidget.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>

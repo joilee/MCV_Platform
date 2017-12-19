@@ -11,19 +11,28 @@
 #include <QTextStream>
 #include <QJsonDocument>
 #include <QWebChannel>
-
+#include <QMessageBox>
+#include "Context/context.h"
 using namespace std;
 
 scatterWidget::scatterWidget(QWidget *parent) :QDialog(parent), ui(new Ui::scatterDialog)
 {
 	ui->setupUi(this);
-	connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(openTestFile()));
+	dataWidget = new correctWidget(this);
+
+	connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(openMeasuredFile()));
+	connect(this->ui->correct_Button,SIGNAL(clicked()), this, SLOT(showPara()));
 	webPage *page = new webPage(this);
 	ui->preview->setPage(page);
 	QWebChannel *channel = new QWebChannel(this);
 	channel->registerObject(QStringLiteral("content"), &m_content);
 	page->setWebChannel(channel);
 	ui->preview->setUrl(QUrl("qrc:/MainWindow/Resources/echarts/index.html"));
+	modeGroup = new QButtonGroup(this);
+	modeGroup->addButton(ui->radioButton, 1);
+	modeGroup->addButton(ui->radioButton_2, 2);
+	ui->radioButton->setChecked(true);
+	connect(modeGroup, SIGNAL(buttonToggled(int, bool)), this, SLOT(modeButtonToggled(int, bool)));
 	initData();
 }
 
@@ -65,18 +74,73 @@ void scatterWidget::openTestFile()
 	m_content.setSendText(dataArray);
 }
 
-void scatterWidget::showResult()
+void scatterWidget::openMeasuredFile()
 {
-
+	globalContext *globalCtx = globalContext::GetInstance();
+	if (!globalCtx->visualManager->getContainer()->isDataExist())
+	{
+		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少仿真数据，请先做仿真计算！"));
+		return;
+	}
+	
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "/", tr("csv Files (*.csv)"));
+	ui->lineEdit->setText(fileName);
+	globalCtx->visualManager->loadMeasuredFile(fileName);
 }
 
-void scatterWidget::setSourceEField(vector<EField> &_placePoint)
+void scatterWidget::showResult()
 {
-	placePoint = _placePoint;
+	int mode = modeGroup->checkedId();
+	if (mode==1)
+	{
+
+	}
+	else
+	{
+		//校正
+		Vector3d before, after;
+		globalContext *globalCtx = globalContext::GetInstance();
+		globalCtx->visualManager->correct(before, after);
+		dataWidget->setPara(before.x, before.y, before.z, after.x, after.y, after.z);
+		//推送数据到前端
+
+	}
+}
+
+
+
+void scatterWidget::showPara()
+{
+	dataWidget->show();
+}
+
+void scatterWidget::modeButtonToggled(int id, bool flag)
+{
+	int mode = modeGroup->checkedId();
+	switch (id)
+	{
+	case 1:
+		enableShowMode(flag);
+			break;
+	case 2:
+		enableCorrectMode(flag);
+		break;
+	}
 }
 
 void scatterWidget::initData()
 {
-	placePoint.clear();
-	testPoint.clear();
+
+}
+
+void scatterWidget::enableShowMode(bool a)
+{
+	ui->comboBox_Site->setEnabled(a);
+}
+
+void scatterWidget::enableCorrectMode(bool a)
+{
+	ui->lineEdit->setEnabled(a);
+	ui->pushButton->setEnabled(a);
+	ui->correct_Button->setEnabled(a);
 }

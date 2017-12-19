@@ -40,7 +40,7 @@ public:
     QWebEngineView *preview;
     QGroupBox *groupBox_File;
     QGroupBox *groupBox_mode;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QGridLayout *gridLayout;
     QSpacerItem *horizontalSpacer_3;
     QRadioButton *radioButton_2;
@@ -55,6 +55,7 @@ public:
     QComboBox *comboBox_Site;
     QSpacerItem *horizontalSpacer_5;
     QPushButton *showResult_Button;
+    QPushButton *correct_Button;
 
     void setupUi(QDialog *scatterDialog)
     {
@@ -96,17 +97,17 @@ public:
         groupBox_mode = new QGroupBox(groupBox_File);
         groupBox_mode->setObjectName(QStringLiteral("groupBox_mode"));
         groupBox_mode->setGeometry(QRect(10, 20, 901, 91));
-        widget = new QWidget(groupBox_mode);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(3, 21, 563, 57));
-        gridLayout = new QGridLayout(widget);
+        layoutWidget1 = new QWidget(groupBox_mode);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(3, 21, 563, 57));
+        gridLayout = new QGridLayout(layoutWidget1);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
         horizontalSpacer_3 = new QSpacerItem(14, 29, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         gridLayout->addItem(horizontalSpacer_3, 0, 0, 2, 1);
 
-        radioButton_2 = new QRadioButton(widget);
+        radioButton_2 = new QRadioButton(layoutWidget1);
         radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
 
         gridLayout->addWidget(radioButton_2, 0, 1, 1, 1);
@@ -115,17 +116,17 @@ public:
 
         gridLayout->addItem(horizontalSpacer, 0, 2, 1, 1);
 
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget1);
         label->setObjectName(QStringLiteral("label"));
 
         gridLayout->addWidget(label, 0, 3, 1, 1);
 
-        lineEdit = new QLineEdit(widget);
+        lineEdit = new QLineEdit(layoutWidget1);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
 
         gridLayout->addWidget(lineEdit, 0, 4, 1, 1);
 
-        pushButton = new QPushButton(widget);
+        pushButton = new QPushButton(layoutWidget1);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setMinimumSize(QSize(0, 20));
 
@@ -135,7 +136,7 @@ public:
 
         gridLayout->addItem(horizontalSpacer_7, 0, 6, 1, 1);
 
-        label_2 = new QLabel(widget);
+        label_2 = new QLabel(layoutWidget1);
         label_2->setObjectName(QStringLiteral("label_2"));
 
         gridLayout->addWidget(label_2, 1, 3, 2, 1);
@@ -144,12 +145,12 @@ public:
 
         gridLayout->addItem(horizontalSpacer_4, 2, 0, 1, 1);
 
-        radioButton = new QRadioButton(widget);
+        radioButton = new QRadioButton(layoutWidget1);
         radioButton->setObjectName(QStringLiteral("radioButton"));
 
         gridLayout->addWidget(radioButton, 2, 1, 1, 1);
 
-        comboBox_Site = new QComboBox(widget);
+        comboBox_Site = new QComboBox(layoutWidget1);
         comboBox_Site->setObjectName(QStringLiteral("comboBox_Site"));
 
         gridLayout->addWidget(comboBox_Site, 2, 4, 1, 1);
@@ -158,14 +159,15 @@ public:
 
         gridLayout->addItem(horizontalSpacer_5, 2, 6, 1, 1);
 
-        layoutWidget->raise();
-        label_2->raise();
-        pushButton->raise();
         showResult_Button = new QPushButton(groupBox_File);
         showResult_Button->setObjectName(QStringLiteral("showResult_Button"));
         showResult_Button->setGeometry(QRect(790, 110, 75, 31));
+        correct_Button = new QPushButton(groupBox_File);
+        correct_Button->setObjectName(QStringLiteral("correct_Button"));
+        correct_Button->setGeometry(QRect(30, 110, 75, 31));
         showResult_Button->raise();
         groupBox_mode->raise();
+        correct_Button->raise();
 
         verticalLayout->addWidget(groupBox_File);
 
@@ -189,6 +191,7 @@ public:
         label_2->setText(QApplication::translate("scatterDialog", "\351\200\211\346\213\251\347\253\231\347\202\271", 0));
         radioButton->setText(QApplication::translate("scatterDialog", "\345\244\232\347\253\231\347\202\271", 0));
         showResult_Button->setText(QApplication::translate("scatterDialog", "\345\261\225\347\244\272", 0));
+        correct_Button->setText(QApplication::translate("scatterDialog", "\345\257\271\346\257\224\345\217\202\346\225\260", 0));
     } // retranslateUi
 
 };
