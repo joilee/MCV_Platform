@@ -185,11 +185,11 @@ public:
         groupBox_Scatter->setTitle(QApplication::translate("scatterDialog", "\346\225\243\347\202\271\345\233\276", 0));
         groupBox_File->setTitle(QApplication::translate("scatterDialog", "\346\226\207\344\273\266", 0));
         groupBox_mode->setTitle(QApplication::translate("scatterDialog", "\346\250\241\345\274\217", 0));
-        radioButton_2->setText(QApplication::translate("scatterDialog", "\345\215\225\347\253\231\347\202\271", 0));
+        radioButton_2->setText(QApplication::translate("scatterDialog", "\346\240\241\346\255\243", 0));
         label->setText(QApplication::translate("scatterDialog", "\345\256\236\346\265\213\346\226\207\344\273\266", 0));
         pushButton->setText(QApplication::translate("scatterDialog", "\345\257\274\345\205\245", 0));
         label_2->setText(QApplication::translate("scatterDialog", "\351\200\211\346\213\251\347\253\231\347\202\271", 0));
-        radioButton->setText(QApplication::translate("scatterDialog", "\345\244\232\347\253\231\347\202\271", 0));
+        radioButton->setText(QApplication::translate("scatterDialog", "\347\253\231\347\202\271\345\261\225\347\244\272", 0));
         showResult_Button->setText(QApplication::translate("scatterDialog", "\345\261\225\347\244\272", 0));
         correct_Button->setText(QApplication::translate("scatterDialog", "\345\257\271\346\257\224\345\217\202\346\225\260", 0));
     } // retranslateUi

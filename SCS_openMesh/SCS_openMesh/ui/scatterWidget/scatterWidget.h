@@ -46,7 +46,7 @@ private:
 	Ui::scatterDialog *ui;
 	QButtonGroup *modeGroup;
 	Document m_content;
-	QJsonArray dataArray;
+
 	correctWidget * dataWidget;
 	//data
 	void initData();

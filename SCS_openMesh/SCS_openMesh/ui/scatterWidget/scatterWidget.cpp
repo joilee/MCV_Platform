@@ -22,6 +22,7 @@ scatterWidget::scatterWidget(QWidget *parent) :QDialog(parent), ui(new Ui::scatt
 
 	connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(openMeasuredFile()));
 	connect(this->ui->correct_Button,SIGNAL(clicked()), this, SLOT(showPara()));
+	connect(this->ui->showResult_Button, SIGNAL(clicked()), this, SLOT(showResult()));
 	webPage *page = new webPage(this);
 	ui->preview->setPage(page);
 	QWebChannel *channel = new QWebChannel(this);
@@ -53,7 +54,7 @@ void scatterWidget::openTestFile()
 	}
 	QTextStream inData(&dataFile);
 	QString text;
-
+	QJsonArray dataArray;
 	int id, x, y;
 	float z, rsrp, calcfield, correction_calcfield;
 	text = inData.readLine();
@@ -91,6 +92,7 @@ void scatterWidget::openMeasuredFile()
 void scatterWidget::showResult()
 {
 	int mode = modeGroup->checkedId();
+	QJsonArray dataArray;
 	if (mode==1)
 	{
 
@@ -102,9 +104,25 @@ void scatterWidget::showResult()
 		globalContext *globalCtx = globalContext::GetInstance();
 		globalCtx->visualManager->correct(before, after);
 		dataWidget->setPara(before.x, before.y, before.z, after.x, after.y, after.z);
-		//推送数据到前端
 
+		//推送数据到前端网页
+		vector<double> beforeVector=globalCtx->visualManager->getBeforeVec();
+		vector<double> measruedVector =globalCtx->visualManager->getMeasured();
+		vector<double> afterVector = globalCtx->visualManager->getAfterVec();
+		
+		//生成json
+		for (int i = 0; i < beforeVector.size() && i <measruedVector.size() && i < afterVector.size(); i++)
+		{
+			QJsonObject tempObject;
+			tempObject.insert("ID", i);
+			tempObject.insert("RSRP",measruedVector[i]);
+			tempObject.insert("Before", beforeVector[i]);
+			tempObject.insert("Correction",afterVector[i]);
+			dataArray.append(tempObject);
+		}
+		
 	}
+	m_content.setSendText(dataArray);
 }
 
 
