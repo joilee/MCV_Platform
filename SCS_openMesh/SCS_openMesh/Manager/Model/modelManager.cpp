@@ -94,6 +94,15 @@ void ModelManager::loadCityModel(string path)
 	insertGlobalModel(tmp);
 }
 
+//读入obj模型
+void ModelManager::loadGlobalObj(string objPath)
+{
+	abstractGlobalModel * tmp = cityFac->loadModel(objPath);
+	cout << "success: 模型已经读入" << endl;
+	insertGlobalModel(tmp);
+}
+
+
 bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteName,double range)
 {
 	//目前只针对遇到的第一个城市场景操作，如果没有，则退出，返回false
@@ -272,7 +281,3 @@ void ModelManager:: setModelPara()
 	QMessageBox::information(NULL, QStringLiteral("模型参数"), s);
 }
 
-void ModelManager::loadGlobalObj(string objPath)
-{
-
-}

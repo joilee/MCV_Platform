@@ -4,7 +4,19 @@
 objModel::objModel(string objPath)
 {
 	id = 0;
-	name = "";
+	fileType = ModelType::OBJ;
+	int lPos = objPath.find_last_of('\\');
+	int rPos = objPath.find('.');
+	name = objPath.substr(lPos+1,rPos-1);
+
+	readObj(objPath);
+	uniformColor = Color(0.0f, 0.0f, 0.0f);
+	initDraw();
+}
+
+
+void objModel::readObj(string objPath)
+{
 	ifstream fin(objPath, ios::in);
 
 	string line;
@@ -27,7 +39,7 @@ objModel::objModel(string objPath)
 			vertices.push_back(y);
 			vertices.push_back(z);
 
-			points.push_back(Pot(x, y, z));
+			points.push_back(Vector3d(x, y, z));
 
 			//x,y,z的最大值与最小值
 			pMax = Max(pMax, Vector3d(x, y, z));
@@ -39,16 +51,43 @@ objModel::objModel(string objPath)
 		{
 			istringstream lineStream(line);
 			lineStream >> type >> v1 >> v2 >> v3;
-			faces.push_back(v1);
-			faces.push_back(v2);
-			faces.push_back(v3);
+			faces.push_back(Vector3i(v1,v2,v3));
 		}
 	}
 	fin.close();
+
 }
+
 
 void objModel::draw(vector<bool> mode, double alpha)
 {
+	if (mode[1]) { //draw line
+		//glCallList(showWireList);
+		glDisable(GL_LIGHTING);
+		glLineWidth(2.0f);
+		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+		glBegin(GL_LINES);
+		for (int i = 0; i < faces.size(); i++) {
+			for (int j = 0; j < 3; j++) {
+				glVertex3d((GLdouble)points[faces[i][j]].x, (GLdouble)points[faces[i][j]].y, (GLdouble)points[faces[i][j]].z);
+				glVertex3d((GLdouble)points[faces[i][(j + 1) % 3]].x, (GLdouble)points[faces[i][(j + 1) % 3]].y, (GLdouble)points[faces[i][(j + 1) % 3]].z);
+			}
+		}
+		glEnd();
+		glEnable(GL_LIGHTING);
+	}
+	if (mode[2]) { //draw face
+		// enable and specify pointers to vertex arrays
+		glEnableClientState(GL_NORMAL_ARRAY);;
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glColor4f(uniformColor.r / 256.0, uniformColor.g / 256.0, uniformColor.b / 256.0, alpha);
+		glNormalPointer(GL_FLOAT, 0, &normals[0]);
+		glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);
+		glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
+	}
 
 }
 
@@ -60,20 +99,65 @@ void objModel::initDraw()
 	int defaultID = globalCtx->modelManager->matManager->getDefaultMaterial();
 	int index = globalCtx->modelManager->matManager->getVectorIndexFromID(defaultID);
 	uniformColor = globalCtx->modelManager->matManager->getColor(index);
-	
 
+	f_materialId = vector<int>(faces.size(), defaultID);
+
+	for (int i = 0; i < faces.size();i++)
+	{
+		int index = globalCtx->modelManager->matManager->getVectorIndexFromID(f_materialId[i]);
+		Color tmp = globalCtx->modelManager->matManager->getColor(index);
+
+		vector<float> colorVector;
+		colorVector.push_back((double)tmp.r / 256.0);
+		colorVector.push_back((double)tmp.g / 256.0);
+		colorVector.push_back((double)tmp.b / 256.0);
+		colorVector.push_back(uniform_alpha);
+		faceColor.push_back(colorVector);
+	}
+
+	for (int i = 0; i < faces.size(); i++) {
+		Vector3i vIndex = faces[i];//3个点
+		for (int j = 0; j < 3; j++) {
+			//索引坐标
+			indices.push_back(i * 3 + j);
+			//点的坐标
+			vertices.push_back(points[vIndex[j]].x);
+			vertices.push_back(points[vIndex[j]].y);
+			vertices.push_back(points[vIndex[j]].z);
+			//向量坐标
+			normals.push_back(normals[i].x);
+			normals.push_back(normals[i].y);
+			normals.push_back(normals[i].z);
+		}
+	}
+
+	showWireList = glGenLists(1);
+	glNewList(showWireList, GL_COMPILE);
+	glDisable(GL_LIGHTING);
+	glLineWidth(2.0f);
+	glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+	glBegin(GL_LINES);
+	for (int i = 0; i < faces.size(); i++) {
+		for (int j = 0; j < 3; j++) {
+			glVertex3d((GLdouble)points[faces[i][j]].x, (GLdouble)points[faces[i][j]].y, (GLdouble)points[faces[i][j]].z);
+			glVertex3d((GLdouble)points[faces[i][(j + 1) % 3]].x, (GLdouble)points[faces[i][(j + 1) % 3]].y, (GLdouble)points[faces[i][(j + 1) % 3]].z);
+		}
+	}
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glEndList();
 }
 
 //计算高度
 double objModel::getAltitude(double x, double y)
 {
 	double minZ = DBL_MAX;
-	for (int i = 0; i < faces.size() / 3; i = i + 3)
+	for (int i = 0; i < faces.size(); i++)
 	{
-		Pot a = points[faces[i]];
-		Pot b = points[faces[i + 1]];
-		Pot c = points[faces[i + 2]];
-		Pot p = Pot(x, y, 0.0);
+		Vector3d a = points[faces[i].x];
+		Vector3d b = points[faces[i].y];
+		Vector3d c = points[faces[i].z];
+		Vector3d p = Vector3d(x, y, 0.0);
 
 		Vector3d ab(b.x - a.x, b.y - a.y, b.z - a.z);
 		Vector3d ap(p.x - a.x, p.y - a.y, p.z - a.z);
@@ -82,12 +166,9 @@ double objModel::getAltitude(double x, double y)
 		double u = (ap.x*ab.y - ab.x*ap.y) / (ac.x*ab.y - ab.x*ac.y);
 		double v = (ap.x*ac.y - ac.x*ap.y) / (ab.x*ac.y - ac.x*ab.y);
 
-		if (u < 0 || v<0 || (u + v)>1)
+		if (!(u < 0 || v<0 || (u + v)>1))
 		{
-		}
-		else
-		{
-			float z = (a.z + b.z + c.z) / 3.0;
+			float z = (a.z + b.z + c.z) / 3.0;  //改为插值计算
 			if (z < minZ) minZ = z;
 		}
 	}
@@ -108,11 +189,11 @@ Vector3d objModel::getMinPoint()
 
 void objModel::getNormals()
 {
-	for (int i = 0; i < faces.size() / 3; i = i + 3)
+	for (int i = 0; i < faces.size();i++)
 	{
-		Pot a = points[faces[i]];
-		Pot b = points[faces[i + 1]];
-		Pot c = points[faces[i + 2]];
+		Vector3d a = points[faces[i].x];
+		Vector3d b = points[faces[i].y];
+		Vector3d c = points[faces[i].z];
 
 		Vector3d n = VectorCross(Vector3d(b.x - a.x, b.y - a.y, b.z - a.z), Vector3d(c.x - a.x, c.y - a.y, c.z - a.z));
 		n = n.normalize();

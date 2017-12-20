@@ -78,6 +78,7 @@
     <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp" />
     <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp" />
     <ClCompile Include="Model\OBJModel\objModel.cpp" />
+    <ClCompile Include="Model\OBJModel\objModelFactory.cpp" />
     <ClCompile Include="observer\LocalModelSubject.cpp" />
     <ClCompile Include="Manager\Computation\computeManager.cpp" />
     <ClCompile Include="Context\context.cpp" />

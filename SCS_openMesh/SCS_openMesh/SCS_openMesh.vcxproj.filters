@@ -275,6 +275,9 @@
     <ClCompile Include="Model\OBJModel\objModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\OBJModel\objModelFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="glWidget.h">
