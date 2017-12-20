@@ -77,6 +77,7 @@
     <ClCompile Include="Model\abstractGlobalModel\abstractGlobalModel.cpp" />
     <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp" />
     <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp" />
+    <ClCompile Include="Model\OBJModel\objModel.cpp" />
     <ClCompile Include="observer\LocalModelSubject.cpp" />
     <ClCompile Include="Manager\Computation\computeManager.cpp" />
     <ClCompile Include="Context\context.cpp" />
@@ -964,6 +965,8 @@
     <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h" />
     <ClInclude Include="Model\cityModel\cityLocalModelFactory.h" />
     <ClInclude Include="Model\ModelType.h" />
+    <ClInclude Include="Model\OBJModel\objModel.h" />
+    <ClInclude Include="Model\OBJModel\objModelFactory.h" />
     <ClInclude Include="observer\LocalModelSubject.h" />
     <ClInclude Include="Manager\Id\ModelIdManager.h" />
     <ClInclude Include="observer\LocalModelObserver.h" />

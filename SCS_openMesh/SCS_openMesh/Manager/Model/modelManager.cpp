@@ -271,3 +271,8 @@ void ModelManager:: setModelPara()
 
 	QMessageBox::information(NULL, QStringLiteral("模型参数"), s);
 }
+
+void ModelManager::loadGlobalObj(string objPath)
+{
+
+}

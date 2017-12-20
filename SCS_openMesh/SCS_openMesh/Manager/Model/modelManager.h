@@ -141,6 +141,8 @@ public:
 	void setLocalShowID(int id);
 
 	int getLocalShowID();
+
+	void loadGlobalObj(string objPath);
 private:
 
 	cityLocalModelFactory *localFac;
