@@ -11,6 +11,7 @@ objModel::objModel(string objPath)
 
 	readObj(objPath);
 	uniformColor = Color(0.0f, 0.0f, 0.0f);
+	getNormals();
 	initDraw();
 }
 
@@ -51,7 +52,7 @@ void objModel::readObj(string objPath)
 		{
 			istringstream lineStream(line);
 			lineStream >> type >> v1 >> v2 >> v3;
-			faces.push_back(Vector3i(v1,v2,v3));
+			faces.push_back(Vector3i(v1-1,v2-1,v3-1));
 		}
 	}
 	fin.close();
@@ -125,9 +126,9 @@ void objModel::initDraw()
 			vertices.push_back(points[vIndex[j]].y);
 			vertices.push_back(points[vIndex[j]].z);
 			//向量坐标
-			normals.push_back(normals[i].x);
-			normals.push_back(normals[i].y);
-			normals.push_back(normals[i].z);
+			m_normals.push_back(normals[i].x);
+			m_normals.push_back(normals[i].y);
+			m_normals.push_back(normals[i].z);
 		}
 	}
 
@@ -168,7 +169,9 @@ double objModel::getAltitude(double x, double y)
 
 		if (!(u < 0 || v<0 || (u + v)>1))
 		{
-			float z = (a.z + b.z + c.z) / 3.0;  //改为插值计算
+			vector<double> coffs(4);
+			coffs = calculateCoffs(a, b, c);
+			double z = (-coffs[3] - x*coffs[0] - y* coffs[1]) / coffs[2];
 			if (z < minZ) minZ = z;
 		}
 	}
@@ -202,5 +205,24 @@ void objModel::getNormals()
 			n = -1.0 * n;
 		normals.push_back(n);
 	}
+}
+
+vector<double> objModel::calculateCoffs(Vector3d a, Vector3d b, Vector3d c)
+{
+	vector<double> coffs(4);
+
+	coffs[0] = (b.y - a.y)*(c.z - a.z) - (b.z - a.z)*(c.y - a.y);
+	coffs[1] = (b.z - a.z)*(c.x - a.x) - (b.x - a.x)*(c.z - a.z);
+	coffs[2] = (b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x);
+	coffs[3] = -(coffs[0] * a.x + coffs[1] * a.y + coffs[1] * a.z);
+
+	double s = sqrt(coffs[0] * coffs[0] + coffs[1] * coffs[1] + coffs[2] * coffs[2] + coffs[3] * coffs[3]);
+
+	coffs[0] = coffs[0] / s;
+	coffs[1] = coffs[1] / s;
+	coffs[2] = coffs[2] / s;
+	coffs[3] = coffs[3] / s;
+
+	return coffs;
 }
 

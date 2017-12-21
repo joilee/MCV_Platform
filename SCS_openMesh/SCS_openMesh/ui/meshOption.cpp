@@ -9,6 +9,7 @@ void meshOptionDialog::getValue(vector<Vector3d> &_center,vector<int>&siteID,dou
     _center=center;
     _range=range;
 	siteID = siteName;
+
 }
 
 void meshOptionDialog::enableSingleMode(bool flag) {
@@ -151,7 +152,7 @@ void meshOptionDialog::dynamicLoadSite(int index) {
         centerYLE->setReadOnly(false);
         centerZLE->setReadOnly(false);
 		siteName.clear();
-		siteName.push_back(-1);//一般不会没有站点信息，所以这里赋值为-1
+		siteName.push_back(500);//一般不会没有站点信息，所以这里赋值为-1
         return;
     } 
 	else

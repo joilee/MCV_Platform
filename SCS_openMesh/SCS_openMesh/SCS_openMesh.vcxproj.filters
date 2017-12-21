@@ -278,6 +278,12 @@
     <ClCompile Include="Model\OBJModel\objModelFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model\OBJModel\objLocalModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\OBJModel\objLocalModelFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="glWidget.h">
@@ -542,6 +548,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\OBJModel\objModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\OBJModel\objLocalModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\OBJModel\objLocalModelFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

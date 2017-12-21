@@ -8,7 +8,7 @@ abstractGlobalModel  * objModelFactory::loadModel(string path)
 
 objModelFactory::objModelFactory()
 {
-	cout << "Info: Model Factory initialized. " << endl;
+	cout << "Info: ObjModel Factory initialized. " << endl;
 }
 
 

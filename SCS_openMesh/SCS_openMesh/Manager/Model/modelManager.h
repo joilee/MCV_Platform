@@ -6,6 +6,8 @@
 #include "Container/ModelContainer.h"
 #include "../Material/materialManager.h"
 #include <map>
+#include "Model/OBJModel/objModelFactory.h"
+#include "Model/OBJModel/objLocalModelFactory.h"
 
 
 class ModelManager
@@ -143,11 +145,14 @@ public:
 	int getLocalShowID();
 
 	void loadGlobalObj(string objPath);
+
+	void loadLocalObj(vector<Vector3d> center, double localRange, vector<int> siteName);
 private:
 
 	cityLocalModelFactory *localFac;
 	cityModelFactory *cityFac;
-
+	objModelFactory *objFac;
+	objLocalModelFactory *objLocalFac;
 	modelSubject * m_subject;
 	LocalModelSubject * m_local_subject;
 

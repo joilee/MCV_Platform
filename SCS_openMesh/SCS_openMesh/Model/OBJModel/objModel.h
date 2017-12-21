@@ -19,19 +19,25 @@ public:
 	int getConcaveSize(){ return 0; }
 	void getNormals();
 	void readObj(string objPath);
+	vector<double> calculateCoffs(Vector3d a, Vector3d b,Vector3d c);
+
+	vector<Vector3d> getPoints(){ return points; }
+	vector<Vector3i> getFaces(){ return faces; }
+	vector<Vector3d> getFaceNormals(){ return normals; }
 
 private:
 
 	//城市模型场景 包括建筑物 地面模型  以及两者合成的三角面片模型
 
-	vector<GLfloat> vertices; 
 	vector<Vector3d> points;
 	vector<Vector3i> faces;
 	vector<Vector3d> normals;
+
 	vector<int>f_materialId;
 	vector<vector<GLfloat>> faceColor;
 	vector<GLuint> indices;
-
+	vector<GLfloat> vertices;
+	vector<GLfloat> m_normals;
 	double uniform_alpha;
 	Color uniformColor;
 	GLuint showWireList;
