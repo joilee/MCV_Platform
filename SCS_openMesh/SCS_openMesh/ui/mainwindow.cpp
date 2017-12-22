@@ -304,7 +304,17 @@ void MainWindow::showScatterWidget()
 /************************************************************************/
 void MainWindow::loadObj()
 {
-	
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("读取Obj文件"), ".", "*.obj");
+	globalContext *gctx = globalContext::GetInstance();
+	if (!path.isEmpty())
+	{
+		gctx->modelManager->loadGlobalObj(path.toStdString());
+		outputLog(QStringLiteral("Obj文件读取成功"));
+	}
+	else
+	{
+		outputLog(QStringLiteral("Obj文件读取失败"));
+	}
 }
 
 /************************************************************************/
@@ -332,13 +342,29 @@ void MainWindow::meshAll()
 	if (mod->inputFlag)
 	{
 		mod->getValue(center,siteID,range);
+		if (siteID.empty())
+		{
+			for (int i = 0; i < center.size();i++)
+			{
+				siteID.push_back(i + 1);
+			}
+		}
 	}
 	else
 	{
 		outputLog(QStringLiteral("没有设置剖分参数"));
 		return;
 	}
-	gctx->modelManager->generateLocalModel(center,siteID, range);
+
+	if (gctx->modelManager->getFirstCity()->getType()==ModelType::CITY)
+	{
+		gctx->modelManager->generateLocalModel(center, siteID, range);
+	}
+	else if (gctx->modelManager->getFirstCity()->getType() == ModelType::OBJ)
+	{
+		gctx->modelManager->loadLocalObj(center, range, siteID);
+	}
+
 }
 
 

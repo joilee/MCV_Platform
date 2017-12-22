@@ -10,6 +10,8 @@ ModelManager::ModelManager()
 	modelPara = new ModelPara;
 	cityFac = new cityModelFactory;
 	localFac = new cityLocalModelFactory;
+	objFac = new objModelFactory;
+	objLocalFac = new objLocalModelFactory;
 	m_subject = new modelSubject;
 	m_local_subject = new LocalModelSubject;
 	modelContainer = new ModelContainer;
@@ -93,6 +95,42 @@ void ModelManager::loadCityModel(string path)
 	cout << "success: 模型已经读入" << endl; 
 	insertGlobalModel(tmp);
 }
+
+//读入obj模型
+void ModelManager::loadGlobalObj(string objPath)
+{
+	abstractGlobalModel * tmp = objFac->loadModel(objPath);
+	cout << "success: 模型已经读入" << endl;
+	insertGlobalModel(tmp);
+}
+
+
+void ModelManager::loadLocalObj(vector<Vector3d> center, double localRange, vector<int> siteName)
+{
+	//step1 找到大的城市场景 这是全局唯一的
+	abstractGlobalModel * city = modelContainer->getFirstCity();
+	if (city == nullptr)
+	{
+		QMessageBox::critical(NULL, QStringLiteral("模型"), QStringLiteral("没有城市场景！请重新读入！"), QMessageBox::Yes, QMessageBox::Yes);
+		return ;
+	}
+	cout << "开始生成新场景,共" << center.size() << "个场景" << endl;
+
+	if (city->getType() == ModelType::OBJ)
+	{
+		for (int i = 0; i < center.size(); i++)//依次添加模型
+		{
+			stringstream stream;
+			stream << siteName[i];
+			string name= stream.str();   //此处也可以用 stream>>string_temp  
+
+			abstractLocalModel * localModel = objLocalFac->loadModel(center[i], localRange, name,(objModel*)city);
+			insertLocalModel(localModel);
+			cout << "success: 第" << i + 1 << "个局部模型已经构造！" << endl;
+		}
+	}
+}
+
 
 bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteName,double range)
 {
@@ -271,3 +309,5 @@ void ModelManager:: setModelPara()
 
 	QMessageBox::information(NULL, QStringLiteral("模型参数"), s);
 }
+
+
