@@ -272,6 +272,7 @@
     <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+
     <ClCompile Include="Model\OBJModel\objModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -282,6 +283,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Model\OBJModel\objLocalModelFactory.cpp">
+
+    <ClCompile Include="Correction\MearsuredData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\scatterWidget\correctWidget.cpp">
+
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -450,6 +457,9 @@
     <CustomBuild Include="Model\abstractModel\abstractModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="correctionWidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\face.ico">
@@ -544,6 +554,7 @@
     <ClInclude Include="Model\cityModel\cityLocalModelFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
     <ClInclude Include="Model\OBJModel\objModelFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -554,6 +565,14 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\OBJModel\objLocalModelFactory.h">
+    <ClInclude Include="Correction\MearsuredData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_correctionWidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\scatterWidget\correctWidget.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

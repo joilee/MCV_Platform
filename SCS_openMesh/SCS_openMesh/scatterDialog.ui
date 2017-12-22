@@ -101,7 +101,7 @@
        <property name="title">
         <string>模式</string>
        </property>
-       <widget class="QWidget" name="">
+       <widget class="QWidget" name="layoutWidget">
         <property name="geometry">
          <rect>
           <x>3</x>
@@ -127,7 +127,7 @@
          <item row="0" column="1">
           <widget class="QRadioButton" name="radioButton_2">
            <property name="text">
-            <string>单站点</string>
+            <string>校正</string>
            </property>
           </widget>
          </item>
@@ -203,7 +203,7 @@
          <item row="2" column="1">
           <widget class="QRadioButton" name="radioButton">
            <property name="text">
-            <string>多站点</string>
+            <string>站点展示</string>
            </property>
           </widget>
          </item>
@@ -225,9 +225,6 @@
          </item>
         </layout>
        </widget>
-       <zorder>layoutWidget</zorder>
-       <zorder>label_2</zorder>
-       <zorder>pushButton</zorder>
       </widget>
       <widget class="QPushButton" name="showResult_Button">
        <property name="geometry">
@@ -242,8 +239,22 @@
         <string>展示</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="correct_Button">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>110</y>
+         <width>75</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>对比参数</string>
+       </property>
+      </widget>
       <zorder>showResult_Button</zorder>
       <zorder>groupBox_mode</zorder>
+      <zorder>correct_Button</zorder>
      </widget>
     </item>
    </layout>

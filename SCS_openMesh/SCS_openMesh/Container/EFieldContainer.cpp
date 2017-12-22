@@ -3,16 +3,13 @@
 EFieldContainer::EFieldContainer()
 {
 	eFieldData.clear();
-	mesuredData = nullptr;
+	measuredData.clear();
 }
 
 EFieldContainer::~EFieldContainer()
 {
-	eFieldData.clear();
-	if (mesuredData!=nullptr)
-	{
-		delete mesuredData;
-	}
+	deleteAllSimuData();
+	clearMeasuredData();
 }
 
 bool EFieldContainer::isDataExist()
@@ -219,17 +216,78 @@ int EFieldContainer::getSiteIDByPCI(int pci)
 		}
 		if (flag == false)
 		{
-			return -1;
+			return NO_SITE_PCI;
 		}
 	}
 	else
 	{
-		return -1;
+		return NO_SITE_PCI;
 	}
 }
 
-void EFieldContainer::setMeasuredData(Cell_Data *a)
+void EFieldContainer::addPCI_Mearsured(Cell_Data *a)
 {
-	mesuredData = a;
+	int siteID = getSiteIDByPCI(a->pci);
+	if (siteID==NO_SITE_PCI)
+	{
+
+	}
+	else
+	{
+		auto it = measuredData.find(siteID);
+		if (it == measuredData.end())
+		{
+			Site_Data *tmp = new Site_Data(siteID);
+			measuredData.insert(make_pair(siteID, tmp));
+		}
+		it = measuredData.find(siteID);
+		it->second->cellsMap.insert(make_pair(a->pci, a));
+	}
+	return;
+}
+
+void EFieldContainer::clearMeasuredData()
+{
+	auto it = measuredData.begin();
+	for (; it != measuredData.end(); it++)
+	{
+		delete it->second;
+	}
+	map<int, Site_Data*> tmp;
+	measuredData.swap(tmp);
+}
+
+void EFieldContainer::addEfield_Measured(EField*a, int pci)
+{
+	if (!isPCIExist(pci))
+	{
+		return;
+	}
+	int siteID = getSiteIDByPCI(pci);
+	if (siteID == NO_SITE_PCI)
+	{
+
+	}
+	else
+	{
+		auto it = measuredData.find(siteID);
+		if (it == measuredData.end())
+		{
+			//新建site
+			Site_Data *tmp = new Site_Data(siteID);
+			measuredData.insert(make_pair(siteID, tmp));
+		}
+		it = measuredData.find(siteID);
+		auto it2 = it->second->cellsMap.find(pci);
+		if (it2==it->second->cellsMap.end())
+		{
+			//新建cell
+			Cell_Data * tmpCell = new Cell_Data(pci);
+			it->second->cellsMap.insert(make_pair(pci, tmpCell));
+		}
+		auto it3 = it->second->cellsMap.find(pci);
+		it3->second->efildVec.push_back(a);
+	}
+	return;
 }
 

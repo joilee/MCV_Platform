@@ -16,7 +16,7 @@ BaseModel::~BaseModel()
 
 double BaseModel::getPointAltitude(double x, double y)
 {
-	if (localScene == NULL)
+	if (localScene == nullptr)
 	{
 		return DBL_MIN;
 	}
