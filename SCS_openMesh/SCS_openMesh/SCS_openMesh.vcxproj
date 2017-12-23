@@ -184,6 +184,7 @@
     <ClCompile Include="ui\computeOptionPage.cpp" />
     <ClCompile Include="ui\computerOptionDialog.cpp" />
     <ClCompile Include="ui\GLWidget\scsGlobalGL.cpp" />
+    <ClCompile Include="ui\GLWidget\scsPlaneGL.cpp" />
     <ClCompile Include="ui\InfoPage.cpp" />
     <ClCompile Include="ui\mainwindow.cpp" />
     <ClCompile Include="ui\meshOption.cpp" />
@@ -987,6 +988,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Manager\visualManager\visualManager.h" />
     <ClInclude Include="ui\GLWidget\scsGlobalGL.h" />
+    <ClInclude Include="ui\GLWidget\scsPlaneGL.h" />
     <ClInclude Include="ui\scatterWidget\correctWidget.h" />
     <ClInclude Include="visualData\visualPluginItem.h" />
     <ClInclude Include="visualData\visualResultItem.h" />

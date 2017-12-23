@@ -87,6 +87,9 @@
     <ClCompile Include="ui\GLWidget\scsGlobalGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ui\GLWidget\scsPlaneGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Container\EFieldContainer.h" />
@@ -122,6 +125,9 @@
     <ClInclude Include="ui\scsLocalModelGLWidget.h" />
     <ClInclude Include="visualData\LocalModelItem.h" />
     <ClInclude Include="ui\GLWidget\scsGlobalGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\GLWidget\scsPlaneGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

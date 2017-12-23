@@ -393,6 +393,7 @@ void MainWindow::deletePlugin()
 
 void MainWindow::run()
 {
+	/*
 	QObject* object ;
 	globalContext *gctx = globalContext::GetInstance();
 	QString  plugin_file_path = gctx->cptManager->getPluginPath();
@@ -409,6 +410,10 @@ void MainWindow::run()
 			gctx->visualManager->setContainerData();
 			outputLog(QStringLiteral("显示结果"));
 		}
+	}
+	*/
+	for ()
+	{
 	}
 }
 
