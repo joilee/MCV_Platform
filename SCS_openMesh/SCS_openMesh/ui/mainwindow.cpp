@@ -412,9 +412,7 @@ void MainWindow::run()
 		}
 	}
 	*/
-	for ()
-	{
-	}
+
 }
 
 

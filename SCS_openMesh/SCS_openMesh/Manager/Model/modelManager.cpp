@@ -284,17 +284,30 @@ void ModelManager:: setModelPara()
 			BaseModel* tmpBase = new BaseModel();
 			std::shared_ptr<cityScene> tmpScene(tmp->getScene());
 			tmpBase->setCityScene(tmpScene);
-
-			tmpBase->setSceneRange(tmp->getRange());
+			tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
 
 			std::shared_ptr<MESH> tmpMesh(tmp->getMesh());
 			tmpBase->setGround_Mesh(tmpMesh);
 
+			tmpBase->setSceneRange(tmp->getRange());
 			tmpBase->setVertices(tmp->getVertices());
 			tmpBase->setFaces(tmp->getFaces());
 			tmpBase->setNormals(tmp->getNF());
 			tmpBase->setEachFaceMaterial(tmp->getF_material());
-			tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
+	
+			modelPara->addModel(tmpBase);
+			count++;
+		}
+		else if (tmpModel->getType() == ModelType::OBJ_LOCAL)
+		{
+			objLocalModel *tmp = (objLocalModel*)tmpModel;
+			BaseModel* tmpBase = new BaseModel();
+
+			tmpBase->setSceneRange(tmp->getRange());
+			tmpBase->setVertices(tmp->getVertices());
+			tmpBase->setFaces(tmp->getFaces());
+			tmpBase->setNormals(tmp->getNF());
+			tmpBase->setEachFaceMaterial(tmp->getF_material());
 
 			modelPara->addModel(tmpBase);
 			count++;
