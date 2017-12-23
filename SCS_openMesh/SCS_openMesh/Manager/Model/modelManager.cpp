@@ -294,7 +294,8 @@ void ModelManager:: setModelPara()
 			tmpBase->setFaces(tmp->getFaces());
 			tmpBase->setNormals(tmp->getNF());
 			tmpBase->setEachFaceMaterial(tmp->getF_material());
-	
+			tmpBase->setModelType(ModelType::CITY_LOCAL);
+			tmpBase->setModelID(tmp->getID());
 			modelPara->addModel(tmpBase);
 			count++;
 		}
@@ -308,6 +309,8 @@ void ModelManager:: setModelPara()
 			tmpBase->setFaces(tmp->getFaces());
 			tmpBase->setNormals(tmp->getNF());
 			tmpBase->setEachFaceMaterial(tmp->getF_material());
+			tmpBase->setModelType(ModelType::OBJ_LOCAL);
+			tmpBase->setModelID(tmp->getID());
 
 			modelPara->addModel(tmpBase);
 			count++;

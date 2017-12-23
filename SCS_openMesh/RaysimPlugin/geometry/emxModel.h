@@ -38,7 +38,7 @@ public:
   *@brief 从城市场景模型中构建模型
   *@since 6/22/2017
   */
-  emxModel(ModelPara *para);
+  emxModel(BaseModel *para);
 
   ~emxModel ();					 // default desconstruction
 

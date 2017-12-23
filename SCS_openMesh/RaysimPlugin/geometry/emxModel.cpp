@@ -591,7 +591,7 @@ int emxModel::getMtlId(int faceId)
 }
 
 
-emxModel::emxModel(ModelPara *para)
+emxModel::emxModel(BaseModel *para)
 {
 	V.clear();
 	F.clear();

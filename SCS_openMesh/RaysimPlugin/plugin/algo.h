@@ -3,7 +3,7 @@
 
 #include "geometry/emxKdTreeD.h"
 #include "geometry/SphereBeam.h"
-#include "util/EField.h"
+#include <util/EField.h>
 #include <para/modelPara.h>
 #include <para/computePara.h>
 #include <omp.h>  //OpenMp并行编程需要包含的头文件
@@ -60,7 +60,7 @@ void BeamTracing(emxKdTree* pKdTree, const int &reflectnum, emxBeam* &beam);
 
 void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes);
 
-void SetEFieldPoint(vector<EField>  &EFieldArray, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP);   //设置接收点坐标
+void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP);   //设置接收点坐标
 
 void Point_In_Out(vector<EField>  &EFieldArray,vector<Building> &Local_buildings,double Zheight,Scene_para &sp);
 

@@ -134,5 +134,8 @@
     <ClInclude Include="para\baseModel.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="cityModule\ModelType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

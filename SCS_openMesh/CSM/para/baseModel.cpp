@@ -3,6 +3,7 @@
 BaseModel::BaseModel()
 {
 	LocalScene_range = 0;
+	m_Type = ModelType::UNDEFINED;
 }
 
 BaseModel::~BaseModel()
@@ -16,9 +17,13 @@ BaseModel::~BaseModel()
 
 double BaseModel::getPointAltitude(double x, double y)
 {
-	if (localScene == nullptr)
+	if (m_Type==ModelType::CITY_LOCAL)
 	{
-		return DBL_MIN;
+		return localScene->getAltitude(x, y);
 	}
-	return localScene->getAltitude(x, y);
+	else 
+	{
+		
+	}
+
 }

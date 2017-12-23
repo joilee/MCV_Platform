@@ -228,21 +228,16 @@ void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
 }
 
 //设置接收点坐标
-void SetEFieldPoint(vector<EField>  &EFieldArray, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP)
+//设置一个site内所有接收点的坐标
+void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP)
 {
-	EFieldArray.clear();
+	m_siteData->cellsMap.clear();
 
 	double Left_Up_X = AP_position.x - LocalScene_range/2;
 	double Left_Up_Y = AP_position.y + LocalScene_range/2;
 	double Right_Down_X = AP_position.x + LocalScene_range/2;
 	double Right_Down_Y = AP_position.y - LocalScene_range/2;
 	
-
-	//ui.lineEdit_AreaLeftUpX->setText(QString::number(Left_Up_X));
-	//ui.lineEdit_AreaLeftUpY->setText(QString::number(Left_Up_Y));
-	//ui.lineEdit_RightBottomX->setText(QString::number(Right_Down_X));
-	//ui.lineEdit_RightBottomY->setText(QString::number(Right_Down_Y));
-
 	//定义测试的点数，横向m等分，纵向n等分
 	
 	if(Precetion <= 0.0)
@@ -279,15 +274,35 @@ void SetEFieldPoint(vector<EField>  &EFieldArray, Vector3d AP_position, double L
 	{
 		sp.Ystep = (Left_Up_Y - Right_Down_Y)/n;
 	}
-	for(int i = 0; i < (m+1)*(n+1); i++)
+	BaseModel *tmpModel;
+	bool find=false;
+	for (int i = 0; i < mP->SiteModels.size();i++)
 	{
-		EField s;
-		EFieldArray.push_back(s);
-		double x = Xmin+sp.Xstep*(i/(n+1));
-		double y = Ymin+sp.Ystep*(i%(n+1));
-		double z = Zheight + mP->getPointAltitude(x,y);
-		EFieldArray[i].Position = Vector3d(x,y,z);
+		if (mP->SiteModels[i]->getModelID()==m_siteData->siteID)
+		{
+			tmpModel = mP->SiteModels[i];
+			find = true;
+			break;
+		}
 	}
+	if (find)
+	{
+		for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
+		{
+			for (int i = 0; i < (m + 1)*(n + 1); i++)
+			{
+				EField *s = new EField;
+
+				double x = Xmin + sp.Xstep*(i / (n + 1));
+				double y = Ymin + sp.Ystep*(i % (n + 1));
+				double z = Zheight + tmpModel->get
+				s->Position = Vector3d(x, y, z);
+				it->second->efildVec.push_back(s);
+			}
+		}
+	}
+
+
 }
 
 

@@ -105,7 +105,6 @@
     <ClInclude Include="Model\abstractLocalModel\abstractLocalModel.h" />
     <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h" />
     <ClInclude Include="Model\cityModel\cityLocalModelFactory.h" />
-    <ClInclude Include="Model\ModelType.h" />
     <ClInclude Include="Model\OBJModel\objLocalModel.h" />
     <ClInclude Include="Model\OBJModel\objLocalModelFactory.h" />
     <ClInclude Include="Model\OBJModel\objModel.h" />

@@ -1,7 +1,7 @@
 ﻿#ifndef MODELPARA_H
 #define  MODELPARA_H
 #include "baseModel.h"
-
+#include "../cityModule/ModelType.h"
 class ModelPara
 {
 public:
@@ -22,7 +22,7 @@ public:
 	//材料数组，来自于文件
 	vector<scsMaterial> materialdatabase;
 	vector<BaseModel*> SiteModels;
-
+	ModelType mType;
 };
 
 

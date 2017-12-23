@@ -140,9 +140,6 @@
     <CustomBuild Include="util\Color.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="util\EField.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="util\emxCamera.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -164,28 +161,26 @@
     <CustomBuild Include="util\vector.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="height\canny.h">
+    <CustomBuild Include="height\canny.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="height\defaultPara.h">
+    </CustomBuild>
+    <CustomBuild Include="height\defaultPara.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="height\IO_obj.h">
+    </CustomBuild>
+    <CustomBuild Include="height\IO_obj.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="height\point.h">
+    </CustomBuild>
+    <CustomBuild Include="height\point.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="height\readGrid.h">
+    </CustomBuild>
+    <CustomBuild Include="height\readGrid.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="height\TriMesh.h">
+    </CustomBuild>
+    <CustomBuild Include="height\TriMesh.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="height\TriSimplify.h">
+    </CustomBuild>
+    <CustomBuild Include="height\TriSimplify.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </CustomBuild>
   </ItemGroup>
 </Project>

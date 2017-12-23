@@ -3,6 +3,7 @@
 #include "../util/vector.h"
 #include "../mesh/point.h"
 #include "../material/scsMaterial.h"
+#include "../cityModule/ModelType.h"
 #include <memory>
 //基本模型
 //包括局部城市场景、三角面片
@@ -36,6 +37,11 @@ public:
 	void setSceneRange(double a){ LocalScene_range = a; }
 	double getSceneRange(){ return LocalScene_range; }
 
+	void setModelType(ModelType a){ m_Type = a; }
+	ModelType getModelType(){ return m_Type; };
+
+	void setModelID(int a){ id = a; };
+	int getModelID(){ return id; }
 private:
 	std::shared_ptr<cityScene> localScene;
 	double LocalScene_range;
@@ -50,6 +56,8 @@ private:
 	//建筑物棱边
 	vector<Vedge> AP_Edge_list;
 
+	int id;//与站点的siteID一一对应
+	ModelType m_Type;
 	/************************************************************************/
 	/* 得到一个点对应的高度                                                                     */
 	/************************************************************************/
