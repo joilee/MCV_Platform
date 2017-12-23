@@ -36,10 +36,6 @@ void objModel::readObj(string objPath)
 		{
 			istringstream lineStream(line);
 			lineStream >> type >> x >> y >> z;
-			vertices.push_back(x);
-			vertices.push_back(y);
-			vertices.push_back(z);
-
 			points.push_back(Vector3d(x, y, z));
 
 			//x,y,z的最大值与最小值
@@ -82,7 +78,7 @@ void objModel::draw(vector<bool> mode, double alpha)
 		glEnableClientState(GL_NORMAL_ARRAY);;
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glColor4f(uniformColor.r / 256.0, uniformColor.g / 256.0, uniformColor.b / 256.0, alpha);
-		glNormalPointer(GL_FLOAT, 0, &normals[0]);
+		glNormalPointer(GL_FLOAT, 0, &m_normals[0]);
 		glVertexPointer(3, GL_FLOAT, 0, &vertices[0]);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, &indices[0]);
 		glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays

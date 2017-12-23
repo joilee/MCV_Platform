@@ -39,9 +39,9 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <widget class="GLWidget" name="ModelView">
+      <widget class="scsGlobalGL" name="ModelView">
        <attribute name="title">
         <string>模型场景</string>
        </attribute>
@@ -722,6 +722,12 @@
    <class>scsLocalModelGLWidget</class>
    <extends>QWidget</extends>
    <header>scsLocalModelGLWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>scsGlobalGL</class>
+   <extends>QWidget</extends>
+   <header location="global">scsGlobalGL.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

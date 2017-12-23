@@ -1,582 +1,209 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
-      <Extensions>qrc;*</Extensions>
-      <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>moc;h;cpp</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{b731dc49-30c0-4190-8442-bc6d2a752aba}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{a06e0b13-84a4-4808-aa7a-5427dd2f6031}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Context\context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_computeOptionPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_computerOptionDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_glWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_InfoPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_meshOption.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_outdoorFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_computeOptionPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_computerOptionDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_glWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_InfoPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_meshOption.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_outdoorFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry\emxBBoxD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry\emxFace.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry\emxModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry\emxVertex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry\SphereBeam.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="io\io_simuPlane.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\computeOptionPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\computerOptionDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\InfoPage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\meshOption.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\outdoorFile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\ArcBall.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\emxCamera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\HsvToRgb.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="util\Quaternion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\cityModel\cityModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\cityModel\cityModelFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="visualData\visualModelItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="observer\modelSubject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scsModelTable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scsModelTable.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scsModelTable.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\cityModel\cityLocalModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="visualData\visualAntennaItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="observer\antennaSubject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scsGLWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scsSimuPlaneGLWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scsGLWidget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\qrc_mainwindow.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Document.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Document.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scatterWidget\Document.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_webPage.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_webPage.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_scatterWidget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_scatterWidget.cpp">
-      <Filter>Generated Files\Release</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scatterWidget\scatterWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\Model\modelManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\Material\materialManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\Computation\computeManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\Id\ModelIdManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Container\SitesContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Container\ModelContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Manager\visualManager\visualManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="visualData\LocalModelItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="observer\LocalModelSubject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scsLocalModelGLWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\catalogWidget\catalogWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
-      <Filter>Generated Files\Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="Container\EFieldContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="observer\SiteCellSubject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="visualData\visualResultItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="visualData\visualPluginItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="observer\PluginSubject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\abstractModel\abstractModelFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\abstractModel\abstractModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\abstractGlobalModel\abstractGlobalModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-
-    <ClCompile Include="Model\OBJModel\objModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\OBJModel\objModelFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\OBJModel\objLocalModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\OBJModel\objLocalModelFactory.cpp">
-
-    <ClCompile Include="Correction\MearsuredData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ui\scatterWidget\correctWidget.cpp">
-
+    <ClCompile Include="Container\EFieldContainer.cpp" />
+    <ClCompile Include="Container\ModelContainer.cpp" />
+    <ClCompile Include="Container\SitesContainer.cpp" />
+    <ClCompile Include="Correction\MearsuredData.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp" />
+    <ClCompile Include="Model\abstractGlobalModel\abstractGlobalModel.cpp" />
+    <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp" />
+    <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp" />
+    <ClCompile Include="Model\OBJModel\objLocalModel.cpp" />
+    <ClCompile Include="Model\OBJModel\objLocalModelFactory.cpp" />
+    <ClCompile Include="Model\OBJModel\objModel.cpp" />
+    <ClCompile Include="Model\OBJModel\objModelFactory.cpp" />
+    <ClCompile Include="observer\LocalModelSubject.cpp" />
+    <ClCompile Include="Manager\Computation\computeManager.cpp" />
+    <ClCompile Include="Context\context.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_computeOptionPage.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_computerOptionDialog.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_Document.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_glWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_InfoPage.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_meshOption.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_outdoorFile.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_scatterWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_scsGLWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_scsModelTable.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_webPage.cpp" />
+    <ClCompile Include="GeneratedFiles\qrc_mainwindow.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_computeOptionPage.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_computerOptionDialog.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_Document.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_glWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_InfoPage.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_mainwindow.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_meshOption.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_outdoorFile.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_scatterWidget.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_scsModelTable.cpp" />
+    <ClCompile Include="GeneratedFiles\Release\moc_webPage.cpp" />
+    <ClCompile Include="geometry\emxBBoxD.cpp" />
+    <ClCompile Include="geometry\emxFace.cpp" />
+    <ClCompile Include="geometry\emxModel.cpp" />
+    <ClCompile Include="geometry\emxVertex.cpp" />
+    <ClCompile Include="geometry\SphereBeam.cpp" />
+    <ClCompile Include="glWidget.cpp" />
+    <ClCompile Include="Manager\Id\ModelIdManager.cpp" />
+    <ClCompile Include="io\io_simuPlane.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manager\Material\materialManager.cpp" />
+    <ClCompile Include="Model\abstractModel\abstractModel.cpp" />
+    <ClCompile Include="Model\abstractModel\abstractModelFactory.cpp" />
+    <ClCompile Include="Model\cityModel\cityLocalModel.cpp" />
+    <ClCompile Include="Model\cityModel\cityModelFactory.cpp" />
+    <ClCompile Include="Model\cityModel\cityModel.cpp" />
+    <ClCompile Include="Manager\Model\modelManager.cpp" />
+    <ClCompile Include="observer\antennaSubject.cpp" />
+    <ClCompile Include="observer\modelSubject.cpp" />
+    <ClCompile Include="observer\PluginSubject.cpp" />
+    <ClCompile Include="observer\SiteCellSubject.cpp" />
+    <ClCompile Include="ui\catalogWidget\catalogWidget.cpp" />
+    <ClCompile Include="ui\computeOptionPage.cpp" />
+    <ClCompile Include="ui\computerOptionDialog.cpp" />
+    <ClCompile Include="ui\InfoPage.cpp" />
+    <ClCompile Include="ui\mainwindow.cpp" />
+    <ClCompile Include="ui\meshOption.cpp" />
+    <ClCompile Include="ui\outdoorFile.cpp" />
+    <ClCompile Include="ui\scatterWidget\correctWidget.cpp" />
+    <ClCompile Include="ui\scatterWidget\Document.cpp" />
+    <ClCompile Include="ui\scatterWidget\scatterWidget.cpp" />
+    <ClCompile Include="ui\scsGLWidget.cpp" />
+    <ClCompile Include="ui\scsLocalModelGLWidget.cpp" />
+    <ClCompile Include="ui\scsModelTable.cpp" />
+    <ClCompile Include="ui\scsSimuPlaneGLWidget.cpp" />
+    <ClCompile Include="util\ArcBall.cpp" />
+    <ClCompile Include="util\emxCamera.cpp" />
+    <ClCompile Include="util\HsvToRgb.cpp" />
+    <ClCompile Include="util\Quaternion.cpp" />
+    <ClCompile Include="visualData\visualAntennaItem.cpp" />
+    <ClCompile Include="visualData\visualModelItem.cpp" />
+    <ClCompile Include="Manager\visualManager\visualManager.cpp" />
+    <ClCompile Include="visualData\LocalModelItem.cpp" />
+    <ClCompile Include="visualData\visualPluginItem.cpp" />
+    <ClCompile Include="visualData\visualResultItem.cpp" />
+    <ClCompile Include="ui\GLWidget\scsGlobalGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="glWidget.h">
+    <ClInclude Include="Container\EFieldContainer.h" />
+    <ClInclude Include="Container\ModelContainer.h" />
+    <ClInclude Include="Container\SitesContainer.h" />
+    <ClInclude Include="Correction\MearsuredData.h" />
+    <ClInclude Include="GeneratedFiles\ui_correctionWidget.h" />
+    <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />
+    <ClInclude Include="GeneratedFiles\ui_saveResultDialog.h" />
+    <ClInclude Include="GeneratedFiles\ui_scatterDialog.h" />
+    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModel.h" />
+    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h" />
+    <ClInclude Include="Model\abstractLocalModel\abstractLocalModel.h" />
+    <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h" />
+    <ClInclude Include="Model\cityModel\cityLocalModelFactory.h" />
+    <ClInclude Include="Model\ModelType.h" />
+    <ClInclude Include="Model\OBJModel\objLocalModel.h" />
+    <ClInclude Include="Model\OBJModel\objLocalModelFactory.h" />
+    <ClInclude Include="Model\OBJModel\objModel.h" />
+    <ClInclude Include="Model\OBJModel\objModelFactory.h" />
+    <ClInclude Include="observer\LocalModelSubject.h" />
+    <ClInclude Include="Manager\Id\ModelIdManager.h" />
+    <ClInclude Include="observer\LocalModelObserver.h" />
+    <ClInclude Include="observer\PluginObserver.h" />
+    <ClInclude Include="observer\PluginSubject.h" />
+    <ClInclude Include="observer\SiteCellObserver.h" />
+    <ClInclude Include="observer\SiteCellSubject.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Manager\visualManager\visualManager.h" />
+    <ClInclude Include="ui\scatterWidget\correctWidget.h" />
+    <ClInclude Include="visualData\visualPluginItem.h" />
+    <ClInclude Include="visualData\visualResultItem.h" />
+    <ClInclude Include="ui\scsLocalModelGLWidget.h" />
+    <ClInclude Include="visualData\LocalModelItem.h" />
+    <ClInclude Include="ui\GLWidget\scsGlobalGL.h">
       <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\outdoorFile.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\meshOption.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\mainwindow.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\InfoPage.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\computerOptionDialog.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\computeOptionPage.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Manager\Computation\computeManager.h" />
+    <CustomBuild Include="Context\context.h" />
+    <CustomBuild Include="GeneratedFiles\ui_mainwindow.h" />
+    <CustomBuild Include="GeneratedFiles\ui_outdoorFile.h" />
+    <CustomBuild Include="geometry\dataStruct.h" />
+    <CustomBuild Include="geometry\emxBBoxD.h" />
+    <CustomBuild Include="geometry\emxFace.h" />
+    <CustomBuild Include="geometry\emxModel.h" />
+    <CustomBuild Include="geometry\emxPoint.h" />
+    <CustomBuild Include="geometry\emxRayD.h" />
+    <CustomBuild Include="geometry\emxVertex.h" />
+    <CustomBuild Include="geometry\SphereBeam.h" />
+    <CustomBuild Include="GLHelper\MeshGLEnv.h" />
+    <CustomBuild Include="Manager\Material\materialManager.h" />
+    <CustomBuild Include="Model\abstractModel\abstractModel.h" />
+    <CustomBuild Include="Model\abstractModel\abstractModelFactory.h" />
+    <CustomBuild Include="observer\antennaObserver.h" />
+    <CustomBuild Include="observer\antennaSubject.h" />
+    <CustomBuild Include="observer\modelSubject.h" />
+    <CustomBuild Include="ui\scsModelTable.h" />
+    <CustomBuild Include="ui\scsGLWidget.h" />
+    <CustomBuild Include="ui\scsSimuPlaneGLWidget.h" />
+    <CustomBuild Include="util\emxRenderUtility.h" />
+    <CustomBuild Include="visualData\visualAntennaItem.h" />
+    <CustomBuild Include="visualData\visualModelItem.h" />
+    <CustomBuild Include="glWidget.h" />
+    <CustomBuild Include="io\io_simuPlane.h" />
+    <CustomBuild Include="Model\cityModel\cityModelFactory.h" />
+    <CustomBuild Include="Model\cityModel\cityLocalModel.h" />
+    <CustomBuild Include="Model\cityModel\cityModel.h" />
+    <CustomBuild Include="Manager\Model\modelManager.h" />
+    <CustomBuild Include="observer\modelObserver.h" />
+    <CustomBuild Include="plugin\PluginInterface.h" />
+    <CustomBuild Include="util\ArcBall.h" />
+    <CustomBuild Include="util\emxCamera.h" />
+    <CustomBuild Include="util\HsvToRgb.h" />
+    <CustomBuild Include="util\PredictionIndex.h" />
+    <CustomBuild Include="util\Quaternion.h" />
+    <CustomBuild Include="ui\outdoorFile.h" />
+    <CustomBuild Include="ui\meshOption.h" />
+    <CustomBuild Include="ui\mainwindow.h" />
+    <CustomBuild Include="ui\InfoPage.h" />
+    <CustomBuild Include="ui\computerOptionDialog.h" />
+    <CustomBuild Include="ui\computeOptionPage.h" />
+    <CustomBuild Include="ImageFIle\StartExe\start.png" />
     <CustomBuild Include="mainwindow.ui" />
     <CustomBuild Include="outdoorFile.ui" />
-    <CustomBuild Include="ui\scsModelTable.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\scsGLWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Context\context.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GeneratedFiles\ui_mainwindow.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GeneratedFiles\ui_outdoorFile.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\dataStruct.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\emxBBoxD.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\emxFace.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\emxModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\emxPoint.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\emxRayD.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\emxVertex.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="geometry\SphereBeam.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="GLHelper\MeshGLEnv.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="observer\antennaObserver.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="observer\antennaSubject.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="observer\modelSubject.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\scsSimuPlaneGLWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="util\emxRenderUtility.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="visualData\visualAntennaItem.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="visualData\visualModelItem.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="io\io_simuPlane.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\cityModel\cityModelFactory.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\cityModel\cityLocalModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\cityModel\cityModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="observer\modelObserver.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="plugin\PluginInterface.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="util\ArcBall.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="util\emxCamera.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="util\HsvToRgb.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="util\PredictionIndex.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="util\Quaternion.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ImageFIle\StartExe\start.png">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Resources\scatter.ico">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="mainwindow.qrc">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="echartsWidget.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\scatterWidget\Document.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\scatterWidget\webPage.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\scatterWidget\scatterWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="scatterDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Manager\Model\modelManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Manager\Material\materialManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Manager\Computation\computeManager.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="saveResultDialog.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\abstractModel\abstractModelFactory.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Model\abstractModel\abstractModel.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="correctionWidget.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\face.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\line.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\pluginInsert.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\point.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Resources\run.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GeneratedFiles\ui_echartsWidget.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_scatterDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\Id\ModelIdManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Container\SitesContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Container\ModelContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager\visualManager\visualManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="observer\LocalModelObserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="visualData\LocalModelItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="observer\LocalModelSubject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\scsLocalModelGLWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Container\EFieldContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_saveResultDialog.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="visualData\visualResultItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="observer\SiteCellSubject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="observer\SiteCellObserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="observer\PluginObserver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="visualData\visualPluginItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="observer\PluginSubject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\ModelType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\abstractLocalModel\abstractLocalModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\cityModel\cityLocalModelFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-
-    <ClInclude Include="Model\OBJModel\objModelFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\OBJModel\objModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\OBJModel\objLocalModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\OBJModel\objLocalModelFactory.h">
-    <ClInclude Include="Correction\MearsuredData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_correctionWidget.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\scatterWidget\correctWidget.h">
-
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <CustomBuild Include="Resources\scatter.ico" />
+    <CustomBuild Include="mainwindow.qrc" />
+    <CustomBuild Include="ui\catalogWidget\catalogWidget.h" />
+    <CustomBuild Include="ui\scatterWidget\scatterWidget.h" />
+    <CustomBuild Include="ui\scatterWidget\webPage.h" />
+    <CustomBuild Include="ui\scatterWidget\Document.h" />
+    <CustomBuild Include="echartsWidget.ui" />
+    <CustomBuild Include="scatterDialog.ui" />
+    <CustomBuild Include="saveResultDialog.ui" />
+    <CustomBuild Include="correctionWidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SCS_openMesh.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\face.ico" />
+    <Image Include="Resources\line.ico" />
+    <Image Include="Resources\pluginInsert.ico" />
+    <Image Include="Resources\point.ico" />
+    <Image Include="Resources\run.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;cxx;c;def</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
   </ItemGroup>
 </Project>
