@@ -247,7 +247,13 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 	}
 	int width = (int)((Left_Up_Y - Right_Down_Y)/Precetion);//row
 	int length = (int)((Right_Down_X - Left_Up_X)/Precetion);//col
-
+	//			length
+	//      ********************
+	//		*				   *
+	//width *				   *	
+	//		*				   *
+	//		********************
+	//
 	cout<<"width: "<<width<<"  length: "<<length<<endl;
 	int num = length * width;
 
@@ -292,13 +298,17 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 			for (int i = 0; i < (m + 1)*(n + 1); i++)
 			{
 				EField *s = new EField;
-
+				//先x再y ，也就是从下到上，再从左到右，绘制仿真面时候需要注意
 				double x = Xmin + sp.Xstep*(i / (n + 1));
 				double y = Ymin + sp.Ystep*(i % (n + 1));
-				double z = Zheight + tmpModel->get
+				double z = Zheight + tmpModel->getPointAltitude(x, y);
 				s->Position = Vector3d(x, y, z);
 				it->second->efildVec.push_back(s);
 			}
+			//补全cell的信息
+			it->second->row = width + 1;
+			it->second->col = length + 1;
+			it->second->pricision = Precetion;
 		}
 	}
 
@@ -309,7 +319,7 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 
 
 
-void Point_In_Out(vector<EField>  &EFieldArray,vector< Building > &Local_buildings,double Zheight,Scene_para &sp)
+void Point_In_Out(Site_Data *m_siteData,vector< Building > &Local_buildings,double Zheight,Scene_para &sp)
 {
 	double Xmin = EFieldArray[0].Position.x;
 	double Ymin = EFieldArray[0].Position.y;

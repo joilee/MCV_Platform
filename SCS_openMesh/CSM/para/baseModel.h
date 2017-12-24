@@ -42,6 +42,11 @@ public:
 
 	void setModelID(int a){ id = a; };
 	int getModelID(){ return id; }
+
+	/************************************************************************/
+	/* 得到一个点对应的高度                                                                     */
+	/************************************************************************/
+	double getPointAltitude(double x, double y);
 private:
 	std::shared_ptr<cityScene> localScene;
 	double LocalScene_range;
@@ -58,10 +63,7 @@ private:
 
 	int id;//与站点的siteID一一对应
 	ModelType m_Type;
-	/************************************************************************/
-	/* 得到一个点对应的高度                                                                     */
-	/************************************************************************/
-	double getPointAltitude(double x, double y);
+
 };
 
 
