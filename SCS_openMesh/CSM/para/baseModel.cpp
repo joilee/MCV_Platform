@@ -8,7 +8,7 @@ BaseModel::BaseModel()
 
 BaseModel::~BaseModel()
 {
-	V.clear();cc
+	V.clear();
 	F.clear();
 	NF.clear();
 	f_materialId.clear();
