@@ -319,8 +319,16 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 
 
 
-void Point_In_Out(Site_Data *m_siteData,vector< Building > &Local_buildings,double Zheight,Scene_para &sp)
+void Point_In_Out(ComputationEnum ce,Site_Data *m_siteData,vector< Building > &Local_buildings,double Zheight,Scene_para &sp)
 {
+	if (ce==ComputationEnum::ReceivePoint)
+	{
+		auto it = m_siteData->cellsMap.begin();
+		for ( ;  ; )
+		{
+
+		}
+	}
 	double Xmin = EFieldArray[0].Position.x;
 	double Ymin = EFieldArray[0].Position.y;
 	//double Zheight = ui.lineEdit_PredictHeight->text().toDouble();    //仿真面的高度

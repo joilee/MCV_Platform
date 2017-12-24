@@ -165,7 +165,7 @@ void PluginInstance::runAlgorithm(ModelPara *modelParameter,ComputePara *cptPara
 
 
 			//接收点的内外特征判断
-			Point_In_Out(m_siteData, modelParameter->SiteModels[siteCount]->getLocalScene()->getTotal_Building(), cptPara->altitude, s_para);
+			Point_In_Out(cptPara->computeEnum, m_siteData, modelParameter->SiteModels[siteCount]->getLocalScene()->getTotal_Building(), cptPara->altitude, s_para);
 
 		}
 		else if (modelParameter->mType == ModelType::OBJ_LOCAL)

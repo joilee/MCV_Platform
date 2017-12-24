@@ -62,7 +62,7 @@ void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes);
 
 void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP);   //设置接收点坐标
 
-void Point_In_Out(vector<EField>  &EFieldArray,vector<Building> &Local_buildings,double Zheight,Scene_para &sp);
+void Point_In_Out(ComputationEnum ce,Site_Data* sitedata,vector<Building> &Local_buildings,double Zheight,Scene_para &sp);
 
 void EfieldPointInPolygon(vector<Vector3d>& polygon,double Xmin,double Ymin,int &start_rowId,int &end_rowId,int &start_columnId,int &end_columnId,Scene_para sp);  //获取在多边形内部点的id信息
 
