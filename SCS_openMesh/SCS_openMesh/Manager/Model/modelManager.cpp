@@ -285,6 +285,7 @@ void ModelManager:: setModelPara()
 			std::shared_ptr<cityScene> tmpScene(tmp->getScene());
 			tmpBase->setCityScene(tmpScene);
 			tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
+			tmpBase->setApEdgeID(tmp->getScene()->getAPEdgeID());
 
 			std::shared_ptr<MESH> tmpMesh(tmp->getMesh());
 			tmpBase->setGround_Mesh(tmpMesh);

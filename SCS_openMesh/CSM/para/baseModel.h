@@ -34,6 +34,9 @@ public:
 	void setApEdgeList(vector<Vedge> a){ AP_Edge_list = a; }
 	vector<Vedge> &getAP_Edge_List(){ return AP_Edge_list; }
 
+	void setApEdgeID(vector<int> id){ AP_Edge_ID=id; }
+	vector<int>& getAP_Edge_ID(){ return AP_Edge_ID; }
+
 	void setSceneRange(double a){ LocalScene_range = a; }
 	double getSceneRange(){ return LocalScene_range; }
 
@@ -60,7 +63,7 @@ private:
 	std::vector<int>f_materialId;                //the material of face,面片对应的材料编号
 	//建筑物棱边
 	vector<Vedge> AP_Edge_list;
-
+	vector<int> AP_Edge_ID;
 	int id;//与站点的siteID一一对应
 	ModelType m_Type;
 

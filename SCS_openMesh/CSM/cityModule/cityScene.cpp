@@ -123,8 +123,31 @@ void cityScene::GenerateEdge()
 				edge_now1.materialId = 11;
 				edge_now2.materialId = 11;
 
-				AP_Edge_list.push_back(edge_now1);
-				AP_Edge_list.push_back(edge_now2);
+				Vector3d Edge_unitDirection1 = (edge_now1.end - edge_now1.start).normalize();
+				double FaceInteriorAngle1 = 0;
+				if (Dot(VectorCross(edge_now1.normal_front, edge_now1.normal_back), Edge_unitDirection1) > 0)
+				{
+					FaceInteriorAngle1 = M_PI - acos(max(-1.0, min(1.0, Dot(edge_now1.normal_front, edge_now1.normal_back))));
+					if (FaceInteriorAngle1 >= M_PI / 6 && FaceInteriorAngle1 <= M_PI * 2 / 3)   //劈内角满足30度~120度之间才可以发生绕射
+					{
+						AP_Edge_list.push_back(edge_now1);
+					}
+				}
+
+				//判断棱边edge_now2劈内角是否符合 30~120范围
+				Vector3d Edge_unitDirection2 = (edge_now2.end - edge_now2.start).normalize();
+				double FaceInteriorAngle2 = 0;
+				if (Dot(VectorCross(edge_now2.normal_front, edge_now2.normal_back), Edge_unitDirection2) > 0)
+				{
+					FaceInteriorAngle2 = M_PI - acos(max(-1.0, min(1.0, Dot(edge_now2.normal_front, edge_now2.normal_back))));
+					if (FaceInteriorAngle2 >= M_PI / 6 && FaceInteriorAngle2 <= M_PI * 2 / 3)   //劈内角满足30度~120度之间才可以发生绕射
+					{
+						AP_Edge_list.push_back(edge_now2);
+
+						Vertical_Edge_ID.push_back(AP_Edge_list.size() - 1);    //存储垂直棱边在Edge_list 中对应的索引编号
+					}
+				}
+				
 			}
 			else if (a!=0&&c!=0)//特殊处理
 			{
