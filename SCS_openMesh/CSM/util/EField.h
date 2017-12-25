@@ -13,7 +13,7 @@ public:
 	vector<Vector3d> Path_interPoint;	
 	vector<int> propagation_type;   //0代表反射，1代表透射，2代表绕射 
 	vector<Vector3d> intersect_faceNormal;  //反透射路径相交面片的法向量
-	vector<int>Intersection_FaceID; //反透射路径相交面片编号
+	vector<int> intersect_ID; //反透射路径相交面片编号
 	int edge_id;   //绕射路径经过的棱边id号
 	Field_Path() {all_distance = 0; power_Loss = 0; edge_id = -1;}
 };

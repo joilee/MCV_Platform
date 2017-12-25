@@ -57,6 +57,7 @@ void PluginInstance::runAlgorithm(ModelPara *modelParameter,ComputePara *cptPara
 		const char *fileName = "D:\\calculation_log.dat";
 		ofstream fout(fileName);
 
+		//保存结果的站点文件
 		Site_Data* m_siteData = new Site_Data(siteIterator->first);
 		double beginTime = clock();
 
@@ -99,6 +100,7 @@ void PluginInstance::runAlgorithm(ModelPara *modelParameter,ComputePara *cptPara
 				delete pRootBeams[i];
 				pRootBeams[i] = NULL;
 			}
+
 			//找出有效直射、反射、透射、绕射传播路径
 			fout << "Begin to find the valid path of receivers in  site  " << siteIterator->second->Site_Name << endl;
 			
@@ -160,12 +162,39 @@ void PluginInstance::runAlgorithm(ModelPara *modelParameter,ComputePara *cptPara
 				//设置仿真面的点
 				SetEFieldPoint(m_siteData, AP_position, modelParameter->SiteModels[siteIterator->first]->getSceneRange(), cptPara->altitude, cptPara->precision, s_para, modelParameter);
 			}
-			//接收点设置完毕
-
-
 
 			//接收点的内外特征判断
 			Point_In_Out(cptPara->computeEnum, m_siteData, modelParameter->SiteModels[siteCount]->getLocalScene()->getTotal_Building(), cptPara->altitude, s_para);
+			//接收点设置完毕
+
+			//开始以cell为单位循环计算
+			auto cellIterator = m_siteData->cellsMap.begin();
+			while (cellIterator!=m_siteData->cellsMap.end())
+			{
+				//直射
+				double time10 = clock();
+				valid_DirPath(AP_KdTree, AP_position, cellIterator->second);
+				double time11 = clock();
+				double time_DirPath = (time11 - time10) / 1000;
+				fout << "time_DirPath:  " << time_DirPath << endl;
+
+				valid_RefTransPath(AP_KdTree, AP_position, EFieldArray, AP_route);
+
+
+
+				double time13 = clock();
+				double time_totalValidPath = (time13 - time10) / 1000;
+				fout << "the end of finding valid paths" << endl;
+				fout << "time_totalValidPath:  " << time_totalValidPath << endl;
+				fout << "Begin to calculate the signal strength of receivers in  site  " <<siteIterator->second->Site_Name << endl;
+				cout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->second->Site_Name << endl;
+
+
+
+
+				cellIterator++;
+			}
+			
 
 		}
 		else if (modelParameter->mType == ModelType::OBJ_LOCAL)
@@ -196,33 +225,11 @@ void PluginInstance::runAlgorithm(ModelPara *modelParameter,ComputePara *cptPara
 		
 
 	
+	
+
+
 		
-
-
-
-
-
-		//设置虚拟仿真面，并构建仿真面kd-tree
-		double t1 = clock();
-		double SimPlaneHeight=cptPara->altitude;
-		emxModel * LocalVirtualSimPlane = new emxModel(modelParameter->getGround_Mesh(), SimPlaneHeight);
-		emxKdTree *LocalVirtualSimPlane_KdTree = new emxKdTree(LocalVirtualSimPlane, 80, 1, 0.5, 1, -1);
-		double t2 = clock();
-		double time_SimPlaneKdTree = (t2 - t1)/1000;
-		fout <<"time_SimPlaneKdTree:  "<<time_SimPlaneKdTree<<endl;
-
-		double time10 = clock();
-		valid_DirPath(AP_KdTree,AP_position,Cell_EFieldArray);
-		double time11 = clock();
-		double time_DirPath = (time11-time10)/1000;
-		fout <<"time_DirPath:  "<<time_DirPath<<endl;
-
-		double time13 = clock();
-		double time_totalValidPath = (time13-time10)/1000;
-		fout<<"the end of finding valid paths"<<endl;
-		fout <<"time_totalValidPath:  "<<time_totalValidPath<<endl;
-
-		fout<<"Begin to calculate the signal strength of receivers in  site  "<<cptPara->Sites[site_id].Site_Name<<endl;
+		
 
 		for (int Cell_id = 0; Cell_id < cptPara->Sites[site_id].Site_Antennas.size();Cell_id++)
 		{
