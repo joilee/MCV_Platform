@@ -54,41 +54,57 @@ struct Antenna_Para
 	double EveryRayPowerStrength;
 	double NorthAngle;
 };
-void CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vector3d AP_position,int BeamNumber); //位于原点处的单位球，细分count次生成初始beams
 
-void BeamTracing(emxKdTree* pKdTree, const int &reflectnum, emxBeam* &beam);
+class algo
+{
+public:
+	algo();
+	~algo();
 
-void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes);
+private:
+	void CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vector3d AP_position, int BeamNumber); //位于原点处的单位球，细分count次生成初始beams
 
-void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP);   //设置接收点坐标
+	void BeamTracing(emxKdTree* pKdTree, const int &reflectnum, emxBeam* &beam);
 
-void Point_In_Out(vector<EField>  &EFieldArray,vector<Building> &Local_buildings,double Zheight,Scene_para &sp);
+	void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes);
 
-void EfieldPointInPolygon(vector<Vector3d>& polygon,double Xmin,double Ymin,int &start_rowId,int &end_rowId,int &start_columnId,int &end_columnId,Scene_para sp);  //获取在多边形内部点的id信息
+	void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range, double Zheight, double Precetion, Scene_para &sp, ModelPara *mP);   //设置接收点坐标
 
-bool contain(vector<Vector3d>& polygon, Vector3d point0);
+	void Point_In_Out(ComputationEnum ce, Site_Data* sitedata, vector<Building> &Local_buildings, double Zheight, Scene_para &sp);
 
-void valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, vector<EField>  &EFieldArray);
+	void EfieldPointInPolygon(vector<Vector3d>& polygon, double Xmin, double Ymin, int &start_rowId, int &end_rowId, int &start_columnId, int &end_columnId, Scene_para sp);  //获取在多边形内部点的id信息
 
-void Calc_GO_UTD( TransAntenna &AP, vector<EField>  &EFieldArray,vector<Vedge> &Edge_list,Antenna_Para & cPara,ComputePara * c_para,ModelPara *mp);//计算反射、透射、绕射路径到达接收点的信号强度
+	bool contain(vector<Vector3d>& polygon, Vector3d point0);
 
-void Calc_DirPathSignal(EField &NField ,TransAntenna &AP, int &path_id,Antenna_Para a);
+	void valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, Cell_Data *m_cellData);
 
-void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, int &path_id,Antenna_Para aP,ModelPara *mp);
+	void Calc_GO_UTD(TransAntenna &AP, vector<EField>  &EFieldArray, vector<Vedge> &Edge_list, Antenna_Para & cPara, ComputePara * c_para, ModelPara *mp);//计算反射、透射、绕射路径到达接收点的信号强度
 
-bool getDiffEdgeINfor(Vedge& info, const Vector3d& source_pos, const Vector3d& diffract_pos);
+	void Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, Antenna_Para a);
 
-complex<double>getEpsilon(double freq/*单位:HZ*/, int materialId,ModelPara *mp);   //相对介电常数
+	void Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAntenna &AP, int &path_id, Antenna_Para aP, ModelPara *mp);
 
-int getMaterial(double freq /*单位:HZ*/,int materialId,ModelPara *mp);
+	bool getDiffEdgeINfor(Vedge& info, const Vector3d& source_pos, const Vector3d& diffract_pos);
 
-void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_Para ap,ModelPara *mp,ComputePara *cp); //计算反透射路径信号强度
+	complex<double>getEpsilon(double freq/*单位:HZ*/, int materialId, ModelPara *mp);   //相对介电常数
 
-int  sign_func(double x)  ;//符号函数
+	int getMaterial(double freq /*单位:HZ*/, int materialId, ModelPara *mp);
 
-int roundInt(double x) ;//四舍五入
+	void Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, Antenna_Para ap, ModelPara *mp, ComputePara *cp); //计算反透射路径信号强度
 
-complex<double>Fresnel( double xf );
+	void valid_RefTransPath(ComputationEnum ce, Scene_para &sp, emxKdTree* pKdTree, Vector3d AP_position, Cell_Data* m_cellData, const vector<vector<beamNode>> &beamRoutes);
 
-bool Domp(const vector<beamNode> &a, const vector<beamNode> &b);
+	int  sign_func(double x);//符号函数
+
+	int roundInt(double x);//四舍五入
+
+	complex<double>Fresnel(double xf);
+
+	bool Domp(const vector<beamNode> &a, const vector<beamNode> &b);
+
+	bool intersect(emxRay ray, Vector3d v0, Vector3d v1, Vector3d v2, Vector3d &intersectPoint);
+};
+
+
+
 #endif

@@ -1,8 +1,8 @@
-#include "algo.h"
+ï»¿#include "algo.h"
 #include <QMessageBox>
 
 
-int  sign_func(double x)  //·ûºÅº¯Êı
+int algo:: sign_func(double x)  //ç¬¦å·å‡½æ•°
 {
 	if (x > DOUBLE_EPSILON)
 	{
@@ -17,7 +17,7 @@ int  sign_func(double x)  //·ûºÅº¯Êı
 		return 0;
 	}
 }
-int roundInt(double x) //ËÄÉáÎåÈëÈ¡Õûº¯Êı
+int algo::roundInt(double x) //å››èˆäº”å…¥å–æ•´å‡½æ•°
 {
 	if (x >= 0.0)
 	{
@@ -30,7 +30,7 @@ int roundInt(double x) //ËÄÉáÎåÈëÈ¡Õûº¯Êı
 }
 
 
-complex<double>Fresnel( double xf )
+complex<double> algo::Fresnel(double xf)
 {
 	complex<double> fxx[ 8 ] = { complex<double>(0.0, 0.0), complex<double>(0.5195, 0.0025), 
 		complex<double>(0.3355, -0.0665),  complex<double>(0.2187, -0.0757), 
@@ -64,7 +64,7 @@ complex<double>Fresnel( double xf )
 	}
 	return (xf >= 0) ? fresnel : conj(fresnel);
 }
-bool Domp(const vector<beamNode> &a, const vector<beamNode> &b)
+bool algo::Domp(const vector<beamNode> &a, const vector<beamNode> &b)
 {
 	if(a.size() != b.size())
 		return a.size() < b.size();
@@ -72,11 +72,49 @@ bool Domp(const vector<beamNode> &a, const vector<beamNode> &b)
 		return false;
 }
 
-//************È·¶¨ĞÔBeamTracing Ä£ĞÍ·ÂÕæ************//
-//initial beams creation
-void CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vector3d AP_position,int BeamNumber)  //Î»ÓÚÔ­µã´¦µÄµ¥Î»Çò£¬Ï¸·Öcount´ÎÉú³É³õÊ¼beams
+
+
+bool algo:: intersect(emxRay ray, Vector3d v0, Vector3d v1, Vector3d v2, Vector3d &intersectPoint)
 {
-	//¶à´ÎÏ¸·Öºó£¬´æ·ÅÇòÉÏËùÓĞÉú³ÉÈı½ÇÃæ¶¥µãĞÅÏ¢£¨´ËÊ±²»¿¼ÂÇÌìÏßÎ»ÖÃ£¬°´ÕÕÎ»ÓÚÔ­µã´¦Éú³Ébeam£©
+	Vector3d E1 = v1 - v0;
+	Vector3d E2 = v2 - v0;
+	Vector3d S = ray.origin - v0;
+	Vector3d S1 = VectorCross(ray.direction, E2);
+	Vector3d S2 = VectorCross(S, E1);
+
+	double denometor = Dot(S1, E1);
+	if (fabs(denometor) > DOUBLE_EPSILON)
+	{
+		denometor = 1.0 / denometor;
+		double t = Dot(S2, E2) * denometor;
+		//if(t <= 0.0 || t >= ray.maxt || t <= ray.mint)		// avoid intersect with the edge of two triangles
+		//	return false;
+		if (t < DOUBLE_EPSILON || t > ray.maxt - DOUBLE_EPSILON || t < ray.mint + DOUBLE_EPSILON)		// avoid intersect with the edge of two triangles
+			return false;
+		//if(t <= 0.0 || fabs(t - ray.maxt)<=1e-3 || fabs(t - ray.mint)<=1e-3)		// avoid intersect with the edge of two triangles
+		//	return false;
+		double v = Dot(S1, S) * denometor;
+		double w = Dot(S2, ray.direction) * denometor;
+		double u = 1 - v - w;
+		if (UnitValue(u) && UnitValue(v) && UnitValue(w))
+		{
+			//tHit = t;
+			// Coordinate
+			intersectPoint = ray.origin + ray.direction * t;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+
+//************ç¡®å®šæ€§BeamTracing æ¨¡å‹ä»¿çœŸ************//
+//initial beams creation
+void algo::CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vector3d AP_position, int BeamNumber)  //ä½äºåŸç‚¹å¤„çš„å•ä½çƒï¼Œç»†åˆ†countæ¬¡ç”Ÿæˆåˆå§‹beams
+{
+	//å¤šæ¬¡ç»†åˆ†åï¼Œå­˜æ”¾çƒä¸Šæ‰€æœ‰ç”Ÿæˆä¸‰è§’é¢é¡¶ç‚¹ä¿¡æ¯ï¼ˆæ­¤æ—¶ä¸è€ƒè™‘å¤©çº¿ä½ç½®ï¼ŒæŒ‰ç…§ä½äºåŸç‚¹å¤„ç”Ÿæˆbeamï¼‰
 	for(size_t k = 0; k < BeamNumber; k++)
 	{
 		emxBeam *pRootBeam = new emxBeam();
@@ -97,7 +135,7 @@ void CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vec
 	}
 }
 
-void BeamTracing(emxKdTree* pKdTree, const int &reflectnum,emxBeam* &beam)
+void algo::BeamTracing(emxKdTree* pKdTree, const int &reflectnum, emxBeam* &beam)
 {
 	int reflectnum1 = reflectnum;
 
@@ -153,8 +191,8 @@ void BeamTracing(emxKdTree* pKdTree, const int &reflectnum,emxBeam* &beam)
 
 }
 
-//ÕÒ³öpRootBeamÖ¸ÏòµÄÂ·¾¶beamÊ÷ÖĞËùÓĞ¿ÉÄÜµÄÂ·¾¶
-void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
+//æ‰¾å‡ºpRootBeamæŒ‡å‘çš„è·¯å¾„beamæ ‘ä¸­æ‰€æœ‰å¯èƒ½çš„è·¯å¾„
+void algo::find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
 {
 	/*if(pRootBeam == NULL)
 	{return;}*/
@@ -173,13 +211,13 @@ void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
 			}
 			else if(pBeam->IsHitBeam() && pBeam->reflectedBeam != NULL)
 			{
-				vector<beamNode> record;  //record¼ÇÂ¼µÄÊÇÄæÏòÂ·¾¶
-				vector<beamNode> mecord; //Í¨¹ı¶Ôrecord½øĞĞÄæÏò²Ù×÷£¬½ø¶øµÃµ½Êµ¼ÊµÄÂ·¾¶£¬´æ´¢ÔÚÈİÆ÷mecord
+				vector<beamNode> record;  //recordè®°å½•çš„æ˜¯é€†å‘è·¯å¾„
+				vector<beamNode> mecord; //é€šè¿‡å¯¹recordè¿›è¡Œé€†å‘æ“ä½œï¼Œè¿›è€Œå¾—åˆ°å®é™…çš„è·¯å¾„ï¼Œå­˜å‚¨åœ¨å®¹å™¨mecord
 				emxBeam* subNode = NULL ;
 				subNode = new emxBeam(*pBeam->reflectedBeam);
 				while(subNode !=NULL)
 				{
-					if (subNode->beam_type != 2) //Â·¾¶ÖĞ½ö±£´æ·´Éä¡¢Í¸Éäbeam£¬²»±£´æchildbeams
+					if (subNode->beam_type != 2) //è·¯å¾„ä¸­ä»…ä¿å­˜åå°„ã€é€å°„beamï¼Œä¸ä¿å­˜childbeams
 					{
 						beamNode NodeNow;
 						NodeNow.beam_type = subNode->beam_type;
@@ -227,9 +265,9 @@ void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
 	}
 }
 
-//ÉèÖÃ½ÓÊÕµã×ø±ê
-//ÉèÖÃÒ»¸ösiteÄÚËùÓĞ½ÓÊÕµãµÄ×ø±ê
-void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range,double Zheight,double Precetion ,Scene_para &sp,ModelPara *mP)
+//è®¾ç½®æ¥æ”¶ç‚¹åæ ‡
+//è®¾ç½®ä¸€ä¸ªsiteå†…æ‰€æœ‰æ¥æ”¶ç‚¹çš„åæ ‡
+void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range, double Zheight, double Precetion, Scene_para &sp, ModelPara *mP)
 {
 	m_siteData->cellsMap.clear();
 
@@ -238,11 +276,11 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 	double Right_Down_X = AP_position.x + LocalScene_range/2;
 	double Right_Down_Y = AP_position.y - LocalScene_range/2;
 	
-	//¶¨Òå²âÊÔµÄµãÊı£¬ºáÏòmµÈ·Ö£¬×İÏònµÈ·Ö
+	//å®šä¹‰æµ‹è¯•çš„ç‚¹æ•°ï¼Œæ¨ªå‘mç­‰åˆ†ï¼Œçºµå‘nç­‰åˆ†
 	
 	if(Precetion <= 0.0)
 	{
-		QMessageBox::warning(NULL, QStringLiteral("½ÓÊÕ´¦Ô¤²âµã·Ö²¼"), QStringLiteral("ÇëÊäÈëºÏÊÊµÄ·Ö²¼¾«¶È"));
+		QMessageBox::warning(NULL, QStringLiteral("æ¥æ”¶å¤„é¢„æµ‹ç‚¹åˆ†å¸ƒ"), QStringLiteral("è¯·è¾“å…¥åˆé€‚çš„åˆ†å¸ƒç²¾åº¦"));
 		return;
 	}
 	int width = (int)((Left_Up_Y - Right_Down_Y)/Precetion);//row
@@ -298,15 +336,15 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 			for (int i = 0; i < (m + 1)*(n + 1); i++)
 			{
 				EField *s = new EField;
-				//ÏÈxÔÙy £¬Ò²¾ÍÊÇ´ÓÏÂµ½ÉÏ£¬ÔÙ´Ó×óµ½ÓÒ£¬»æÖÆ·ÂÕæÃæÊ±ºòĞèÒª×¢Òâ
+				//å…ˆxå†y ï¼Œä¹Ÿå°±æ˜¯ä»ä¸‹åˆ°ä¸Šï¼Œå†ä»å·¦åˆ°å³ï¼Œç»˜åˆ¶ä»¿çœŸé¢æ—¶å€™éœ€è¦æ³¨æ„
 				double x = Xmin + sp.Xstep*(i / (n + 1));
 				double y = Ymin + sp.Ystep*(i % (n + 1));
 				double z = Zheight + tmpModel->getPointAltitude(x, y);
 				s->Position = Vector3d(x, y, z);
 				it->second->efildVec.push_back(s);
 			}
-			//²¹È«cellµÄĞÅÏ¢
-			it->second->row = width + 1;
+			//è¡¥å…¨cellçš„ä¿¡æ¯
+			it->second->row = width + 1;//widthæ˜¯æ …æ ¼æ•°ï¼Œrowæ˜¯ç‚¹çš„è¡Œæ•°
 			it->second->col = length + 1;
 			it->second->pricision = Precetion;
 		}
@@ -319,39 +357,80 @@ void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalSce
 
 
 
-void Point_In_Out(Site_Data *m_siteData,vector< Building > &Local_buildings,double Zheight,Scene_para &sp)
+void algo::Point_In_Out(ComputationEnum ce, Site_Data *m_siteData, vector< Building > &Local_buildings, double Zheight, Scene_para &sp)
 {
-	double Xmin = EFieldArray[0].Position.x;
-	double Ymin = EFieldArray[0].Position.y;
-	//double Zheight = ui.lineEdit_PredictHeight->text().toDouble();    //·ÂÕæÃæµÄ¸ß¶È
-	int start_rowId,end_rowId,start_columnId,end_columnId;
-	for (int j = 0; j<Local_buildings.size();j++)
+	if (ce==ComputationEnum::ReceivePoint)
 	{
-		vector<Vector3d> upperFacePoint = Local_buildings[j].upper_facePoint;
-		double building_height = upperFacePoint[0].z;   //½¨ÖşÎïµÄ¸ß¶È£¨Ä¿Ç°´¦Àíµ±×ö½¨ÖşÎï¶¥ÃæËùÓĞµã¸ß¶ÈÒ»Ñù£¬Êµ¼ÊÓ¦¸Ã²»Í¬£©
-
-		EfieldPointInPolygon(upperFacePoint,Xmin,Ymin,start_rowId,end_rowId,start_columnId,end_columnId,sp);
-		if (start_rowId*(start_rowId-sp.scene_width)<=0 && end_rowId*(end_rowId-sp.scene_width)<=0 && start_columnId*(start_columnId-sp.scene_length)<=0 && end_columnId*(end_columnId-sp.scene_length)<=0)
+		auto it = m_siteData->cellsMap.begin();
+		for ( ;it!=m_siteData->cellsMap.end()  ;it++ )
 		{
-			for (int columnId = start_columnId;columnId <= end_columnId; columnId++)
+			for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end();it2++)
 			{
-				for (int rowId = start_rowId; rowId <= end_rowId; rowId++)
+				EField *NField = (*it2);
+				for (int j = 0; j < Local_buildings.size();j++)
 				{
-					EField &NField = EFieldArray[columnId*(sp.scene_width+1)+rowId];
-
-					if( NField.Position.z >= building_height)
+					vector<Vector3d> upperFacePoint = Local_buildings[j].upper_facePoint;
+					double building_height = upperFacePoint[0].z;   //å»ºç­‘ç‰©çš„é«˜åº¦
+					if (NField->Position.z >= building_height)
 						continue;
-					else if (contain(upperFacePoint,NField.Position))
+					else if (contain(upperFacePoint, NField->Position))
 					{
-						NField.In_or_Out = 0;
+						NField->In_or_Out = 0;
+						break;
 					}
 				}
 			}
-		}	
-	}	
+
+		}
+	}
+	else if (ce == ComputationEnum::SimuPlane)
+	{
+		//è·å¾—ä»¿çœŸé¢å·¦ä¸‹è§’
+		Cell_Data *cell= m_siteData->cellsMap.begin()->second;
+		EField* tmpE = *(cell->efildVec.begin());
+		double Xmin = tmpE->Position.x;
+		double Ymin = tmpE->Position.y;
+
+		int start_rowId, end_rowId, start_columnId, end_columnId;
+
+		for (int j = 0; j < Local_buildings.size(); j++)
+		{
+			vector<Vector3d> upperFacePoint = Local_buildings[j].upper_facePoint;
+			double building_height = upperFacePoint[0].z;  
+			EfieldPointInPolygon(upperFacePoint, Xmin, Ymin, start_rowId, end_rowId, start_columnId, end_columnId,sp);
+			if (start_rowId*(start_rowId - sp.scene_width) <= 0 && end_rowId*(end_rowId - sp.scene_width) <= 0 && start_columnId*(start_columnId - sp.scene_length) <= 0 && end_columnId*(end_columnId - sp.scene_length) <= 0)
+			{
+				//å¦‚æœå»ºç­‘ç‰©çš„åŒ…å›´ç›’å››æ¡è¾¹éƒ½åœ¨ä»¿çœŸé¢çš„å†…éƒ¨
+				for (int columnId = start_columnId; columnId <= end_columnId; columnId++)
+				{
+					for (int rowId = start_rowId; rowId <= end_rowId; rowId++)
+					{
+						//å¯¹siteé‡Œçš„æ‰€æœ‰cellè¿›è¡Œç­›é€‰æ“ä½œ
+						EField* tmpLocationE = cell->efildVec[columnId*(sp.scene_width + 1) + rowId];
+						if (tmpLocationE->Position.z>building_height)
+						{
+							continue;
+						}
+						else if (contain(upperFacePoint,tmpLocationE->Position))
+						{
+							//å¯¹siteé‡Œçš„æ‰€æœ‰cellè¿›è¡Œæ ‡è¯†ï¼Œæ ‡è¯†å½“å‰ä½ç½®çš„æ¥æ”¶ç‚¹åœ¨å»ºç­‘ç‰©å†…éƒ¨
+							auto deleteIte = m_siteData->cellsMap.begin();
+							for (; deleteIte != m_siteData->cellsMap.end();deleteIte++)
+							{
+								deleteIte->second->efildVec[columnId*(sp.scene_width + 1) + rowId]->In_or_Out = 0;
+							}
+							//æ ‡è¯†å®Œæ¯•
+						}
+
+					}
+				}
+			}//å¦‚æœå»ºç­‘ç‰©ä¸åœ¨ä»¿çœŸé¢å†…éƒ¨ï¼Œè·³è¿‡
+		}//ç»“æŸå¯¹æ‰€æœ‰å»ºç­‘çš„å¾ªç¯
+	}
+
 }
 
-void EfieldPointInPolygon(vector<Vector3d>& polygon,double Xmin,double Ymin,int &start_rowId,int &end_rowId,int &start_columnId,int &end_columnId,Scene_para sp)
+void algo::EfieldPointInPolygon(vector<Vector3d>& polygon, double Xmin, double Ymin, int &start_rowId, int &end_rowId, int &start_columnId, int &end_columnId, Scene_para sp)
 {
 	double start_x = polygon[0].x,start_y = polygon[0].y, end_x = polygon[0].x,end_y = polygon[0].y;
 	for (int i = 1; i < polygon.size(); i++)
@@ -361,7 +440,7 @@ void EfieldPointInPolygon(vector<Vector3d>& polygon,double Xmin,double Ymin,int 
 		end_x = max(end_x,polygon[i].x);
 		end_y = max(end_y,polygon[i].y);
 	}
-	start_columnId = ceil((start_x - Xmin)/sp.Xstep);
+	start_columnId = ceil((start_x - Xmin)/sp.Xstep);//æ‰¾åˆ°å»ºç­‘ç‰©ç›¸å¯¹äºä»¿çœŸé¢çš„è¡Œåˆ—å€¼ã€‚
 	end_columnId = floor((end_x-Xmin)/sp.Xstep);
 	start_rowId = ceil((start_y-Ymin)/sp.Ystep);
 	end_rowId = floor((end_y-Ymin)/sp.Ystep);
@@ -384,7 +463,7 @@ void EfieldPointInPolygon(vector<Vector3d>& polygon,double Xmin,double Ymin,int 
 	}
 }
 
-bool contain(vector<Vector3d>& polygon, Vector3d point0)
+bool algo::contain(vector<Vector3d>& polygon, Vector3d point0)
 {
 	int crossings = 0;
 	double x0 = point0.x;
@@ -397,18 +476,18 @@ bool contain(vector<Vector3d>& polygon, Vector3d point0)
 		if ((point1.x >x0) != (point2.x > x0) && (y0 < slope * (x0 - point1.x) + point1.y))
 			crossings++;
 	}
-	return (crossings %2 != 0);    //ÈôÎªÆæÊıÔòµãÔÚ¶à±ßĞÎÄÚ²¿
+	return (crossings %2 != 0);    //è‹¥ä¸ºå¥‡æ•°åˆ™ç‚¹åœ¨å¤šè¾¹å½¢å†…éƒ¨
 }
 
-//ÕÒ³öÓĞĞ§µÄÖ±´ïÂ·¾¶
-void valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, vector<EField>  &EFieldArray)
+//æ‰¾å‡ºæœ‰æ•ˆçš„ç›´è¾¾è·¯å¾„
+void algo::valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, Cell_Data *m_cellData)
 {
-	//ÏÈÅĞ¶ÏÓĞÃ»ÓĞÖ±Éäµç´Å²¨µ½´ï
-	for (int i=0; i<EFieldArray.size(); i ++)
+	//å…ˆåˆ¤æ–­æœ‰æ²¡æœ‰ç›´å°„ç”µç£æ³¢åˆ°è¾¾
+	for (int i=0; i<m_cellData->efildVec.size(); i ++)
 	{
-		if (!EFieldArray[i].In_or_Out)  //¶ÔÓÚÎ»ÓÚ½¨ÖşÎïÄÚ²¿µÄ½ÓÊÕµã²»ÓÃ¿¼²ìÊÇ·ñ·¢ÉúÖ±Éä
+		if (!m_cellData->efildVec[i]->In_or_Out)  //å¯¹äºä½äºå»ºç­‘ç‰©å†…éƒ¨çš„æ¥æ”¶ç‚¹ä¸ç”¨è€ƒå¯Ÿæ˜¯å¦å‘ç”Ÿç›´å°„
 			continue;
-		Vector3d direction = EFieldArray[i].Position - AP_position;
+		Vector3d direction = m_cellData->efildVec[i]->Position - AP_position;
 		double length = direction.norm();
 		emxRay directRay;
 		int dirFaceid = -1;
@@ -420,17 +499,17 @@ void valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, vector<EField>  &EF
 		{
 			Field_Path ipath;
 			ipath.Path_interPoint.push_back(AP_position);
-			ipath.Path_interPoint.push_back(EFieldArray[i].Position);
+			ipath.Path_interPoint.push_back(m_cellData->efildVec[i]->Position);
 
 			ipath.all_distance = length;
-			EFieldArray[i].Path.push_back(ipath);
+			m_cellData->efildVec[i]->Path.push_back(ipath);
 		}
 	}
 }
 
 
-//¼ÆËã·´Éä¡¢Í¸Éä¡¢ÈÆÉäÂ·¾¶µ½´ï½ÓÊÕµãµÄĞÅºÅÇ¿¶È
-void  Calc_GO_UTD( TransAntenna &AP, vector<EField>  &EFieldArray,vector<Vedge> &Edge_list,Antenna_Para & A_Para,ComputePara * c_para,ModelPara *mp)
+//è®¡ç®—åå°„ã€é€å°„ã€ç»•å°„è·¯å¾„åˆ°è¾¾æ¥æ”¶ç‚¹çš„ä¿¡å·å¼ºåº¦
+void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField>  &EFieldArray, vector<Vedge> &Edge_list, Antenna_Para & A_Para, ComputePara * c_para, ModelPara *mp)
 {
 	A_Para.frequency = AP.frequency * 1e6;
 	A_Para.light_speed = 299792458;
@@ -439,9 +518,9 @@ void  Calc_GO_UTD( TransAntenna &AP, vector<EField>  &EFieldArray,vector<Vedge> 
 	A_Para.k = 2 * M_PI * A_Para.frequency /A_Para.light_speed; 
 	A_Para.w = 2 * M_PI * A_Para.frequency;
 
-	double initPowerStrength = pow(10,(AP.trans_power + AP.enlarge_power - AP.wire_loss)/10); //·¢ÉäÔ´³õÊ¼¹¦ÂÊ£¬ÓÉdBm×ª»»ÎªmW
-	A_Para.EveryRayPowerStrength = initPowerStrength*1e-3; //Ã¿ÌõÔ´·¢ÉäÉäÏßĞ¯´øµÄ¹¦ÂÊ£¬ÓÉmW×ªÎªW
-	//»ñÈ¡È«¾Ö×ø±êÏµÖĞµÄÕı±±·½ÏòÔÚ³¡¾°×ø±êÏµÏÂµÄ·½Î»½Çphi,3DÌìÏß·½ÏòÔöÒæphiÊÇÏà¶ÔÓÚÕı±±·½ÏòµÄ¼Ğ½Ç£¬Òò´Ëµ±ÏÂ×ø±êÏµÍ³»ñÈ¡µÄphiĞè×ª»»µ½Õı±±·½ÏòµÄ¼Ğ½Ç
+	double initPowerStrength = pow(10,(AP.trans_power + AP.enlarge_power - AP.wire_loss)/10); //å‘å°„æºåˆå§‹åŠŸç‡ï¼Œç”±dBmè½¬æ¢ä¸ºmW
+	A_Para.EveryRayPowerStrength = initPowerStrength*1e-3; //æ¯æ¡æºå‘å°„å°„çº¿æºå¸¦çš„åŠŸç‡ï¼Œç”±mWè½¬ä¸ºW
+	//è·å–å…¨å±€åæ ‡ç³»ä¸­çš„æ­£åŒ—æ–¹å‘åœ¨åœºæ™¯åæ ‡ç³»ä¸‹çš„æ–¹ä½è§’phi,3Då¤©çº¿æ–¹å‘å¢ç›Šphiæ˜¯ç›¸å¯¹äºæ­£åŒ—æ–¹å‘çš„å¤¹è§’ï¼Œå› æ­¤å½“ä¸‹åæ ‡ç³»ç»Ÿè·å–çš„phiéœ€è½¬æ¢åˆ°æ­£åŒ—æ–¹å‘çš„å¤¹è§’
 	A_Para.NorthAngle = c_para->phi;
 
 
@@ -450,25 +529,25 @@ void  Calc_GO_UTD( TransAntenna &AP, vector<EField>  &EFieldArray,vector<Vedge> 
 	{
 		EField &NField = EFieldArray[i];
 
-		NField.HorizontalDis = sqrt((NField.Position.x - AP.position.x)*(NField.Position.x - AP.position.x) + (NField.Position.y - AP.position.y)*(NField.Position.y - AP.position.y));   //·¢ÉäµãºÍ½ÓÊÕµãÖ®¼äµÄË®Æ½¾àÀë
+		NField.HorizontalDis = sqrt((NField.Position.x - AP.position.x)*(NField.Position.x - AP.position.x) + (NField.Position.y - AP.position.y)*(NField.Position.y - AP.position.y));   //å‘å°„ç‚¹å’Œæ¥æ”¶ç‚¹ä¹‹é—´çš„æ°´å¹³è·ç¦»
 
 		//NField.LosDis = (NField.Position - AP.position).norm();
 
-		//ÌŞ³ıÖØ¸´Â·¾¶
+		//å‰”é™¤é‡å¤è·¯å¾„
 		for (int id1= 0; id1<NField.Path.size(); id1++) 
 		{
 			Field_Path path1 = NField.Path[id1];
-			if (path1 .Path_interPoint.size() >= 3 && path1.propagation_type[1] != 2)  //´ËÌõÂ·¾¶Îª·´¡¢Í¸ÉäÂ·¾¶
+			if (path1 .Path_interPoint.size() >= 3 && path1.propagation_type[1] != 2)  //æ­¤æ¡è·¯å¾„ä¸ºåã€é€å°„è·¯å¾„
 			{			
 				for (int id2 = id1+1;id2<NField.Path.size();id2++)
 				{
 					Field_Path path2 = NField.Path[id2];
-					if ( path2.Intersection_FaceID.size() == path1.Intersection_FaceID.size() && path2.propagation_type[1] != 2)
+					if (path2.intersect_ID.size() == path1.intersect_ID.size() && path2.propagation_type[1] != 2)
 					{
 						bool same_Path = true;
-						for (int id3 = 0; id3 < path2.Intersection_FaceID.size();id3++)
+						for (int id3 = 0; id3 < path2.intersect_ID.size(); id3++)
 						{
-							if (path1.Intersection_FaceID[id3] == path2.Intersection_FaceID[id3] && path1.propagation_type[id3] == path2.propagation_type[id3])
+							if (path1.intersect_ID[id3] == path2.intersect_ID[id3] && path1.propagation_type[id3] == path2.propagation_type[id3])
 							{
 								same_Path &= true;
 							}
@@ -489,17 +568,17 @@ void  Calc_GO_UTD( TransAntenna &AP, vector<EField>  &EFieldArray,vector<Vedge> 
 		}
 		for (int j = 0; j<NField.Path.size(); j++)
 		{
-			if (NField.Path[j].Path_interPoint.size() == 2)  //´ËÌõÂ·¾¶ÎªÖ±Éä£¨Ô´µã¡¢½ÓÊÕµã×é³ÉµÄÂ·¾¶£©
+			if (NField.Path[j].Path_interPoint.size() == 2)  //æ­¤æ¡è·¯å¾„ä¸ºç›´å°„ï¼ˆæºç‚¹ã€æ¥æ”¶ç‚¹ç»„æˆçš„è·¯å¾„ï¼‰
 			{
 				Calc_DirPathSignal(NField,AP,j,A_Para);
 			}
-			//»òÕß¿¼ÂÇÈÆÉä
-			else  if (c_para->isDiffractionPara ==true&& NField.Path[j].Path_interPoint.size() == 3 && NField.Path[j].propagation_type[1] == 2)    //ÈÆÉäÂ·¾¶
+			//æˆ–è€…è€ƒè™‘ç»•å°„
+			else  if (c_para->isDiffractionPara ==true&& NField.Path[j].Path_interPoint.size() == 3 && NField.Path[j].propagation_type[1] == 2)    //ç»•å°„è·¯å¾„
 			{
 				Calc_diffSignal1(Edge_list,NField,AP,j,A_Para,mp);
 				//Calc_difftest(Edge_list,NField,AP,j);
 			}
-			else   //·´¡¢Í¸ÉäÂ·¾¶
+			else   //åã€é€å°„è·¯å¾„
 			{
 				Calc_RefTransSignal(NField,AP,j,A_Para,mp,c_para);
 			}		
@@ -507,16 +586,16 @@ void  Calc_GO_UTD( TransAntenna &AP, vector<EField>  &EFieldArray,vector<Vedge> 
 	}
 }
 
-void Calc_DirPathSignal(EField &NField ,TransAntenna &AP, int &path_id,Antenna_Para aPara)
+void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, Antenna_Para aPara)
 {
 	Vector3d direction = NField.Position - AP.position;
 	double length = direction.norm();
-	//TpolorÊÇ³õÊ¼³¡Ç¿·½Ïò
-	Vector3d Tpolor = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),direction.normalize())*(direction.normalize());  //´Ë´¦µÄdirectionÊÇ²»ÊÇĞèÒªnormalize£¿£¿
+	//Tpoloræ˜¯åˆå§‹åœºå¼ºæ–¹å‘
+	Vector3d Tpolor = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),direction.normalize())*(direction.normalize());  //æ­¤å¤„çš„directionæ˜¯ä¸æ˜¯éœ€è¦normalizeï¼Ÿï¼Ÿ
 
 	if(Tpolor.norm() < 1e-10)
 	{
-		//´ËÌõÂ·¾¶ÎŞĞ§£¬ĞèÌŞ³ı
+		//æ­¤æ¡è·¯å¾„æ— æ•ˆï¼Œéœ€å‰”é™¤
 		NField.Path.erase(NField.Path.begin()+path_id);
 		path_id--;
 	}
@@ -524,8 +603,8 @@ void Calc_DirPathSignal(EField &NField ,TransAntenna &AP, int &path_id,Antenna_P
 	{
 		Tpolor = Tpolor.normalize();
 
-		//Ô­Ê¼ÉäÏß·½ÏòÏòÁ¿£¬theta½Ç²»±ä£¬phiĞè±ä»»ÎªÏà¶ÔÓÚÕı±±·½ÏòµÄ¼Ğ½Ç
-		int Hnum = int(asin(fabs(direction.y)/sqrt(direction.x*direction.x + direction.y*direction.y))*180/M_PI+0.5);  //ÉäÏßµÄË®Æ½·½Ïò½Çphi
+		//åŸå§‹å°„çº¿æ–¹å‘å‘é‡ï¼Œthetaè§’ä¸å˜ï¼Œphiéœ€å˜æ¢ä¸ºç›¸å¯¹äºæ­£åŒ—æ–¹å‘çš„å¤¹è§’
+		int Hnum = int(asin(fabs(direction.y)/sqrt(direction.x*direction.x + direction.y*direction.y))*180/M_PI+0.5);  //å°„çº¿çš„æ°´å¹³æ–¹å‘è§’phi
 		if(direction.x >= 0 && direction.y >= 0)
 		{
 			Hnum = aPara.NorthAngle  - Hnum;
@@ -563,28 +642,28 @@ void Calc_DirPathSignal(EField &NField ,TransAntenna &AP, int &path_id,Antenna_P
 			if(Hnum == 360)
 				Hnum = 0;
 		}
-		int Vnum = int(acos(fabs(direction.z)/(direction.norm()))*180/M_PI + 0.5); //ÉäÏßµÄ´¹Ö±·½Ïò½Çtheta
+		int Vnum = int(acos(fabs(direction.z)/(direction.norm()))*180/M_PI + 0.5); //å°„çº¿çš„å‚ç›´æ–¹å‘è§’theta
 		if(direction.z < 0)
 		{
 			Vnum = 180 - Vnum;
 		}
 		aPara.TP_gain = AP.initial_Gain - AP.direction_Gain[Hnum*181 + Vnum][2];
 
-		double EveryRayEFieldStrength = sqrt(30 *aPara. EveryRayPowerStrength * pow(10,aPara.TP_gain/10))/length ;  //ÉäÏßĞ¯´øµÄ¹¦ÂÊ×ª»»ÎªÉäÏß³¡Ç¿Öµ´óĞ¡
-		Vector3d tfield =  Tpolor * EveryRayEFieldStrength ;  //µÚÒ»ÏîÎªÉäÏß³õÊ¼³¡Ç¿·½Ïò£¬µÚ¶şÏîÎªÉäÏß³õÊ¼³¡Ç¿´óĞ¡
+		double EveryRayEFieldStrength = sqrt(30 *aPara. EveryRayPowerStrength * pow(10,aPara.TP_gain/10))/length ;  //å°„çº¿æºå¸¦çš„åŠŸç‡è½¬æ¢ä¸ºå°„çº¿åœºå¼ºå€¼å¤§å°
+		Vector3d tfield =  Tpolor * EveryRayEFieldStrength ;  //ç¬¬ä¸€é¡¹ä¸ºå°„çº¿åˆå§‹åœºå¼ºæ–¹å‘ï¼Œç¬¬äºŒé¡¹ä¸ºå°„çº¿åˆå§‹åœºå¼ºå¤§å°
 		Vector3cd ctfield = Vector3cd(tfield.x,tfield.y,tfield.z);
 
-		ctfield = ctfield *  exp(complex<double>(0,-aPara.k*length));  //¿¼ÂÇÏàÎ»Ó°Ïì
-		NField.EFieldAll += ctfield;     //µç³¡µş¼Ó
-		//NField.MolStrength +=  (lamda * lamda / (4 * M_PI* 120 * M_PI))*( ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag()  + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() +ctfield.z.imag()*ctfield.z.imag() );  //³¡Ç¿×ª³É¹¦ÂÊ
+		ctfield = ctfield *  exp(complex<double>(0,-aPara.k*length));  //è€ƒè™‘ç›¸ä½å½±å“
+		NField.EFieldAll += ctfield;     //ç”µåœºå åŠ 
+		//NField.MolStrength +=  (lamda * lamda / (4 * M_PI* 120 * M_PI))*( ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag()  + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() +ctfield.z.imag()*ctfield.z.imag() );  //åœºå¼ºè½¬æˆåŠŸç‡
 
 		double path_RecPower = aPara.lamda * aPara.lamda * (ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag() + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() + ctfield.z.imag()*ctfield.z.imag()) / (4*M_PI * 120 * M_PI);
 		NField.Path[path_id].power_Loss = 10*log10( aPara.EveryRayPowerStrength  / path_RecPower);
 	}	
 }
 
-//¼ÆËãÈÆÉäÂ·¾¶ĞÅºÅÇ¿¶È
-void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, int &path_id,Antenna_Para aP,ModelPara *mp)
+//è®¡ç®—ç»•å°„è·¯å¾„ä¿¡å·å¼ºåº¦
+void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAntenna &AP, int &path_id, Antenna_Para aP, ModelPara *mp)
 {
 	Vedge the_edge = Edge_list[NField.Path[path_id].edge_id];
 
@@ -602,7 +681,7 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 
 	if(polor_direction.norm() < 1e-10)
 	{
-		//´ËÌõÂ·¾¶ÎŞĞ§£¬ĞèÌŞ³ı
+		//æ­¤æ¡è·¯å¾„æ— æ•ˆï¼Œéœ€å‰”é™¤
 		NField.Path.erase(NField.Path.begin()+path_id);
 		path_id--;
 	}
@@ -654,25 +733,25 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 
 		Vector3d projInVec =-inVec - edgeDir * Dot(-inVec,edgeDir); 
 		projInVec = projInVec.normalize();
-		double phiS = acos(max(-1.0,min(1.0,Dot(projInVec,xDir))));  //ÈëÉäÆ½ÃæºÍĞ¨ĞÎÕıÃæ£¨Ç°Ãæ£©µÄ¼Ğ½Ç
+		double phiS = acos(max(-1.0,min(1.0,Dot(projInVec,xDir))));  //å…¥å°„å¹³é¢å’Œæ¥”å½¢æ­£é¢ï¼ˆå‰é¢ï¼‰çš„å¤¹è§’
 
 		Vector3d projdiffVec = (diffVec - edgeDir * Dot(diffVec, edgeDir));
 		projdiffVec = projdiffVec.normalize();
-		double phi = acos(max(-1.0, min(1.0, Dot(projdiffVec, xDir))));  //ÈÆÉäÆ½ÃæºÍĞ¨ĞÎÕıÃæ£¨Ç°Ãæ£©µÄ¼Ğ½Ç
+		double phi = acos(max(-1.0, min(1.0, Dot(projdiffVec, xDir))));  //ç»•å°„å¹³é¢å’Œæ¥”å½¢æ­£é¢ï¼ˆå‰é¢ï¼‰çš„å¤¹è§’
 
 		if(Dot(diffVec, normal) < 0)
 			phi = 2.0 * M_PI - phi;
 
-		double EveryRayEFieldStrength = sqrt(30*aP.EveryRayPowerStrength* pow(10,AP_gain/10))/lengthSD;  //ÉäÏßĞ¯´øµÄ¹¦ÂÊ×ª»»ÎªÉäÏß³¡Ç¿Öµ´óĞ¡
-		polor_direction =  polor_direction * EveryRayEFieldStrength;  //·¢ÉäÌìÏßµÄ·½ÏòÔöÒæ,µÚ¶şÏîÎªÉäÏß³õÊ¼³¡Ç¿·½Ïò£¬µÚÈıÏîÎªÉäÏß³õÊ¼³¡Ç¿´óĞ¡
+		double EveryRayEFieldStrength = sqrt(30*aP.EveryRayPowerStrength* pow(10,AP_gain/10))/lengthSD;  //å°„çº¿æºå¸¦çš„åŠŸç‡è½¬æ¢ä¸ºå°„çº¿åœºå¼ºå€¼å¤§å°
+		polor_direction =  polor_direction * EveryRayEFieldStrength;  //å‘å°„å¤©çº¿çš„æ–¹å‘å¢ç›Š,ç¬¬äºŒé¡¹ä¸ºå°„çº¿åˆå§‹åœºå¼ºæ–¹å‘ï¼Œç¬¬ä¸‰é¡¹ä¸ºå°„çº¿åˆå§‹åœºå¼ºå¤§å°
 
 		Vector3cd in_field = Vector3cd(polor_direction.x,polor_direction.y,polor_direction.z);
 
 		double FaceInteriorAngle = M_PI - acos(max(-1.0,min(1.0,Dot(the_edge.normal_front,the_edge.normal_back))));
-		double n = 2 - FaceInteriorAngle/M_PI;//ÈÆÉä¼âÅü£¬×î½Ó½üÈëÉäÃæ£¨¼´¶¨ÒåµÄÕıÃæ»òÇ°Ãæ£©µÄÅüÃæÎª0Ãæ£¬ÁíÒ»ÃæÎªnÃæ£¬ÅüÄÚ½ÇÎª FaceInteriorAngle = (2-n)*PI
+		double n = 2 - FaceInteriorAngle/M_PI;//ç»•å°„å°–åŠˆï¼Œæœ€æ¥è¿‘å…¥å°„é¢ï¼ˆå³å®šä¹‰çš„æ­£é¢æˆ–å‰é¢ï¼‰çš„åŠˆé¢ä¸º0é¢ï¼Œå¦ä¸€é¢ä¸ºné¢ï¼ŒåŠˆå†…è§’ä¸º FaceInteriorAngle = (2-n)*PI
 		double L =((lengthSD * lengthDF) / (lengthSD + lengthDF));
 
-		//À©É¢Òò×Ó
+		//æ‰©æ•£å› å­
 		double factor = sqrt(lengthSD/(lengthDF*(lengthSD + lengthDF)));
 
 		complex<double> epsilon = getEpsilon(aP.frequency, the_edge.materialId,mp);
@@ -702,7 +781,7 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 
 		for(int j = 0; j < 4; ++j) 
 		{
-			if(fabs(gama[j]) < DOUBLE_EPSILON) //µ±gama[j]Ç÷ÓÚ0Ê±£¬cot(gama[j])Ç÷ÓÚÎŞÇî£¬µ«Óë´ËÍ¬Ê±£¬ÆäÏàÓ¦µÄ¹ı¶Éº¯ÊıFÇ÷ÓÚÁã£¬´Ó¶øÏû³ıÁËÆæÒìĞÔ¡£ÒõÓ°±ß½ç£¨phi-phiS = M_PI£©ºÍ·´Éä±ß½ç´¦(phi+phiS = M_PI)
+			if(fabs(gama[j]) < DOUBLE_EPSILON) //å½“gama[j]è¶‹äº0æ—¶ï¼Œcot(gama[j])è¶‹äºæ— ç©·ï¼Œä½†ä¸æ­¤åŒæ—¶ï¼Œå…¶ç›¸åº”çš„è¿‡æ¸¡å‡½æ•°Fè¶‹äºé›¶ï¼Œä»è€Œæ¶ˆé™¤äº†å¥‡å¼‚æ€§ã€‚é˜´å½±è¾¹ç•Œï¼ˆphi-phiS = M_PIï¼‰å’Œåå°„è¾¹ç•Œå¤„(phi+phiS = M_PI)
 			{
 				complex<double> fresnel = n *(sqrt(2*M_PI*aP.k*L)*sign_func(epsilonp[j]) - 2*aP.k*L*epsilonp[j]*exp(complex<double>(0,M_PI/4))) * exp(complex<double>(0,M_PI/4));
 
@@ -712,12 +791,12 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 				D[j] = prevD * cot(gama[j]) * Fresnel(aP.k*L*a[j]);
 		}
 
-		complex<double> R0v(-1),R0p(1),Rnv(-1),Rnp(1);   //if perfectly conducting  R0ºÍRn·Ö±ğÊÇÈëÉäÃæºÍÈÆÉäÃæµÄ·´ÉäÒò×Ó
+		complex<double> R0v(-1),R0p(1),Rnv(-1),Rnp(1);   //if perfectly conducting  R0å’ŒRnåˆ†åˆ«æ˜¯å…¥å°„é¢å’Œç»•å°„é¢çš„åå°„å› å­
 
 		//////////////////////////////////////////////////////////////////////////
 		double theta0 = phiS;
 		double thetan = n*M_PI - phi;
-		//if not perfectly conducting  ÓĞºÄ½éÖÊ
+		//if not perfectly conducting  æœ‰è€—ä»‹è´¨
 		if(1)
 		{
 			R0v = (sin(theta0) - sqrt(epsilon - cos(theta0) * cos(theta0))) 
@@ -730,10 +809,10 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 				/ (epsilon * sin(thetan) + sqrt(epsilon - cos(thetan) * cos(thetan)));
 		}
 		// TE/TM 
-		Vector3d phipv ;  //ÈëÉä´¹Ö±¼«»¯²¨·½Ïò£¬TE
-		Vector3d betapv ; //ÈëÉäÆ½ĞĞ¼«»¯²¨·½Ïò£¬TM 
-		Vector3d phiv   ; //ÈÆÉä´¹Ö±¼«»¯²¨·½Ïò£¬TE
-		Vector3d betav  ; //ÈÆÉäÆ½ĞĞ¼«»¯²¨·½Ïò£¬TM 
+		Vector3d phipv ;  //å…¥å°„å‚ç›´æåŒ–æ³¢æ–¹å‘ï¼ŒTE
+		Vector3d betapv ; //å…¥å°„å¹³è¡ŒæåŒ–æ³¢æ–¹å‘ï¼ŒTM 
+		Vector3d phiv   ; //ç»•å°„å‚ç›´æåŒ–æ³¢æ–¹å‘ï¼ŒTE
+		Vector3d betav  ; //ç»•å°„å¹³è¡ŒæåŒ–æ³¢æ–¹å‘ï¼ŒTM 
 		phipv = (VectorCross(inVec, edgeDir)).normalize();
 		betapv= (VectorCross( phipv, inVec)).normalize();
 		phiv = (VectorCross( edgeDir, diffVec)).normalize();
@@ -753,16 +832,16 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 		complex<double> Dsh = -(R0p+R0v)*cos_alpha1*sin_alpha1*D[2] - (Rnp + Rnv)*cos_alpha2*sin_alpha2*D[3];
 		complex<double> Dhs = (R0p+R0v)*cos_alpha1*sin_alpha1*D[2] + (Rnp + Rnv)*cos_alpha2*sin_alpha2*D[3];
 
-		complex<double> Ei_betap = Dot(in_field, betapv); //ÈëÉä³¡µÄÆ½ĞĞ¼«»¯·ÖÁ¿
-		complex<double> Ei_phip  = Dot(in_field,  phipv); //ÈëÉä³¡µÄ´¹Ö±¼«»¯·ÖÁ¿
-		complex<double> Ed_beta  = (Dss * Ei_betap + Dsh * Ei_phip) * factor; //ÈÆÉä³¡µÄÆ½ĞĞ¼«»¯·ÖÁ¿
-		complex<double> Ed_phi   = (Dhs * Ei_betap + Dhh * Ei_phip) * factor; //ÈÆÉä³¡µÄ´¹Ö±¼«»¯·ÖÁ¿
+		complex<double> Ei_betap = Dot(in_field, betapv); //å…¥å°„åœºçš„å¹³è¡ŒæåŒ–åˆ†é‡
+		complex<double> Ei_phip  = Dot(in_field,  phipv); //å…¥å°„åœºçš„å‚ç›´æåŒ–åˆ†é‡
+		complex<double> Ed_beta  = (Dss * Ei_betap + Dsh * Ei_phip) * factor; //ç»•å°„åœºçš„å¹³è¡ŒæåŒ–åˆ†é‡
+		complex<double> Ed_phi   = (Dhs * Ei_betap + Dhh * Ei_phip) * factor; //ç»•å°„åœºçš„å‚ç›´æåŒ–åˆ†é‡
 
 		Vector3cd diffField = Ed_beta*betav + Ed_phi*phiv;
 
 		diffField = diffField * exp(complex<double>(0,-(aP.k*(lengthSD + lengthDF))));
 		NField.EFieldAll += diffField;			
-		//NField.MolStrength +=  (lamda * lamda / (4 *M_PI* 120 * M_PI))*( diffField.x.real()*diffField.x.real() + diffField.x.imag()*diffField.x.imag()  + diffField.y.real()*diffField.y.real() + diffField.y.imag()*diffField.y.imag() + diffField.z.real()*diffField.z.real() +diffField.z.imag()*diffField.z.imag() );  //³¡Ç¿×ª³É¹¦ÂÊ
+		//NField.MolStrength +=  (lamda * lamda / (4 *M_PI* 120 * M_PI))*( diffField.x.real()*diffField.x.real() + diffField.x.imag()*diffField.x.imag()  + diffField.y.real()*diffField.y.real() + diffField.y.imag()*diffField.y.imag() + diffField.z.real()*diffField.z.real() +diffField.z.imag()*diffField.z.imag() );  //åœºå¼ºè½¬æˆåŠŸç‡
 
 		NField.Path[path_id].all_distance = lengthSD + lengthDF;
 		double path_RecPower =aP.lamda * aP.lamda * (diffField.x.real()*diffField.x.real() + diffField.x.imag()*diffField.x.imag() + diffField.y.real()*diffField.y.real() + diffField.y.imag()*diffField.y.imag() + diffField.z.real()*diffField.z.real() + diffField.z.imag()*diffField.z.imag()) / (4*M_PI * 120 * M_PI);
@@ -770,9 +849,9 @@ void Calc_diffSignal1(vector<Vedge> &Edge_list,EField &NField,TransAntenna &AP, 
 	}
 }
 
-bool getDiffEdgeINfor(Vedge& info, const Vector3d& source_pos, const Vector3d& diffract_pos)
+bool algo::getDiffEdgeINfor(Vedge& info, const Vector3d& source_pos, const Vector3d& diffract_pos)
 {
-	//·Ö±ğÇóÈëÉä¹âÏßÓë¼ĞÀâ±ßÁ½Ãæ·¨ÏòÁ¿µÄ¼Ğ½Ç£¬À´ÅĞ¶ÏÏà¶ÔÓÚÈëÉä¹âÏß¶øÑÔ£¬ÄÄ¸öÊÇÇ°Ãæ£¬ÄÄ¸öÊÇ±³Ãæ
+	//åˆ†åˆ«æ±‚å…¥å°„å…‰çº¿ä¸å¤¹æ£±è¾¹ä¸¤é¢æ³•å‘é‡çš„å¤¹è§’ï¼Œæ¥åˆ¤æ–­ç›¸å¯¹äºå…¥å°„å…‰çº¿è€Œè¨€ï¼Œå“ªä¸ªæ˜¯å‰é¢ï¼Œå“ªä¸ªæ˜¯èƒŒé¢
 	if(Dot(source_pos - diffract_pos, info.normal_front) < DOUBLE_EPSILON  && Dot(source_pos - diffract_pos, info.normal_back) > DOUBLE_EPSILON)
 	{
 		std::swap(info.normal_front, info.normal_back);
@@ -781,18 +860,18 @@ bool getDiffEdgeINfor(Vedge& info, const Vector3d& source_pos, const Vector3d& d
 	return true;
 }
 
-complex<double>getEpsilon(double freq, int materialId,ModelPara * mp)   //Ïà¶Ô½éµç³£Êı        /*µ¥Î»:HZ*/
+complex<double>algo::getEpsilon(double freq, int materialId, ModelPara * mp)   //ç›¸å¯¹ä»‹ç”µå¸¸æ•°        /*å•ä½:HZ*/
 {
 	double w = 2 * M_PI * freq ;
 	int index = getMaterial(freq,materialId,mp);
 	double dielectric = mp->materialdatabase[index].dielectric;
 	double conductivity = mp->materialdatabase[index].conductivity;
 	return std::complex<double>(dielectric, 
-		-conductivity / (w * 1e-9 / (36 * M_PI)));  //¸´½éµç³£Êı
+		-conductivity / (w * 1e-9 / (36 * M_PI)));  //å¤ä»‹ç”µå¸¸æ•°
 
 }
 
-int getMaterial(double freq /*µ¥Î»:HZ*/,int materialId,ModelPara * mp)
+int algo::getMaterial(double freq /*å•ä½:HZ*/, int materialId, ModelPara * mp)
 {
 	double dif = DBL_MAX;
 	int MatVector_index;
@@ -800,7 +879,7 @@ int getMaterial(double freq /*µ¥Î»:HZ*/,int materialId,ModelPara * mp)
 	{
 		if (materialId == mp->materialdatabase[i].Id )
 		{
-			if (fabs(freq - (mp->materialdatabase[i].frequency/*µ¥Î»:MHZ*/) * 1e6) < dif)
+			if (fabs(freq - (mp->materialdatabase[i].frequency/*å•ä½:MHZ*/) * 1e6) < dif)
 			{
 				dif = fabs(freq - (mp->materialdatabase[i].frequency) * 1e6);
 				MatVector_index = i;
@@ -813,19 +892,19 @@ int getMaterial(double freq /*µ¥Î»:HZ*/,int materialId,ModelPara * mp)
 
 
 
-//¼ÆËã·´Í¸ÉäÂ·¾¶ĞÅºÅÇ¿¶È
-void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_Para ap,ModelPara *mp,ComputePara * cPara)
+//è®¡ç®—åé€å°„è·¯å¾„ä¿¡å·å¼ºåº¦
+void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, Antenna_Para ap, ModelPara *mp, ComputePara * cPara)
 {
-	//Â·¾¶ÅĞ¶ÏÓĞĞ§ºó£¬×·×Ù´ËÌõÂ·¾¶¼ÆËã³¡Ç¿
+	//è·¯å¾„åˆ¤æ–­æœ‰æ•ˆåï¼Œè¿½è¸ªæ­¤æ¡è·¯å¾„è®¡ç®—åœºå¼º
 	vector<Vector3d> &path_point = NField.Path[path_id].Path_interPoint;
 	Vector3d Raydirection = (path_point[1]-path_point[0]).normalize();
-	double raydistance = (path_point[1]-path_point[0]).norm();  //raydistance ¼ÇÂ¼ÕûÌõ´«²¥Â·¾¶µÄ³¤¶È
-	//TpolorÊÇ·¢ÉäÌìÏßµÄ¼«»¯·½Ïò
+	double raydistance = (path_point[1]-path_point[0]).norm();  //raydistance è®°å½•æ•´æ¡ä¼ æ’­è·¯å¾„çš„é•¿åº¦
+	//Tpoloræ˜¯å‘å°„å¤©çº¿çš„æåŒ–æ–¹å‘
 	Vector3d Tpolor = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),Raydirection)*(Raydirection); 
 
 	if(Tpolor.norm() < 1e-10)
 	{
-		//´ËÌõÂ·¾¶ÎŞĞ§£¬ĞèÌŞ³ı
+		//æ­¤æ¡è·¯å¾„æ— æ•ˆï¼Œéœ€å‰”é™¤
 		NField.Path.erase(NField.Path.begin()+path_id);
 		path_id--;
 	}
@@ -833,7 +912,7 @@ void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_P
 	{
 		Tpolor = Tpolor.normalize();
 
-		int Hnum = int(asin(fabs(Raydirection.y)/sqrt(Raydirection.x*Raydirection.x + Raydirection.y*Raydirection.y))*180/M_PI+0.5);  //ÉäÏßµÄË®Æ½·½Ïò½Çphi
+		int Hnum = int(asin(fabs(Raydirection.y)/sqrt(Raydirection.x*Raydirection.x + Raydirection.y*Raydirection.y))*180/M_PI+0.5);  //å°„çº¿çš„æ°´å¹³æ–¹å‘è§’phi
 		if(Raydirection.x >= 0 && Raydirection.y >= 0)
 		{
 			Hnum =ap. NorthAngle  - Hnum;
@@ -871,7 +950,7 @@ void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_P
 			if(Hnum == 360)
 				Hnum = 0;
 		}
-		int Vnum = int(acos(fabs(Raydirection.z)/Raydirection.norm())*180/M_PI + 0.5); //ÉäÏßµÄ´¹Ö±·½Ïò½Çtheta£¬ÓëÇò×ø±êÏµÖĞtheta²»Ò»ÖÂ£¿£¿£¿£¿£¿£¿  ¸ÄÁË
+		int Vnum = int(acos(fabs(Raydirection.z)/Raydirection.norm())*180/M_PI + 0.5); //å°„çº¿çš„å‚ç›´æ–¹å‘è§’thetaï¼Œä¸çƒåæ ‡ç³»ä¸­thetaä¸ä¸€è‡´ï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿï¼Ÿ  æ”¹äº†
 		if(Raydirection.z < 0)
 		{
 			Vnum = 180 - Vnum;
@@ -879,59 +958,59 @@ void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_P
 
 		ap.TP_gain = AP.initial_Gain - AP.direction_Gain[Hnum*181 + Vnum][2];
 
-		double EveryRayEFieldStrength = sqrt(30 * ap.EveryRayPowerStrength * pow(10,ap.TP_gain/10))/raydistance;  //ÉäÏßĞ¯´øµÄ¹¦ÂÊ×ª»»ÎªÉäÏß³¡Ç¿Öµ´óĞ¡
+		double EveryRayEFieldStrength = sqrt(30 * ap.EveryRayPowerStrength * pow(10,ap.TP_gain/10))/raydistance;  //å°„çº¿æºå¸¦çš„åŠŸç‡è½¬æ¢ä¸ºå°„çº¿åœºå¼ºå€¼å¤§å°
 		Vector3d tfield = Tpolor *  EveryRayEFieldStrength;
-		Vector3cd ctfield(tfield.x,tfield.y,tfield.z); //ÈëÉäÉäÏßÔÚµÚÒ»¸öÏà½»ÃæÏà½»µã´¦µÄÈëÉäÄ©³¡Ç¿					
+		Vector3cd ctfield(tfield.x,tfield.y,tfield.z); //å…¥å°„å°„çº¿åœ¨ç¬¬ä¸€ä¸ªç›¸äº¤é¢ç›¸äº¤ç‚¹å¤„çš„å…¥å°„æœ«åœºå¼º					
 
-		Vector3d Into, next_Into, Normal; //IntoÈëÉä·½ÏòÏòÁ¿£¬NormalÏà½»Ãæ´¦·¨ÏòÁ¿
-		double currentTOnext_distance; //´Ë´ÎÏà½»µãµ½ÏÂ´Î³¡µã£¨Ïà½»µã£©Ö®¼äµÄ¾àÀë
-		//´«²¥¹ı³ÌÖĞµç³¡¾­¹ı¶à´Î·´Éä¡¢ÕÛÉä£¬×îÖÕµ½´ï½ÓÊÕµã´¦·½Ïò
+		Vector3d Into, next_Into, Normal; //Intoå…¥å°„æ–¹å‘å‘é‡ï¼ŒNormalç›¸äº¤é¢å¤„æ³•å‘é‡
+		double currentTOnext_distance; //æ­¤æ¬¡ç›¸äº¤ç‚¹åˆ°ä¸‹æ¬¡åœºç‚¹ï¼ˆç›¸äº¤ç‚¹ï¼‰ä¹‹é—´çš„è·ç¦»
+		//ä¼ æ’­è¿‡ç¨‹ä¸­ç”µåœºç»è¿‡å¤šæ¬¡åå°„ã€æŠ˜å°„ï¼Œæœ€ç»ˆåˆ°è¾¾æ¥æ”¶ç‚¹å¤„æ–¹å‘
 		for(int l = 1; l < path_point.size()-1; l++)
 		{
-			double d_factor; //À©É¢Òò×Ó£¬Óë¾àÀëÓĞ¹Ø
-			//int materialId = pMesh->getMtlId(rayRoute[l].faceId); //»ñÈ¡ÃæÆ¬¶ÔÓ¦µÄ²ÄÖÊ±àºÅ
-			int materialId = 11; //»ñÈ¡ÃæÆ¬¶ÔÓ¦µÄ²ÄÖÊ±àºÅ
-			complex<double> Epsilon = getEpsilon(ap.frequency, materialId,mp); //ÕÛÉä´¦½éÖÊµÄÏà¶Ô½éµç³£Êı£¬´Ë´¦Îª¸´Ïà¶Ô½éµç³£Êı
-			//complex<double> Epsilon = complex<double>(6.0,  -1.0/(w * 1e-9 / (36 * M_PI)));  //¸´Ïà¶Ô½éµç³£Êı
+			double d_factor; //æ‰©æ•£å› å­ï¼Œä¸è·ç¦»æœ‰å…³
+			//int materialId = pMesh->getMtlId(rayRoute[l].faceId); //è·å–é¢ç‰‡å¯¹åº”çš„æè´¨ç¼–å·
+			int materialId = 11; //è·å–é¢ç‰‡å¯¹åº”çš„æè´¨ç¼–å·
+			complex<double> Epsilon = getEpsilon(ap.frequency, materialId,mp); //æŠ˜å°„å¤„ä»‹è´¨çš„ç›¸å¯¹ä»‹ç”µå¸¸æ•°ï¼Œæ­¤å¤„ä¸ºå¤ç›¸å¯¹ä»‹ç”µå¸¸æ•°
+			//complex<double> Epsilon = complex<double>(6.0,  -1.0/(w * 1e-9 / (36 * M_PI)));  //å¤ç›¸å¯¹ä»‹ç”µå¸¸æ•°
 			Into = (path_point[l]-path_point[l-1]).normalize();
 			next_Into = (path_point[l+1]-path_point[l]).normalize();
-			Normal = NField.Path[path_id].intersect_faceNormal[l]; //·´Éä¡¢Í¸ÉäbeamµÄnormal
-			double costheta = fabs(Dot(Into,Normal));  //ÈëÉä½ÇµÄcosÖµ
+			Normal = NField.Path[path_id].intersect_faceNormal[l]; //åå°„ã€é€å°„beamçš„normal
+			double costheta = fabs(Dot(Into,Normal));  //å…¥å°„è§’çš„coså€¼
 			double square_sintheta = 1 - costheta*costheta;
 
-			currentTOnext_distance = (path_point[l+1] - path_point[l]).norm(); //µ±Ç°Ïà½»Ãæ´¦µãµ½ÏÂ´Î³¡µã£¨Ïà½»µã£©Ö®¼äµÄ¾àÀë
-			//µ±À©É¢Òò×ÓÖĞµÄs'Àí½âÎª´ÓÔ´µãµ½µ±Ç°Í¸ÉäµãÕû¸ö´«²¥Â·¾¶µÄ³¤¶ÈÊ±£¬À©É¢Òò×ÓµÄ¼ÆËã±í´ïÊ½
+			currentTOnext_distance = (path_point[l+1] - path_point[l]).norm(); //å½“å‰ç›¸äº¤é¢å¤„ç‚¹åˆ°ä¸‹æ¬¡åœºç‚¹ï¼ˆç›¸äº¤ç‚¹ï¼‰ä¹‹é—´çš„è·ç¦»
+			//å½“æ‰©æ•£å› å­ä¸­çš„s'ç†è§£ä¸ºä»æºç‚¹åˆ°å½“å‰é€å°„ç‚¹æ•´ä¸ªä¼ æ’­è·¯å¾„çš„é•¿åº¦æ—¶ï¼Œæ‰©æ•£å› å­çš„è®¡ç®—è¡¨è¾¾å¼
 			d_factor = raydistance/(raydistance + currentTOnext_distance);
 
-			//Í¸ÉäÊ±
+			//é€å°„æ—¶
 			if(NField.Path[path_id].propagation_type[l] == 1) 
 			{
 
 				//	cout<<"transmision"<<endl;
-				if (cPara->transIndex == 0) //Ê¹ÓÃ¾­ÑéÍ¸ÉäËğºÄÖµ
+				if (cPara->transIndex == 0) //ä½¿ç”¨ç»éªŒé€å°„æŸè€—å€¼
 				{
-					//	Ê¹ÓÃ¾­ÑéÍ¸ÉäËğºÄÖµ Í¸ÉäËğºÄÒª¿ÉÉèÖÃ£¬Ò»°ãÊÇÓĞÁ½¸ö²ÎÊı£ºÍ¸ÉäËğºÄ£¬±íÊ¾ĞÅºÅ´©Í¸Ç½ÌåºóµÄË¥¼õ£¬±ÈÈç£º³ÇÊĞ½¨ÖşÎïÉèÖÃ15dBµÄÍ¸ÉäËğºÄ£»
-					//	ÁíÒ»¸ö²ÎÊı£¬Í¸Éäµİ½øËğºÄ£¬±íÊ¾ÊÒÍâĞÅºÅ´©Í¸µ½ÊÒÄÚºó£¬²»Çå³şÇëÊÒÄÚ²¼¾ÖµÄÇé¿öÏÂ£¬Ëæ×ÅĞÅºÅ¸²¸ÇÉîÈë£¬ĞÅºÅÇ¿¶ÈËæ¾àÀë¼ÌĞøË¥¼õ£¬±ÈÈç£ºÒ»°ãÉèÖÃÎª0.5dB/m
+					//	ä½¿ç”¨ç»éªŒé€å°„æŸè€—å€¼ é€å°„æŸè€—è¦å¯è®¾ç½®ï¼Œä¸€èˆ¬æ˜¯æœ‰ä¸¤ä¸ªå‚æ•°ï¼šé€å°„æŸè€—ï¼Œè¡¨ç¤ºä¿¡å·ç©¿é€å¢™ä½“åçš„è¡°å‡ï¼Œæ¯”å¦‚ï¼šåŸå¸‚å»ºç­‘ç‰©è®¾ç½®15dBçš„é€å°„æŸè€—ï¼›
+					//	å¦ä¸€ä¸ªå‚æ•°ï¼Œé€å°„é€’è¿›æŸè€—ï¼Œè¡¨ç¤ºå®¤å¤–ä¿¡å·ç©¿é€åˆ°å®¤å†…åï¼Œä¸æ¸…æ¥šè¯·å®¤å†…å¸ƒå±€çš„æƒ…å†µä¸‹ï¼Œéšç€ä¿¡å·è¦†ç›–æ·±å…¥ï¼Œä¿¡å·å¼ºåº¦éšè·ç¦»ç»§ç»­è¡°å‡ï¼Œæ¯”å¦‚ï¼šä¸€èˆ¬è®¾ç½®ä¸º0.5dB/m
 					double wall_loss = 10;
 					double dis_loss = 0.5;
 					double tf_distance = currentTOnext_distance;
 					raydistance += tf_distance;
-					double total_loss = wall_loss + dis_loss * tf_distance;  //´ÓÍ¸Éäµãµ½´ïÍ¸Éä³¡µãÖ®¼äµÄËğºÄ£ºÍ¸ÉäËğºÄ£¨´©Í¸Ç½ÌåËğºÄ£©+ Í¸Éäµİ½øËğºÄ£¨½øÈëÊÒÄÚËæ¾àÀëËğºÄ£©
+					double total_loss = wall_loss + dis_loss * tf_distance;  //ä»é€å°„ç‚¹åˆ°è¾¾é€å°„åœºç‚¹ä¹‹é—´çš„æŸè€—ï¼šé€å°„æŸè€—ï¼ˆç©¿é€å¢™ä½“æŸè€—ï¼‰+ é€å°„é€’è¿›æŸè€—ï¼ˆè¿›å…¥å®¤å†…éšè·ç¦»æŸè€—ï¼‰
 					ctfield = ctfield  * complex<double>((1 / pow(10,  total_loss/10)), 0);
 				}
-				else if (cPara->transIndex  == 1)  //Ê¹ÓÃÀíÂÛ¹«Ê½¼ÆËã
+				else if (cPara->transIndex  == 1)  //ä½¿ç”¨ç†è®ºå…¬å¼è®¡ç®—
 				{
-					complex<double> EV,EP;//´¹Ö±¼«»¯Ë¥¼õÏµÊı¡¢Æ½ĞĞ¼«»¯Ë¥¼õÏµÊı
-					complex<double> VD1,VD2,PD1,PD2;//´¹Ö±¼«»¯·½ÏòÕÛÉäÇ°ºóµÄ·ÖÁ¿£¬Æ½ĞĞ¼«»¯ÕÛÉäÇ°ºóµÄ·ÖÁ¿
-					Vector3d TV1,TP1,TV2,TP2; //Í¸ÉäÇ°ºóµÄ´¹Ö±¼«»¯·½Ïò£¬Æ½ĞĞ¼«»¯·½Ïò
+					complex<double> EV,EP;//å‚ç›´æåŒ–è¡°å‡ç³»æ•°ã€å¹³è¡ŒæåŒ–è¡°å‡ç³»æ•°
+					complex<double> VD1,VD2,PD1,PD2;//å‚ç›´æåŒ–æ–¹å‘æŠ˜å°„å‰åçš„åˆ†é‡ï¼Œå¹³è¡ŒæåŒ–æŠ˜å°„å‰åçš„åˆ†é‡
+					Vector3d TV1,TP1,TV2,TP2; //é€å°„å‰åçš„å‚ç›´æåŒ–æ–¹å‘ï¼Œå¹³è¡ŒæåŒ–æ–¹å‘
 
-					EV = (costheta * 2)/(costheta + sqrt(Epsilon-square_sintheta));   //´¹Ö±¼«»¯Í¸ÉäÏµÊı
-					EP = (2*costheta*sqrt(Epsilon))/(Epsilon*costheta + sqrt(Epsilon-square_sintheta));   //Ë®Æ½¼«»¯²¨Í¸ÉäÏµÊı
+					EV = (costheta * 2)/(costheta + sqrt(Epsilon-square_sintheta));   //å‚ç›´æåŒ–é€å°„ç³»æ•°
+					EP = (2*costheta*sqrt(Epsilon))/(Epsilon*costheta + sqrt(Epsilon-square_sintheta));   //æ°´å¹³æåŒ–æ³¢é€å°„ç³»æ•°
 
-					//	ÇóÍ¸ÉäºóµÄ´¹Ö±¼«»¯·ÖÁ¿£¬Æ½ĞĞ¼«»¯·ÖÁ¿
+					//	æ±‚é€å°„åçš„å‚ç›´æåŒ–åˆ†é‡ï¼Œå¹³è¡ŒæåŒ–åˆ†é‡
 					if(costheta > 0.9999999999999)
 					{
-						//	´¹Ö±ÈëÉäÊ±£¬Í¸Éä²¨³¡Ç¿
+						//	å‚ç›´å…¥å°„æ—¶ï¼Œé€å°„æ³¢åœºå¼º
 						ctfield = ctfield*(complex<double>(2,0)/(complex<double>(1,0)+sqrt(Epsilon)));
 						raydistance += currentTOnext_distance;
 					}
@@ -939,19 +1018,19 @@ void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_P
 					{
 						TV1 = VectorCross(Into,Normal).normalize();
 						TP1 = VectorCross(TV1,Into).normalize();
-						//Í¸Éäºó´¹Ö±¡¢Ë®Æ½¼«»¯·½ÏòÓëÍ¸ÉäÇ°Ò»ÖÂ
+						//é€å°„åå‚ç›´ã€æ°´å¹³æåŒ–æ–¹å‘ä¸é€å°„å‰ä¸€è‡´
 						TV2 = TV1;
 						TP2 = TP1;
 
-						//ÕÛÉäºó´¹Ö±¼«»¯·ÖÁ¿VD2´óĞ¡¸Ä±ä
-						VD1 = Dot(ctfield,TV1); //Í¸ÉäÇ°´¹Ö±¼«»¯·ÖÁ¿ÊıÖµ
+						//æŠ˜å°„åå‚ç›´æåŒ–åˆ†é‡VD2å¤§å°æ”¹å˜
+						VD1 = Dot(ctfield,TV1); //é€å°„å‰å‚ç›´æåŒ–åˆ†é‡æ•°å€¼
 						VD2 = VD1*EV*d_factor;
 
-						//ÕÛÉäÇ°ºóÆ½ĞĞ¼«»¯·ÖÁ¿PD2´óĞ¡¸Ä±ä
-						PD1 = Dot(ctfield,TP1); //Í¸ÉäÇ°Æ½ĞĞ¼«»¯·ÖÁ¿ÊıÖµ
+						//æŠ˜å°„å‰åå¹³è¡ŒæåŒ–åˆ†é‡PD2å¤§å°æ”¹å˜
+						PD1 = Dot(ctfield,TP1); //é€å°„å‰å¹³è¡ŒæåŒ–åˆ†é‡æ•°å€¼
 						PD2 = PD1*EP*d_factor;
 
-						//ÕÛÉäºóµç³¡·½Ïò£¨Ò»°ãÎª·Çµ¥Î»ÏòÁ¿£¬¾­¹ıÏµÊıË¥¼õ£©
+						//æŠ˜å°„åç”µåœºæ–¹å‘ï¼ˆä¸€èˆ¬ä¸ºéå•ä½å‘é‡ï¼Œç»è¿‡ç³»æ•°è¡°å‡ï¼‰
 						ctfield = TV2*VD2 + TP2*PD2;
 
 						raydistance += currentTOnext_distance;
@@ -959,20 +1038,20 @@ void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_P
 				}
 			}
 
-			//·´ÉäÊ±
+			//åå°„æ—¶
 			else if (NField.Path[path_id].propagation_type[l] == 0)
 			{
-				complex<double> EV,EP;//·´Éä´¹Ö±¼«»¯ÏµÊı¡¢Æ½ĞĞ¼«»¯ÏµÊı
-				complex<double> VD1,VD2,PD1,PD2;//´¹Ö±¼«»¯·½Ïò·´ÉäÇ°ºóµÄ·ÖÁ¿£¬Æ½ĞĞ¼«»¯·´ÉäÇ°ºóµÄ·ÖÁ¿
-				Vector3d RV1,RP1,RV2,RP2; //·´ÉäÇ°ºóµÄ´¹Ö±¼«»¯·½Ïò£¬Æ½ĞĞ¼«»¯·½Ïò
+				complex<double> EV,EP;//åå°„å‚ç›´æåŒ–ç³»æ•°ã€å¹³è¡ŒæåŒ–ç³»æ•°
+				complex<double> VD1,VD2,PD1,PD2;//å‚ç›´æåŒ–æ–¹å‘åå°„å‰åçš„åˆ†é‡ï¼Œå¹³è¡ŒæåŒ–åå°„å‰åçš„åˆ†é‡
+				Vector3d RV1,RP1,RV2,RP2; //åå°„å‰åçš„å‚ç›´æåŒ–æ–¹å‘ï¼Œå¹³è¡ŒæåŒ–æ–¹å‘
 
 				EV = (costheta - sqrt(Epsilon-square_sintheta))/(costheta + sqrt(Epsilon-square_sintheta));
 				EP = (Epsilon*costheta - sqrt(Epsilon-square_sintheta))/(Epsilon*costheta + sqrt(Epsilon-square_sintheta));
 
-				//Çó·´ÉäºóµÄ´¹Ö±¼«»¯·ÖÁ¿£¬Æ½ĞĞ¼«»¯·ÖÁ¿
+				//æ±‚åå°„åçš„å‚ç›´æåŒ–åˆ†é‡ï¼Œå¹³è¡ŒæåŒ–åˆ†é‡
 				if(costheta > 0.9999999999999)
 				{
-					//´¹Ö±ÈëÉäÊ±£¬·´Éä²¨³¡Ç¿
+					//å‚ç›´å…¥å°„æ—¶ï¼Œåå°„æ³¢åœºå¼º
 					ctfield = ctfield*((complex<double>(1,0)-sqrt(Epsilon))/(complex<double>(1,0)+sqrt(Epsilon)));
 					raydistance += currentTOnext_distance;
 				}
@@ -984,28 +1063,520 @@ void Calc_RefTransSignal(EField &NField,TransAntenna &AP, int &path_id,Antenna_P
 					RP2 = VectorCross(RV2,next_Into).normalize();
 
 
-					//·´Éäºó´¹Ö±¼«»¯·ÖÁ¿VD2ÊıÖµ´óĞ¡¸Ä±äÌåÏÖÔÚÏµÊıÀïÃæ
+					//åå°„åå‚ç›´æåŒ–åˆ†é‡VD2æ•°å€¼å¤§å°æ”¹å˜ä½“ç°åœ¨ç³»æ•°é‡Œé¢
 					VD1 = Dot(ctfield,RV1);
 					VD2 = VD1*EV*d_factor;
-					//·´ÉäºóÆ½ĞĞ¼«»¯·ÖÁ¿PD2ÊıÖµ´óĞ¡¸Ä±äÌåÏÖÔÚÏµÊıÀïÃæ
+					//åå°„åå¹³è¡ŒæåŒ–åˆ†é‡PD2æ•°å€¼å¤§å°æ”¹å˜ä½“ç°åœ¨ç³»æ•°é‡Œé¢
 					PD1 = Dot(ctfield,RP1);
 					PD2 = PD1*EP*d_factor;
 
-					//·´Éäºóµç³¡·½Ïò£¨Ò»°ãÎª·Çµ¥Î»ÏòÁ¿£¬¾­¹ıÏµÊıË¥¼õ£©
+					//åå°„åç”µåœºæ–¹å‘ï¼ˆä¸€èˆ¬ä¸ºéå•ä½å‘é‡ï¼Œç»è¿‡ç³»æ•°è¡°å‡ï¼‰
 					ctfield = RV2*VD2 + RP2*PD2; 
 
 					raydistance += currentTOnext_distance;
 				}
 			}
 		}
-		double phase =ap.k*raydistance;  //¼ÇÂ¼ÕûÌõ´«²¥Â·¾¶µÄÀÛ¼ÆÏàÎ»
+		double phase =ap.k*raydistance;  //è®°å½•æ•´æ¡ä¼ æ’­è·¯å¾„çš„ç´¯è®¡ç›¸ä½
 
-		ctfield = ctfield*exp(complex<double>(0,-phase));   //¿¼ÂÇÕûÌõ´«²¥Â·¾¶ÀÛ¼ÆÏàÎ»Ó°Ïì
+		ctfield = ctfield*exp(complex<double>(0,-phase));   //è€ƒè™‘æ•´æ¡ä¼ æ’­è·¯å¾„ç´¯è®¡ç›¸ä½å½±å“
 		NField.EFieldAll+= ctfield;
-		//NField.MolStrength +=  (lamda * lamda / (4 * M_PI * 120 * M_PI))*( ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag()  + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() +ctfield.z.imag()*ctfield.z.imag() );  //³¡Ç¿×ª³É¹¦ÂÊ
+		//NField.MolStrength +=  (lamda * lamda / (4 * M_PI * 120 * M_PI))*( ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag()  + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() +ctfield.z.imag()*ctfield.z.imag() );  //åœºå¼ºè½¬æˆåŠŸç‡
 
 		NField.Path[path_id].all_distance = raydistance;
 		double path_RecPower =ap.lamda * ap.lamda * (ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag() + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() + ctfield.z.imag()*ctfield.z.imag()) / (4*M_PI * 120 * M_PI);
 		NField.Path[path_id].power_Loss = 10*log10( ap.EveryRayPowerStrength  / path_RecPower);
 	}
+}
+
+//æ‰¾å‡ºæœ‰æ•ˆçš„åé€å°„è·¯å¾„ï¼Œç›´æ¥ç”±beamä¸è™šæ‹Ÿä»¿çœŸé¢çš„è¦†ç›–åŒºåŸŸè·å–æ¥æ”¶ç‚¹ä¿¡æ¯ï¼Œæœªè€ƒè™‘æµ·æ‹”æ—¶
+void algo::valid_RefTransPath(ComputationEnum ce, Scene_para &sp, emxKdTree* pKdTree, Vector3d AP_position, Cell_Data* m_cellData, const vector<vector<beamNode>> &beamRoutes)
+{
+
+		double Xmin =m_cellData->efildVec[0]->Position.x;
+		double Ymin = m_cellData->efildVec[0]->Position.y;
+		double Zheight = m_cellData->efildVec[0]->Position.z;
+		Vector3d Point_IN_SimPlane(Xmin, Ymin, Zheight);
+		Vector3d SimPlane_Normal(0, 0, 1);
+		int num_RefTransPath = 0;
+
+#pragma omp parallel for schedule(static,4)
+		for (int beam_id = 0; beam_id < beamRoutes.size(); beam_id++)  //å®¹å™¨beamRouteså­˜æ”¾çš„æ‰€æœ‰å¯èƒ½è·¯å¾„
+		{
+			vector<beamNode> beamroute = beamRoutes[beam_id];
+			int FinalBeamNum = beamroute.size() - 1;
+			beamNode FinalBeam = beamroute[FinalBeamNum];
+
+			int start_rowId, end_rowId, start_columnId, end_columnId;    //beamä¸ä»¿çœŸé¢åŒºåŸŸç›¸äº¤è¦†ç›–çš„æ¥æ”¶ç‚¹ä¸‹æ ‡
+			bool illuminate = false;
+			for (int beam_type = 0; beam_type <= 1; beam_type++)  //beam_type=0å¯¹åå°„beamçš„æ“ä½œï¼Œbeam_type=1å¯¹é€å°„beamæ“ä½œ
+			{
+				//åˆå§‹åŒ–
+				illuminate = false;
+				start_rowId = -1;
+				end_rowId = -1;
+				start_columnId = -1;
+				end_columnId = -1;
+
+				//è®¡ç®—beamä¸ä»¿çœŸé¢åŒºåŸŸçš„ç›¸äº¤
+				Vector3d origin;
+				if (beam_type == 0)
+				{
+					origin = FinalBeam.origin;
+				}
+				else
+				{
+					//é€å°„beamæºç‚¹
+					Vector3d TransBeamOrigin = FinalBeam.origin - FinalBeam.beamNormal * (2 * Dot(FinalBeam.beamNormal, FinalBeam.origin - FinalBeam.BeamVertex[0]));
+					origin = TransBeamOrigin;
+					//continue;
+				}
+
+				if (fabs(origin.z - Zheight) < DOUBLE_EPSILON)  //beamçš„æºç‚¹åœ¨ä»¿çœŸé¢ä¸Šï¼Œæ­¤æ—¶ä¸å¯èƒ½å­˜åœ¨è¦†ç›–åŒºåŸŸ
+					continue;
+
+				//è‹¥æ²¡æœ‰ä»¿çœŸé¢æ—¶ï¼Œåªæ˜¯åœ¨ä¸€æ¡ç›´çº¿ä¸Šå–æ¥æ”¶ç‚¹ï¼Œæ­¤æ—¶æ— æ³•æ±‚å¾—ä»¿çœŸåŒºåŸŸï¼Œéœ€è¦å¯¹æ‰€æœ‰æ¥æ”¶ç‚¹è€ƒå¯Ÿæœ‰æ•ˆæ€§æˆ–è€…å¯¹äºå®æµ‹ä½ç½®å¤„çš„æ¥æ”¶ç‚¹é¢„æµ‹ä¿¡å·å¼ºåº¦æ—¶ï¼Œç”±äºä¸ä½äºä»¿çœŸé¢ä¸Šï¼Œæ‰€ä»¥ä¹Ÿå¾—å¯¹æ‰€æœ‰æ¥æ”¶ç‚¹è€ƒå¯Ÿæœ‰æ•ˆæ€§
+				if (ce==ComputationEnum::ReceivePoint)
+				{
+					start_rowId = 0;
+					end_rowId = m_cellData->efildVec.size() - 1;
+					start_columnId = 0;
+					end_columnId = 0;
+					illuminate = true;
+				}
+				else
+				{
+					bool ALLbackward = true;   //åˆ¤æ–­æ˜¯å¦beamçš„æ‰€æœ‰æ£±è¾¹éƒ½èƒŒç¦»ä»¿çœŸé¢ä¼ æ’­
+					//åˆ¤æ–­beamæ˜¯å¦èƒŒå‘ä»¿çœŸé¢ä¼ æ’­
+					for (int i = 0; i < FinalBeam.cornerNum; i++)
+					{
+						Vector3d direction = (FinalBeam.BeamVertex[i] - origin).normalize();  //???????????		
+						if (origin.z>Zheight)
+						{
+							ALLbackward &= (Dot(direction, SimPlane_Normal) >= 0);
+						}
+						else if (origin.z < Zheight)
+						{
+							ALLbackward &= (Dot(direction, SimPlane_Normal) <= 0);
+						}
+					}
+					if (ALLbackward)
+						continue;
+
+					//beamç›¸äº¤æƒ…å†µ
+					double tmax[] = { 0.0, 0.0, 0.0, 0.0 };	// distance from beam origin to SimPlane
+					bool behind = true;
+					bool Paral = false;
+					bool anyone_backward = false;   //åˆ¤æ–­beamæ˜¯å¦æœ‰éƒ¨åˆ†ï¼ˆ1<= ï¼Ÿï¼Ÿ  <æ£±è¾¹æ•°ç›®ï¼‰æ£±è¾¹èƒŒç¦»ä»¿çœŸé¢ä¼ æ’­
+					for (int i = 0; i < FinalBeam.cornerNum; i++)
+					{
+						Vector3d direction = (FinalBeam.BeamVertex[i] - origin).normalize();  //???????????
+						double invDDotN;
+						if (fabs(Dot(direction, SimPlane_Normal)) < DOUBLE_EPSILON)  //å°„çº¿æ–¹å‘ä¸é¢ç‰‡æ–¹å‘å¹³è¡Œæ—¶
+						{
+							Paral = true;
+							break;
+						}
+						//åˆ¤æ–­beamæ˜¯å¦æœ‰éƒ¨åˆ†æ£±è¾¹èƒŒå‘ä»¿çœŸé¢ä¼ æ’­
+						else if ((origin.z>Zheight &&Dot(direction, SimPlane_Normal) > 0) || (origin.z < Zheight &&Dot(direction, SimPlane_Normal) < 0))
+						{
+							anyone_backward = true;
+							break;
+						}
+						else
+						{
+							invDDotN = 1.0 / Dot(direction, SimPlane_Normal);
+							tmax[i] = -Dot(FinalBeam.BeamVertex[i] - Point_IN_SimPlane, SimPlane_Normal) * invDDotN;
+							behind &= (tmax[i] < DOUBLE_EPSILON);
+						}
+					}
+					// è·å–beamè¦†ç›–çš„ä»¿çœŸé¢åŒºåŸŸå¯¹åº”çš„æ¥æ”¶ç‚¹
+					if (Paral || anyone_backward)  //beamçš„çš„æŸæ¡è¾¹ä¸ä»¿çœŸé¢å¹³è¡Œæˆ–è€…beamçš„éƒ¨åˆ†æ£±è¾¹èƒŒç¦»ä»¿çœŸé¢ï¼Œæ— æ³•æ±‚å¾—ç›¸äº¤åŒºåŸŸï¼Œåˆ™éœ€å¯¹æ‰€æœ‰æ¥æ”¶ç‚¹éªŒè¯æœ‰æ•ˆæ€§
+					{
+						start_rowId = 0;
+						end_rowId = sp.scene_width;
+						start_columnId = 0;
+						end_columnId = sp.scene_length;
+						illuminate = true;
+					}
+					else if (behind)	//è‹¥å­˜åœ¨ç›¸äº¤æƒ…å†µï¼Œä½†æ˜¯ä»¿çœŸé¢å‡åœ¨beamå¹³é¢ä¹‹å‰ï¼Œå³ä¸å­˜åœ¨æœ‰æ•ˆç›¸äº¤åŒºåŸŸ
+					{
+						illuminate = false;
+					}
+					else
+					{
+						//åå°„beamæˆ–è€…é€å°„beamä¸ä»¿çœŸé¢å­˜åœ¨ç›¸äº¤åŒºåŸŸ
+						Vector3d illuminateArea[5];
+						int illunimateNum_p = 0;
+						for (int i = 0; i < FinalBeam.cornerNum; i++)
+						{
+							Vector3d direction = (FinalBeam.BeamVertex[i] - origin).normalize();
+							Vector3d next_direction = (FinalBeam.BeamVertex[(i + 1) % FinalBeam.cornerNum] - origin).normalize();
+
+							if (tmax[i] >= -DOUBLE_EPSILON)
+								illuminateArea[illunimateNum_p++] = FinalBeam.BeamVertex[i] + direction * tmax[i];
+							//ç©¿é€æ—¶çš„äº¤ç‚¹
+							if (fabs(tmax[i]) > DOUBLE_EPSILON && fabs(tmax[(i + 1) % FinalBeam.cornerNum]) > DOUBLE_EPSILON && tmax[i] * tmax[(i + 1) % FinalBeam.cornerNum] < 0.0)
+							{
+								Vector3d A = FinalBeam.BeamVertex[i];
+								Vector3d C = FinalBeam.BeamVertex[(i + 1) % FinalBeam.cornerNum];
+								Vector3d direction = (C - A).normalize();
+								double t = Dot((Point_IN_SimPlane - A), SimPlane_Normal) / Dot(direction, SimPlane_Normal);
+								illuminateArea[illunimateNum_p++] = A + direction*t;
+							}
+						}
+						vector<Vector3d> illunimatre_Vertexs;
+						for (int illuminate_id = 0; illuminate_id < illunimateNum_p; illuminate_id++)
+						{
+							illunimatre_Vertexs.push_back(illuminateArea[illuminate_id]);
+						}
+						EfieldPointInPolygon(illunimatre_Vertexs, Xmin, Ymin, start_rowId, end_rowId, start_columnId, end_columnId,sp);
+						illuminate = true;
+					}
+				}
+
+
+				//å¯¹beamè¦†ç›–çš„æ¥æ”¶ç‚¹è®¡ç®—ä¿¡å·å¼ºåº¦
+
+				if (illuminate && (ce==ComputationEnum::ReceivePoint || start_rowId*(start_rowId - sp.scene_width) <= 0 && end_rowId*(end_rowId - sp.scene_width) <= 0 && start_columnId*(start_columnId - sp.scene_length) <= 0 && end_columnId*(end_columnId - sp.scene_length) <= 0))
+				{
+					for (int columnId = start_columnId; columnId <= end_columnId; columnId++)
+					{
+						for (int rowId = start_rowId; rowId <= end_rowId; rowId++)
+						{
+							if (ce == ComputationEnum::ReceivePoint)  //åªæœ‰åœ¨ä»¿çœŸé¢è®¾ç½®çš„æ¥æ”¶ç‚¹ä½ç½®æ—¶å€™ï¼Œæ‰æœ‰scene_widthï¼Œè€Œå¯¹äºéä»¿çœŸé¢è®¾ç½®çš„æ¥æ”¶ç‚¹ï¼Œä¸å­˜åœ¨scene_width
+							{
+								sp.scene_width = 0;
+							}
+							EField *NField = m_cellData->efildVec[columnId*(sp.scene_width + 1) + rowId];
+							Vector3d receiver = NField->Position;
+
+							if (NField->In_or_Out)   //é€å°„åªå¯¹å»ºç­‘ç‰©å†…çš„æ¥æ”¶ç‚¹è€ƒå¯Ÿ
+							{
+								if (beam_type == 1)
+									continue;
+							}
+							else  //åå°„åªå¯¹å»ºç­‘ç‰©å¤–çš„æ¥æ”¶ç‚¹è€ƒå¯Ÿ
+							{
+								if (beam_type == 0)
+									continue;
+							}
+
+							emxRay Finalray;
+							Finalray.origin = origin;
+							Finalray.direction = (receiver - Finalray.origin).normalize();
+							Finalray.mint = 0;
+							Finalray.maxt = (receiver - Finalray.origin).norm();
+							Finalray.lastID = -1;
+							Vector3d intersectPoint;
+							bool valid = false;
+							if (FinalBeam.cornerNum == 3)
+							{
+								valid = intersect(Finalray, FinalBeam.BeamVertex[0], FinalBeam.BeamVertex[1], FinalBeam.BeamVertex[2], intersectPoint);
+							}
+							else if (FinalBeam.cornerNum == 4)
+							{
+								valid = intersect(Finalray, FinalBeam.BeamVertex[0], FinalBeam.BeamVertex[1], FinalBeam.BeamVertex[2], intersectPoint) ||
+									intersect(Finalray, FinalBeam.BeamVertex[2], FinalBeam.BeamVertex[3], FinalBeam.BeamVertex[0], intersectPoint);
+							}
+							if (valid)
+							{
+								Finalray.origin = intersectPoint;
+								Finalray.direction = (receiver - intersectPoint).normalize();
+								Finalray.mint = 0;
+								Finalray.maxt = (receiver - Finalray.origin).norm();
+								Finalray.lastID = -1;
+								double finalHit = 0;
+								int finalFaceid = -1;
+								vector<Vector3d>path_point, inverse_pathpoint; //å­˜æ”¾ä¼ æ’­è¿‡ç¨‹è·¯å¾„ç‚¹ä¿¡æ¯,invese_pathpointä¸­å­˜å‚¨çš„æ˜¯é€†å‘è·¯å¾„ä¿¡æ¯
+								if (((receiver - intersectPoint).norm() > 1e-6) && (!pKdTree->Intersect(Finalray, finalHit, finalFaceid) || (finalHit >= 0.9999 *(receiver - intersectPoint).norm())))
+								{
+									if (beam_type == 1) //æ­¤æ¡è·¯å¾„æœ‰æ•ˆï¼Œä¸”æœ€åä¸€æ¬¡ä¸ºé€å°„
+									{
+										beamroute[FinalBeamNum].beam_type = 1;
+									}
+
+									inverse_pathpoint.push_back(intersectPoint);
+									for (int j = beamroute.size() - 2; j >= 1; j--)
+									{
+										Vector3d direction = (intersectPoint - beamroute[j].origin).normalize();
+										double dist = Dot(beamroute[j].BeamVertex[0] - beamroute[j].origin, beamroute[j].beamNormal) / Dot(direction, beamroute[j].beamNormal);
+										intersectPoint = beamroute[j].origin + direction * dist;
+										inverse_pathpoint.push_back(intersectPoint);
+									}
+									path_point.push_back(AP_position);
+									for (int i = inverse_pathpoint.size() - 1; i >= 0; i--)
+									{
+										path_point.push_back(inverse_pathpoint[i]);
+									}
+									path_point.push_back(receiver);
+
+									Field_Path ipath;
+									ipath.Path_interPoint = path_point;
+									for (int j = 0; j < beamroute.size(); j++)
+									{
+										ipath.propagation_type.push_back(beamroute[j].beam_type);
+										ipath.intersect_faceNormal.push_back(beamroute[j].beamNormal);
+										ipath.intersect_ID.push_back(beamroute[j].faceID);
+									}
+									#pragma omp critical
+									{
+										NField->Path.push_back(ipath);
+									}
+									num_RefTransPath++;
+								}
+								vector<Vector3d>().swap(path_point);
+								vector<Vector3d>().swap(inverse_pathpoint);
+							}
+						}
+					}
+				}
+			}
+			vector<beamNode>().swap(beamroute);
+		}
+		cout << "---------- num_RefTransPath = " << num_RefTransPath << endl;
+}
+
+
+void algo::valid_RefDiffPath(ComputePara *cptPara, emxKdTree* pKdTree, vector<Vedge> &Edge_list, Vector3d AP_position, Cell_Data* m_cellData, const vector<vector<beamNode>> &beamRoutes)
+{
+	int num_RefDiff_diff = 0;
+	double Xmin = EFieldArray[0].Position.x;
+	double Ymin = EFieldArray[0].Position.y;
+	double Zheight = EFieldArray[0].Position.z;
+	Vector3d Point_IN_SimPlane(Xmin, Ymin, Zheight);
+	Vector3d SimPlane_Normal(0, 0, 1);
+
+}
+
+
+
+algo::algo()
+{
+}
+
+algo::~algo()
+{
+}
+
+void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *vPara)
+{
+	bool ok;
+	int totalcpu = omp_get_num_procs();
+	cout << "----------å¼€å§‹è®¡ç®—--------------" << endl;
+	int core_nums = QInputDialog::getInt(NULL, QStringLiteral("cpu core"), QString("There are ") + QString::number(totalcpu) + " cores in this PC.\n use ", 0, 0, 100, 1, &ok);
+	omp_set_num_threads(core_nums);   //æŒ‡å®šç”¨äºå¹¶è¡Œè®¡ç®—çš„çº¿ç¨‹æ•°ç›®
+
+	if (modelParameter->SiteModels.empty())
+	{
+		QMessageBox::warning(NULL, QStringLiteral("æ¨¡å‹æ–‡ä»¶"), QStringLiteral("è¯·åŠ è½½æ¨¡å‹æ–‡ä»¶"));
+		return;
+	}
+	if (cptPara->Sites.size() == 0)
+	{
+		QMessageBox::warning(NULL, QStringLiteral("å‘å°„å¤©çº¿"), QStringLiteral("è¯·æ·»åŠ å‘å°„å¤©çº¿æ–‡ä»¶"));
+		return;
+	}
+	if (modelParameter->materialdatabase.size() == 0)
+	{
+		QMessageBox::warning(NULL, QStringLiteral("æè´¨æ–‡ä»¶"), QStringLiteral("è¯·åŠ è½½æè´¨æ–‡ä»¶"));
+		return;
+	}
+	map<int, Site_Data *> &AP_EFieldMap = vPara->simuResult;
+	AP_EFieldMap.clear();
+	auto siteIterator = cptPara->Sites.begin();
+	int siteCount = 0;
+
+	//å¯¹æ¯ä¸€ä¸ªç«™ç‚¹å¾ªç¯å¤„ç†
+	while (siteIterator != cptPara->Sites.end())
+	{
+		SphereBeam* SphereTest = new SphereBeam;
+		SphereTest = SphereTest->creat(cptPara->RT_sample, cptPara->RT_radius);  //ç•Œé¢äº¤äº’è®¾ç½®çš„é‡‡æ ·å¯†åº¦å³å¯¹æ­£20é¢ä½“ç»†åˆ†çš„æ¬¡æ•°
+		int BeamNumber = SphereTest->m_Face.size();; //å‘å°„æºé‡‡æ ·Beamæ•°ç›®
+		const char *fileName = "D:\\calculation_log.dat";
+		ofstream fout(fileName);
+
+		//ä¿å­˜ç»“æœçš„ç«™ç‚¹æ–‡ä»¶
+		Site_Data* m_siteData = new Site_Data(siteIterator->first);
+		double beginTime = clock();
+
+		if (modelParameter->mType == ModelType::CITY_LOCAL)
+		{
+			//
+			BaseModel* currentModel = nullptr;
+			int currentModelID = siteIterator->first;
+			for (size_t i = 0; i < modelParameter->SiteModels.size(); i++)
+			{
+				if (currentModelID==modelParameter->SiteModels[i]->getModelID())
+				{
+					currentModel = modelParameter->SiteModels[i];
+				}
+			}
+
+			if (currentModel==nullptr)
+			{
+				cout << "no model" << endl;
+				return;
+			}
+
+			emxModel *trianglePara = new emxModel(currentModel);
+			Vector3d AP_position = siteIterator->second->Site_Antennas[0].position;
+			double  time1 = clock();
+			emxKdTree *AP_KdTree = new emxKdTree(trianglePara, 80, 1, 0.5, 1, -1);
+			double  time2 = clock();
+			double time_kd_tree = (time2 - time1) / 1000;
+			fout << "time_kd_tree:  " << time_kd_tree << endl;
+			fout << "begin to find all possible propagation path" << endl;
+			vector<emxBeam*> pRootBeams;
+			double time6 = clock();
+			CreateInitialBeam(pRootBeams, SphereTest, AP_position, BeamNumber);
+			fout << "pRootBeams Number: " << pRootBeams.size() << endl;
+			double time7 = clock();
+			double time_initialBeam = (time7 - time6) / 1000;
+			fout << "time_initialBeam:  " << time_initialBeam << endl;
+			double time8 = clock();
+			vector< vector<beamNode> >  AP_route;  //route
+			int totalpathnum = 0;  //the number of available path
+
+#pragma omp parallel for
+			for (int sourceID = 0; sourceID < pRootBeams.size(); sourceID++)
+			{
+				BeamTracing(AP_KdTree, cptPara->reflectNumPara, pRootBeams[sourceID]);  //è·Ÿè¸ªç”Ÿæˆç¼–å·ä¸ºsourceIDæŒ‡å‘çš„æºbeamå¯¹åº”çš„è·¯å¾„æ ‘
+				find_beamroute(pRootBeams[sourceID], AP_route); //æ‰¾å‡ºtoBeProcessedBeams[sourceId]æŒ‡å‘çš„è·¯å¾„æ ‘ä¸­æ‰€æœ‰è·¯å¾„ï¼Œå­˜æ”¾åˆ°Allrouteä¸­
+
+			}
+			double time9 = clock();
+			double time_Beamtracing = (time9 - time8) / 1000;
+			fout << "time_Beamtracing:  " << time_Beamtracing << endl;
+
+			totalpathnum = AP_route.size();
+			fout << "the total possible path number is " << totalpathnum * 2 << endl;
+			for (int i = 0; i < pRootBeams.size(); i++)
+			{
+				delete pRootBeams[i];
+				pRootBeams[i] = NULL;
+			}
+
+			//æ‰¾å‡ºæœ‰æ•ˆç›´å°„ã€åå°„ã€é€å°„ã€ç»•å°„ä¼ æ’­è·¯å¾„
+			fout << "Begin to find the valid path of receivers in  site  " << siteIterator->second->Site_Name << endl;
+
+			//æ¥æ”¶ç‚¹åæ ‡è®¾ç½®
+			Site_Data * m_siteData;
+			Scene_para s_para;
+
+
+			if (cptPara->computeEnum == ComputationEnum::ReceivePoint)  //éä»¿çœŸé¢çš„æ¥æ”¶ç‚¹è®¾ç½®
+			{
+				//æ ¹æ®æ¥æ”¶ç‚¹çš„pciä¿¡æ¯ï¼Œç”Ÿæˆè¦è®¡ç®—çš„ç«™ç‚¹ç»“æœï¼Œ
+				//å½“ç„¶ç›®å‰åªåŒ…å«ä½ç½®ï¼Œä¿¡å·å¼ºåº¦éœ€è¦ä¸‹é¢ç®—æ³•ç»§ç»­è®¡ç®—ï¼Œå¹¶ä¿å­˜åˆ° m_siteData
+				for (int j = 0; j < cptPara->No_SimPlanePoint.size(); j++)
+				{
+					int pci = cptPara->No_SimPlanePoint[j].PCI;
+
+					auto transVec = siteIterator->second->Site_Antennas;
+					//æ£€æµ‹å¯¼å…¥çš„ç«™ç‚¹æ–‡ä»¶æ˜¯å¦åŒ…å«æ­¤PCI
+					bool isPciInSite = false;
+					string cellName = "";
+					for (vector<TransAntenna>::iterator it = transVec.begin(); it != transVec.end(); it++)
+					{
+						if ((*it).PCI == pci)
+						{
+							isPciInSite = true;
+							cellName = (*it).Cell_Name;
+							break;
+						}
+					}
+					//æ£€æµ‹ç»“æœæ–‡ä»¶æ˜¯å¦åŒ…å«æ­¤pci
+					if (m_siteData->cellsMap.find(pci) == m_siteData->cellsMap.end())
+					{
+						m_siteData->cellsMap.insert(make_pair(pci, new Cell_Data(pci, cellName)));
+					}
+					//
+					if (isPciInSite)
+					{
+						//åŠ å…¥æœ¬ç«™ç‚¹è¦è®¡ç®—çš„æ¥å—ç‚¹
+						EField *s = new EField;
+						s->Position = cptPara->No_SimPlanePoint[j].position;
+						m_siteData->cellsMap[pci]->efildVec.push_back(s);
+					}
+					else
+					{
+						continue;
+					}
+
+				}
+			}
+			else if (cptPara->computeEnum == ComputationEnum::SimuPlane) //æŒ‰ç…§ä»¿çœŸé¢è®¾ç½®
+			{
+				//å°†è¯¥ç«™ç‚¹æ‰€æœ‰çš„pciè¿›è¡Œ
+				auto transVec = siteIterator->second->Site_Antennas;
+				for (vector<TransAntenna>::iterator it2 = transVec.begin(); it2 != transVec.end(); it2++)
+				{
+					Cell_Data * tmpCell = new Cell_Data((*it2).PCI, (*it2).Cell_Name);
+					m_siteData->cellsMap.insert(make_pair((*it2).PCI, tmpCell));
+				}
+				//è®¾ç½®ä»¿çœŸé¢çš„ç‚¹
+				SetEFieldPoint(m_siteData, AP_position, modelParameter->SiteModels[siteIterator->first]->getSceneRange(), cptPara->altitude, cptPara->precision, s_para, modelParameter);
+			}
+
+			//æ¥æ”¶ç‚¹çš„å†…å¤–ç‰¹å¾åˆ¤æ–­
+			Point_In_Out(cptPara->computeEnum, m_siteData, modelParameter->SiteModels[siteCount]->getLocalScene()->getTotal_Building(), cptPara->altitude, s_para);
+			//æ¥æ”¶ç‚¹è®¾ç½®å®Œæ¯•
+
+			//å¼€å§‹ä»¥cellä¸ºå•ä½å¾ªç¯è®¡ç®—
+			auto cellIterator = m_siteData->cellsMap.begin();
+			while (cellIterator != m_siteData->cellsMap.end())
+			{
+				//ç›´å°„
+				double time10 = clock();
+				valid_DirPath(AP_KdTree, AP_position, cellIterator->second);
+				double time11 = clock();
+				double time_DirPath = (time11 - time10) / 1000;
+				fout << "time_DirPath:  " << time_DirPath << endl;
+
+				valid_RefTransPath(cptPara->computeEnum, s_para, AP_KdTree, AP_position, cellIterator->second, AP_route);
+				double time12 = clock();
+				double time_RefTransPath = (time12 - time11) / 1000;
+				fout << "time_RefTransPath:  " << time_RefTransPath << endl;
+				cout << "time_RefTransPath:  " << time_RefTransPath << endl;
+
+				if (cptPara->diffractionNumPara>=1)
+				{
+					vector<Vedge> currentEdge = currentModel->getAP_Edge_List();
+					valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, cellIterator->second);
+					double time13 = clock();
+					double time_once_diffPath = (time13 - time12) / 1000;
+					fout << "time_once_diffPath:  " << time_once_diffPath << endl;
+					cout << "time_once_diffPath:  " << time_once_diffPath << endl;
+
+					valid_RefDiffPath(TODO, AP_KdTree, AP_Edge_list, AP_position, EFieldArray, AP_route);
+					double time16 = clock();
+					double time_Ref_LastdiffPath = (time16 - time13) / 1000;
+					fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
+					cout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
+				}
+
+				double time13 = clock();
+				double time_totalValidPath = (time13 - time10) / 1000;
+				fout << "the end of finding valid paths" << endl;
+				fout << "time_totalValidPath:  " << time_totalValidPath << endl;
+				fout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->second->Site_Name << endl;
+				cout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->second->Site_Name << endl;
+
+				cellIterator++;
+			}
+
+
+		}
+		else if (modelParameter->mType == ModelType::OBJ_LOCAL)
+		{
+			//æš‚æ—¶ä¸å¤„ç†
+		}
+
+
+
+		siteCount++;
+		siteIterator++;
+	}
+
 }
