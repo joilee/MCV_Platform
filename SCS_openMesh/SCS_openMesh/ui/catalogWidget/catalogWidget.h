@@ -10,10 +10,10 @@
 #include "observer/LocalModelObserver.h"
 #include "observer/PluginObserver.h"
 using namespace std;
-#define CITY_VIEW "City"
-#define MODEL_ITEM "Model"
-#define CPT_ITEM "Computation"
-#define  VIS_ITEM "Visualization"
+#define CITY_VIEW "城市"
+#define MODEL_ITEM "基站"
+#define CPT_ITEM "插件"
+#define  VIS_ITEM "可视化"
 
 class catalogWidget :public QTreeWidget, public modelObserver, public ComputePluginObserver
 {

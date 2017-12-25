@@ -197,6 +197,7 @@
     <ClCompile Include="ui\scsModelTable.cpp" />
     <ClCompile Include="ui\scsSimuPlaneGLWidget.cpp" />
     <ClCompile Include="util\ArcBall.cpp" />
+    <ClCompile Include="util\dclist.cpp" />
     <ClCompile Include="util\emxCamera.cpp" />
     <ClCompile Include="util\HsvToRgb.cpp" />
     <ClCompile Include="util\Quaternion.cpp" />
@@ -989,6 +990,7 @@
     <ClInclude Include="ui\GLWidget\scsGlobalGL.h" />
     <ClInclude Include="ui\GLWidget\scsPlaneGL.h" />
     <ClInclude Include="ui\scatterWidget\correctWidget.h" />
+    <ClInclude Include="util\dclist.h" />
     <ClInclude Include="visualData\visualPluginItem.h" />
     <ClInclude Include="visualData\visualResultItem.h" />
     <CustomBuild Include="ui\catalogWidget\catalogWidget.h">

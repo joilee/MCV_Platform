@@ -6,10 +6,12 @@ scsModelTable::scsModelTable(QWidget* a ) :LocalModelObserver("scsModelTable"),m
 {
 	//QWidget::showMaximized();
 //	this = new QTableWidget(this);
-	QStringList headers;
-	headers << QStringLiteral("属性") <<QStringLiteral( "值");
-	this->setHorizontalHeaderLabels(headers);
+	//QStringList headers;
+	//headers << QStringLiteral("属性") <<QStringLiteral("值");
+	//this->setHorizontalHeaderLabels(headers);
+
 	this->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	this->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	//this->verticalHeader()->setVisible(false);   //隐藏列表头  
 	this->setRowCount(15);
 	this->setColumnCount(2);

@@ -29,7 +29,7 @@ private:
 	QListWidget *contentsWidget;
 	QStackedWidget *pagesWidget;
 	QPushButton *okButton;
-	QPushButton *check;
+	//QPushButton *check;
 };
 
 #endif

@@ -1,4 +1,4 @@
-#include "catalogWidget.h"
+ï»¿#include "catalogWidget.h"
 #include <QFileDialog>
 #include "Context/context.h"
 #include <QJsonDocument>
@@ -7,23 +7,18 @@
 catalogWidget::catalogWidget(QWidget *parent)
 :ComputePluginObserver("catalogWidgetForPlugin"), modelObserver("catalogWidget"),QTreeWidget(parent)
 {
-
-	this->setHeaderLabels(QStringList() << QStringLiteral("ÏîÄ¿")<< QStringLiteral("ÊôĞÔ"));
+	this->setHeaderLabels(QStringList() << QStringLiteral("é¡¹ç›®")<< QStringLiteral("å±æ€§"));
 	
-	mGlobalItem = new QTreeWidgetItem();
-	mGlobalItem->setText(0, CITY_VIEW);
+	mGlobalItem = new QTreeWidgetItem(this, QStringList(QStringLiteral(CITY_VIEW)));
 	this->addTopLevelItem(mGlobalItem);
 
-	mLocalItem = new QTreeWidgetItem();
-	mLocalItem->setText(0, MODEL_ITEM);
+	mLocalItem = new QTreeWidgetItem(this, QStringList(QStringLiteral(MODEL_ITEM)));
 	this->addTopLevelItem(mLocalItem);
 
-	cItem = new QTreeWidgetItem();
-	cItem->setText(0, CPT_ITEM);
+	cItem = new QTreeWidgetItem(this, QStringList(QStringLiteral(CPT_ITEM)));
 	this->addTopLevelItem(cItem);
 
-	vItem = new QTreeWidgetItem();
-	vItem->setText(0, VIS_ITEM);
+	vItem = new QTreeWidgetItem(this, QStringList(QStringLiteral(VIS_ITEM)));
 	this->addTopLevelItem(vItem);
 	
 }
@@ -37,19 +32,19 @@ void catalogWidget::addParentMenu()
 	QTreeWidgetItem *item = this->currentItem();
 	if (item == NULL) return;
 
-	if (item->text(0) == CITY_VIEW)
+	if (item->text(0) == QStringLiteral(CITY_VIEW))
 	{
-		QAction * addModelAction = new QAction(QStringLiteral("µ¼Èë³ÇÊĞ³¡¾°"),this);
+		QAction * addModelAction = new QAction(QStringLiteral("å¯¼å…¥åŸå¸‚åœºæ™¯"),this);
 		menu->addAction(addModelAction);
 		connect(addModelAction, SIGNAL(triggered()), this, SLOT(addModel()));
 	}
-	if (item->text(0) == CPT_ITEM)
+	if (item->text(0) == QStringLiteral(CPT_ITEM))
 	{
-		QAction * addPluginAction= new QAction(QStringLiteral("µ¼Èë²å¼ş"), this);
+		QAction * addPluginAction= new QAction(QStringLiteral("å¯¼å…¥æ’ä»¶"), this);
 		menu->addAction(addPluginAction);
 		connect(addPluginAction, SIGNAL(triggered()), this, SLOT(addCptPlugin()));
 	}
-	if (item->text(0) == VIS_ITEM)
+	if (item->text(0) == QStringLiteral(VIS_ITEM))
 	{
 
 	}
@@ -68,8 +63,8 @@ void catalogWidget::addChildMenu()
 	}
 
 
-	//ÔİÊ±Ö»Ğ´ÁËÄ£ĞÍ°å¿é
-	if (item->parent()->text(0)==MODEL_ITEM)
+	//æš‚æ—¶åªå†™äº†æ¨¡å‹æ¿å—
+	if (item->parent()->text(0) == QStringLiteral(MODEL_ITEM))
 	{
 		QAction * deleteModelAction = new QAction(tr("delete"), this);
 		menu->addAction(deleteModelAction);
@@ -103,13 +98,13 @@ void catalogWidget::deleleItemsUnderItem(QTreeWidgetItem * a)
 
 void catalogWidget::addModel()
 {
-	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("¿ìËÙµ¼Èë³¡¾°"), "./", QStringLiteral("³¡¾°ÎÄ¼ş (*.json)"));
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("å¿«é€Ÿå¯¼å…¥åœºæ™¯"), "./", QStringLiteral("åœºæ™¯æ–‡ä»¶ (*.json)"));
 	if (path.isNull())
 	{
 		return;
 	}
 
-	//»ñÈ¡jsonÎÄ¼şËùÔÚÎÄ¼ş¼ĞµÄÄ¿Â¼,Îª¶Á²ÄÖÊÎÄ¼ş×¼±¸ºÃÂ·¾¶
+	//è·å–jsonæ–‡ä»¶æ‰€åœ¨æ–‡ä»¶å¤¹çš„ç›®å½•,ä¸ºè¯»æè´¨æ–‡ä»¶å‡†å¤‡å¥½è·¯å¾„
 	QDir jsonPath(path);
 	jsonPath.cdUp();
 	QString fatherDirectory = jsonPath.path();
@@ -127,17 +122,17 @@ void catalogWidget::addModel()
 	if (jsDoc.isObject())
 	{
 		QJsonObject obj = jsDoc.object();
-		//¼ì²âÄ£ĞÍ
+		//æ£€æµ‹æ¨¡å‹
 		if (obj.contains("Name"))
 		{
 			_name = obj.value("Name").toString();
 		}
 		else
 		{
-			cout << "error: jsonÎÄ¼şÖĞÃ»ÓĞÄ£ĞÍ£¬Çë¼ì²é£¡" << endl;
+			cout << "error: jsonæ–‡ä»¶ä¸­æ²¡æœ‰æ¨¡å‹ï¼Œè¯·æ£€æŸ¥ï¼" << endl;
 			return;
 		}
-		//¼ì²â²ÄÁÏ
+		//æ£€æµ‹ææ–™
 		if (obj.contains("Material"))
 		{
 			QJsonValue name_value = obj["Material"];
@@ -148,7 +143,7 @@ void catalogWidget::addModel()
 		}
 		else
 		{
-			cout << "error: jsonÖĞÃ»ÓĞ²ÄÖÊÎÄ¼ş£¬Çë¼ì²é£¡" << endl;
+			cout << "error: jsonä¸­æ²¡æœ‰æè´¨æ–‡ä»¶ï¼Œè¯·æ£€æŸ¥ï¼" << endl;
 		}
 	}
 
@@ -161,7 +156,7 @@ void catalogWidget::addModel()
 void catalogWidget::deleteModel()
 {
 	QTreeWidgetItem *item = this->currentItem();
-	if (item->parent()!=NULL&&item->parent()->text(0)==MODEL_ITEM)
+	if (item->parent() != NULL&&item->parent()->text(0) == QStringLiteral(MODEL_ITEM))
 	{
 		string name = (item->text(0)).toStdString();
 		globalContext *gctx = globalContext::GetInstance();
@@ -172,7 +167,7 @@ void catalogWidget::deleteModel()
 void catalogWidget::showModel()
 {
 	QTreeWidgetItem *item = this->currentItem();
-	if (item->parent() != NULL&&item->parent()->text(0) == MODEL_ITEM)
+	if (item->parent() != NULL&&item->parent()->text(0) == QStringLiteral(MODEL_ITEM))
 	{
 		string name = (item->text(0)).toStdString();
 		int id = (item->text(1)).toInt();
@@ -184,14 +179,14 @@ void catalogWidget::showModel()
 
 void catalogWidget::addCptPlugin()
 {
-	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("µ¼Èë¼ÆËã²å¼ş"), "./", QStringLiteral("¶¯Ì¬Á´½Ó¿â (*.dll)"));
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("å¯¼å…¥è®¡ç®—æ’ä»¶"), "./", QStringLiteral("åŠ¨æ€é“¾æ¥åº“ (*.dll)"));
 	globalContext *gctx = globalContext::GetInstance();
 	gctx->cptManager->setPluginPath(path);
 }
 
 void catalogWidget::update(visualModelItem * a)
 {
-	cout << "Catalog ½ÓÊÕµ½¾Ö²¿¸üĞÂµÄĞÅºÅ" << endl;
+	cout << "Catalog æ¥æ”¶åˆ°å±€éƒ¨æ›´æ–°çš„ä¿¡å·" << endl;
 	if (a->cityNeedUpdate())
 	{
 		deleleItemsUnderItem(mGlobalItem);
@@ -227,7 +222,7 @@ void catalogWidget::update(visualModelItem * a)
 
 void catalogWidget::updatePluginInfo(VisualPluginItem* a)
 {
-	cout << "Catalog ½ÓÊÕµ½plugin¸üĞÂµÄĞÅºÅ" << endl;
+	cout << "Catalog æ¥æ”¶åˆ°pluginæ›´æ–°çš„ä¿¡å·" << endl;
 	if (a->itemExist())
 	{
 		deleleItemsUnderItem(cItem);

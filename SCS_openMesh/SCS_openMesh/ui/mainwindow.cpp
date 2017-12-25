@@ -58,6 +58,9 @@ void MainWindow::init()
 	modelTable = new scsModelTable;
 	modelTable->showMaximized();
 	ui.dockWidget_Property->setWidget(modelTable);
+	QStringList headers;
+	headers << QStringLiteral("属性") << QStringLiteral("值");
+	modelTable->setHorizontalHeaderLabels(headers);
 
 	globalContext *gctx = globalContext::GetInstance();
 	gctx->modelManager->getModelSubject()->attach(modelTable);
@@ -193,34 +196,41 @@ void MainWindow::saveAllResult()
 		}
 		qDebug() << "------------save Site success!  site id " << siteIDs[i] << "-----------------" << endl;
 	}
-
+	outputLog(QString(QStringLiteral("sucess: 仿真文件保存成功！")));
 	return;
 }
 
 void MainWindow::setShowLineEdit(int id)
 {
 	ui.lineEdit_ModelID->setText(QString::number(id));
+	outputLog(QString(QStringLiteral("设置当前显示模型的id为：") + QString::number(id, 10)));
 }
 
 void MainWindow::setModelAlpha(int a)
 {
 	ui.simuArea->setModelAlpha(a);
+	outputLog(QString(QStringLiteral("设置局部模型透明度为：") + QString::number(a, 10)));
 }
 
 void MainWindow::setDrawPointMode(bool flag)
 {
 	//用二进制表达状态
 	ui.simuArea->setPoint(flag);
+	
 }
 void MainWindow::setDrawLineMode(bool flag)
 {
 	//用二进制表达状态
 	ui.simuArea->setLine(flag);
+	if (flag)
+		outputLog(QString(QStringLiteral("设置绘制模式为：线框模式")));
 }
 void MainWindow::setDrawFaceMode(bool flag)
 {
 	//用二进制表达状态
 	ui.simuArea->setFace(flag);
+	if (flag)
+		outputLog(QString(QStringLiteral("设置绘制模式为：面模式")));
 }
 
 
@@ -237,6 +247,7 @@ void MainWindow::open_material()
 	
 	QString path = QFileDialog::getOpenFileName(this,QStringLiteral("打开材质文件"),"./",QStringLiteral("txt 材质文件 (*.txt)"));
 	load_Material(path.toStdString());
+	outputLog(QString(QStringLiteral("sucess: 材料文件导入成功！")));
 }
 void MainWindow:: load_Material(string path)
 {
@@ -250,6 +261,7 @@ void MainWindow::setMeshOption()
 		mod = new meshOptionDialog(this);
 	}
 	mod->exec();
+	outputLog(QString(QStringLiteral("sucess: 模型参数设置成功！")));
 }
 
 void MainWindow::setMaterial()
@@ -338,7 +350,7 @@ void MainWindow::meshAll()
 	vector< Vector3d> center;
 	vector<int> siteID;
 	double range;
-	//要不要加一个判断，防止错误？
+
 	if (mod->inputFlag)
 	{
 		mod->getValue(center,siteID,range);
@@ -461,4 +473,5 @@ void MainWindow::quickLoadJson()
 		}
 	}
 	load_Material(_m.toStdString());
+	outputLog(QString(QStringLiteral("sucess: json文件导入成功！")));
 }

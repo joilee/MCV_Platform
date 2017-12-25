@@ -14,11 +14,11 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 	 QPushButton *closeButton = new QPushButton(tr("Close"));
 	 okButton = new QPushButton(QStringLiteral("生成算法参数"));
 	 okButton->setToolTip(QStringLiteral("更新参数"));
-	 check = new QPushButton(tr("Check"));
-	 check->setToolTip(QStringLiteral("检查参数是否完整"));
+	// check = new QPushButton(tr("Check"));
+	 //check->setToolTip(QStringLiteral("检查参数是否完整"));
 	 connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 	 connect(okButton,SIGNAL(clicked()),this,SLOT(getPara()));
-	 connect(check, SIGNAL(clicked()), this, SLOT(checkSiteAndAnte()));
+	// connect(check, SIGNAL(clicked()), this, SLOT(checkSiteAndAnte()));
 	contentsWidget = new QListWidget;
 	//layout
 	contentsWidget->setMovement(QListView::Static);
@@ -59,7 +59,7 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 
 	  QHBoxLayout *buttonsLayout = new QHBoxLayout;
 	  buttonsLayout->addStretch(1);
-	  buttonsLayout->addWidget(check);
+	 // buttonsLayout->addWidget(check);
 	   buttonsLayout->addWidget(okButton);
 	  buttonsLayout->addWidget(closeButton);
 

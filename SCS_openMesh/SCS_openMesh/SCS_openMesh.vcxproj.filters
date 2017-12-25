@@ -90,6 +90,9 @@
     <ClCompile Include="ui\GLWidget\scsPlaneGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="util\dclist.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Container\EFieldContainer.h" />
@@ -127,6 +130,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ui\GLWidget\scsPlaneGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="util\dclist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
