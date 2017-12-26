@@ -7,7 +7,7 @@
 	const Color Color::WHITE(1.f, 1.f, 1.f);
 	const Color Color::GRAY (.5f, .5f, .5f);
 	const Color Color::BLACK(0.f, 0.f, 0.f);
-	const Color Color::MediumSlateBlue(123,104,238);
+	const Color Color::MediumSlateBlue(175,175,175);
 	const Color Color::Turquoise(64,224,208);
 	const Color Color::RED    ( 1.f, 0.f, 0.f);
 	const Color Color::YELLOW ( 1.f, 1.f, 0.f);
