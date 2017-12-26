@@ -203,7 +203,6 @@ void computeManager::openNo_simplaneReceiver(string path)
 		cptPara->No_SimPlanePoint.push_back(receiver);
 	}
 	infile.close();
-	cptPara->no_simplane = true;
 	noSimFlag = true;
 }
 

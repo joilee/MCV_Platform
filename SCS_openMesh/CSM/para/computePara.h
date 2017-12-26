@@ -34,7 +34,7 @@ public:
 	double RT_BeamNum;//beam数量
 
 	//@Deprecated  使用枚举类代替
-	bool no_simplane;
+	//bool no_simplane;
 	//计算方式 枚举类
 	ComputationEnum computeEnum;
 
