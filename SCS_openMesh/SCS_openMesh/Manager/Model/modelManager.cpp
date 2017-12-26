@@ -282,13 +282,13 @@ void ModelManager:: setModelPara()
 			cityLocalModel *tmp = (cityLocalModel*)tmpModel;
 
 			BaseModel* tmpBase = new BaseModel();
-			std::shared_ptr<cityScene> tmpScene(tmp->getScene());
-			tmpBase->setCityScene(tmpScene);
+
+			tmpBase->setCityScene(tmp->getScene());
 			tmpBase->setApEdgeList(tmp->getScene()->getAPEdge());
 			tmpBase->setApEdgeID(tmp->getScene()->getAPEdgeID());
 
-			std::shared_ptr<MESH> tmpMesh(tmp->getMesh());
-			tmpBase->setGround_Mesh(tmpMesh);
+
+			tmpBase->setGround_Mesh(tmp->getMesh());
 
 			tmpBase->setSceneRange(tmp->getRange());
 			tmpBase->setVertices(tmp->getVertices());

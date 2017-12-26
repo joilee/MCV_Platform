@@ -3,7 +3,6 @@
 ComputePara::ComputePara()
 {
 	Sites.clear();
-	no_simplane = false;
 	phi=90;
 	leftUpX=0;
 	leftUpY=0;

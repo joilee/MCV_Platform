@@ -1,6 +1,6 @@
 ﻿#include "algo.h"
 #include <QMessageBox>
-
+#include <para/baseModel.h>
 
 int algo:: sign_func(double x)  //符号函数
 {
@@ -267,7 +267,7 @@ void algo::find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
 
 //设置接收点坐标
 //设置一个site内所有接收点的坐标
-void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range, double Zheight, double Precetion, Scene_para &sp, ModelPara *mP)
+void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range, double Zheight, double Precetion, Scene_para &sp)
 {
 	m_siteData->cellsMap.clear();
 
@@ -320,11 +320,11 @@ void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double Lo
 	}
 	BaseModel *tmpModel;
 	bool find=false;
-	for (int i = 0; i < mP->SiteModels.size();i++)
+	for (int i = 0; i < modelParameter->SiteModels.size();i++)
 	{
-		if (mP->SiteModels[i]->getModelID()==m_siteData->siteID)
+		if (modelParameter->SiteModels[i]->getModelID()==m_siteData->siteID)
 		{
-			tmpModel = mP->SiteModels[i];
+			tmpModel = modelParameter->SiteModels[i];
 			find = true;
 			break;
 		}
@@ -480,68 +480,72 @@ bool algo::contain(vector<Vector3d>& polygon, Vector3d point0)
 }
 
 //找出有效的直达路径
-void algo::valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, Cell_Data *m_cellData)
+void algo::valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, Site_Data *m_siteData)
 {
 	//先判断有没有直射电磁波到达
-	for (int i=0; i<m_cellData->efildVec.size(); i ++)
+	for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end();it++)
 	{
-		if (!m_cellData->efildVec[i]->In_or_Out)  //对于位于建筑物内部的接收点不用考察是否发生直射
-			continue;
-		Vector3d direction = m_cellData->efildVec[i]->Position - AP_position;
-		double length = direction.norm();
-		emxRay directRay;
-		int dirFaceid = -1;
-		double dirHit = 0;
-		directRay.direction = direction.normalize();
-		directRay.origin = AP_position;
-		directRay.lastID = -1;
-		if(length > 1e-6&&(!pKdTree->Intersect(directRay, dirHit, dirFaceid) || dirHit>=0.9999*length))
+		for (int i = 0; i < it->second->efildVec.size(); i++)
 		{
-			Field_Path ipath;
-			ipath.Path_interPoint.push_back(AP_position);
-			ipath.Path_interPoint.push_back(m_cellData->efildVec[i]->Position);
+			if (!it->second->efildVec[i]->In_or_Out)  //对于位于建筑物内部的接收点不用考察是否发生直射
+				continue;
+			Vector3d direction = it->second->efildVec[i]->Position - AP_position;
+			double length = direction.norm();
+			emxRay directRay;
+			int dirFaceid = -1;
+			double dirHit = 0;
+			directRay.direction = direction.normalize();
+			directRay.origin = AP_position;
+			directRay.lastID = -1;
+			if (length > 1e-6 && (!pKdTree->Intersect(directRay, dirHit, dirFaceid) || dirHit >= 0.9999*length))
+			{
+				Field_Path ipath;
+				ipath.Path_interPoint.push_back(AP_position);
+				ipath.Path_interPoint.push_back(it->second->efildVec[i]->Position);
 
-			ipath.all_distance = length;
-			m_cellData->efildVec[i]->Path.push_back(ipath);
+				ipath.all_distance = length;
+				it->second->efildVec[i]->Path.push_back(ipath);
+			}
 		}
 	}
+
 }
 
 
 //计算反射、透射、绕射路径到达接收点的信号强度
-void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField>  &EFieldArray, vector<Vedge> &Edge_list, Antenna_Para & A_Para, ComputePara * c_para, ModelPara *mp)
+void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField*>  &EFieldArray, vector<Vedge> &Edge_list, Antenna_Para * A_Para)
 {
-	A_Para.frequency = AP.frequency * 1e6;
-	A_Para.light_speed = 299792458;
-	A_Para.epsilon0 =  1e-9/(36*M_PI);
-	A_Para.lamda = A_Para.light_speed/A_Para.frequency;
-	A_Para.k = 2 * M_PI * A_Para.frequency /A_Para.light_speed; 
-	A_Para.w = 2 * M_PI * A_Para.frequency;
+	A_Para->frequency = AP.frequency * 1e6;
+	A_Para->light_speed = 299792458;
+	A_Para->epsilon0 =  1e-9/(36*M_PI);
+	A_Para->lamda = A_Para->light_speed/A_Para->frequency;
+	A_Para->k = 2 * M_PI * A_Para->frequency /A_Para->light_speed; 
+	A_Para->w = 2 * M_PI * A_Para->frequency;
 
 	double initPowerStrength = pow(10,(AP.trans_power + AP.enlarge_power - AP.wire_loss)/10); //发射源初始功率，由dBm转换为mW
-	A_Para.EveryRayPowerStrength = initPowerStrength*1e-3; //每条源发射射线携带的功率，由mW转为W
+	A_Para->EveryRayPowerStrength = initPowerStrength*1e-3; //每条源发射射线携带的功率，由mW转为W
 	//获取全局坐标系中的正北方向在场景坐标系下的方位角phi,3D天线方向增益phi是相对于正北方向的夹角，因此当下坐标系统获取的phi需转换到正北方向的夹角
-	A_Para.NorthAngle = c_para->phi;
+	A_Para->NorthAngle = cptPara->phi;
 
 
 #pragma omp parallel for
 	for (int i=0; i<EFieldArray.size(); i++)
 	{
-		EField &NField = EFieldArray[i];
+		EField *NField = EFieldArray[i];
 
-		NField.HorizontalDis = sqrt((NField.Position.x - AP.position.x)*(NField.Position.x - AP.position.x) + (NField.Position.y - AP.position.y)*(NField.Position.y - AP.position.y));   //发射点和接收点之间的水平距离
+		NField->HorizontalDis = sqrt((NField->Position.x - AP.position.x)*(NField->Position.x - AP.position.x) + (NField->Position.y - AP.position.y)*(NField->Position.y - AP.position.y));   //发射点和接收点之间的水平距离
 
 		//NField.LosDis = (NField.Position - AP.position).norm();
 
 		//剔除重复路径
-		for (int id1= 0; id1<NField.Path.size(); id1++) 
+		for (int id1= 0; id1<NField->Path.size(); id1++) 
 		{
-			Field_Path path1 = NField.Path[id1];
+			Field_Path path1 = NField->Path[id1];
 			if (path1 .Path_interPoint.size() >= 3 && path1.propagation_type[1] != 2)  //此条路径为反、透射路径
 			{			
-				for (int id2 = id1+1;id2<NField.Path.size();id2++)
+				for (int id2 = id1+1;id2<NField->Path.size();id2++)
 				{
-					Field_Path path2 = NField.Path[id2];
+					Field_Path path2 = NField->Path[id2];
 					if (path2.intersect_ID.size() == path1.intersect_ID.size() && path2.propagation_type[1] != 2)
 					{
 						bool same_Path = true;
@@ -559,36 +563,36 @@ void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField>  &EFieldArray, vector<V
 						}
 						if (same_Path)
 						{
-							NField.Path.erase(NField.Path.begin() + id2);
+							NField->Path.erase(NField->Path.begin() + id2);
 							id2--;
 						}
 					}
 				}
 			}			
 		}
-		for (int j = 0; j<NField.Path.size(); j++)
+		for (int j = 0; j<NField->Path.size(); j++)
 		{
-			if (NField.Path[j].Path_interPoint.size() == 2)  //此条路径为直射（源点、接收点组成的路径）
+			if (NField->Path[j].Path_interPoint.size() == 2)  //此条路径为直射（源点、接收点组成的路径）
 			{
 				Calc_DirPathSignal(NField,AP,j,A_Para);
 			}
 			//或者考虑绕射
-			else  if (c_para->isDiffractionPara ==true&& NField.Path[j].Path_interPoint.size() == 3 && NField.Path[j].propagation_type[1] == 2)    //绕射路径
+			else  if (cptPara->isDiffractionPara ==true&& NField->Path[j].Path_interPoint.size() == 3 && NField->Path[j].propagation_type[1] == 2)    //绕射路径
 			{
-				Calc_diffSignal1(Edge_list,NField,AP,j,A_Para,mp);
+				Calc_diffSignal1(Edge_list,NField,AP,j,A_Para);
 				//Calc_difftest(Edge_list,NField,AP,j);
 			}
 			else   //反、透射路径
 			{
-				Calc_RefTransSignal(NField,AP,j,A_Para,mp,c_para);
+				Calc_RefTransSignal(NField,AP,j,A_Para);
 			}		
 		}
 	}
 }
 
-void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, Antenna_Para aPara)
+void algo::Calc_DirPathSignal(EField *NField, TransAntenna &AP, int &path_id, Antenna_Para* aPara)
 {
-	Vector3d direction = NField.Position - AP.position;
+	Vector3d direction = NField->Position - AP.position;
 	double length = direction.norm();
 	//Tpolor是初始场强方向
 	Vector3d Tpolor = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),direction.normalize())*(direction.normalize());  //此处的direction是不是需要normalize？？
@@ -596,7 +600,7 @@ void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, An
 	if(Tpolor.norm() < 1e-10)
 	{
 		//此条路径无效，需剔除
-		NField.Path.erase(NField.Path.begin()+path_id);
+		NField->Path.erase(NField->Path.begin()+path_id);
 		path_id--;
 	}
 	else
@@ -607,7 +611,7 @@ void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, An
 		int Hnum = int(asin(fabs(direction.y)/sqrt(direction.x*direction.x + direction.y*direction.y))*180/M_PI+0.5);  //射线的水平方向角phi
 		if(direction.x >= 0 && direction.y >= 0)
 		{
-			Hnum = aPara.NorthAngle  - Hnum;
+			Hnum = aPara->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -616,7 +620,7 @@ void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, An
 		else if(direction.x < 0 && direction.y >= 0)
 		{
 			Hnum = 180 - Hnum;
-			Hnum = aPara.NorthAngle  - Hnum;
+			Hnum = aPara->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -625,7 +629,7 @@ void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, An
 		else if(direction.x <= 0 && direction.y <= 0)
 		{
 			Hnum = 180 + Hnum;
-			Hnum = aPara.NorthAngle  - Hnum;
+			Hnum = aPara->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -634,7 +638,7 @@ void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, An
 		else
 		{
 			Hnum = 360 - Hnum;
-			Hnum = aPara.NorthAngle  - Hnum;
+			Hnum = aPara->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -647,25 +651,25 @@ void algo::Calc_DirPathSignal(EField &NField, TransAntenna &AP, int &path_id, An
 		{
 			Vnum = 180 - Vnum;
 		}
-		aPara.TP_gain = AP.initial_Gain - AP.direction_Gain[Hnum*181 + Vnum][2];
+		aPara->TP_gain = AP.initial_Gain - AP.direction_Gain[Hnum*181 + Vnum][2];
 
-		double EveryRayEFieldStrength = sqrt(30 *aPara. EveryRayPowerStrength * pow(10,aPara.TP_gain/10))/length ;  //射线携带的功率转换为射线场强值大小
+		double EveryRayEFieldStrength = sqrt(30 *aPara-> EveryRayPowerStrength * pow(10,aPara->TP_gain/10))/length ;  //射线携带的功率转换为射线场强值大小
 		Vector3d tfield =  Tpolor * EveryRayEFieldStrength ;  //第一项为射线初始场强方向，第二项为射线初始场强大小
 		Vector3cd ctfield = Vector3cd(tfield.x,tfield.y,tfield.z);
 
-		ctfield = ctfield *  exp(complex<double>(0,-aPara.k*length));  //考虑相位影响
-		NField.EFieldAll += ctfield;     //电场叠加
+		ctfield = ctfield *  exp(complex<double>(0,-aPara->k*length));  //考虑相位影响
+		NField->EFieldAll += ctfield;     //电场叠加
 		//NField.MolStrength +=  (lamda * lamda / (4 * M_PI* 120 * M_PI))*( ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag()  + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() +ctfield.z.imag()*ctfield.z.imag() );  //场强转成功率
 
-		double path_RecPower = aPara.lamda * aPara.lamda * (ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag() + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() + ctfield.z.imag()*ctfield.z.imag()) / (4*M_PI * 120 * M_PI);
-		NField.Path[path_id].power_Loss = 10*log10( aPara.EveryRayPowerStrength  / path_RecPower);
+		double path_RecPower = aPara->lamda * aPara->lamda * (ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag() + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() + ctfield.z.imag()*ctfield.z.imag()) / (4*M_PI * 120 * M_PI);
+		NField->Path[path_id].power_Loss = 10*log10( aPara->EveryRayPowerStrength  / path_RecPower);
 	}	
 }
 
 //计算绕射路径信号强度
-void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAntenna &AP, int &path_id, Antenna_Para aP, ModelPara *mp)
+void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField *NField, TransAntenna &AP, int &path_id, Antenna_Para *aP)
 {
-	Vedge the_edge = Edge_list[NField.Path[path_id].edge_id];
+	Vedge the_edge = Edge_list[NField->Path[path_id].edge_id];
 
 	Vector3d vInit = the_edge.start;
 	Vector3d vEnd = the_edge.end;
@@ -673,8 +677,8 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 	Vector3d line_unitDirection = lineDirection.normalize();
 
 	Vector3d source_pos = AP.position;
-	Vector3d Diffract_Pos = NField.Path[path_id].Path_interPoint[1];
-	Vector3d field_pos = NField.Position;
+	Vector3d Diffract_Pos = NField->Path[path_id].Path_interPoint[1];
+	Vector3d field_pos = NField->Position;
 
 	Vector3d direction = (Diffract_Pos-source_pos).normalize();
 	Vector3d polor_direction = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),direction.normalize())*(direction.normalize()); 	
@@ -682,7 +686,7 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 	if(polor_direction.norm() < 1e-10)
 	{
 		//此条路径无效，需剔除
-		NField.Path.erase(NField.Path.begin()+path_id);
+		NField->Path.erase(NField->Path.begin()+path_id);
 		path_id--;
 	}
 	else
@@ -711,7 +715,7 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 			Vnum = 180 - Vnum;
 		}
 
-		Hnum = aP.NorthAngle - Hnum;
+		Hnum = aP->NorthAngle - Hnum;
 		if (Hnum<0)
 		{
 			Hnum+=360;
@@ -742,7 +746,7 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 		if(Dot(diffVec, normal) < 0)
 			phi = 2.0 * M_PI - phi;
 
-		double EveryRayEFieldStrength = sqrt(30*aP.EveryRayPowerStrength* pow(10,AP_gain/10))/lengthSD;  //射线携带的功率转换为射线场强值大小
+		double EveryRayEFieldStrength = sqrt(30*aP->EveryRayPowerStrength* pow(10,AP_gain/10))/lengthSD;  //射线携带的功率转换为射线场强值大小
 		polor_direction =  polor_direction * EveryRayEFieldStrength;  //发射天线的方向增益,第二项为射线初始场强方向，第三项为射线初始场强大小
 
 		Vector3cd in_field = Vector3cd(polor_direction.x,polor_direction.y,polor_direction.z);
@@ -754,9 +758,9 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 		//扩散因子
 		double factor = sqrt(lengthSD/(lengthDF*(lengthSD + lengthDF)));
 
-		complex<double> epsilon = getEpsilon(aP.frequency, the_edge.materialId,mp);
+		complex<double> epsilon = getEpsilon(aP->frequency, the_edge.materialId,modelParameter);
 
-		complex<double> prevD = -exp(complex<double>(0,-M_PI/4.0)) /(2 * n * sqrt(2 * M_PI* aP.k));
+		complex<double> prevD = -exp(complex<double>(0,-M_PI/4.0)) /(2 * n * sqrt(2 * M_PI* aP->k));
 
 		double gama[4] = {
 			(M_PI - (phi - phiS)) / (2 * n), (M_PI + (phi - phiS)) / (2 * n), 
@@ -783,12 +787,12 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 		{
 			if(fabs(gama[j]) < DOUBLE_EPSILON) //当gama[j]趋于0时，cot(gama[j])趋于无穷，但与此同时，其相应的过渡函数F趋于零，从而消除了奇异性。阴影边界（phi-phiS = M_PI）和反射边界处(phi+phiS = M_PI)
 			{
-				complex<double> fresnel = n *(sqrt(2*M_PI*aP.k*L)*sign_func(epsilonp[j]) - 2*aP.k*L*epsilonp[j]*exp(complex<double>(0,M_PI/4))) * exp(complex<double>(0,M_PI/4));
+				complex<double> fresnel = n *(sqrt(2*M_PI*aP->k*L)*sign_func(epsilonp[j]) - 2*aP->k*L*epsilonp[j]*exp(complex<double>(0,M_PI/4))) * exp(complex<double>(0,M_PI/4));
 
 				D[j] = prevD * fresnel;
 			}
 			else 
-				D[j] = prevD * cot(gama[j]) * Fresnel(aP.k*L*a[j]);
+				D[j] = prevD * cot(gama[j]) * Fresnel(aP->k*L*a[j]);
 		}
 
 		complex<double> R0v(-1),R0p(1),Rnv(-1),Rnp(1);   //if perfectly conducting  R0和Rn分别是入射面和绕射面的反射因子
@@ -839,13 +843,13 @@ void algo::Calc_diffSignal1(vector<Vedge> &Edge_list, EField &NField, TransAnten
 
 		Vector3cd diffField = Ed_beta*betav + Ed_phi*phiv;
 
-		diffField = diffField * exp(complex<double>(0,-(aP.k*(lengthSD + lengthDF))));
-		NField.EFieldAll += diffField;			
+		diffField = diffField * exp(complex<double>(0,-(aP->k*(lengthSD + lengthDF))));
+		NField->EFieldAll += diffField;			
 		//NField.MolStrength +=  (lamda * lamda / (4 *M_PI* 120 * M_PI))*( diffField.x.real()*diffField.x.real() + diffField.x.imag()*diffField.x.imag()  + diffField.y.real()*diffField.y.real() + diffField.y.imag()*diffField.y.imag() + diffField.z.real()*diffField.z.real() +diffField.z.imag()*diffField.z.imag() );  //场强转成功率
 
-		NField.Path[path_id].all_distance = lengthSD + lengthDF;
-		double path_RecPower =aP.lamda * aP.lamda * (diffField.x.real()*diffField.x.real() + diffField.x.imag()*diffField.x.imag() + diffField.y.real()*diffField.y.real() + diffField.y.imag()*diffField.y.imag() + diffField.z.real()*diffField.z.real() + diffField.z.imag()*diffField.z.imag()) / (4*M_PI * 120 * M_PI);
-		NField.Path[path_id].power_Loss = 10*log10( aP.EveryRayPowerStrength/ path_RecPower);
+		NField->Path[path_id].all_distance = lengthSD + lengthDF;
+		double path_RecPower =aP->lamda * aP->lamda * (diffField.x.real()*diffField.x.real() + diffField.x.imag()*diffField.x.imag() + diffField.y.real()*diffField.y.real() + diffField.y.imag()*diffField.y.imag() + diffField.z.real()*diffField.z.real() + diffField.z.imag()*diffField.z.imag()) / (4*M_PI * 120 * M_PI);
+		NField->Path[path_id].power_Loss = 10*log10( aP->EveryRayPowerStrength/ path_RecPower);
 	}
 }
 
@@ -893,10 +897,10 @@ int algo::getMaterial(double freq /*单位:HZ*/, int materialId, ModelPara * mp)
 
 
 //计算反透射路径信号强度
-void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, Antenna_Para ap, ModelPara *mp, ComputePara * cPara)
+void algo::Calc_RefTransSignal(EField *NField, TransAntenna &AP, int &path_id, Antenna_Para *ap)
 {
 	//路径判断有效后，追踪此条路径计算场强
-	vector<Vector3d> &path_point = NField.Path[path_id].Path_interPoint;
+	vector<Vector3d> &path_point = NField->Path[path_id].Path_interPoint;
 	Vector3d Raydirection = (path_point[1]-path_point[0]).normalize();
 	double raydistance = (path_point[1]-path_point[0]).norm();  //raydistance 记录整条传播路径的长度
 	//Tpolor是发射天线的极化方向
@@ -905,7 +909,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 	if(Tpolor.norm() < 1e-10)
 	{
 		//此条路径无效，需剔除
-		NField.Path.erase(NField.Path.begin()+path_id);
+		NField->Path.erase(NField->Path.begin()+path_id);
 		path_id--;
 	}
 	else
@@ -915,7 +919,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 		int Hnum = int(asin(fabs(Raydirection.y)/sqrt(Raydirection.x*Raydirection.x + Raydirection.y*Raydirection.y))*180/M_PI+0.5);  //射线的水平方向角phi
 		if(Raydirection.x >= 0 && Raydirection.y >= 0)
 		{
-			Hnum =ap. NorthAngle  - Hnum;
+			Hnum =ap->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -924,7 +928,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 		else if(Raydirection.x < 0 && Raydirection.y >= 0)
 		{
 			Hnum = 180 - Hnum;
-			Hnum = ap.NorthAngle  - Hnum;
+			Hnum = ap->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -933,7 +937,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 		else if(Raydirection.x <= 0 && Raydirection.y <= 0)
 		{
 			Hnum = 180 + Hnum;
-			Hnum = ap.NorthAngle  - Hnum;
+			Hnum = ap->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -942,7 +946,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 		else
 		{
 			Hnum = 360 - Hnum;
-			Hnum = ap.NorthAngle  - Hnum;
+			Hnum = ap->NorthAngle  - Hnum;
 			if (Hnum<0)
 			{
 				Hnum = Hnum + 360;
@@ -956,9 +960,9 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 			Vnum = 180 - Vnum;
 		}
 
-		ap.TP_gain = AP.initial_Gain - AP.direction_Gain[Hnum*181 + Vnum][2];
+		ap->TP_gain = AP.initial_Gain - AP.direction_Gain[Hnum*181 + Vnum][2];
 
-		double EveryRayEFieldStrength = sqrt(30 * ap.EveryRayPowerStrength * pow(10,ap.TP_gain/10))/raydistance;  //射线携带的功率转换为射线场强值大小
+		double EveryRayEFieldStrength = sqrt(30 * ap->EveryRayPowerStrength * pow(10,ap->TP_gain/10))/raydistance;  //射线携带的功率转换为射线场强值大小
 		Vector3d tfield = Tpolor *  EveryRayEFieldStrength;
 		Vector3cd ctfield(tfield.x,tfield.y,tfield.z); //入射射线在第一个相交面相交点处的入射末场强					
 
@@ -970,11 +974,11 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 			double d_factor; //扩散因子，与距离有关
 			//int materialId = pMesh->getMtlId(rayRoute[l].faceId); //获取面片对应的材质编号
 			int materialId = 11; //获取面片对应的材质编号
-			complex<double> Epsilon = getEpsilon(ap.frequency, materialId,mp); //折射处介质的相对介电常数，此处为复相对介电常数
+			complex<double> Epsilon = getEpsilon(ap->frequency, materialId,modelParameter); //折射处介质的相对介电常数，此处为复相对介电常数
 			//complex<double> Epsilon = complex<double>(6.0,  -1.0/(w * 1e-9 / (36 * M_PI)));  //复相对介电常数
 			Into = (path_point[l]-path_point[l-1]).normalize();
 			next_Into = (path_point[l+1]-path_point[l]).normalize();
-			Normal = NField.Path[path_id].intersect_faceNormal[l]; //反射、透射beam的normal
+			Normal = NField->Path[path_id].intersect_faceNormal[l]; //反射、透射beam的normal
 			double costheta = fabs(Dot(Into,Normal));  //入射角的cos值
 			double square_sintheta = 1 - costheta*costheta;
 
@@ -983,11 +987,11 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 			d_factor = raydistance/(raydistance + currentTOnext_distance);
 
 			//透射时
-			if(NField.Path[path_id].propagation_type[l] == 1) 
+			if(NField->Path[path_id].propagation_type[l] == 1) 
 			{
 
 				//	cout<<"transmision"<<endl;
-				if (cPara->transIndex == 0) //使用经验透射损耗值
+				if (cptPara->transIndex == 0) //使用经验透射损耗值
 				{
 					//	使用经验透射损耗值 透射损耗要可设置，一般是有两个参数：透射损耗，表示信号穿透墙体后的衰减，比如：城市建筑物设置15dB的透射损耗；
 					//	另一个参数，透射递进损耗，表示室外信号穿透到室内后，不清楚请室内布局的情况下，随着信号覆盖深入，信号强度随距离继续衰减，比如：一般设置为0.5dB/m
@@ -998,7 +1002,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 					double total_loss = wall_loss + dis_loss * tf_distance;  //从透射点到达透射场点之间的损耗：透射损耗（穿透墙体损耗）+ 透射递进损耗（进入室内随距离损耗）
 					ctfield = ctfield  * complex<double>((1 / pow(10,  total_loss/10)), 0);
 				}
-				else if (cPara->transIndex  == 1)  //使用理论公式计算
+				else if (cptPara->transIndex  == 1)  //使用理论公式计算
 				{
 					complex<double> EV,EP;//垂直极化衰减系数、平行极化衰减系数
 					complex<double> VD1,VD2,PD1,PD2;//垂直极化方向折射前后的分量，平行极化折射前后的分量
@@ -1039,7 +1043,7 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 			}
 
 			//反射时
-			else if (NField.Path[path_id].propagation_type[l] == 0)
+			else if (NField->Path[path_id].propagation_type[l] == 0)
 			{
 				complex<double> EV,EP;//反射垂直极化系数、平行极化系数
 				complex<double> VD1,VD2,PD1,PD2;//垂直极化方向反射前后的分量，平行极化反射前后的分量
@@ -1077,293 +1081,1042 @@ void algo::Calc_RefTransSignal(EField &NField, TransAntenna &AP, int &path_id, A
 				}
 			}
 		}
-		double phase =ap.k*raydistance;  //记录整条传播路径的累计相位
+		double phase =ap->k*raydistance;  //记录整条传播路径的累计相位
 
 		ctfield = ctfield*exp(complex<double>(0,-phase));   //考虑整条传播路径累计相位影响
-		NField.EFieldAll+= ctfield;
+		NField->EFieldAll+= ctfield;
 		//NField.MolStrength +=  (lamda * lamda / (4 * M_PI * 120 * M_PI))*( ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag()  + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() +ctfield.z.imag()*ctfield.z.imag() );  //场强转成功率
 
-		NField.Path[path_id].all_distance = raydistance;
-		double path_RecPower =ap.lamda * ap.lamda * (ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag() + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() + ctfield.z.imag()*ctfield.z.imag()) / (4*M_PI * 120 * M_PI);
-		NField.Path[path_id].power_Loss = 10*log10( ap.EveryRayPowerStrength  / path_RecPower);
+		NField->Path[path_id].all_distance = raydistance;
+		double path_RecPower =ap->lamda * ap->lamda * (ctfield.x.real()*ctfield.x.real() + ctfield.x.imag()*ctfield.x.imag() + ctfield.y.real()*ctfield.y.real() + ctfield.y.imag()*ctfield.y.imag() + ctfield.z.real()*ctfield.z.real() + ctfield.z.imag()*ctfield.z.imag()) / (4*M_PI * 120 * M_PI);
+		NField->Path[path_id].power_Loss = 10*log10( ap->EveryRayPowerStrength  / path_RecPower);
 	}
 }
 
 //找出有效的反透射路径，直接由beam与虚拟仿真面的覆盖区域获取接收点信息，未考虑海拔时
-void algo::valid_RefTransPath(ComputationEnum ce, Scene_para &sp, emxKdTree* pKdTree, Vector3d AP_position, Cell_Data* m_cellData, const vector<vector<beamNode>> &beamRoutes)
+void algo::valid_RefTransPath(BaseModel* model, Scene_para &sp, emxKdTree* pKdTree, emxKdTree* Local_SimPlaneKdTree, Vector3d AP_position, Site_Data* m_siteData, const vector<vector<beamNode>> &beamRoutes)
 {
+#pragma omp parallel for schedule(static,2)
+	for (int beam_id = 0; beam_id < beamRoutes.size(); beam_id++)  //容器beamRoutes存放的所有可能路径
+	{
+		vector<beamNode> beamroute = beamRoutes[beam_id];
+		int FinalBeamNum = beamroute.size() - 1;
+		beamNode FinalBeam = beamroute[FinalBeamNum];
 
-		double Xmin =m_cellData->efildVec[0]->Position.x;
-		double Ymin = m_cellData->efildVec[0]->Position.y;
-		double Zheight = m_cellData->efildVec[0]->Position.z;
-		Vector3d Point_IN_SimPlane(Xmin, Ymin, Zheight);
-		Vector3d SimPlane_Normal(0, 0, 1);
-		int num_RefTransPath = 0;
+		int start_rowId, end_rowId, start_columnId, end_columnId;    //beam与仿真面区域相交覆盖的接收点下标
+		bool illuminate;
 
-#pragma omp parallel for schedule(static,4)
-		for (int beam_id = 0; beam_id < beamRoutes.size(); beam_id++)  //容器beamRoutes存放的所有可能路径
+		for (int beam_type = 0; beam_type <= 1; beam_type++)  //beam_type=0对反射beam的操作，beam_type=1对透射beam操作
 		{
-			vector<beamNode> beamroute = beamRoutes[beam_id];
-			int FinalBeamNum = beamroute.size() - 1;
-			beamNode FinalBeam = beamroute[FinalBeamNum];
+			//初始化
+			illuminate = false;
+			start_rowId = -1;
+			end_rowId = -1;
+			start_columnId = -1;
+			end_columnId = -1;
 
-			int start_rowId, end_rowId, start_columnId, end_columnId;    //beam与仿真面区域相交覆盖的接收点下标
-			bool illuminate = false;
-			for (int beam_type = 0; beam_type <= 1; beam_type++)  //beam_type=0对反射beam的操作，beam_type=1对透射beam操作
+			//计算beam与仿真面区域的相交
+			Vector3d origin;
+			if (beam_type == 0)
 			{
-				//初始化
-				illuminate = false;
-				start_rowId = -1;
-				end_rowId = -1;
-				start_columnId = -1;
-				end_columnId = -1;
+				//反射beam源点
+				origin = FinalBeam.origin;
+			}
+			else
+			{
+				//透射beam源点
+				Vector3d TransBeamOrigin = FinalBeam.origin - FinalBeam.beamNormal * (2 * Dot(FinalBeam.beamNormal, FinalBeam.origin - FinalBeam.BeamVertex[0]));
+				origin = TransBeamOrigin;
+			}
 
-				//计算beam与仿真面区域的相交
-				Vector3d origin;
-				if (beam_type == 0)
+			/*added by ligen
+			如果是接收点模式，那EFieldArray存所有接收点
+			如果是仿真面模式，那EFieldArray存一个单独的仿真面上的接受点，在计算路径之后，将该仿真面上的接收点数据复制到其他仿真面
+			*/
+			vector<EField*> EfildArray;
+			if (cptPara->computeEnum==ComputationEnum::ReceivePoint)
+			{
+				for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
 				{
-					origin = FinalBeam.origin;
+					for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+					{
+						EfildArray.push_back(*(it2));
+					}
 				}
-				else
+			}
+			else if (cptPara->computeEnum==ComputationEnum::SimuPlane)
+			{
+				//只放入第一个cell的仿真面的点，其余的点复制这个面的路径信息
+				auto it = m_siteData->cellsMap.begin(); 			
+				for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
 				{
-					//透射beam源点
-					Vector3d TransBeamOrigin = FinalBeam.origin - FinalBeam.beamNormal * (2 * Dot(FinalBeam.beamNormal, FinalBeam.origin - FinalBeam.BeamVertex[0]));
-					origin = TransBeamOrigin;
-					//continue;
-				}
+					EfildArray.push_back(*(it2));
+				}	
+			}
 
-				if (fabs(origin.z - Zheight) < DOUBLE_EPSILON)  //beam的源点在仿真面上，此时不可能存在覆盖区域
+			if (cptPara->computeEnum == ComputationEnum::ReceivePoint)
+			{
+
+				start_rowId = 0;
+				end_rowId = EfildArray.size() - 1;
+				start_columnId = 0;
+				end_columnId = 0;
+				illuminate = true;
+			}
+			else if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+			{
+				double Xmin = m_siteData->cellsMap.begin()->second->efildVec[0]->Position.x;
+				double Ymin = m_siteData->cellsMap.begin()->second->efildVec[0]->Position.y;
+				double Zheight = cptPara->altitude;
+				//获取beam源点位置处仿真面的高度
+				double height = model->getPointAltitude(origin.x, origin.y) + Zheight;
+				if (fabs(origin.z - height) < DOUBLE_EPSILON)  //beam的源点在仿真面上，此时不可能存在覆盖区域
 					continue;
+				bool is_intersection = true; //判断beam棱边是否和仿真面相交
+				bool ALLbackward = true;   //判断是否beam的所有棱边都背离仿真面传播
+				vector<Vector3d> illuminate_Vertexs;  //存放beamray和仿真面的交点
 
-				//若没有仿真面时，只是在一条直线上取接收点，此时无法求得仿真区域，需要对所有接收点考察有效性或者对于实测位置处的接收点预测信号强度时，由于不位于仿真面上，所以也得对所有接收点考察有效性
-				if (ce==ComputationEnum::ReceivePoint)
+				for (int i = 0; i < FinalBeam.cornerNum; i++)
 				{
-					start_rowId = 0;
-					end_rowId = m_cellData->efildVec.size() - 1;
-					start_columnId = 0;
-					end_columnId = 0;
-					illuminate = true;
-				}
-				else
-				{
-					bool ALLbackward = true;   //判断是否beam的所有棱边都背离仿真面传播
-					//判断beam是否背向仿真面传播
-					for (int i = 0; i < FinalBeam.cornerNum; i++)
-					{
-						Vector3d direction = (FinalBeam.BeamVertex[i] - origin).normalize();  //???????????		
-						if (origin.z>Zheight)
-						{
-							ALLbackward &= (Dot(direction, SimPlane_Normal) >= 0);
-						}
-						else if (origin.z < Zheight)
-						{
-							ALLbackward &= (Dot(direction, SimPlane_Normal) <= 0);
-						}
-					}
-					if (ALLbackward)
-						continue;
+					emxRay beam_ray;
+					beam_ray.origin = FinalBeam.BeamVertex[i];
+					beam_ray.direction = (FinalBeam.BeamVertex[i] - origin).normalize();
+					beam_ray.lastID = -1;
+					beam_ray.mint = 0;
+					beam_ray.maxt = INFINITY;
 
-					//beam相交情况
-					double tmax[] = { 0.0, 0.0, 0.0, 0.0 };	// distance from beam origin to SimPlane
-					bool behind = true;
-					bool Paral = false;
-					bool anyone_backward = false;   //判断beam是否有部分（1<= ？？  <棱边数目）棱边背离仿真面传播
-					for (int i = 0; i < FinalBeam.cornerNum; i++)
+					int hitFaceid = -1;
+					double tHit = 0;
+					if (Local_SimPlaneKdTree->Intersect(beam_ray, tHit, hitFaceid) /*ConventionalIntersect(SimPlane_mesh,beam_ray,tHit,hitFaceid)*/)
 					{
-						Vector3d direction = (FinalBeam.BeamVertex[i] - origin).normalize();  //???????????
-						double invDDotN;
-						if (fabs(Dot(direction, SimPlane_Normal)) < DOUBLE_EPSILON)  //射线方向与面片方向平行时
-						{
-							Paral = true;
-							break;
-						}
-						//判断beam是否有部分棱边背向仿真面传播
-						else if ((origin.z>Zheight &&Dot(direction, SimPlane_Normal) > 0) || (origin.z < Zheight &&Dot(direction, SimPlane_Normal) < 0))
-						{
-							anyone_backward = true;
-							break;
-						}
-						else
-						{
-							invDDotN = 1.0 / Dot(direction, SimPlane_Normal);
-							tmax[i] = -Dot(FinalBeam.BeamVertex[i] - Point_IN_SimPlane, SimPlane_Normal) * invDDotN;
-							behind &= (tmax[i] < DOUBLE_EPSILON);
-						}
-					}
-					// 获取beam覆盖的仿真面区域对应的接收点
-					if (Paral || anyone_backward)  //beam的的某条边与仿真面平行或者beam的部分棱边背离仿真面，无法求得相交区域，则需对所有接收点验证有效性
-					{
-						start_rowId = 0;
-						end_rowId = sp.scene_width;
-						start_columnId = 0;
-						end_columnId = sp.scene_length;
-						illuminate = true;
-					}
-					else if (behind)	//若存在相交情况，但是仿真面均在beam平面之前，即不存在有效相交区域
-					{
-						illuminate = false;
+						ALLbackward &= false;
+						is_intersection &= true;
+
+						Vector3d HitPoint = beam_ray.origin + beam_ray.direction * tHit;
+						illuminate_Vertexs.push_back(HitPoint);
 					}
 					else
 					{
-						//反射beam或者透射beam与仿真面存在相交区域
-						Vector3d illuminateArea[5];
-						int illunimateNum_p = 0;
-						for (int i = 0; i < FinalBeam.cornerNum; i++)
-						{
-							Vector3d direction = (FinalBeam.BeamVertex[i] - origin).normalize();
-							Vector3d next_direction = (FinalBeam.BeamVertex[(i + 1) % FinalBeam.cornerNum] - origin).normalize();
-
-							if (tmax[i] >= -DOUBLE_EPSILON)
-								illuminateArea[illunimateNum_p++] = FinalBeam.BeamVertex[i] + direction * tmax[i];
-							//穿透时的交点
-							if (fabs(tmax[i]) > DOUBLE_EPSILON && fabs(tmax[(i + 1) % FinalBeam.cornerNum]) > DOUBLE_EPSILON && tmax[i] * tmax[(i + 1) % FinalBeam.cornerNum] < 0.0)
-							{
-								Vector3d A = FinalBeam.BeamVertex[i];
-								Vector3d C = FinalBeam.BeamVertex[(i + 1) % FinalBeam.cornerNum];
-								Vector3d direction = (C - A).normalize();
-								double t = Dot((Point_IN_SimPlane - A), SimPlane_Normal) / Dot(direction, SimPlane_Normal);
-								illuminateArea[illunimateNum_p++] = A + direction*t;
-							}
-						}
-						vector<Vector3d> illunimatre_Vertexs;
-						for (int illuminate_id = 0; illuminate_id < illunimateNum_p; illuminate_id++)
-						{
-							illunimatre_Vertexs.push_back(illuminateArea[illuminate_id]);
-						}
-						EfieldPointInPolygon(illunimatre_Vertexs, Xmin, Ymin, start_rowId, end_rowId, start_columnId, end_columnId,sp);
-						illuminate = true;
+						ALLbackward &= true;
+						is_intersection &= false;
 					}
 				}
-
-
-				//对beam覆盖的接收点计算信号强度
-
-				if (illuminate && (ce==ComputationEnum::ReceivePoint || start_rowId*(start_rowId - sp.scene_width) <= 0 && end_rowId*(end_rowId - sp.scene_width) <= 0 && start_columnId*(start_columnId - sp.scene_length) <= 0 && end_columnId*(end_columnId - sp.scene_length) <= 0))
+				if (ALLbackward) //不与仿真面相交
 				{
-					for (int columnId = start_columnId; columnId <= end_columnId; columnId++)
+					continue;
+				}
+				else if (!is_intersection)  //部分与仿真面相交
+				{
+					start_rowId = 0;
+					end_rowId = sp.scene_width;
+					start_columnId = 0;
+					end_columnId = sp.scene_length;
+					illuminate = true;
+				}
+				else //均与仿真面相交
+				{
+					if (illuminate_Vertexs.size() != FinalBeam.cornerNum)
 					{
-						for (int rowId = start_rowId; rowId <= end_rowId; rowId++)
+						cout << "intersection error" << endl;
+					}
+					EfieldPointInPolygon(illuminate_Vertexs, Xmin, Ymin, start_rowId, end_rowId, start_columnId, end_columnId, sp);
+					illuminate = true;
+				}
+			}
+
+			//对beam覆盖的接收点计算信号强度
+			if (illuminate && (cptPara->computeEnum == ComputationEnum::ReceivePoint || start_rowId*(start_rowId - sp.scene_width) <= 0 && end_rowId*(end_rowId - sp.scene_width) <= 0 && start_columnId*(start_columnId - sp.scene_length) <= 0 && end_columnId*(end_columnId - sp.scene_length) <= 0))
+			{
+				for (int columnId = start_columnId; columnId <= end_columnId; columnId++)
+				{
+					for (int rowId = start_rowId; rowId <= end_rowId; rowId++)
+					{
+						if (cptPara->computeEnum == ComputationEnum::ReceivePoint)  //只有在仿真面设置的接收点位置时候，才有scene_width，而对于非仿真面设置的接收点，不存在scene_width
 						{
-							if (ce == ComputationEnum::ReceivePoint)  //只有在仿真面设置的接收点位置时候，才有scene_width，而对于非仿真面设置的接收点，不存在scene_width
-							{
-								sp.scene_width = 0;
-							}
-							EField *NField = m_cellData->efildVec[columnId*(sp.scene_width + 1) + rowId];
-							Vector3d receiver = NField->Position;
+							sp.scene_width = 0;
+						}
+						EField *NField = EfildArray[columnId*(sp.scene_width + 1) + rowId];
+						Vector3d receiver = NField->Position;
 
-							if (NField->In_or_Out)   //透射只对建筑物内的接收点考察
-							{
-								if (beam_type == 1)
-									continue;
-							}
-							else  //反射只对建筑物外的接收点考察
-							{
-								if (beam_type == 0)
-									continue;
-							}
+						if (NField->In_or_Out)   //透射只对建筑物内的接收点考察
+						{
+							if (beam_type == 1)
+								continue;
+						}
+						else  //反射只对建筑物外的接收点考察
+						{
+							if (beam_type == 0)
+								continue;
+						}
 
-							emxRay Finalray;
-							Finalray.origin = origin;
-							Finalray.direction = (receiver - Finalray.origin).normalize();
+						emxRay Finalray;
+						Finalray.origin = origin;
+						Finalray.direction = (receiver - Finalray.origin).normalize();
+						Finalray.mint = 0;
+						Finalray.maxt = (receiver - Finalray.origin).norm();
+						Finalray.lastID = -1;
+						Vector3d intersectPoint;
+						bool valid = false;
+						if (FinalBeam.cornerNum == 3)
+						{
+							valid = intersect(Finalray, FinalBeam.BeamVertex[0], FinalBeam.BeamVertex[1], FinalBeam.BeamVertex[2], intersectPoint);
+						}
+						else if (FinalBeam.cornerNum == 4)
+						{
+							valid = intersect(Finalray, FinalBeam.BeamVertex[0], FinalBeam.BeamVertex[1], FinalBeam.BeamVertex[2], intersectPoint) ||
+								intersect(Finalray, FinalBeam.BeamVertex[2], FinalBeam.BeamVertex[3], FinalBeam.BeamVertex[0], intersectPoint);
+						}
+						if (valid)
+						{
+							Finalray.origin = intersectPoint;
+							Finalray.direction = (receiver - intersectPoint).normalize();
 							Finalray.mint = 0;
 							Finalray.maxt = (receiver - Finalray.origin).norm();
 							Finalray.lastID = -1;
-							Vector3d intersectPoint;
-							bool valid = false;
-							if (FinalBeam.cornerNum == 3)
+							double finalHit = 0;
+							int finalFaceid = -1;
+							vector<Vector3d>path_point, inverse_pathpoint; //存放传播过程路径点信息,invese_pathpoint中存储的是逆向路径信息
+							if (((receiver - intersectPoint).norm() > 1e-6) && (!pKdTree->Intersect(Finalray, finalHit, finalFaceid) || (finalHit >= 0.9999 *(receiver - intersectPoint).norm())))
 							{
-								valid = intersect(Finalray, FinalBeam.BeamVertex[0], FinalBeam.BeamVertex[1], FinalBeam.BeamVertex[2], intersectPoint);
-							}
-							else if (FinalBeam.cornerNum == 4)
-							{
-								valid = intersect(Finalray, FinalBeam.BeamVertex[0], FinalBeam.BeamVertex[1], FinalBeam.BeamVertex[2], intersectPoint) ||
-									intersect(Finalray, FinalBeam.BeamVertex[2], FinalBeam.BeamVertex[3], FinalBeam.BeamVertex[0], intersectPoint);
-							}
-							if (valid)
-							{
-								Finalray.origin = intersectPoint;
-								Finalray.direction = (receiver - intersectPoint).normalize();
-								Finalray.mint = 0;
-								Finalray.maxt = (receiver - Finalray.origin).norm();
-								Finalray.lastID = -1;
-								double finalHit = 0;
-								int finalFaceid = -1;
-								vector<Vector3d>path_point, inverse_pathpoint; //存放传播过程路径点信息,invese_pathpoint中存储的是逆向路径信息
-								if (((receiver - intersectPoint).norm() > 1e-6) && (!pKdTree->Intersect(Finalray, finalHit, finalFaceid) || (finalHit >= 0.9999 *(receiver - intersectPoint).norm())))
+								if (beam_type == 1) //此条路径有效，且最后一次为透射
 								{
-									if (beam_type == 1) //此条路径有效，且最后一次为透射
-									{
-										beamroute[FinalBeamNum].beam_type = 1;
-									}
-
-									inverse_pathpoint.push_back(intersectPoint);
-									for (int j = beamroute.size() - 2; j >= 1; j--)
-									{
-										Vector3d direction = (intersectPoint - beamroute[j].origin).normalize();
-										double dist = Dot(beamroute[j].BeamVertex[0] - beamroute[j].origin, beamroute[j].beamNormal) / Dot(direction, beamroute[j].beamNormal);
-										intersectPoint = beamroute[j].origin + direction * dist;
-										inverse_pathpoint.push_back(intersectPoint);
-									}
-									path_point.push_back(AP_position);
-									for (int i = inverse_pathpoint.size() - 1; i >= 0; i--)
-									{
-										path_point.push_back(inverse_pathpoint[i]);
-									}
-									path_point.push_back(receiver);
-
-									Field_Path ipath;
-									ipath.Path_interPoint = path_point;
-									for (int j = 0; j < beamroute.size(); j++)
-									{
-										ipath.propagation_type.push_back(beamroute[j].beam_type);
-										ipath.intersect_faceNormal.push_back(beamroute[j].beamNormal);
-										ipath.intersect_ID.push_back(beamroute[j].faceID);
-									}
-									#pragma omp critical
-									{
-										NField->Path.push_back(ipath);
-									}
-									num_RefTransPath++;
+									beamroute[FinalBeamNum].beam_type = 1;
 								}
-								vector<Vector3d>().swap(path_point);
-								vector<Vector3d>().swap(inverse_pathpoint);
+
+								inverse_pathpoint.push_back(intersectPoint);
+								for (int j = beamroute.size() - 2; j >= 1; j--)
+								{
+									Vector3d direction = (intersectPoint - beamroute[j].origin).normalize();
+									double dist = Dot(beamroute[j].BeamVertex[0] - beamroute[j].origin, beamroute[j].beamNormal) / Dot(direction, beamroute[j].beamNormal);
+									intersectPoint = beamroute[j].origin + direction * dist;
+									inverse_pathpoint.push_back(intersectPoint);
+								}
+								path_point.push_back(AP_position);
+								for (int i = inverse_pathpoint.size() - 1; i >= 0; i--)
+								{
+									path_point.push_back(inverse_pathpoint[i]);
+								}
+								path_point.push_back(receiver);
+
+								Field_Path ipath;
+								ipath.Path_interPoint = path_point;
+								for (int j = 0; j < beamroute.size(); j++)
+								{
+									ipath.propagation_type.push_back(beamroute[j].beam_type);
+									ipath.intersect_faceNormal.push_back(beamroute[j].beamNormal);
+									ipath.intersect_ID.push_back(beamroute[j].faceID);
+								}
+								#pragma omp critical
+								{
+									NField->Path.push_back(ipath);
+									if (cptPara->computeEnum==ComputationEnum::SimuPlane)
+									{
+										//在该site的其他cell中加入同样的信息
+										auto itMap = m_siteData->cellsMap.begin();
+										itMap++;//跳过自己
+										while (itMap != m_siteData->cellsMap.end())
+										{
+											itMap->second->efildVec[columnId*(sp.scene_width + 1) + rowId]->Path.push_back(ipath);
+											itMap++;
+										}
+									}
+
+								}
+							}
+							vector<Vector3d>().swap(path_point);
+							vector<Vector3d>().swap(inverse_pathpoint);
+						}
+					}
+				}
+			}
+
+		}
+		vector<beamNode>().swap(beamroute);
+	}
+}
+
+void algo::valid_OnceDiffPath(vector<Vedge> &Edge_list, emxKdTree* pKdTree, Vector3d AP_position, Site_Data*m_siteData)
+{
+	Vector3d source_pos = AP_position;
+#pragma omp parallel for  schedule(static,2)
+	for (int i = 0; i < Edge_list.size(); i++)
+	{
+		Vedge the_edge = Edge_list[i];
+		Vector3d vInit = the_edge.start;
+		Vector3d vEnd = the_edge.end;
+		//发射源点必须位于绕射棱边两侧面之外
+		if (Dot(AP_position - vInit, the_edge.normal_front) < DOUBLE_EPSILON && Dot(AP_position - vInit, the_edge.normal_back) < DOUBLE_EPSILON/*|| !LOS_edge[i]*/)
+		{
+			//	count ++;
+			continue;
+		}
+
+		//通过设定源点与棱边的距离阈值来限制绕射发生
+		Vector3d edge_center = 0.5*(the_edge.start + the_edge.end);
+		if ((source_pos - edge_center).norm()>Diff_dis)
+			continue;
+
+		//粗略判断棱边是否对源可见
+		emxRay ray;
+		double ray_tHit = 0;
+		int ray_faceID = -1;
+		ray.lastID = ray_faceID;
+		ray.origin = source_pos;
+		ray.direction = (edge_center - source_pos).normalize();
+
+		if (pKdTree->Intersect(ray, ray_tHit, ray_faceID) && (ray_tHit <= 0.999 * (edge_center - source_pos).norm()))  //判断从发射点到绕射棱边中点是否有遮挡,若有遮挡则认为此条棱边对源不可见
+			continue;
+
+		Vector3d lineDirection = vEnd - vInit;
+		Vector3d line_unitDirection = lineDirection.normalize();
+
+		//遍历所有站点信息，放入到EfildArray中
+		/*added by ligen
+		如果是接收点模式，那EFieldArray存所有接收点
+		如果是仿真面模式，那EFieldArray存一个单独的仿真面上的接受点，在计算路径之后，将该仿真面上的接收点数据复制到其他仿真面
+		*/
+		vector<EField*> EFieldArray;
+		if (cptPara->computeEnum == ComputationEnum::ReceivePoint)
+		{
+			for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
+			{
+				for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+				{
+					EFieldArray.push_back(*(it2));
+				}
+			}
+		}
+		else if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+		{
+			//只放入第一个cell的仿真面的点，其余的点复制这个面的路径信息
+			auto it = m_siteData->cellsMap.begin();
+			for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+			{
+				EFieldArray.push_back(*(it2));
+			}
+		}
+		//接收点设置完毕
+
+		for (int j = 0; j < EFieldArray.size(); j++)
+		{
+			if (!EFieldArray[j]->In_or_Out)  //只对位于建筑物外的接收点考察是否发生绕射
+				continue;
+
+			EField *NField = EFieldArray[j];
+			Vector3d field_pos = NField->Position;
+
+			//接收点必须位于绕射棱边两侧面之外
+			if (Dot(field_pos - vInit, the_edge.normal_front) < DOUBLE_EPSILON && Dot(field_pos - vInit, the_edge.normal_back) < DOUBLE_EPSILON)
+				continue;
+
+			//通过设定接收点与棱边的距离阈值来限制绕射发生
+			if ((field_pos - edge_center).norm()>Diff_dis)
+				continue;
+
+			//double time3 = clock();
+
+			Vector3d line1_Direction = source_pos - vInit;
+			Vector3d line2_Direction = field_pos - vInit;
+
+			double line_Length1 = line1_Direction.norm();
+			double line_Length2 = line2_Direction.norm();
+			double shadowLength1 = Dot(line1_Direction, line_unitDirection);
+			double shadowLength2 = Dot(line2_Direction, line_unitDirection);
+			Vector3d Intesect_Tranfer = vInit + shadowLength1 * line_unitDirection;
+			Vector3d Intesect_Receive = vInit + shadowLength2 * line_unitDirection;
+			double dis_Transfer = sqrt(line_Length1 * line_Length1 - shadowLength1 * shadowLength1);
+			double dis_Receiver = sqrt(line_Length2 * line_Length2 - shadowLength2 * shadowLength2);
+			Vector3d Diffract_Pos;
+			Diffract_Pos = (dis_Receiver * Intesect_Tranfer + dis_Transfer*Intesect_Receive) / (dis_Transfer + dis_Receiver);
+
+			//	double time4= clock();
+			//	time_Valid += (time4-time3)/1000;
+
+			if (Dot(Diffract_Pos - vInit, Diffract_Pos - vEnd) < 0)//几何绕射点位于棱边上
+			{
+				bool isDiff = 0;  //用变量isDiff判断是否存在绕射
+				//判断两边是否可见
+				emxRay Rayfirst;
+				emxRay Raysecond;
+				Vector3d RayDirect1(Diffract_Pos - source_pos);
+				Vector3d RayDirect2(field_pos - Diffract_Pos);
+				double tHit(0);
+				int faceID = -1;
+				double sll = 0;
+				Rayfirst.lastID = faceID;
+				Rayfirst.origin = source_pos/* point->position*/;
+				Rayfirst.direction = RayDirect1.normalize();
+
+				if (!pKdTree->Intersect(Rayfirst, tHit, faceID) || (tHit > 0.999 * (Diffract_Pos - source_pos).norm()))  //判断从发射点到绕射点是否有遮挡
+				{
+
+					sll = (Diffract_Pos - field_pos).norm();
+					Raysecond.lastID = -1;
+
+					Raysecond.origin = Diffract_Pos;
+					Raysecond.direction = RayDirect2.normalize();
+					tHit = 0;
+
+					if (!pKdTree->Intersect(Raysecond, tHit, Raysecond.lastID) || tHit > 0.999*sll)  //判断从绕射点到接收点是否有遮挡
+					{
+						isDiff = 1;
+					}
+					if ((Diffract_Pos - source_pos).norm() < 1e-10 || (field_pos - Diffract_Pos).norm() < 1e-10)
+					{
+						isDiff = 0;
+					}
+				}
+
+				//double time5 = clock();
+				//time_Valid += (time5-time4)/1000;
+
+				if (isDiff)//存在此绕射
+				{
+					Field_Path ipath;
+					ipath.Path_interPoint.push_back(source_pos);
+					ipath.propagation_type.push_back(-1);  //源点处设置为-1
+					ipath.intersect_ID.push_back(-1);
+
+					ipath.Path_interPoint.push_back(Diffract_Pos);
+					ipath.propagation_type.push_back(2);  //2表示传播为绕射
+					ipath.intersect_ID.push_back(i);
+
+					ipath.Path_interPoint.push_back(field_pos);
+
+#pragma omp critical
+					{
+						NField->Path.push_back(ipath);
+						if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+						{
+							//在该site的其他cell中加入同样的信息
+							auto itMap = m_siteData->cellsMap.begin();
+							itMap++;//跳过自己
+							while (itMap != m_siteData->cellsMap.end())
+							{
+								itMap->second->efildVec[j]->Path.push_back(ipath);
+								itMap++;
 							}
 						}
 					}
 				}
 			}
-			vector<beamNode>().swap(beamroute);
 		}
-		cout << "---------- num_RefTransPath = " << num_RefTransPath << endl;
+	}
 }
 
-
-void algo::valid_RefDiffPath(ComputePara *cptPara, emxKdTree* pKdTree, vector<Vedge> &Edge_list, Vector3d AP_position, Cell_Data* m_cellData, const vector<vector<beamNode>> &beamRoutes)
+void algo::valid_RefDiffPath(emxKdTree* pKdTree, vector<Vedge> &Edge_list, Vector3d AP_position,Site_Data* m_siteData, const vector<vector<beamNode>> &beamRoutes)
 {
-	int num_RefDiff_diff = 0;
-	double Xmin = EFieldArray[0].Position.x;
-	double Ymin = EFieldArray[0].Position.y;
-	double Zheight = EFieldArray[0].Position.z;
-	Vector3d Point_IN_SimPlane(Xmin, Ymin, Zheight);
-	Vector3d SimPlane_Normal(0, 0, 1);
+#pragma omp parallel for schedule(static,4)
+	for (int beam_id = 0; beam_id < beamRoutes.size(); beam_id++)  //容器beamRoutes存放的所有可能路径
+	{
+		vector<beamNode> beamroute = beamRoutes[beam_id];
+		if (beamroute.size() <= 2)
+		{
+			continue;
+		}
+		int FinalBeamNum = beamroute.size() - 1;
+		beamNode FinalBeam = beamroute[FinalBeamNum];
 
+		int edge_id = -1;
+		int beamedge_id = -1;
+		if (is_diffEdge(FinalBeam, Edge_list, beamedge_id, edge_id))
+		{
+			Vedge the_edge = Edge_list[edge_id];
+			Vector3d vInit = the_edge.start;
+			Vector3d vEnd = the_edge.end;
+			Vector3d edge_center = 0.5*(vInit + vEnd);
+
+			Vector3d source_pos = beamroute[beamroute.size() - 2].origin;
+			//发射源点必须位于绕射棱边两侧面之外
+			if (Dot(source_pos - vInit, the_edge.normal_front) < DOUBLE_EPSILON && Dot(source_pos - vInit, the_edge.normal_back) < DOUBLE_EPSILON)
+			{
+				continue;
+			}
+
+			Vector3d lineDirection = vEnd - vInit;
+			Vector3d line_unitDirection = lineDirection.normalize();
+
+			//遍历所有站点信息，放入到EfildArray中
+			/*added by ligen
+			如果是接收点模式，那EFieldArray存所有接收点
+			如果是仿真面模式，那EFieldArray存一个单独的仿真面上的接受点，在计算路径之后，将该仿真面上的接收点数据复制到其他仿真面
+			*/
+			vector<EField*> EfildArray;
+			if (cptPara->computeEnum == ComputationEnum::ReceivePoint)
+			{
+				for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
+				{
+					for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+					{
+						EfildArray.push_back(*(it2));
+					}
+				}
+			}
+			else if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+			{
+				//只放入第一个cell的仿真面的点，其余的点复制这个面的路径信息
+				auto it = m_siteData->cellsMap.begin();
+				for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+				{
+					EfildArray.push_back(*(it2));
+				}
+			}
+
+			for (int efIndex = 0; efIndex <EfildArray.size(); efIndex++)
+			{
+				if (!EfildArray[efIndex]->In_or_Out)  //只对位于建筑物外的接收点考察是否发生绕射
+					continue;
+
+				EField *NField = EfildArray[efIndex];
+				Vector3d field_pos = NField->Position;
+
+				//接收点必须位于绕射棱边两侧面之外
+				if (Dot(field_pos - vInit, the_edge.normal_front) < DOUBLE_EPSILON && Dot(field_pos - vInit, the_edge.normal_back) < DOUBLE_EPSILON)
+					continue;
+
+				//通过设定接收点与棱边的距离阈值来限制绕射发生
+				if ((field_pos - edge_center).norm()>Diff_dis)
+					continue;
+
+				Vector3d line1_Direction = source_pos - vInit;
+				Vector3d line2_Direction = field_pos - vInit;
+
+				double line_Length1 = line1_Direction.norm();
+				double line_Length2 = line2_Direction.norm();
+				double shadowLength1 = Dot(line1_Direction, line_unitDirection);
+				double shadowLength2 = Dot(line2_Direction, line_unitDirection);
+				Vector3d Intesect_Tranfer = vInit + shadowLength1 * line_unitDirection;
+				Vector3d Intesect_Receive = vInit + shadowLength2 * line_unitDirection;
+				double dis_Transfer = sqrt(line_Length1 * line_Length1 - shadowLength1 * shadowLength1);
+				double dis_Receiver = sqrt(line_Length2 * line_Length2 - shadowLength2 * shadowLength2);
+				// 求出准确的绕射点位置：Diffract_Pos
+				Vector3d Diffract_Pos;
+				Diffract_Pos = (dis_Receiver * Intesect_Tranfer + dis_Transfer*Intesect_Receive) / (dis_Transfer + dis_Receiver);
+
+				//判断绕射点是否在beam的边上					
+				if (Dot(Diffract_Pos - FinalBeam.BeamVertex[(beamedge_id - 1 + FinalBeam.cornerNum) % FinalBeam.cornerNum], Diffract_Pos - FinalBeam.BeamVertex[beamedge_id]) < 0)
+				{
+					bool isDiff = 0;
+					emxRay Ray;
+					double tHit = 0;
+					int faceID = -1;
+					double sll = 0;
+					Ray.lastID = faceID;
+					Ray.origin = Diffract_Pos;
+					Ray.direction = (field_pos - Diffract_Pos).normalize();
+					sll = (Diffract_Pos - field_pos).norm();
+
+					if (!pKdTree->Intersect(Ray, tHit, Ray.lastID) || tHit > 0.999*sll)  //判断从绕射点到接收点是否有遮挡
+					{
+						isDiff = 1;
+					}
+					//绕射的实际发射源点
+					int beam_id = beamroute.size() - 2;
+					Vector3d direction1 = (Diffract_Pos - beamroute[beam_id].origin).normalize();
+					double dist1 = Dot(beamroute[beam_id].BeamVertex[0] - beamroute[beam_id].origin, beamroute[beam_id].beamNormal) / Dot(direction1, beamroute[beam_id].beamNormal);
+					Vector3d intersectPoint = beamroute[beam_id].origin + direction1 * dist1;
+					if ((field_pos - Diffract_Pos).norm() < DOUBLE_EPSILON || (Diffract_Pos - intersectPoint).norm() < DOUBLE_EPSILON)
+					{
+						isDiff = 0;
+					}
+
+					if (isDiff)//存在此绕射
+					{
+						vector<Vector3d>path_point, inverse_pathpoint; //存放传播过程路径点信息,invese_pathpoint中存储的是逆向路径信息
+						inverse_pathpoint.push_back(Diffract_Pos);
+						inverse_pathpoint.push_back(intersectPoint);
+						for (int j = beamroute.size() - 3; j >= 1; j--)
+						{
+							Vector3d direction = (intersectPoint - beamroute[j].origin).normalize();
+							double dist = Dot(beamroute[j].BeamVertex[0] - beamroute[j].origin, beamroute[j].beamNormal) / Dot(direction, beamroute[j].beamNormal);
+							intersectPoint = beamroute[j].origin + direction * dist;
+							inverse_pathpoint.push_back(intersectPoint);
+						}
+						path_point.push_back(AP_position);
+						for (int i = inverse_pathpoint.size() - 1; i >= 0; i--)
+						{
+							path_point.push_back(inverse_pathpoint[i]);
+						}
+						path_point.push_back(field_pos);
+
+						Field_Path ipath;
+						ipath.Path_interPoint = path_point;
+						for (int j = 0; j <= beamroute.size() - 2; j++)
+						{
+							ipath.propagation_type.push_back(beamroute[j].beam_type);
+							ipath.intersect_faceNormal.push_back(beamroute[j].beamNormal);
+							ipath.intersect_ID.push_back(beamroute[j].faceID);
+						}
+						//最后一次为绕射
+						ipath.propagation_type.push_back(2);  //2表示绕射
+						ipath.intersect_ID.push_back(edge_id);
+
+#pragma omp critical
+						{
+							NField->Path.push_back(ipath);
+
+						  //复制给站点的其他cell的仿真面 
+							//added by ligen
+							if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+							{
+								//在该site的其他cell中加入同样的信息
+								auto itMap = m_siteData->cellsMap.begin();
+								itMap++;//跳过自己
+								while (itMap != m_siteData->cellsMap.end())
+								{
+									itMap->second->efildVec[efIndex]->Path.push_back(ipath);
+									itMap++;
+								}
+							}
+
+						}
+						vector<Vector3d>().swap(path_point);
+						vector<Vector3d>().swap(inverse_pathpoint);
+					}
+				}
+			}
+		}
+	}
 }
 
 
+
+bool algo::is_diffEdge(beamNode &the_beam, vector<Vedge> &Edge_list, int &beamedge_id, int &edge_id)
+{
+	for (int i = 0; i < Edge_list.size(); i++)
+	{
+		Vedge the_edge = Edge_list[i];
+		Vector3d start = the_edge.start;
+		Vector3d end = the_edge.end;
+		double edge_length = (end - start).norm();
+
+		int count = 0;
+		for (int j = 0; j < the_beam.cornerNum; j++)
+		{
+			Vector3d A = the_beam.BeamVertex[j];
+			if (fabs((A - start).norm() + (A - end).norm() - edge_length) < DOUBLE_EPSILON)  //判断点A是否在棱边the_edge上
+			{
+				count++;
+				beamedge_id = j;
+			}
+		}
+		if (count >= 2)
+		{
+			edge_id = i;
+			return true;
+		}
+	}
+	return false;
+}
+
+void algo::Get_diffVEdge(vector<int>&Vertical_Edge_ID, vector<Vedge> &Edge_list, emxKdTree* pKdTree, vector<vector<int>>&diff_RouteEdgeID, vector<vector<int>> & NextDifEdgesID, int diff_Num, int first_edgeid)
+{
+	vector<int>first_route;
+	first_route.push_back(first_edgeid);
+	vector<vector<int>> tobeProcessedEdge; //记录待处理的棱边
+	tobeProcessedEdge.push_back(first_route);
+
+	for (int id = 0; id<diff_Num; id++)
+	{
+		vector<vector<int>> nextTobeProcessedEdge;
+		for (int id1 = 0; id1<tobeProcessedEdge.size(); id1++)
+		{
+			int prev_edgeid = tobeProcessedEdge[id1][tobeProcessedEdge[id1].size() - 1];    //获取该条路径最后一条棱边id号(在Vertical_Edge_ID中的索引号)
+			for (int i = 0; i<NextDifEdgesID[prev_edgeid].size(); i++)
+			{
+				vector<int> diff_route(tobeProcessedEdge[id1]);
+				int current_edgeid = NextDifEdgesID[prev_edgeid][i];
+				diff_route.push_back(current_edgeid);
+				/*	if (id == diff_Num-1)
+				{
+				diff_RouteEdgeID.push_back(diff_route);
+				}*/
+				diff_RouteEdgeID.push_back(diff_route);
+
+				nextTobeProcessedEdge.push_back(diff_route);
+			}
+		}
+		tobeProcessedEdge = nextTobeProcessedEdge;
+	}
+}
+
+void algo::Get_SourceLosEdgesInfo(Vector3d source_pos, vector<int>&Vertical_Edge_ID, vector<Vedge> &Edge_list, emxKdTree* pKdTree, map<int, Source_LosEdgeInfo> &Source_LosEdges)
+{
+	for (int i = 0; i < Vertical_Edge_ID.size(); i++)
+	{
+		int the_edge1_ID = Vertical_Edge_ID[i];
+		Vedge the_edge1 = Edge_list[the_edge1_ID];
+		Vector3d vInit1 = the_edge1.start;
+		Vector3d vEnd1 = the_edge1.end;
+
+		//发射源点必须位于绕射棱边两侧面之外
+		if (Dot(source_pos - vInit1, the_edge1.normal_front) < DOUBLE_EPSILON && Dot(source_pos - vInit1, the_edge1.normal_back) < DOUBLE_EPSILON)
+		{
+			continue;
+		}
+		//通过设定源点与棱边的距离阈值来限制绕射发生
+		Vector3d edge_center1 = 0.5*(the_edge1.start + the_edge1.end);
+		if ((source_pos - edge_center1).norm()>Diff_dis)
+			continue;
+
+		//粗略判断棱边是否对源可见
+		emxRay ray;
+		double ray_tHit = 0;
+		int ray_faceID = -1;
+		ray.lastID = ray_faceID;
+		ray.origin = source_pos;
+		ray.direction = (edge_center1 - source_pos).normalize();
+		if (pKdTree->Intersect(ray, ray_tHit, ray_faceID) && (ray_tHit <= 0.999 * (edge_center1 - source_pos).norm()))  //判断从发射点到绕射棱边1的中点是否有遮挡,若有遮挡则认为此条棱边1对源不可见
+			continue;
+
+		//对垂直棱边可用以下方式计算
+		Vector3d Intesect_Source = Vector3d(vInit1.x, vInit1.y, source_pos.z);   //源点在棱边上的垂直映射
+		double dis_source = (Intesect_Source - source_pos).norm();   //源点和棱边的垂直距离
+
+		Source_LosEdgeInfo LosEdge;
+		LosEdge.dis_sourceToEdge = dis_source;
+		LosEdge.source_onEdge = Intesect_Source;
+
+		Source_LosEdges.insert(map<int, Source_LosEdgeInfo>::value_type(i, LosEdge));	//将对源可见的棱边信息保存下来
+	}
+}
+
+void algo::Get_nextDifEdge(vector<int>&Vertical_Edge_ID, vector<Vedge> &Edge_list, emxKdTree* pKdTree, vector<vector<int>> & NextDifEdgesID)
+{
+#pragma omp parallel for schedule(static,2)
+	for (int j = 0; j < Vertical_Edge_ID.size(); j++)
+	{
+		int prev_edgeid = Vertical_Edge_ID[j];
+		Vedge prev_edge = Edge_list[prev_edgeid];
+		int current_edgeid = -1;
+		Vector3d prev_edge_center = 0.5*(prev_edge.start + prev_edge.end);
+		vector<int> nextDifEdgeID;
+		for (int i = 0; i<Vertical_Edge_ID.size(); i++)
+		{
+			if (i != j)
+			{
+				current_edgeid = Vertical_Edge_ID[i];
+				Vedge the_current_edge = Edge_list[current_edgeid];
+
+				//通过设定相邻两棱边的距离阈值来限制绕射发生
+				Vector3d current_edge_center = 0.5*(the_current_edge.start + the_current_edge.end);
+				if ((prev_edge_center - current_edge_center).norm()>Diff_dis)
+					continue;
+
+				//棱边1必须位于绕射棱边2两侧面之外,棱边2也必须位于绕射棱边1两侧面之外
+				if ((Dot(prev_edge_center - the_current_edge.start, the_current_edge.normal_front) < DOUBLE_EPSILON && Dot(prev_edge_center - the_current_edge.start, the_current_edge.normal_back) < DOUBLE_EPSILON) ||
+					(Dot(current_edge_center - prev_edge.start, prev_edge.normal_front) < DOUBLE_EPSILON && Dot(current_edge_center - prev_edge.start, prev_edge.normal_back) < DOUBLE_EPSILON))
+				{
+					continue;
+				}
+
+				//粗略判断两棱边是否直接可见
+				emxRay ray;
+				double ray_tHit = 0;
+				int ray_faceID = -1;
+				ray.lastID = ray_faceID;
+				ray.origin = prev_edge_center;
+				ray.direction = (current_edge_center - prev_edge_center).normalize();
+				if (pKdTree->Intersect(ray, ray_tHit, ray_faceID) && (ray_tHit <= 0.999 *  (current_edge_center - prev_edge_center).norm()))  //判断从edge1中点到edge2棱边中点是否有遮挡,若有遮挡则认为两棱边不可见
+					continue;
+
+				nextDifEdgeID.push_back(i);
+			}
+		}
+		NextDifEdgesID[j] = nextDifEdgeID;
+	}
+}
+
+void algo::Get_EdgeLosFieldPoint(vector<int>&Vertical_Edge_ID, vector<Vedge> &Edge_list, emxKdTree* pKdTree, vector<EField*> &EFieldArray, vector<vector<Edge_LosPointInfo>> & edges_LosFieldPoints)
+{
+#pragma omp parallel for schedule(static,2)
+	for (int j = 0; j < Vertical_Edge_ID.size(); j++)
+	{
+		int edgeid = Vertical_Edge_ID[j];
+		Vedge edge = Edge_list[edgeid];
+		Vector3d edge_center = 0.5*(edge.start + edge.end);
+		vector<Edge_LosPointInfo> edge_FieldPoints;
+
+		for (int i = 0; i<EFieldArray.size(); i++)
+		{
+			if (!EFieldArray[i]->In_or_Out)  //只对位于建筑物外的接收点考察是否发生绕射
+				continue;
+
+			Vector3d field_pos = EFieldArray[i]->Position;
+
+			//通过设定棱边与接收点距离阈值来限制绕射发生
+			if ((field_pos - edge_center).norm()>Diff_dis)
+				continue;
+
+			//接收点必须位于绕射棱边两侧面之外
+			if (Dot(field_pos - edge.start, edge.normal_front) < DOUBLE_EPSILON && Dot(field_pos - edge.start, edge.normal_back) < DOUBLE_EPSILON)
+			{
+				continue;
+			}
+
+			//粗略判断棱边是否对接收点直接可见
+			emxRay ray;
+			double ray_tHit = 0;
+			int ray_faceID = -1;
+			ray.lastID = ray_faceID;
+			ray.origin = edge_center;
+			ray.direction = (field_pos - edge_center).normalize();
+			if (pKdTree->Intersect(ray, ray_tHit, ray_faceID) && (ray_tHit <= 0.999 *  (field_pos - edge_center).norm()))  //判断从棱边中点到接收点是否有遮挡,若有遮挡则认为不可见
+				continue;
+
+			//对垂直棱边可用以下方式计算
+			Vector3d Intesect_Receive = Vector3d(edge.start.x, edge.start.y, field_pos.z);
+			double dis_Receiver = (Intesect_Receive - field_pos).norm();
+
+			Edge_LosPointInfo LosPoint;
+			LosPoint.ReceiverID = i;
+			LosPoint.dis_edgeToReceiver = dis_Receiver;
+			LosPoint.Receiver_onEdge = Intesect_Receive;
+			edge_FieldPoints.push_back(LosPoint);	//将每条棱边通过简单判断能够到达的接收点索引号保存下来
+		}
+		edges_LosFieldPoints[j] = edge_FieldPoints;
+	}
+}
+
+void algo::valid_NVDiffPath(vector<int>&Vertical_Edge_ID, vector<Vedge> &Edge_list, emxKdTree* pKdTree, Vector3d AP_position, Site_Data* m_siteData, int diff_Num)
+{
+	Vector3d source_pos = AP_position;
+	vector<vector<int>> total_diff_RouteEdgeID; //所有 <= N次绕射的路径序列
+
+	/*
+	和之前的所有绕射计算的函数一样，这里会生成一个临时的EFieldArray
+	如果是接收点模式，那EFieldArray存所有接收点
+	如果是仿真面模式，那EFieldArray存一个单独的仿真面上的接受点，在计算路径之后，将该仿真面上的接收点数据复制到其他仿真面
+	*/
+	vector<EField*> EfildArray;
+	if (cptPara->computeEnum == ComputationEnum::ReceivePoint)
+	{
+		for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
+		{
+			for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+			{
+				EfildArray.push_back(*(it2));
+			}
+		}
+	}
+	else if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+	{
+		//只放入第一个cell的仿真面的点，其余的点复制这个面的路径信息
+		auto it = m_siteData->cellsMap.begin();
+		for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+		{
+			EfildArray.push_back(*(it2));
+		}
+	}
+
+
+
+	double time1 = clock();
+	//**********************预处理提前计算一些可重用的信息**********************//
+	//获取对源可见的棱边集合
+	map<int, Source_LosEdgeInfo>Source_LosEdges;
+	Get_SourceLosEdgesInfo(source_pos, Vertical_Edge_ID, Edge_list, pKdTree, Source_LosEdges);
+	double time5 = clock();
+	cout << "the source los edge: " << (time5 - time1) / 1000 << endl;
+
+	//获取每条棱边下一可能发射绕射的棱边集合
+	vector<vector<int>> NextDifEdgesID(Vertical_Edge_ID.size());
+	Get_nextDifEdge(Vertical_Edge_ID, Edge_list, pKdTree, NextDifEdgesID);
+	double time6 = clock();
+	cout << "the next diff edge: " << (time6 - time5) / 1000 << endl;
+
+	//获取每条棱边简单判断的可到达接收点索引号
+	vector<vector<Edge_LosPointInfo>> edges_LosFieldPoints(Vertical_Edge_ID.size());
+	Get_EdgeLosFieldPoint(Vertical_Edge_ID, Edge_list, pKdTree, EfildArray, edges_LosFieldPoints);
+	double time7 = clock();
+	cout << "the edge los field point: " << (time7 - time6) / 1000 << endl;
+
+	//******************************************************************************//
+	double time2 = clock();
+	cout << "the preprocessing time is: " << (time2 - time1) / 1000 << endl;
+
+	map<int, Source_LosEdgeInfo>::iterator m_iter;
+	vector<int> Los_EdgeID;
+	for (m_iter = Source_LosEdges.begin(); m_iter != Source_LosEdges.end(); m_iter++)
+	{
+		Los_EdgeID.push_back(m_iter->first);
+	}
+	cout << "the Los EDGE: " << Los_EdgeID.size() << endl;
+
+	//获取所有可能的绕射棱边传播序列
+#pragma omp parallel for schedule(static,2)
+	for (int i = 0; i < Los_EdgeID.size(); i++)
+	{
+		int the_edge_ID = Los_EdgeID[i];
+
+		//获取绕射传播棱边序列
+		vector<vector<int>> diff_RouteEdgeID;
+		Get_diffVEdge(Vertical_Edge_ID, Edge_list, pKdTree, diff_RouteEdgeID, NextDifEdgesID, diff_Num - 1, the_edge_ID);
+
+#pragma omp critical
+		{
+			total_diff_RouteEdgeID.insert(total_diff_RouteEdgeID.end(), diff_RouteEdgeID.begin(), diff_RouteEdgeID.end());
+		}
+
+	}
+	double time3 = clock();
+	cout << "get the possible edge path: " << (time3 - time2) / 1000 << endl;
+
+	//验证路径有效性并计算出绕射点
+#pragma omp parallel for schedule(static,2)
+	for (int j = 0; j < total_diff_RouteEdgeID.size(); j++)
+	{
+		//判断当前路径是否有能够到达的接收点
+		int ID = total_diff_RouteEdgeID[j][total_diff_RouteEdgeID[j].size() - 1];  //edges_LosFieldPoints是和Vertical_Edge_ID中相对应的，所以要取和Vertical_Edge_ID中相对应的ID
+		if (edges_LosFieldPoints[ID].size() == 0)  //没有能够到达的接收点
+			continue;
+
+		vector<int> diff_route;
+		for (int m = 0; m < total_diff_RouteEdgeID[j].size(); m++)
+		{
+			diff_route.push_back(Vertical_Edge_ID[total_diff_RouteEdgeID[j][m]]);  //total_diff_RouteEdgeID中的每条路径序列中的棱边id号是和Vertical_Edge_ID中相对应的，所以需要做一个转换，取该id号在Vertical_Edge_ID中的对应值，即为实际棱边id号（对应Edge_list中）
+		}
+		double total_horizontal_dis = 0;
+		vector<double> Distance;   //当前棱边到起始棱边之间，相邻两棱边的水平距离之和
+		Distance.push_back(0);
+		for (int route_id = 1; route_id < diff_route.size(); route_id++)
+		{
+			total_horizontal_dis += (Vector3d(Edge_list[diff_route[route_id]].start.x, Edge_list[diff_route[route_id]].start.y, 0) - Vector3d(Edge_list[diff_route[route_id - 1]].start.x, Edge_list[diff_route[route_id - 1]].start.y, 0)).norm();
+			Distance.push_back(total_horizontal_dis);
+		}
+		int the_firstedgeID = diff_route[0];
+		Vedge the_firstedge = Edge_list[the_firstedgeID];
+		map<int, Source_LosEdgeInfo>::iterator m_iter1 = Source_LosEdges.find(total_diff_RouteEdgeID[j][0]);
+		Source_LosEdgeInfo the_firstedgeInfo = m_iter1->second;
+		Vector3d Intesect_Tranfer = the_firstedgeInfo.source_onEdge;
+		double dis_Transfer = the_firstedgeInfo.dis_sourceToEdge;
+
+		for (int l = 0; l < edges_LosFieldPoints[ID].size(); l++)
+		{
+			EField *NField = EfildArray[edges_LosFieldPoints[ID][l].ReceiverID];
+			Vector3d field_pos = NField->Position;
+
+			Vector3d Intesect_Receive = edges_LosFieldPoints[ID][l].Receiver_onEdge;
+			double dis_Receiver = edges_LosFieldPoints[ID][l].dis_edgeToReceiver;
+			Vector3d Intesect_Receive_onEdge1(the_firstedge.start.x, the_firstedge.start.y, Intesect_Receive.z);  //接收点水平投影到第一条绕射棱边，对垂直棱边可用此方式计算
+
+			vector<Vector3d> path_point;   //绕射路径中间绕射点信息
+			double current_horizontalDis = 0;
+			Vector3d prevDifPos = source_pos, currentDifPos_onEdge1, currentDifPos;
+			bool is_diff = true;  //用变量isDiff判断是否存在绕射
+			//判断对该接收点而言此条绕射路径是否有效，并计算出中间传播棱边上的绕射点
+			for (int id = 0; id < diff_route.size(); id++)
+			{
+				Vedge current_edge = Edge_list[diff_route[id]];
+				current_horizontalDis = Distance[id];
+				currentDifPos_onEdge1 = ((dis_Receiver + total_horizontal_dis - current_horizontalDis) * Intesect_Tranfer + (dis_Transfer + current_horizontalDis)*Intesect_Receive_onEdge1) / (dis_Transfer + dis_Receiver + total_horizontal_dis);  //计算得到的是当前绕射点在起始棱边上的垂直映射
+				currentDifPos = Vector3d(current_edge.start.x, current_edge.start.y, currentDifPos_onEdge1.z);   //将在起始棱边上的投影绕射点再映射到该发生绕射的棱边得到真正的绕射点坐标
+				path_point.push_back(currentDifPos);
+				if (Dot(currentDifPos - current_edge.start, currentDifPos - current_edge.end) < 0 && (currentDifPos - prevDifPos).norm() >= DOUBLE_EPSILON)  //几何绕射点位于棱边上
+				{
+					//判断从上一绕射点到当前绕射点是否无遮挡
+					emxRay Rayfirst;
+					Vector3d RayDirect1(currentDifPos - prevDifPos);
+					double tHit = 0;
+					int faceID = -1;
+					Rayfirst.lastID = faceID;
+					Rayfirst.origin = prevDifPos;
+					Rayfirst.direction = RayDirect1.normalize();
+					if (!pKdTree->Intersect(Rayfirst, tHit, faceID) || (tHit > 0.999 * RayDirect1.norm())) //判断从上一绕射点到当前绕射点是否无遮挡
+					{
+						is_diff &= true;
+						prevDifPos = currentDifPos;
+					}
+					else
+					{
+						is_diff &= false;
+						break;
+					}
+				}
+				else
+				{
+					is_diff &= false;
+					break;
+				}
+			}
+			if (is_diff && path_point.size() > 0)    //从发射点到最后一个绕射点之间均有效
+			{
+				//判断从最后一个绕射点到接收点之间是否无遮挡
+				emxRay Raysecond;
+				Vector3d RayDirect2(field_pos - prevDifPos);
+				double tHit = 0;
+				int faceID = -1;
+				Raysecond.lastID = faceID;
+				Raysecond.origin = prevDifPos;
+				Raysecond.direction = RayDirect2.normalize();
+				if (RayDirect2.norm() >= DOUBLE_EPSILON && (!pKdTree->Intersect(Raysecond, tHit, faceID) || tHit > 0.999*RayDirect2.norm()))
+				{
+					Field_Path ipath;
+					ipath.Path_interPoint.push_back(source_pos);
+					ipath.propagation_type.push_back(-1);  //源点处设置为-1
+					ipath.intersect_ID.push_back(-1);
+					for (int path_point_id = 0; path_point_id < path_point.size(); path_point_id++)
+					{
+						ipath.Path_interPoint.push_back(path_point[path_point_id]);
+						ipath.propagation_type.push_back(2);  //2表示传播为绕射
+						ipath.intersect_ID.push_back(diff_route[path_point_id]);
+					}
+					ipath.Path_interPoint.push_back(field_pos);
+#pragma omp critical
+					{
+						NField->Path.push_back(ipath);
+
+						/************************************************************************/
+						/* 如果是仿真面，就传送到其他点                                               */
+						/************************************************************************/
+						if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+						{
+							//在该site的其他cell中加入同样的信息
+							auto itMap = m_siteData->cellsMap.begin();
+							itMap++;//跳过自己
+							while (itMap != m_siteData->cellsMap.end())
+							{
+								itMap->second->efildVec[j]->Path.push_back(ipath);
+								itMap++;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	double time4 = clock();
+	cout << "the path validation and geting path info : " << (time4 - time3) / 1000 << endl;
+
+	//清除内存
+	vector<vector<int>>().swap(NextDifEdgesID);
+	vector<vector<int>>().swap(total_diff_RouteEdgeID);
+	map<int, Source_LosEdgeInfo>().swap(Source_LosEdges);
+	vector<vector<Edge_LosPointInfo>>().swap(edges_LosFieldPoints);
+	vector<int>().swap(Los_EdgeID);
+}
 
 algo::algo()
 {
+	Diff_dis = 800;
+	m_logText=new LogText;
+	modelParameter = nullptr;
+	cptPara = nullptr;
+	vPara = nullptr;
 }
 
 algo::~algo()
 {
 }
 
-void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *vPara)
+void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 {
+	modelParameter = mmmm;
+	cptPara = cccc;
+	vPara = vvvv;
 	bool ok;
 	int totalcpu = omp_get_num_procs();
-	cout << "----------开始计算--------------" << endl;
+
 	int core_nums = QInputDialog::getInt(NULL, QStringLiteral("cpu core"), QString("There are ") + QString::number(totalcpu) + " cores in this PC.\n use ", 0, 0, 100, 1, &ok);
 	omp_set_num_threads(core_nums);   //指定用于并行计算的线程数目
 
@@ -1386,6 +2139,13 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 	AP_EFieldMap.clear();
 	auto siteIterator = cptPara->Sites.begin();
 	int siteCount = 0;
+	m_logText->show();
+	m_logText->addText(QStringLiteral("----------开始计算--------------"));
+
+	double  beginTime = clock();
+	QString fileName= QCoreApplication::applicationDirPath();
+	fileName.append("/calculation_log.dat");
+	ofstream fout(fileName.toStdString());
 
 	//对每一个站点循环处理
 	while (siteIterator != cptPara->Sites.end())
@@ -1393,13 +2153,12 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 		SphereBeam* SphereTest = new SphereBeam;
 		SphereTest = SphereTest->creat(cptPara->RT_sample, cptPara->RT_radius);  //界面交互设置的采样密度即对正20面体细分的次数
 		int BeamNumber = SphereTest->m_Face.size();; //发射源采样Beam数目
-		const char *fileName = "D:\\calculation_log.dat";
-		ofstream fout(fileName);
+
 
 		//保存结果的站点文件
 		Site_Data* m_siteData = new Site_Data(siteIterator->first);
 		double beginTime = clock();
-
+		m_logText->addText("--------------Site: "+QString::number(siteIterator->first)+"---------------");
 		if (modelParameter->mType == ModelType::CITY_LOCAL)
 		{
 			//
@@ -1427,13 +2186,16 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 			double time_kd_tree = (time2 - time1) / 1000;
 			fout << "time_kd_tree:  " << time_kd_tree << endl;
 			fout << "begin to find all possible propagation path" << endl;
+			m_logText->addText("time_kd_tree :"+QString::number(time_kd_tree)+"s");
 			vector<emxBeam*> pRootBeams;
 			double time6 = clock();
 			CreateInitialBeam(pRootBeams, SphereTest, AP_position, BeamNumber);
 			fout << "pRootBeams Number: " << pRootBeams.size() << endl;
+			m_logText->addText("pRootBeams Number: " + QString::number(pRootBeams.size()));
 			double time7 = clock();
 			double time_initialBeam = (time7 - time6) / 1000;
 			fout << "time_initialBeam:  " << time_initialBeam << endl;
+			m_logText->addText("time_initialBeam:  " + QString::number(time_initialBeam));
 			double time8 = clock();
 			vector< vector<beamNode> >  AP_route;  //route
 			int totalpathnum = 0;  //the number of available path
@@ -1448,9 +2210,13 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 			double time9 = clock();
 			double time_Beamtracing = (time9 - time8) / 1000;
 			fout << "time_Beamtracing:  " << time_Beamtracing << endl;
+			m_logText->addText("time_Beamtracing:" + QString::number(time_Beamtracing));
+
+
 
 			totalpathnum = AP_route.size();
 			fout << "the total possible path number is " << totalpathnum * 2 << endl;
+			m_logText->addText("the total possible path number is:" + QString::number(totalpathnum * 2));
 			for (int i = 0; i < pRootBeams.size(); i++)
 			{
 				delete pRootBeams[i];
@@ -1459,16 +2225,17 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 
 			//找出有效直射、反射、透射、绕射传播路径
 			fout << "Begin to find the valid path of receivers in  site  " << siteIterator->second->Site_Name << endl;
-
+			m_logText->addText(QStringLiteral("开始寻找有效直射、反射、透射、绕射传播路径"));
 			//接收点坐标设置
-			Site_Data * m_siteData;
 			Scene_para s_para;
 
 
 			if (cptPara->computeEnum == ComputationEnum::ReceivePoint)  //非仿真面的接收点设置
 			{
+				bool siteNeedCompute = false;//判断该站点是否要计算
+
 				//根据接收点的pci信息，生成要计算的站点结果，
-				//当然目前只包含位置，信号强度需要下面算法继续计算，并保存到 m_siteData
+				//目前只包含位置，信号强度需要下面算法继续计算，并保存到 m_siteData
 				for (int j = 0; j < cptPara->No_SimPlanePoint.size(); j++)
 				{
 					int pci = cptPara->No_SimPlanePoint[j].PCI;
@@ -1486,24 +2253,31 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 							break;
 						}
 					}
-					//检测结果文件是否包含此pci
-					if (m_siteData->cellsMap.find(pci) == m_siteData->cellsMap.end())
-					{
-						m_siteData->cellsMap.insert(make_pair(pci, new Cell_Data(pci, cellName)));
-					}
+
 					//
 					if (isPciInSite)
 					{
 						//加入本站点要计算的接受点
+						//检测结果文件是否包含此pci
+						if (m_siteData->cellsMap.find(pci) == m_siteData->cellsMap.end())
+						{
+							m_siteData->cellsMap.insert(make_pair(pci, new Cell_Data(pci, cellName)));
+						}
+
 						EField *s = new EField;
 						s->Position = cptPara->No_SimPlanePoint[j].position;
 						m_siteData->cellsMap[pci]->efildVec.push_back(s);
+						siteNeedCompute = true;
 					}
 					else
 					{
 						continue;
 					}
 
+				}
+				if (siteNeedCompute==false)
+				{
+					continue;
 				}
 			}
 			else if (cptPara->computeEnum == ComputationEnum::SimuPlane) //按照仿真面设置
@@ -1516,67 +2290,147 @@ void algo::pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *
 					m_siteData->cellsMap.insert(make_pair((*it2).PCI, tmpCell));
 				}
 				//设置仿真面的点
-				SetEFieldPoint(m_siteData, AP_position, modelParameter->SiteModels[siteIterator->first]->getSceneRange(), cptPara->altitude, cptPara->precision, s_para, modelParameter);
+				SetEFieldPoint(m_siteData, AP_position, currentModel->getSceneRange(), cptPara->altitude, cptPara->precision, s_para);
 			}
-
+			m_logText->addText(QStringLiteral("接收点设置完毕"));
 			//接收点的内外特征判断
-			Point_In_Out(cptPara->computeEnum, m_siteData, modelParameter->SiteModels[siteCount]->getLocalScene()->getTotal_Building(), cptPara->altitude, s_para);
+			Point_In_Out(cptPara->computeEnum, m_siteData, currentModel->getLocalScene()->getTotal_Building(), cptPara->altitude, s_para);
 			//接收点设置完毕
 
-			//开始以cell为单位循环计算
-			auto cellIterator = m_siteData->cellsMap.begin();
-			while (cellIterator != m_siteData->cellsMap.end())
+			emxModel * LocalVirtualSimPlane = new emxModel(currentModel->getGround_Mesh(), cptPara->altitude);
+			emxKdTree *LocalVirtualSimPlane_KdTree = new emxKdTree(LocalVirtualSimPlane, 80, 1, 0.5, 1, -1);
+			double time10 = clock();
+			//直射
+			valid_DirPath(AP_KdTree, AP_position,m_siteData );
+			double time11 = clock();
+			double time_DirPath = (time11 - time10) / 1000;
+			fout << "time_DirPath:  " << time_DirPath << endl;
+			m_logText->addText(QStringLiteral("直射计算完毕"));
+			m_logText->addText("time_DirPath:  "+QString::number(time_DirPath));
+
+			valid_RefTransPath(currentModel, s_para, AP_KdTree, LocalVirtualSimPlane_KdTree, AP_position, m_siteData, AP_route);
+			double time12 = clock();
+			double time_RefTransPath = (time12 - time11) / 1000;
+			fout << "time_RefTransPath:  " << time_RefTransPath << endl;
+			m_logText->addText(QStringLiteral("反射透射计算完毕"));
+			m_logText->addText("time_RefTransPath::  " + QString::number(time_RefTransPath));
+
+			if (cptPara->diffractionNumPara >= 1)
 			{
-				//直射
-				double time10 = clock();
-				valid_DirPath(AP_KdTree, AP_position, cellIterator->second);
-				double time11 = clock();
-				double time_DirPath = (time11 - time10) / 1000;
-				fout << "time_DirPath:  " << time_DirPath << endl;
-
-				valid_RefTransPath(cptPara->computeEnum, s_para, AP_KdTree, AP_position, cellIterator->second, AP_route);
-				double time12 = clock();
-				double time_RefTransPath = (time12 - time11) / 1000;
-				fout << "time_RefTransPath:  " << time_RefTransPath << endl;
-				cout << "time_RefTransPath:  " << time_RefTransPath << endl;
-
-				if (cptPara->diffractionNumPara>=1)
-				{
-					vector<Vedge> currentEdge = currentModel->getAP_Edge_List();
-					valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, cellIterator->second);
-					double time13 = clock();
-					double time_once_diffPath = (time13 - time12) / 1000;
-					fout << "time_once_diffPath:  " << time_once_diffPath << endl;
-					cout << "time_once_diffPath:  " << time_once_diffPath << endl;
-
-					valid_RefDiffPath(TODO, AP_KdTree, AP_Edge_list, AP_position, EFieldArray, AP_route);
-					double time16 = clock();
-					double time_Ref_LastdiffPath = (time16 - time13) / 1000;
-					fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
-					cout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
-				}
-
+				vector<Vedge> currentEdge = currentModel->getAP_Edge_List();
+				valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
 				double time13 = clock();
-				double time_totalValidPath = (time13 - time10) / 1000;
-				fout << "the end of finding valid paths" << endl;
-				fout << "time_totalValidPath:  " << time_totalValidPath << endl;
-				fout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->second->Site_Name << endl;
-				cout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->second->Site_Name << endl;
+				double time_once_diffPath = (time13 - time12) / 1000;
+				fout << "time_once_diffPath:  " << time_once_diffPath << endl;
+			
+				m_logText->addText(QStringLiteral("一次绕射计算完毕"));
+				m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
 
+
+				valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
+				double time16 = clock();
+				double time_Ref_LastdiffPath = (time16 - time13) / 1000;
+				fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
+			
+				m_logText->addText("time_Ref_LastdiffPath:  " + QString::number(time_Ref_LastdiffPath));
+				if (cptPara->diffractionNumPara>=2)
+				{
+					vector<int> edgeID = currentModel->getAP_Edge_ID();
+					valid_NVDiffPath(edgeID, currentEdge, AP_KdTree, AP_position, m_siteData, cptPara->diffractionNumPara);
+					double time17 = clock();
+					double time_multiple_diffPath = (time17 - time16) / 1000;
+					fout << "time_multiple_diffPath:  " << time_multiple_diffPath << endl;
+					m_logText->addText(QStringLiteral("多次绕射计算完毕"));
+					m_logText->addText("time_multiple_diffPath :  " + QString::number(time_multiple_diffPath));
+
+				}
+			}
+			double time18 = clock();
+			double time_totalValidPath = (time18 - time10) / 1000;
+			fout << "the end of finding valid paths" << endl;
+			fout << "time_totalValidPath:  " << time_totalValidPath << endl;
+			m_logText->addText(QStringLiteral("路径搜索完成"));
+			m_logText->addText("time_totalValidPath :  " + QString::number(time_totalValidPath));
+
+			fout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->first<< endl;
+			m_logText->addText(QStringLiteral("准备计算信号点接收强度"));
+
+			//考虑相位，矢量叠加的信号强度计算
+			auto cellIterator = m_siteData->cellsMap.begin();
+			while (cellIterator!=m_siteData->cellsMap.end())
+			{
+				m_logText->addText(QString("cell is ") + QString(" cellIterator->second->cell_name"));
+
+				//找到当前cptPara中的AP信息
+				vector<TransAntenna>& Transss = siteIterator->second->Site_Antennas;
+				TransAntenna AP;
+				bool findApFlag = false;
+				for (int i = 0; i < Transss.size();i++)
+				{
+					if (Transss[i].PCI==cellIterator->first)
+					{
+						AP = Transss[i];
+						findApFlag = true;
+						break;
+					}
+				}
+				if (!findApFlag)
+				{
+					continue;
+				}
+				vector<EField*>& EfieldArray_tmpCell = cellIterator->second->efildVec;
+				for (int k = 0; k < EfieldArray_tmpCell.size();k++)
+				{
+					if( (AP.position-EfieldArray_tmpCell[k]->Position).norm()<1e-10)//发射点、接收点重合情况
+					{
+						double Power1 = AP.trans_power + AP.enlarge_power - AP.wire_loss;
+						EfieldArray_tmpCell[k]->MolStrength += pow(10, Power1 / 10);
+					}
+				}
+				double time14 = clock();
+				vector<Vedge> currentEdge = currentModel->getAP_Edge_List();
+				Antenna_Para *apara = new Antenna_Para;
+				Calc_GO_UTD(AP, EfieldArray_tmpCell, currentEdge,apara);
+				double time15 = clock();
+				double time_totalSignalCalculation = (time15 - time14) / 1000;
+				fout << "the end of  signal calculation" << endl;
+				fout << "time_totalSignalCalculation:  " << time_totalSignalCalculation << endl;
+
+				m_logText->addText(QStringLiteral("当前站点信号强度计算完成"));
+				m_logText->addText("time_totalSignalCalculation: " + QString::number(time_totalSignalCalculation));
+
+				int total_validpathnum = 0;
+				for (int id = 0; id < EfieldArray_tmpCell.size(); id++)
+				{
+					total_validpathnum += EfieldArray_tmpCell[id]->Path.size();
+					EfieldArray_tmpCell[id]->pathsize = EfieldArray_tmpCell[id]->Path.size();
+
+					if (EfieldArray_tmpCell[id]->Path.size()!=0)//有路径到达的点
+					{
+						Vector3cd tmpEfildAll = EfieldArray_tmpCell[id]->EFieldAll;
+						EfieldArray_tmpCell[id]->MolStrength = (apara->lamda * apara->lamda / (4 * M_PI * 120 * M_PI))*((tmpEfildAll).x.real()*(tmpEfildAll).x.real() + (tmpEfildAll).x.imag()*(tmpEfildAll).x.imag() + (tmpEfildAll).y.real()*(tmpEfildAll).y.real() + (tmpEfildAll).y.imag()*(tmpEfildAll).y.imag() + (tmpEfildAll).z.real()*(tmpEfildAll).z.real() + (tmpEfildAll).z.imag()*(tmpEfildAll).z.imag());  //场强转成功率
+						EfieldArray_tmpCell[id]->MolStrength = 10 * log10(EfieldArray_tmpCell[id]->MolStrength) + 30;  //W转为dBmw
+					}
+				}
 				cellIterator++;
 			}
-
-
 		}
 		else if (modelParameter->mType == ModelType::OBJ_LOCAL)
 		{
-			//暂时不处理
+			//暂时不处理obj
 		}
 
 
 
 		siteCount++;
 		siteIterator++;
-	}
+	}//
 
+	double endTime = clock();
+	double runtime = (endTime - beginTime) / 1000;
+	vPara->runTime = runtime;
+	fout << "the total  runtime is  " << runtime << endl;
+	m_logText->addText(QStringLiteral("所有计算结束！"));
+	m_logText->addText("the total  runtime is " + QString::number(runtime));
+	fout.close();
 }

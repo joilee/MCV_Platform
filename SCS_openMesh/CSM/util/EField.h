@@ -35,7 +35,7 @@ public:
 	bool In_or_Out; //接收点是否在建筑物内部的特征标志，0表示在内部，1表示不在内部
 	//complex<double> InitEFstrength;
 	//	int ordernum;  //接收点处场强大小的排序
-	//int pathnum; //能够到达该接收点的路径数目
+	int pathnum; //能够到达该接收点的路径数目
 	//complex<double> EFieldStrength;  
 	//complex<double> EFieldTotal;  //模值总场强
 	double HorizontalDis;  //接收点和发射源之间水平距离

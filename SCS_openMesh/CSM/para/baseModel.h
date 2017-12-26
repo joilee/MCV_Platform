@@ -1,3 +1,4 @@
+#pragma once
 #include "../cityModule/cityScene.h"
 #include "../mesh/meshStruct.h"
 #include "../util/vector.h"
@@ -12,12 +13,12 @@ class BaseModel
 public:
 	BaseModel();
 	~BaseModel();
+	 
+	void setCityScene(cityScene*_a){ localScene = _a; }
+	cityScene* getLocalScene(){ return localScene; }
 
-	void setCityScene(std::shared_ptr<cityScene>_a){ localScene = _a; }
-	std::shared_ptr<cityScene> getLocalScene(){ return localScene; }
-
-	void setGround_Mesh(std::shared_ptr<MESH> a){ ground_pMesh = a; };
-	std::shared_ptr<MESH> getGround_Mesh(){ return ground_pMesh; }
+	void setGround_Mesh(MESH_PTR a){ ground_pMesh = a; };
+	MESH_PTR getGround_Mesh(){ return ground_pMesh; }
 
 	void setVertices(vector<Vector3d> a){ V = a; }
 	vector<Vector3d>& getVertices(){ return V; }
@@ -51,10 +52,10 @@ public:
 	/************************************************************************/
 	double getPointAltitude(double x, double y);
 private:
-	std::shared_ptr<cityScene> localScene;
+	cityScene *localScene;
 	double LocalScene_range;
 	//地面三角网格
-	std::shared_ptr<MESH> ground_pMesh;
+	MESH_PTR ground_pMesh;
 
 	//所有的点、面、材料编号
 	std::vector<Vector3d> V;					// vertices
