@@ -64,6 +64,7 @@ VisualManager::VisualManager()
 {
 	m_SiteCellSubject = new SiteCellSubject;
 	visContainer = new EFieldContainer;
+	para = new visPara;
 }
 
 
@@ -76,8 +77,10 @@ void VisualManager::setContainerData()
 {
 	if (para==nullptr||para->simuResult.size()==0)
 	{
+		qDebug() << "para为null"<< para->simuResult.size();
 		return;
 	}
+
 	map<int, Site_Data *> &  visRes = para->simuResult;
 
 	//做一次深拷贝，保证visPara和Container分开
@@ -134,13 +137,16 @@ void VisualManager::sendSiteCellName()
 			while (ite != tmpSite->cellsMap.end())
 			{
 				m_SiteCellSubject->siteAndCellData->addCell(siteIDS[i],ite->second->pci,ite->second->cell_name);
+				m_SiteCellSubject->siteAndCellData->setFlag(true);
 				ite++;
 			}
 		}
 	}
 	else
 	{
+		m_SiteCellSubject->siteAndCellData->setFlag(false);
 		m_SiteCellSubject->clearItem();
+		
 	}
 	m_SiteCellSubject->notify();
 }

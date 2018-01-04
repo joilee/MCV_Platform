@@ -162,10 +162,10 @@ void EFieldContainer::addCellData(Cell_Data* a, int siteID)
 	}
 	if (!isSiteExist(siteID))
 	{
-		addNewSite(siteID);
-		eFieldData[siteID]->cellsMap.insert(make_pair(a->pci, a));
+		addNewSite(siteID);	
 	}
 
+	eFieldData[siteID]->cellsMap.insert(make_pair(a->pci, a));
 }
 
 std::vector<int> EFieldContainer::getAllSiteID()

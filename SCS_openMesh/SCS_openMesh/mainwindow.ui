@@ -700,6 +700,9 @@
    </property>
   </action>
   <action name="action_run">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/run.ico</normaloff>Resources/run.ico</iconset>

@@ -206,6 +206,7 @@ public:
         action_deletePlugin->setIcon(icon12);
         action_run = new QAction(MainWindowClass);
         action_run->setObjectName(QStringLiteral("action_run"));
+        action_run->setCheckable(true);
         QIcon icon13;
         icon13.addFile(QStringLiteral("Resources/run.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_run->setIcon(icon13);

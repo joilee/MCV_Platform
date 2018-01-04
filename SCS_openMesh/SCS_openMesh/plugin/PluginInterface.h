@@ -2,9 +2,9 @@
 #define PLUGININTERFACE_H
 
 #include <QtPlugin>
-#include "para/modelPara.h"
-#include "para/computePara.h"
-#include "para/visualPara.h"
+#include <para/modelPara.h>
+#include <para/computePara.h>
+#include <para/visualPara.h>
 #define QtPlugin_iid "com.Plugin.Computation"  
 class ComputeInterface
 {

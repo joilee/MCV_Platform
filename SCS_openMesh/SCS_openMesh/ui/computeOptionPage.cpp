@@ -345,6 +345,9 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	enablePointMode(false);
 	enableRangeMode(true);
 
+	globalContext *globalCtx = globalContext::GetInstance();
+	globalCtx->cptManager->setCptCatagory(1);
+
 }
 
 void fieldpoint::updateLocal(LocalModelItem*a)

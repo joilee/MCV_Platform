@@ -72,6 +72,7 @@ void MainWindow::init()
 	ui.dockWidget_outline->setWidget(catalog);
 	gctx->modelManager->getModelSubject()->attach(catalog);
 	gctx->cptManager->getPluginSubject()->attach(catalog);
+	gctx->visualManager->getSiteSubject()->attach(catalog);
 	
 	ui.progressBar->setRange(0,100);
 

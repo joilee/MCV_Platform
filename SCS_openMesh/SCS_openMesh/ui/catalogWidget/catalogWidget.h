@@ -9,13 +9,14 @@
 #include "observer/modelObserver.h"
 #include "observer/LocalModelObserver.h"
 #include "observer/PluginObserver.h"
+#include "observer/SiteCellObserver.h"
 using namespace std;
 #define CITY_VIEW "城市"
 #define MODEL_ITEM "基站"
 #define CPT_ITEM "插件"
 #define  VIS_ITEM "可视化"
 
-class catalogWidget :public QTreeWidget, public modelObserver, public ComputePluginObserver
+class catalogWidget :public QTreeWidget, public modelObserver, public ComputePluginObserver,public SiteCellObserver
 {
 	Q_OBJECT
 public:
@@ -42,6 +43,7 @@ public:
 	void contextMenuEvent(QContextMenuEvent *event);
 	void deleleItemsUnderItem(QTreeWidgetItem * a);
 	void update(visualModelItem * a);
+	void updateResult(Site_Item*a);
 	void updatePluginInfo(VisualPluginItem* a);
 
 	private slots:

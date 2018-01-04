@@ -299,6 +299,7 @@ void ModelManager:: setModelPara()
 			tmpBase->setModelID(tmp->getID());
 			modelPara->addModel(tmpBase);
 			count++;
+			modelPara->mType = ModelType::CITY_LOCAL;
 		}
 		else if (tmpModel->getType() == ModelType::OBJ_LOCAL)
 		{
@@ -315,6 +316,7 @@ void ModelManager:: setModelPara()
 
 			modelPara->addModel(tmpBase);
 			count++;
+			modelPara->mType = ModelType::OBJ_LOCAL;
 		}
 		
 	}

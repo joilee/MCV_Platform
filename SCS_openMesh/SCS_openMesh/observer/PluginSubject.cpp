@@ -37,7 +37,7 @@ void PluginSubject::detach(ComputePluginObserver*a)
 
 void PluginSubject::notify()
 {
-	cout<< "info: SiteCellSubject开始发送消息"<< endl;
+	cout<< "info: PluginSubject开始发送消息"<< endl;
 	auto it = observers.begin();
 	while (it != observers.end())
 	{
