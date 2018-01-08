@@ -72,6 +72,8 @@ public:
 	vector<double> getAfterVec(){ return afterCorrection_calculationfield; }
 	vector<double> getMeasured(){ return Measuredfield; }
 
+	SiteCellSubject *getSiteSubject(){ return m_SiteCellSubject; }
+
 private:
 	EFieldContainer * visContainer;
 	visPara * para;

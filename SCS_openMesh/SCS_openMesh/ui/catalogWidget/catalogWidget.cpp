@@ -5,7 +5,7 @@
 #include <QJsonObject>
 
 catalogWidget::catalogWidget(QWidget *parent)
-:ComputePluginObserver("catalogWidgetForPlugin"), modelObserver("catalogWidget"),QTreeWidget(parent)
+:SiteCellObserver("siteCell"),ComputePluginObserver("catalogWidgetForPlugin"), modelObserver("catalogWidget"),QTreeWidget(parent)
 {
 	this->setHeaderLabels(QStringList() << QStringLiteral("项目")<< QStringLiteral("属性"));
 	
@@ -234,4 +234,24 @@ void catalogWidget::updatePluginInfo(VisualPluginItem* a)
 	{
 		deleleItemsUnderItem(cItem);
 	}
+}
+
+void catalogWidget::updateResult(Site_Item*a)
+{
+	cout << "Catalog接收到result更新的信号" << endl;
+	if (a->needUpdate())
+	{
+		map<int, Cell_Item_Vector*>::iterator iter;
+		for (iter = a->getData().begin(); iter != a->getData().end(); iter++)
+		{
+			QTreeWidgetItem *visChildItem = new QTreeWidgetItem();
+			visChildItem->setText(0, QString::number(iter->first));
+			vItem->addChild(visChildItem);
+		}
+	}
+	else
+	{
+		deleleItemsUnderItem(cItem);
+	}
+
 }

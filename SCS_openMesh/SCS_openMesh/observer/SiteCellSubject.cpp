@@ -38,7 +38,7 @@ void SiteCellSubject::notify()
 	auto it = observers.begin();
 	while (it!=observers.end())
 	{
-		(*it)->update(siteAndCellData);
+		(*it)->updateResult(siteAndCellData);
 		it++;
 	}
 }

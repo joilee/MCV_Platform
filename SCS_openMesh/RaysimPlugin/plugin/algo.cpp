@@ -269,7 +269,7 @@ void algo::find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes)
 //设置一个site内所有接收点的坐标
 void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range, double Zheight, double Precetion, Scene_para &sp)
 {
-	m_siteData->cellsMap.clear();
+//	m_siteData->cellsMap.clear();
 
 	double Left_Up_X = AP_position.x - LocalScene_range/2;
 	double Left_Up_Y = AP_position.y + LocalScene_range/2;
@@ -2420,7 +2420,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			//暂时不处理obj
 		}
 
-
+		AP_EFieldMap.insert(make_pair(siteIterator->first, m_siteData));
 
 		siteCount++;
 		siteIterator++;

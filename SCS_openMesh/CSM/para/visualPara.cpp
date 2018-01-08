@@ -2,7 +2,7 @@
 
 visPara::visPara()
 {
-	
+	simuResult.clear();
 }
 
 visPara::~visPara()

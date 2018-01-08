@@ -1,5 +1,5 @@
 #pragma once
-#include "scsGLWidget.h"
+#include "ui/scsGLWidget.h"
 #include "Context/context.h"
 #include <material/scsMaterial.h>
 

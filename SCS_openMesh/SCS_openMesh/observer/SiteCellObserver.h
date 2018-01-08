@@ -12,7 +12,7 @@ public:
 		name = a;
 	}
 	string getName(){ return name; }
-	virtual void update(Site_Item*a) = 0;
+	virtual void updateResult(Site_Item*a) = 0;
 private:
 	string name;
 };
