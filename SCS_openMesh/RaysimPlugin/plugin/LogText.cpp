@@ -12,4 +12,5 @@ LogText::~LogText()
 void LogText::addText(QString a)
 {
 	ui.logBrowser->append(a);
+	QApplication::processEvents();
 }
