@@ -205,6 +205,7 @@ cityScene::cityScene(Vector3d  AP_position, double  LocalRange, cityScene* cityA
 		if (in_range)
 		{
 			total_Buildings.push_back(cityAll->getBuildingByValue(buildings_id));
+			cout << buildings_id << " "<<tmpBuilding.height<<endl;
 		}
 	}
 

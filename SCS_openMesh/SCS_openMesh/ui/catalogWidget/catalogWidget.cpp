@@ -255,3 +255,5 @@ void catalogWidget::updateResult(Site_Item*a)
 	}
 
 }
+
+#include "GeneratedFiles/Release/moc_catalogWidget.cpp"

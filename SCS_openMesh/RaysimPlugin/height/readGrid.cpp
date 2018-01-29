@@ -9,6 +9,7 @@ double getPointAltitude(GridHeight &gridR,double x,double y,int row,int col,doub
 	double ymin=ymax-(row)*base;
 	if(x<xmin||y>ymax||x>xmax||y<ymin)
 	{
+		//cout << x << " " << y << endl;
 		cout<<"wrong coordinates from building vector"<<endl;
 	}
 	int pointRow=int((ymax-y)/base);

@@ -5,7 +5,6 @@
     <ClCompile Include="Container\ModelContainer.cpp" />
     <ClCompile Include="Container\SitesContainer.cpp" />
     <ClCompile Include="Correction\MearsuredData.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp" />
     <ClCompile Include="Model\abstractGlobalModel\abstractGlobalModel.cpp" />
     <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp" />
     <ClCompile Include="Model\cityModel\cityLocalModelFactory.cpp" />
@@ -93,54 +92,9 @@
     <ClCompile Include="util\dclist.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_catalogWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_scsGLWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Container\EFieldContainer.h" />
-    <ClInclude Include="Container\ModelContainer.h" />
-    <ClInclude Include="Container\SitesContainer.h" />
-    <ClInclude Include="Correction\MearsuredData.h" />
-    <ClInclude Include="GeneratedFiles\ui_correctionWidget.h" />
-    <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />
-    <ClInclude Include="GeneratedFiles\ui_saveResultDialog.h" />
-    <ClInclude Include="GeneratedFiles\ui_scatterDialog.h" />
-    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModel.h" />
-    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h" />
-    <ClInclude Include="Model\abstractLocalModel\abstractLocalModel.h" />
-    <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h" />
-    <ClInclude Include="Model\cityModel\cityLocalModelFactory.h" />
-    <ClInclude Include="Model\OBJModel\objLocalModel.h" />
-    <ClInclude Include="Model\OBJModel\objLocalModelFactory.h" />
-    <ClInclude Include="Model\OBJModel\objModel.h" />
-    <ClInclude Include="Model\OBJModel\objModelFactory.h" />
-    <ClInclude Include="observer\LocalModelSubject.h" />
-    <ClInclude Include="Manager\Id\ModelIdManager.h" />
-    <ClInclude Include="observer\LocalModelObserver.h" />
-    <ClInclude Include="observer\PluginObserver.h" />
-    <ClInclude Include="observer\PluginSubject.h" />
-    <ClInclude Include="observer\SiteCellObserver.h" />
-    <ClInclude Include="observer\SiteCellSubject.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Manager\visualManager\visualManager.h" />
-    <ClInclude Include="ui\scatterWidget\correctWidget.h" />
-    <ClInclude Include="visualData\visualPluginItem.h" />
-    <ClInclude Include="visualData\visualResultItem.h" />
-    <ClInclude Include="ui\scsLocalModelGLWidget.h" />
-    <ClInclude Include="visualData\LocalModelItem.h" />
-    <ClInclude Include="ui\GLWidget\scsGlobalGL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ui\GLWidget\scsPlaneGL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="util\dclist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Manager\Computation\computeManager.h" />
@@ -192,24 +146,68 @@
     <CustomBuild Include="outdoorFile.ui" />
     <CustomBuild Include="Resources\scatter.ico" />
     <CustomBuild Include="mainwindow.qrc" />
-    <CustomBuild Include="ui\catalogWidget\catalogWidget.h" />
-    <CustomBuild Include="ui\scatterWidget\scatterWidget.h" />
-    <CustomBuild Include="ui\scatterWidget\webPage.h" />
     <CustomBuild Include="ui\scatterWidget\Document.h" />
     <CustomBuild Include="echartsWidget.ui" />
     <CustomBuild Include="scatterDialog.ui" />
     <CustomBuild Include="saveResultDialog.ui" />
     <CustomBuild Include="correctionWidget.ui" />
+    <CustomBuild Include="ui\scatterWidget\scatterWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\scatterWidget\webPage.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Container\EFieldContainer.h" />
+    <CustomBuild Include="Container\ModelContainer.h" />
+    <CustomBuild Include="Container\SitesContainer.h" />
+    <CustomBuild Include="Correction\MearsuredData.h" />
+    <CustomBuild Include="GeneratedFiles\ui_correctionWidget.h" />
+    <CustomBuild Include="GeneratedFiles\ui_echartsWidget.h" />
+    <CustomBuild Include="GeneratedFiles\ui_saveResultDialog.h" />
+    <CustomBuild Include="GeneratedFiles\ui_scatterDialog.h" />
+    <CustomBuild Include="Model\abstractGlobalModel\abstractGlobalModel.h" />
+    <CustomBuild Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h" />
+    <CustomBuild Include="Model\abstractLocalModel\abstractLocalModel.h" />
+    <CustomBuild Include="Model\abstractLocalModel\abstractLocalModelFactory.h" />
+    <CustomBuild Include="Model\cityModel\cityLocalModelFactory.h" />
+    <CustomBuild Include="Model\OBJModel\objLocalModel.h" />
+    <CustomBuild Include="Model\OBJModel\objLocalModelFactory.h" />
+    <CustomBuild Include="Model\OBJModel\objModel.h" />
+    <CustomBuild Include="Model\OBJModel\objModelFactory.h" />
+    <CustomBuild Include="observer\LocalModelSubject.h" />
+    <CustomBuild Include="Manager\Id\ModelIdManager.h" />
+    <CustomBuild Include="observer\LocalModelObserver.h" />
+    <CustomBuild Include="observer\PluginObserver.h" />
+    <CustomBuild Include="observer\PluginSubject.h" />
+    <CustomBuild Include="observer\SiteCellObserver.h" />
+    <CustomBuild Include="observer\SiteCellSubject.h" />
+    <CustomBuild Include="resource.h" />
+    <CustomBuild Include="Manager\visualManager\visualManager.h" />
+    <CustomBuild Include="ui\scatterWidget\correctWidget.h" />
+    <CustomBuild Include="visualData\visualPluginItem.h" />
+    <CustomBuild Include="visualData\visualResultItem.h" />
+    <CustomBuild Include="ui\scsLocalModelGLWidget.h" />
+    <CustomBuild Include="visualData\LocalModelItem.h" />
+    <CustomBuild Include="Resources\face.ico" />
+    <CustomBuild Include="Resources\line.ico" />
+    <CustomBuild Include="Resources\pluginInsert.ico" />
+    <CustomBuild Include="Resources\point.ico" />
+    <CustomBuild Include="Resources\run.ico" />
+    <CustomBuild Include="ui\GLWidget\scsGlobalGL.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui\GLWidget\scsPlaneGL.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="util\dclist.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SCS_openMesh.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Resources\face.ico" />
-    <Image Include="Resources\line.ico" />
-    <Image Include="Resources\pluginInsert.ico" />
-    <Image Include="Resources\point.ico" />
-    <Image Include="Resources\run.ico" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

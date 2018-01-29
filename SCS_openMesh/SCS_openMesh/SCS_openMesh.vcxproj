@@ -40,15 +40,15 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;D:\Program Files\OpenMesh 6.3\include\;$(SolutionDir)\CSM\;$(QTDIR)\include\QtHelp;$(QTDIR)\include\QtWebChannel;$(QTDIR)\include\QtWebEngineCore;$(QTDIR)\include\QtWebEngineWidgets;.\ui\scatterWidget;.\ui\;.\ui\GLWidget\;$(QTDIR)\include\QtWebSockets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include;.\GeneratedFiles\$(ConfigurationName);E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets;D:\Program Files\OpenMesh 6.3\include\;$(SolutionDir)\CSM\;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets;.\ui\scatterWidget;.\ui\;.\ui\GLWidget\;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;opengl32.lib;glu32.lib;Qt5Widgetsd.lib;freeglut.lib;Qt5Helpd.lib;Qt5WebChanneld.lib;Qt5WebEngineCored.lib;Qt5WebEngineWidgetsd.lib;Qt5WebSocketsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\qtmaind.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Cored.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Guid.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5OpenGLd.lib;opengl32.lib;glu32.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Widgetsd.lib;freeglut.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Helpd.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebChanneld.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebEngineCored.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebEngineWidgetsd.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebSocketsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -56,15 +56,15 @@
       <PreprocessorDefinitions>UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_HELP_LIB;QT_WEBCHANNEL_LIB;QT_WEBSOCKETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtOpenGL;$(QTDIR)\include\QtWidgets;D:\project\SCS_openMesh\SCS_openMesh\dependency\;$(SolutionDir)\CSM;$(QTDIR)\include\QtHelp;$(QTDIR)\include\QtWebChannel;.\ui\scatterWidget;.\ui\GLWidget;$(QTDIR)\include\QtWebSockets;$(QTDIR)\include\QtWebEngineCore;$(QTDIR)\include\QtWebEngineWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include;.\GeneratedFiles\$(ConfigurationName);E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets;$(SolutionDir)\CSM;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel;.\ui\scatterWidget;.\ui\GLWidget;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore;E:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(QTDIR)\lib;D:\project\SCS_openMesh\SCS_openMesh\dependency\CSM\lib\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5OpenGL.lib;opengl32.lib;glu32.lib;Qt5Widgets.lib;Qt5Help.lib;Qt5WebChannel.lib;Qt5WebSockets.lib;Qt5WebEngineCore.lib;Qt5WebEngineWidgets.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\qtmain.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Core.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Gui.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5OpenGL.lib;opengl32.lib;glu32.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Widgets.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5Help.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebChannel.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebSockets.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebEngineCore.lib;E:\Qt\Qt5.6.2\5.6\msvc2013_64\lib\Qt5WebEngineWidgets.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -72,10 +72,6 @@
     <ClCompile Include="Container\ModelContainer.cpp" />
     <ClCompile Include="Container\SitesContainer.cpp" />
     <ClCompile Include="Correction\MearsuredData.cpp" />
-    <ClCompile Include="GeneratedFiles\Debug\moc_catalogWidget.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_catalogWidget.cpp" />
     <ClCompile Include="GeneratedFiles\Release\moc_scsGLWidget.cpp" />
     <ClCompile Include="Model\abstractGlobalModel\abstractGlobalModel.cpp" />
     <ClCompile Include="Model\abstractLocalModel\abstractLocalModel.cpp" />
@@ -516,24 +512,24 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="ui\scsModelTable.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing scsModelTable.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing scsModelTable.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\scsGLWidget.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing scsGLWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing scsGLWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="ui\scsSimuPlaneGLWidget.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -600,14 +596,14 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="glWidget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing glWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing glWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="io\io_simuPlane.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -802,64 +798,64 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="ui\outdoorFile.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing outdoorFile.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing outdoorFile.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\meshOption.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing meshOption.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing meshOption.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\mainwindow.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing mainwindow.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing mainwindow.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\InfoPage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing InfoPage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing InfoPage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\computerOptionDialog.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing computerOptionDialog.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing computerOptionDialog.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\computeOptionPage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing computeOptionPage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing computeOptionPage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -880,24 +876,24 @@
       </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="mainwindow.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
     <CustomBuild Include="outdoorFile.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -930,121 +926,701 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(FullPath);.\Resources\scatter.ico;.\Resources\face.ico;.\Resources\line.ico;.\Resources\pluginInsert.ico;.\Resources\point.ico;.\Resources\run.ico;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(FullPath);.\Resources\scatter.ico;.\Resources\face.ico;.\Resources\line.ico;.\Resources\pluginInsert.ico;.\Resources\point.ico;.\Resources\run.ico;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Rcc%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\qrc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\rcc.exe" -name "%(Filename)" -no-compress "%(FullPath)" -o .\GeneratedFiles\qrc_%(Filename).cpp</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\face.ico">
+    <CustomBuild Include="Resources\face.ico">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
-    <Image Include="Resources\line.ico">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Resources\line.ico">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
-    <Image Include="Resources\pluginInsert.ico">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Resources\pluginInsert.ico">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
-    <Image Include="Resources\point.ico">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Resources\point.ico">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
-    <Image Include="Resources\run.ico">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Resources\run.ico">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Image>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Container\EFieldContainer.h" />
-    <ClInclude Include="Container\ModelContainer.h" />
-    <ClInclude Include="Container\SitesContainer.h" />
-    <ClInclude Include="Correction\MearsuredData.h" />
-    <ClInclude Include="GeneratedFiles\ui_correctionWidget.h" />
-    <ClInclude Include="GeneratedFiles\ui_echartsWidget.h" />
-    <ClInclude Include="GeneratedFiles\ui_saveResultDialog.h" />
-    <ClInclude Include="GeneratedFiles\ui_scatterDialog.h" />
-    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModel.h" />
-    <ClInclude Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h" />
-    <ClInclude Include="Model\abstractLocalModel\abstractLocalModel.h" />
-    <ClInclude Include="Model\abstractLocalModel\abstractLocalModelFactory.h" />
-    <ClInclude Include="Model\cityModel\cityLocalModelFactory.h" />
-    <ClInclude Include="Model\OBJModel\objLocalModel.h" />
-    <ClInclude Include="Model\OBJModel\objLocalModelFactory.h" />
-    <ClInclude Include="Model\OBJModel\objModel.h" />
-    <ClInclude Include="Model\OBJModel\objModelFactory.h" />
-    <ClInclude Include="observer\LocalModelSubject.h" />
-    <ClInclude Include="Manager\Id\ModelIdManager.h" />
-    <ClInclude Include="observer\LocalModelObserver.h" />
-    <ClInclude Include="observer\PluginObserver.h" />
-    <ClInclude Include="observer\PluginSubject.h" />
-    <ClInclude Include="observer\SiteCellObserver.h" />
-    <ClInclude Include="observer\SiteCellSubject.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Manager\visualManager\visualManager.h" />
-    <ClInclude Include="ui\GLWidget\scsGlobalGL.h" />
-    <ClInclude Include="ui\GLWidget\scsPlaneGL.h" />
-    <ClInclude Include="ui\scatterWidget\correctWidget.h" />
-    <ClInclude Include="util\dclist.h" />
-    <ClInclude Include="visualData\visualPluginItem.h" />
-    <ClInclude Include="visualData\visualResultItem.h" />
+    <CustomBuild Include="Container\EFieldContainer.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Container\ModelContainer.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Container\SitesContainer.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Correction\MearsuredData.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_correctionWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_echartsWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_saveResultDialog.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="GeneratedFiles\ui_scatterDialog.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\abstractGlobalModel\abstractGlobalModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\abstractGlobalModel\abstractGlobalModelFactory.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\abstractLocalModel\abstractLocalModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\abstractLocalModel\abstractLocalModelFactory.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\cityModel\cityLocalModelFactory.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\OBJModel\objLocalModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\OBJModel\objLocalModelFactory.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\OBJModel\objModel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Model\OBJModel\objModelFactory.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="observer\LocalModelSubject.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Manager\Id\ModelIdManager.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="observer\LocalModelObserver.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="observer\PluginObserver.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="observer\PluginSubject.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="observer\SiteCellObserver.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="observer\SiteCellSubject.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="resource.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="Manager\visualManager\visualManager.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
     <CustomBuild Include="ui\catalogWidget\catalogWidget.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing catalogWidget.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">./GeneratedFiles/$(Configuration)/moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)/bin/moc.exe;%(FullPath);</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing catalogWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing catalogWidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
-    <ClInclude Include="ui\scsLocalModelGLWidget.h" />
-    <ClInclude Include="visualData\LocalModelItem.h" />
+    <CustomBuild Include="ui\GLWidget\scsGlobalGL.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="ui\GLWidget\scsPlaneGL.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="ui\scatterWidget\correctWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
     <CustomBuild Include="ui\scatterWidget\scatterWidget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing scatterWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing scatterWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
     <CustomBuild Include="ui\scatterWidget\webPage.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing webPage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing webPage.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
+    </CustomBuild>
+    <CustomBuild Include="util\dclist.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="visualData\visualPluginItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="visualData\visualResultItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="ui\scsLocalModelGLWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="visualData\LocalModelItem.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="ui\scatterWidget\Document.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing Document.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\Program Files\OpenMesh 6.3\include" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets" "-I.\ui\scatterWidget" "-I.\ui" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing Document.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtOpenGL" "-I$(QTDIR)\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-I$(QTDIR)\include\QtHelp" "-I$(QTDIR)\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-I$(QTDIR)\include\QtWebSockets" "-I$(QTDIR)\include\QtWebEngineCore" "-I$(QTDIR)\include\QtWebEngineWidgets"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_HELP_LIB -DQT_WEBCHANNEL_LIB -DQT_WEBSOCKETS_LIB  "-I." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtGui" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtOpenGL" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWidgets" "-ID:\project\SCS_openMesh\SCS_openMesh\dependency" "-I$(SolutionDir)\CSM" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtHelp" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebChannel" "-I.\ui\scatterWidget" "-I.\ui\GLWidget" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebSockets" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineCore" "-IE:\Qt\Qt5.6.2\5.6\msvc2013_64\include\QtWebEngineWidgets"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="echartsWidget.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -1052,38 +1628,38 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="scatterDialog.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="saveResultDialog.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="correctionWidget.ui">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"E:\Qt\Qt5.6.2\5.6\msvc2013_64\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -1091,7 +1667,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_x64="msvc2013_64" MocOptions="" />
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

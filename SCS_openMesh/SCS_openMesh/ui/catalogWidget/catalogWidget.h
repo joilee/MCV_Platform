@@ -1,5 +1,5 @@
-Ôªø#ifndef CATALOGTREE_H
-#define CATALOGTREE_H
+#ifndef CATALOGWIDGET_H
+#define CATALOGWIDGET_H
 
 #include <QTreeWidget>
 #include <string>
@@ -11,33 +11,33 @@
 #include "observer/PluginObserver.h"
 #include "observer/SiteCellObserver.h"
 using namespace std;
-#define CITY_VIEW "ÂüéÂ∏Ç"
-#define MODEL_ITEM "Âü∫Á´ô"
-#define CPT_ITEM "Êèí‰ª∂"
-#define  VIS_ITEM "ÂèØËßÜÂåñ"
+#define CITY_VIEW "≥« –"
+#define MODEL_ITEM "ª˘’æ"
+#define CPT_ITEM "≤Âº˛"
+#define  VIS_ITEM "ø… ”ªØ"
 
-class catalogWidget :public QTreeWidget, public modelObserver, public ComputePluginObserver,public SiteCellObserver
+class catalogWidget :public QTreeWidget, public modelObserver, public ComputePluginObserver, public SiteCellObserver
 {
 	Q_OBJECT
 public:
 	catalogWidget(QWidget *parent = NULL);
 	~catalogWidget();
-	
+
 	/**
-	  * @Method:    addParentMenu
-	  * @Note: 	Â¢ûÂä†
-	  * @Author:    Li Gen
-	  * @ Date:     2017/12/15
-	  * @Returns:   void
+	* @Method:    addParentMenu
+	* @Note: 	‘ˆº”
+	* @Author:    Li Gen
+	* @ Date:     2017/12/15
+	* @Returns:   void
 	*/
 	void addParentMenu();
 
 	/**
-	  * @Method:    addChildMenu
-	  * @Note: 	
-	  * @Author:    Li Gen
-	  * @ Date:     2017/12/15
-	  * @Returns:   void
+	* @Method:    addChildMenu
+	* @Note:
+	* @Author:    Li Gen
+	* @ Date:     2017/12/15
+	* @Returns:   void
 	*/
 	void addChildMenu();
 	void contextMenuEvent(QContextMenuEvent *event);
@@ -52,7 +52,7 @@ public:
 	void showModel();
 	void addCptPlugin();
 
-	signals:
+signals:
 	void modelID_ShowChanged(int id);
 
 private:
@@ -62,4 +62,4 @@ private:
 	QTreeWidgetItem * vItem;
 };
 
-#endif
+#endif CATALOGWIDGET_H

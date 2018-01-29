@@ -2308,6 +2308,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			m_logText->addText(QStringLiteral("直射计算完毕"));
 			m_logText->addText("time_DirPath:  "+QString::number(time_DirPath));
 
+			//反透射
 			valid_RefTransPath(currentModel, s_para, AP_KdTree, LocalVirtualSimPlane_KdTree, AP_position, m_siteData, AP_route);
 			double time12 = clock();
 			double time_RefTransPath = (time12 - time11) / 1000;
@@ -2315,9 +2316,11 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			m_logText->addText(QStringLiteral("反射透射计算完毕"));
 			m_logText->addText("time_RefTransPath::  " + QString::number(time_RefTransPath));
 
+			//绕射
 			if (cptPara->diffractionNumPara >= 1)
 			{
 				vector<Vedge> currentEdge = currentModel->getAP_Edge_List();
+				//一次绕射
 				valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
 				double time13 = clock();
 				double time_once_diffPath = (time13 - time12) / 1000;
@@ -2326,7 +2329,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 				m_logText->addText(QStringLiteral("一次绕射计算完毕"));
 				m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
 
-
+				//反射加绕射
 				valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
 				double time16 = clock();
 				double time_Ref_LastdiffPath = (time16 - time13) / 1000;
@@ -2336,6 +2339,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 				if (cptPara->diffractionNumPara>=2)
 				{
 					vector<int> edgeID = currentModel->getAP_Edge_ID();
+					//多次绕射
 					valid_NVDiffPath(edgeID, currentEdge, AP_KdTree, AP_position, m_siteData, cptPara->diffractionNumPara);
 					double time17 = clock();
 					double time_multiple_diffPath = (time17 - time16) / 1000;
