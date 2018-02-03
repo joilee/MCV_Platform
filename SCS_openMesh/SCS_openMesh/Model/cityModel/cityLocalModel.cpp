@@ -250,6 +250,7 @@ void cityLocalModel::generateBuildingMesh()
 	cout << "info: 局部建筑物数量是" << local_Buildings.size() << endl;
 	cout << "info: 局部建筑物面片数量是" << F.size() << " 凹建筑物数量是" << concave_polygonNum << endl;
 
+	/*
 	int V_num = V.size();
 	int F_startNum = F.size();
 	int NF_startNum = NF.size();
@@ -298,6 +299,7 @@ void cityLocalModel::generateBuildingMesh()
 	int F_endNum = F.size();
 	int NF_endNum = NF.size();
 	cout << "info: 地面建模点的数量 " << V.size() - V_num << "  三角形数量 " << F_endNum - F_startNum << " 法向量数量 " << NF_endNum - NF_startNum << endl;
+	*/
 	// calculate the bounding box
 	std::vector<Vector3d>::const_iterator v = V.begin();
 	for (++v; v != V.end(); ++v)
