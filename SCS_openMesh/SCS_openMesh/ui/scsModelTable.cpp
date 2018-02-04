@@ -92,10 +92,10 @@ void scsModelTable::update(visualModelItem*a)
 		this->setItem(0, 1, new QTableWidgetItem(QString::number(a->getBuildingNum())));
 		this->setItem(1, 1, new QTableWidgetItem(QString::number(a->getConcaveNum())));
 		this->setItem(2, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMin()[0], 0, 'f', 3)));
-		this->setItem(3, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMin()[1], 0, 'f', 3)));
-		this->setItem(4, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMin()[2], 0, 'f', 3)));
-		this->setItem(5, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMax()[0], 0, 'f', 3)));
-		this->setItem(6, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMax()[1], 0, 'f', 3)));
+		this->setItem(3, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMax()[0], 0, 'f', 3)));
+		this->setItem(4, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMin()[1], 0, 'f', 3)));
+		this->setItem(5, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMax()[1], 0, 'f', 3)));
+		this->setItem(6, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMin()[2], 0, 'f', 3)));
 		this->setItem(7, 1, new QTableWidgetItem(QString("%1").arg(a->getcityMax()[2], 0, 'f', 3)));
 	}
 	else

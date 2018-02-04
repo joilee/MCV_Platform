@@ -17,6 +17,10 @@ public:
     double getBaseByIndex(int i);
 	vector<double> getBoundingBoxByIndex(int i);
 	void addItem(cityGround* a);
+	double getXmin(){ return xmins[0]; }
+	double getXmax(){ return xmaxs[0]; }
+	double getYmin(){ return ymins[0]; }
+	double getYmax(){ return ymaxs[0]; }
 private:
 	vector<cityGround*> groundVector;
 	vector<double> bases;

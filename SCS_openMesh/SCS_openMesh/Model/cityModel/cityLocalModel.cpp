@@ -300,6 +300,8 @@ void cityLocalModel::generateBuildingMesh()
 	cout << "info: 地面建模点的数量 " << V.size() - V_num << "  三角形数量 " << F_endNum - F_startNum << " 法向量数量 " << NF_endNum - NF_startNum << endl;
 	// calculate the bounding box
 	std::vector<Vector3d>::const_iterator v = V.begin();
+	MinPos = Min(MinPos,scene->getMinPoint());
+	MaxPos = Max(MaxPos, scene->getMaxPoint());
 	for (++v; v != V.end(); ++v)
 	{
 		MinPos = Min(MinPos, (*v));

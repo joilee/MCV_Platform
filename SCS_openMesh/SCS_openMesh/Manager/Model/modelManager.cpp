@@ -297,7 +297,9 @@ void ModelManager:: setModelPara()
 			tmpBase->setEachFaceMaterial(tmp->getF_material());
 			tmpBase->setModelType(ModelType::CITY_LOCAL);
 			tmpBase->setModelID(tmp->getID());
+
 			modelPara->addModel(tmpBase);
+			tmpBase->outputOBJ();
 			count++;
 			modelPara->mType = ModelType::CITY_LOCAL;
 		}

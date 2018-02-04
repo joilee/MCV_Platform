@@ -8,6 +8,8 @@ void cityScene::readGround(string p)
 {
 	//导入海拔信息
 	ground = new cityGroundVector(p);
+	MaxPoint = Max(MaxPoint, Vector3d(ground->getXmax(), ground->getYmax(), numeric_limits<double>::min()));
+	MinPoint = Min(MinPoint, Vector3d(ground->getXmin(), ground->getYmin(), numeric_limits<double>::max()));
 }
 
 cityScene::cityScene(vector<string> _v, vector<string> _h, string _p)
@@ -216,7 +218,8 @@ cityScene::cityScene(Vector3d  AP_position, double  LocalRange, cityScene* cityA
 
 	ground = new cityGroundVector;
 	ground->addItem(ground_1);
-
+	MinPoint = Min(MinPoint, Vector3d(ground->getXmin(), ground->getYmin(), DBL_MAX));
+	MaxPoint = Max(MaxPoint, Vector3d(ground->getXmax(), ground->getYmax(), DBL_MIN));
 	//step3 生成建筑物棱边
 	GenerateEdge();
 }
