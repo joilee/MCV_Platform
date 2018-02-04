@@ -931,6 +931,31 @@ int algo::getMaterial(double freq /*单位:HZ*/, int materialId)
 //找出有效的反透射路径，直接由beam与虚拟仿真面的覆盖区域获取接收点信息，未考虑海拔时
 void algo::valid_RefTransPath(BaseModel* model, emxKdTree* pKdTree, Vector3d AP_position, Site_Data* m_siteData, const vector<vector<beamNode>> &beamRoutes)
 {
+	/*added by ligen
+	如果是接收点模式，那EFieldArray存所有接收点
+	如果是仿真面模式，那EFieldArray存一个单独的仿真面上的接受点，在计算路径之后，将该仿真面上的接收点数据复制到其他仿真面
+	*/
+	vector<EField*> EfildArray;
+	if (cptPara->computeEnum == ComputationEnum::ReceivePoint)
+	{
+		for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
+		{
+			for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+			{
+				EfildArray.push_back(*(it2));
+			}
+		}
+	}
+	else if (cptPara->computeEnum == ComputationEnum::SimuPlane)
+	{
+		//只放入第一个cell的仿真面的点，其余的点复制这个面的路径信息
+		auto it = m_siteData->cellsMap.begin();
+		for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
+		{
+			EfildArray.push_back(*(it2));
+		}
+	}
+
 #pragma omp parallel for schedule(static,2)
 	for (int beam_id = 0; beam_id < beamRoutes.size(); beam_id++)  //容器beamRoutes存放的所有可能路径
 	{
@@ -964,30 +989,7 @@ void algo::valid_RefTransPath(BaseModel* model, emxKdTree* pKdTree, Vector3d AP_
 				origin = TransBeamOrigin;
 			}
 
-			/*added by ligen
-			如果是接收点模式，那EFieldArray存所有接收点
-			如果是仿真面模式，那EFieldArray存一个单独的仿真面上的接受点，在计算路径之后，将该仿真面上的接收点数据复制到其他仿真面
-			*/
-			vector<EField*> EfildArray;
-			if (cptPara->computeEnum==ComputationEnum::ReceivePoint)
-			{
-				for (auto it = m_siteData->cellsMap.begin(); it != m_siteData->cellsMap.end(); it++)
-				{
-					for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
-					{
-						EfildArray.push_back(*(it2));
-					}
-				}
-			}
-			else if (cptPara->computeEnum==ComputationEnum::SimuPlane)
-			{
-				//只放入第一个cell的仿真面的点，其余的点复制这个面的路径信息
-				auto it = m_siteData->cellsMap.begin(); 			
-				for (auto it2 = it->second->efildVec.begin(); it2 != it->second->efildVec.end(); it2++)
-				{
-					EfildArray.push_back(*(it2));
-				}	
-			}
+
 
 			if (cptPara->computeEnum == ComputationEnum::ReceivePoint)
 			{

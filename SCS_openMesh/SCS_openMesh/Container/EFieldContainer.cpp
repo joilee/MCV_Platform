@@ -175,6 +175,7 @@ std::vector<int> EFieldContainer::getAllSiteID()
 	while (it!=eFieldData.end())
 	{
 		res.push_back(it->first);
+		it++;
 	}
 	return res;
 }
