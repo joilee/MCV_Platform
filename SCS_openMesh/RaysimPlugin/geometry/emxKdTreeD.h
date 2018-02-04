@@ -9,7 +9,7 @@
 #include "util/emxUtilityInc.h"
 #include "geometry/emxBBoxD.h"
 #include "util/vector.h"
-#include "emxFace.h"
+
 //class emxMeshInterface;
 class emxFace;
 class emxRay;
@@ -195,7 +195,7 @@ protected:
 		emxBoundEdge *edges[3],
 		int *prims0, int *prims1, int badRefines = 0);
 
-	// check if curBeam hits the scene's bounding box, and initialize tmin and tmax
+	//check if curBeam hits the scene's bounding box, and initialize tmin and tmax
 	bool BeamVsAABBox(const emxBeam *curBeam, const emxBBox& bounds, Vector3d tmin[4], Vector3d tmax[4]) const;
 
 	// intersect current beam with split plane

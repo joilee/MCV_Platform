@@ -45,9 +45,5 @@ void SiteCellSubject::notify()
 
 void SiteCellSubject::clearItem()
 {
-	if (siteAndCellData!=nullptr)
-	{
-		delete siteAndCellData;
-	}
-	siteAndCellData = nullptr;
+	siteAndCellData->clearData();
 }

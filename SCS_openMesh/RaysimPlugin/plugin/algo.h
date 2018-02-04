@@ -85,23 +85,26 @@ public:
 	void pluginAlgo(ModelPara *modelParameter, ComputePara *cptPara, visPara *vPara);
 private:
 	double Diff_dis;
+	int BeamNumber;
 	ModelPara *modelParameter;
 	ComputePara *cptPara ;
 	visPara *vPara;
 	LogText *m_logText;
 	
+	Scene_para scenePara;//场景的参数，比如有多少行多少列，精度等。
+
 private:
-	void CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vector3d AP_position, int BeamNumber); //位于原点处的单位球，细分count次生成初始beams
+	void CreateInitialBeam(vector<emxBeam*> &pRootBeams, SphereBeam* SphereTest, Vector3d AP_position); //位于原点处的单位球，细分count次生成初始beams
 
 	void BeamTracing(emxKdTree* pKdTree, const int &reflectnum, emxBeam* &beam);
 
 	void find_beamroute(emxBeam *pRootBeam, vector<vector<beamNode>> &routes);
 
-	void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range, double Zheight, double Precetion, Scene_para &sp);   //设置接收点坐标
+	void SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double LocalScene_range);   //设置接收点坐标
 
-	void Point_In_Out(ComputationEnum ce, Site_Data* sitedata, vector<Building> &Local_buildings, double Zheight, Scene_para &sp);
+	void Point_In_Out( Site_Data* sitedata, vector<Building> &Local_buildings);
 
-	void EfieldPointInPolygon(vector<Vector3d>& polygon, double Xmin, double Ymin, int &start_rowId, int &end_rowId, int &start_columnId, int &end_columnId, Scene_para sp);  //获取在多边形内部点的id信息
+	void EfieldPointInPolygon(vector<Vector3d>& polygon, double Xmin, double Ymin, int &start_rowId, int &end_rowId, int &start_columnId, int &end_columnId);  //获取在多边形内部点的id信息
 
 	bool contain(vector<Vector3d>& polygon, Vector3d point0);
 
@@ -109,19 +112,23 @@ private:
 
 	void Calc_GO_UTD(TransAntenna &AP, vector<EField*>  &EFieldArray, vector<Vedge> &Edge_list, Antenna_Para * cPara);//计算反射、透射、绕射路径到达接收点的信号强度
 
-	void Calc_DirPathSignal(EField *NField, TransAntenna &AP, int &path_id, Antenna_Para *a);
+	void Calc_Signal(EField *NField, TransAntenna &AP, int &path_id, vector<Vedge> &Edge_list, Antenna_Para *a);
+
+	void Calc_RefEfield(Vector3cd &ctfield, Vector3d into, Vector3d normal, Vector3d next_into, TransAntenna &AP);  //计算反射场
+
+	void Calc_TransEfield(Vector3cd &ctfield, Vector3d into, Vector3d normal, TransAntenna &AP); //计算透射场
+
+	void Calc_diffEfield(Vector3cd &ctfield, Vector3d source_pos, Vector3d Diffract_Pos, Vector3d field_pos, Vedge the_edge, TransAntenna &AP, Antenna_Para *a);  //计算绕射场
 
 	void Calc_diffSignal1(vector<Vedge> &Edge_list, EField *NField, TransAntenna &AP, int &path_id, Antenna_Para *aP);
 
 	bool getDiffEdgeINfor(Vedge& info, const Vector3d& source_pos, const Vector3d& diffract_pos);
 
-	complex<double>getEpsilon(double freq/*单位:HZ*/, int materialId, ModelPara *mp);   //相对介电常数
+	complex<double>getEpsilon(double freq/*单位:HZ*/, int materialId);   //相对介电常数
 
-	int getMaterial(double freq /*单位:HZ*/, int materialId, ModelPara *mp);
+	int getMaterial(double freq /*单位:HZ*/, int materialId);
 
-	void Calc_RefTransSignal(EField *NField, TransAntenna &AP, int &path_id, Antenna_Para* ap); //计算反透射路径信号强度
-
-	void valid_RefTransPath(BaseModel* model,Scene_para &sp, emxKdTree* pKdTree, emxKdTree* Local_SimPlaneKdTree, Vector3d AP_position, Site_Data* m, const vector<vector<beamNode>> &beamRoutes);
+	void valid_RefTransPath(BaseModel* model,emxKdTree* pKdTree,  Vector3d AP_position, Site_Data* m, const vector<vector<beamNode>> &beamRoutes);
 
 	int  sign_func(double x);//符号函数
 
