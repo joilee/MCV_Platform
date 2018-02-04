@@ -1,4 +1,6 @@
 #include "baseModel.h"
+#include <fstream>
+using namespace std;
 
 BaseModel::BaseModel()
 {
@@ -26,4 +28,19 @@ double BaseModel::getPointAltitude(double x, double y)
 		
 	}
 
+}
+
+void BaseModel::outputOBJ()
+{
+	ofstream outfile;
+	outfile.open("mesh.obj");
+	for (int i = 0; i < V.size();i++)
+	{
+		outfile << 'v' << " " << V[i].x << " " << V[i].y << " " << V[i].z << endl;
+	}
+	for (int i = 0; i < F.size();i++)
+	{
+		outfile << 'f' << " " << F[i].x+1 << " " << F[i].y+1 << " " << F[i].z+1 << endl;
+	}
+	outfile.close();
 }
