@@ -64,6 +64,7 @@ private slots:
 	void saveAllResult();
 	void setShowLineEdit(int);
 	void setModelAlpha(int);
+	void setSimuPlane(int, int);
 private:
 	void load_Material(string path);
 

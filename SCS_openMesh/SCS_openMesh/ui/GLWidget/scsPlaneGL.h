@@ -8,6 +8,10 @@ class scsPlaneGL :public scsGLWidget
 public:
 	scsPlaneGL(QWidget *parent = 0);
 	void paintGL();
+	void setPCI(int site, int pci);
+	void setAlpha(double a);
+	void setModelAlpha(double a);
+	void setModel();
 
 private:
 	//************************************
@@ -23,13 +27,11 @@ private:
 	void drawPlane();
 	void drawSite();
 
-	void setPCI(int a);
-	void setAlpha(double a);
-	void setModelAlpha(double a);
-	void setModel();
+
 	void LoadUniformColor(double currentVaule, Color &result);
 
 	int pci;
+	int site;
 	int model;
 	Cell_Data *cell;
 	double Tmax;

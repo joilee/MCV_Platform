@@ -74,6 +74,13 @@ void catalogWidget::addChildMenu()
 		menu->addAction(showModelAction);
 		connect(showModelAction, SIGNAL(triggered()), this, SLOT(showModel()));
 	}
+	else if (item->parent()->text(0)==QStringLiteral(VIS_ITEM))
+	{
+		QAction * showSimuPlaneAction = new QAction(tr("show"), this);
+		menu->addAction(showSimuPlaneAction);
+		connect(showSimuPlaneAction, SIGNAL(triggered()), this, SLOT(showSimuPlane()));
+	}
+
 
 
 	menu->exec(QCursor::pos());
@@ -184,6 +191,17 @@ void catalogWidget::addCptPlugin()
 	gctx->cptManager->setPluginPath(path);
 }
 
+void catalogWidget::showSimuPlane()
+{
+	QTreeWidgetItem *item = this->currentItem();
+	if (item->parent() != NULL&&item->parent()->text(0) == QStringLiteral(VIS_ITEM))
+	{
+		int siteID = (item->text(0)).toInt();
+		int pci = (item->text(1)).toInt();
+		emit(planeID_Changed(siteID,pci));		
+	}
+}
+
 void catalogWidget::update(visualModelItem * a)
 {
 	cout << "Catalog 接收到局部更新的信号" << endl;
@@ -243,10 +261,15 @@ void catalogWidget::updateResult(Site_Item*a)
 	{
 		map<int, Cell_Item_Vector*>::iterator iter;
 		for (iter = a->getData().begin(); iter != a->getData().end(); iter++)
-		{
-			QTreeWidgetItem *visChildItem = new QTreeWidgetItem();
-			visChildItem->setText(0, QString::number(iter->first));
-			vItem->addChild(visChildItem);
+		{		
+			Cell_Item_Vector* cellVector = iter->second;
+			for (auto iter2 = cellVector->vec.begin(); iter2 != cellVector->vec.end();iter2++)
+			{
+				QTreeWidgetItem *visChildItem = new QTreeWidgetItem();
+				visChildItem->setText(0, QString::number(iter->first));
+				visChildItem->setText(1, QString::number((*iter2)->id));
+				vItem->addChild(visChildItem);
+			}
 		}
 	}
 	else

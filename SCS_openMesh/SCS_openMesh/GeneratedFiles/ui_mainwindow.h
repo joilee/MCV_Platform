@@ -32,8 +32,8 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include <glWidget.h>
 #include <scsGlobalGL.h>
+#include <scsPlaneGL.h>
 #include "scsLocalModelGLWidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -72,7 +72,7 @@ public:
     QTabWidget *tabWidget_Dispaly;
     scsGlobalGL *ModelView;
     scsLocalModelGLWidget *simuArea;
-    GLWidget *simuPlane;
+    scsPlaneGL *simuPlane;
     QMenuBar *menuBar;
     QMenu *menuFILE;
     QMenu *menuMesh;
@@ -281,7 +281,7 @@ public:
         simuArea = new scsLocalModelGLWidget();
         simuArea->setObjectName(QStringLiteral("simuArea"));
         tabWidget_Dispaly->addTab(simuArea, QString());
-        simuPlane = new GLWidget();
+        simuPlane = new scsPlaneGL();
         simuPlane->setObjectName(QStringLiteral("simuPlane"));
         tabWidget_Dispaly->addTab(simuPlane, QString());
 
@@ -594,7 +594,7 @@ public:
 
         retranslateUi(MainWindowClass);
 
-        tabWidget_Dispaly->setCurrentIndex(0);
+        tabWidget_Dispaly->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindowClass);

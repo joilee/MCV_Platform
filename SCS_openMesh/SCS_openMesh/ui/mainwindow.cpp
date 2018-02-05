@@ -134,6 +134,7 @@ void MainWindow::createActions()
 	connect(ui.action_saveResult, SIGNAL(triggered()), this, SLOT(saveAllResult()));
 	connect(ui.horizontalSlider_Scene_Alpha, SIGNAL(valueChanged(int)), this, SLOT(setModelAlpha(int)));
 	connect(catalog, SIGNAL(modelID_ShowChanged(int)), this, SLOT(setShowLineEdit(int)));
+	connect(catalog, SIGNAL(planeID_Changed(int, int)), this, SLOT(setSimuPlane(int, int)));
 }
 
 void MainWindow::generateModelPara()
@@ -211,6 +212,14 @@ void MainWindow::setModelAlpha(int a)
 {
 	ui.simuArea->setModelAlpha(a);
 	outputLog(QString(QStringLiteral("设置局部模型透明度为：") + QString::number(a, 10)));
+}
+
+void MainWindow::setSimuPlane(int siteID, int PCI)
+{
+	ui.lineEdit_SimuPlane_siteID->setText(QString::number(siteID));
+	ui.lineEdit_SimuPlane_PCI->setText(QString::number(PCI));
+	outputLog(QString(QStringLiteral("设置当前仿真面的站点为：") + QString::number(siteID, 10)) + QString(QStringLiteral(" PCI为：") + QString::number(PCI, 10)));
+	ui.simuPlane->setPCI(siteID, PCI);
 }
 
 void MainWindow::setDrawPointMode(bool flag)

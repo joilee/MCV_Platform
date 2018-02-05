@@ -39,7 +39,7 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="scsGlobalGL" name="ModelView">
        <attribute name="title">
@@ -51,7 +51,7 @@
         <string>仿真场景</string>
        </attribute>
       </widget>
-      <widget class="GLWidget" name="simuPlane">
+      <widget class="scsPlaneGL" name="simuPlane">
        <attribute name="title">
         <string>仿真面</string>
        </attribute>
@@ -824,12 +824,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>GLWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">glWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>scsLocalModelGLWidget</class>
    <extends>QWidget</extends>
    <header>scsLocalModelGLWidget.h</header>
@@ -839,6 +833,12 @@
    <class>scsGlobalGL</class>
    <extends>QWidget</extends>
    <header location="global">scsGlobalGL.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>scsPlaneGL</class>
+   <extends>QWidget</extends>
+   <header location="global">scsPlaneGL.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

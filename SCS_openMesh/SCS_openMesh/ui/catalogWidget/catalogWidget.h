@@ -51,9 +51,11 @@ public:
 	void deleteModel();
 	void showModel();
 	void addCptPlugin();
+	void showSimuPlane();
 
 signals:
 	void modelID_ShowChanged(int id);
+	void planeID_Changed(int siteID,int PCI);
 
 private:
 	QTreeWidgetItem * mGlobalItem;

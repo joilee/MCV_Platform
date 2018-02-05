@@ -7,6 +7,7 @@ scsPlaneGL::scsPlaneGL(QWidget *parent /*= 0*/)
 	Tmax = 100;
 	Tmin = 0;
 	pci = -1;
+	site = -1;
 	model = -1;
 }
 
@@ -27,32 +28,12 @@ void scsPlaneGL::initData()
 	{
 		cell = container->getCellDataByPCI(pci);
 		int siteID = container->getSiteIDByPCI(pci);
+		assert(siteID == site);
 		abstractLocalModel *tmpModel = globalCtx->modelManager->getLocalModelByID(siteID);
 		maxPos = tmpModel->getMax();
 		minPos = tmpModel->getMin();
 		updateMesh();
-	}
-	else
-	{
 
-	}
-
-
-}
-
-void scsPlaneGL::drawPlane()
-{
-	globalContext *globalCtx = globalContext::GetInstance();
-	EFieldContainer *container = globalCtx->visualManager->getContainer();
-	if (container->isPCIExist(pci))
-	{
-
-		glEnable(GL_BLEND);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_LIGHT0);
-		glEnable(GL_DEPTH_TEST);
-		
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		double emax = cell->efildVec[0]->MolStrength;
 		double emin = cell->efildVec[0]->MolStrength;
 
@@ -80,13 +61,37 @@ void scsPlaneGL::drawPlane()
 		Tmax = emax;
 		Tmin = emin;
 
+
+	}
+	else
+	{
+
+	}
+
+
+}
+
+void scsPlaneGL::drawPlane()
+{
+	globalContext *globalCtx = globalContext::GetInstance();
+	EFieldContainer *container = globalCtx->visualManager->getContainer();
+	if (container->isPCIExist(pci))
+	{
+
+		glEnable(GL_BLEND);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_DEPTH_TEST);
+		
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
 		//更新场景的数据
-		minPos = cell->efildVec[0]->Position;
-		maxPos = cell->efildVec[cell->efildVec.size() - 1]->Position;
-		updateMesh();
+		//minPos = cell->efildVec[0]->Position;
+		//maxPos = cell->efildVec[cell->efildVec.size() - 1]->Position;
+		//updateMesh();
 		drawColorBar();
 
-		double length = emax - emin;
+		double length = Tmax - Tmin;
 		glEnable(GL_BLEND);
 		glPushMatrix();
 		glBegin(GL_QUADS);
@@ -102,10 +107,10 @@ void scsPlaneGL::drawPlane()
 				Vector3d v3 = cell->efildVec[(i + 1)*row + j]->Position;
 				Vector3d v4 = cell->efildVec[(i + 1)*row + j + 1]->Position;
 
-				double c1 = (cell->efildVec[i*row + j]->MolStrength - emin) / length;
-				double c4 = (cell->efildVec[i*row + j + 1]->MolStrength - emin) / length;
-				double c2 = (cell->efildVec[(i + 1)*row + j]->MolStrength - emin) / length;
-				double c3 = (cell->efildVec[(i + 1)*row + j + 1]->MolStrength - emin) / length;
+				double c1 = (cell->efildVec[i*row + j]->MolStrength - Tmin) / length;
+				double c4 = (cell->efildVec[i*row + j + 1]->MolStrength - Tmin) / length;
+				double c2 = (cell->efildVec[(i + 1)*row + j]->MolStrength - Tmin) / length;
+				double c3 = (cell->efildVec[(i + 1)*row + j + 1]->MolStrength - Tmin) / length;
 
 				Color result(0.5, 0.0, 0.0);
 
@@ -149,9 +154,10 @@ void scsPlaneGL::LoadUniformColor(double currentVaule, Color &result)
 		result = Color(1.0, (1.0 - currentVaule) * 2.5, 0.0);
 }
 
-void scsPlaneGL::setPCI(int a)
+void scsPlaneGL::setPCI(int siteID,int PCI)
 {
-	pci = a;
+	pci = PCI;
+	site = siteID;
 	initData();
 	setModel();
 }
