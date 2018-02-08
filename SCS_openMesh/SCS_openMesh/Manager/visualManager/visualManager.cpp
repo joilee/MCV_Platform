@@ -7,15 +7,8 @@
 #include "Context/context.h"
 #include <QDebug>
 #include <QProgressDialog>
+#include <util/stringUtil.h>
 
-string Trim(string &str)   //提取不包含空格、制表符、回车、换行符的字符串
-{
-	str.erase(0, str.find_first_not_of(" trn"));
-
-	str.erase(str.find_last_not_of(" trn") + 1);
-
-	return str;
-}
 //**************模型校正**************//
 //均值
 double mean(vector<double> &X, vector<double>&Y)

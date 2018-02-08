@@ -76,7 +76,7 @@ double  cityGround::getPointAltitude(double x, double y)
 {
 	if (x<xmin || y>ymax || x > xmax || y < ymin)
 	{
-		cout << "error:  wrong coordinates from building vector" << endl;
+		cout << "error:  wrong coordinates ("<<x<<","<<y<<")from building vector" << endl;
 		return 0;
 	}
 	int pointRow = int((ymax - y) / base);

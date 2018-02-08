@@ -57,13 +57,16 @@
     <ClCompile Include="util\Color.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="util\stringUtil.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="para\baseModel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="util\EField.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="util\text_encoding_detect.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="util\FileEncode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,6 +138,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="cityModule\ModelType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="util\text_encoding_detect.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="util\FileEncode.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

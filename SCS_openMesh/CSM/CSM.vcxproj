@@ -146,7 +146,8 @@
     <ClCompile Include="para\visualPara.cpp" />
     <ClCompile Include="util\Color.cpp" />
     <ClCompile Include="util\EField.cpp" />
-    <ClCompile Include="util\stringUtil.cpp" />
+    <ClCompile Include="util\FileEncode.cpp" />
+    <ClCompile Include="util\text_encoding_detect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Antenna\antenna.h" />
@@ -170,7 +171,9 @@
     <ClInclude Include="util\computationEnum.h" />
     <ClInclude Include="util\EField.h" />
     <ClInclude Include="util\emxUtilityInc.h" />
+    <ClInclude Include="util\FileEncode.h" />
     <ClInclude Include="util\stringUtil.h" />
+    <ClInclude Include="util\text_encoding_detect.h" />
     <ClInclude Include="util\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

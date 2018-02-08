@@ -223,7 +223,54 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 
 	globalContext *globalCtx = globalContext::GetInstance();
 	string str, str_flag;
-	getline(infile, str);//跳过第一行
+	getline(infile, str);
+	//获取天线参数文件中所需参数信息对应所在列的ID号
+	int sitename_id = -1, cellname_id = -1, frequency_id = -1, pci_id = -1, height_id = -1, x_id = -1, y_id = -1, power_id = -1, loss_id = -1;
+	istringstream linestream1(str);
+	string parameter1;
+	int count = 0;
+	while (getline(linestream1, parameter1, ','))
+	{
+		parameter1 = Trim(parameter1);
+		if (parameter1 == "Site Name(*)")
+		{
+			sitename_id = count;
+		}
+		if (parameter1 == "Cell Name(*)")
+		{
+			cellname_id = count;
+		}
+		if (parameter1 == "Frequency Band(*)")
+		{
+			frequency_id = count;
+		}
+		if (parameter1 == "PCI")
+		{
+			pci_id = count;
+		}
+		if (parameter1 == "Height")
+		{
+			height_id = count;
+		}
+		if (parameter1 == "RS Power(dBm)")
+		{
+			power_id = count;
+		}
+		if (parameter1 == "Total Loss(DL)")
+		{
+			loss_id = count;
+		}
+		if (parameter1 == "X")
+		{
+			x_id = count;
+		}
+		if (parameter1 == "Y")
+		{
+			y_id = count;
+		}
+		count++;
+	}
+
 	while (getline(infile, str))
 	{
 		istringstream linestream(str);
@@ -233,23 +280,31 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 		{
 			parameters.push_back(parameter);
 		}
-		string SiteName = Trim(parameters[0]);
-		string CellName = Trim(parameters[1]);
-		string PCI = Trim(parameters[3]);
-		string height = Trim(parameters[8]);
-		string str_x = Trim(parameters[14]);
-		string str_y = Trim(parameters[15]);
+		string SiteName = ExtractNumber(Trim(parameters[sitename_id]));
+		string CellName = Trim(parameters[cellname_id]);
+		string PCI = Trim(parameters[pci_id]);
+		string height = Trim(parameters[height_id]);
+		string str_x = Trim(parameters[x_id]);
+		string str_y = Trim(parameters[y_id]);
 		double x = atof(str_x.c_str());
 		double y = atof(str_y.c_str());
 		//从全局中获取
 		double z = atof(height.c_str()) + globalCtx->modelManager->getFirstCity()->getAltitude(x, y);
 
+		string frequency_str;
+		istringstream frequency_stream(parameters[frequency_id]);
+		frequency_stream >> frequency_str;
+
+		string frequency = Trim(frequency_str);
+		string power_str = Trim(parameters[power_id]);
+		string loss_str = Trim(parameters[loss_id]);
+
 		TransAntenna new_antenna;
 		new_antenna.Cell_Name = CellName;
 		new_antenna.PCI = atoi(PCI.c_str());
-		new_antenna.frequency = 1750; //单位为MHZ，设置了一个默认
-		new_antenna.trans_power = 12.2; //单位为dBm
-		new_antenna.wire_loss = 0.5;
+		new_antenna.frequency = atof(frequency.c_str());  //单位为MHZ
+		new_antenna.trans_power = atof(power_str.c_str()); //单位为dBm
+		new_antenna.wire_loss = atof(loss_str.c_str());
 		new_antenna.enlarge_power = 0;
 		new_antenna.position = Vector3d(x, y, z);
 		new_antenna.polor_direction = Vector3d(0, 0, 1);
@@ -263,8 +318,6 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 			cout << "error : 天线文件读取错误。已返回！" << endl;
 			return;
 		}	
-
-
 		//针对新获得的cell，检测是否存在一个已知的site中，如果是，则插入，否则新建
 		int current_sitename = stof(SiteName.c_str());
 		sitesContainer->addAntenna(new_antenna, current_sitename);
