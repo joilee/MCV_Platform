@@ -180,7 +180,35 @@ void computeManager::openNo_simplaneReceiver(string path)
 	}
 	string str;
 	getline(infile, str);
+	//¶ÁÈë xyz  pci
+	int x_id = -1, y_id = -1, z_id = -1, pci_id = -1;
+	istringstream linestream1(str);
+	string parameter1;
+	int count = 0;
+	while (getline(linestream1, parameter1, ','))
+	{
+		parameter1 = Trim(parameter1);
+		if (parameter1 == "x" || parameter1 == "X")
+		{
+			x_id = count;
+		}
+		if (parameter1 == "y" || parameter1 == "Y")
+		{
+			y_id = count;
+		}
+		if (parameter1 == "z" || parameter1 == "Z")
+		{
+			z_id = count;
+		}
+		if (parameter1 == "PCI"||parameter1=="pci")
+		{
+			pci_id = count;
+		}
+		count++;
+	}
+
 	globalContext *glbctx = globalContext::GetInstance();
+
 	while (getline(infile, str))
 	{
 		istringstream linestream(str);
@@ -190,10 +218,10 @@ void computeManager::openNo_simplaneReceiver(string path)
 		{
 			parameters.push_back(parameter);
 		}
-		string str_x = Trim(parameters[0]);
-		string str_y = Trim(parameters[1]);
-		string str_z = Trim(parameters[2]);
-		string PCI = Trim(parameters[3]);
+		string str_x = Trim(parameters[x_id]);
+		string str_y = Trim(parameters[y_id]);
+		string str_z = Trim(parameters[z_id]);
+		string PCI = Trim(parameters[pci_id]);
 		double x = atof(str_x.c_str());
 		double y = atof(str_y.c_str());
 		double z = atof(str_z.c_str()) + glbctx->modelManager->getFirstLocal()->getAltitude(x, y);

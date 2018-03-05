@@ -11,7 +11,7 @@ bool FileEncode::checkBOM(const char * filename)
 {
 	//判断文件的格式，是否包含BOM
 	wchar_t  file2D[200];
-	swprintf(file2D, 100, L"%hs", filename);
+	swprintf(file2D, 180, L"%hs", filename);
 	FILE *file= _wfopen(file2D, L"rb");
 
 	if (file == NULL)
