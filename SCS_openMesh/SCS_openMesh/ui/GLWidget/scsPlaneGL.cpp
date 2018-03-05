@@ -112,20 +112,19 @@ void scsPlaneGL::drawPlane()
 				double c2 = (cell->efildVec[(i + 1)*row + j]->MolStrength - Tmin) / length;
 				double c3 = (cell->efildVec[(i + 1)*row + j + 1]->MolStrength - Tmin) / length;
 
-				Color result(0.5, 0.0, 0.0);
-
-				LoadUniformColor(c1, result);
-				glColor4d(result.r, result.g, result.b, vis_factor_face);
-				glVertex3d(v1.x, v1.y, v1.z);
-				LoadUniformColor(c2, result);
-				glColor4d(result.r, result.g, result.b, vis_factor_face);
-				glVertex3d(v2.x, v2.y, v2.z);
+				Color result(0.5, 0.0, 0.0);				
 				LoadUniformColor(c3, result);
 				glColor4d(result.r, result.g, result.b, vis_factor_face);
 				glVertex3d(v3.x, v3.y, v3.z);
 				LoadUniformColor(c4, result);
 				glColor4d(result.r, result.g, result.b, vis_factor_face);
 				glVertex3d(v4.x, v4.y, v4.z);
+				LoadUniformColor(c2, result);
+				glColor4d(result.r, result.g, result.b, vis_factor_face);
+				glVertex3d(v2.x, v2.y, v2.z);
+				LoadUniformColor(c1, result);
+				glColor4d(result.r, result.g, result.b, vis_factor_face);
+				glVertex3d(v1.x, v1.y, v1.z);
 			}
 		}
 		glEnd();
