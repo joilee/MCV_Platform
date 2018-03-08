@@ -23,6 +23,9 @@ public:
 	int GetCurrPos(node* curr);
 	bool IsInterior(node* curr, node* judge);
 	bool IsConvex(node* curr);
+	bool IsClockwise();
+	Vector3d getVector(node* p, node* q);
+	void ConvertList();
 
 private:
 	node* head;

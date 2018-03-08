@@ -71,7 +71,7 @@ void cityLocalModel::generateBuildingMesh()
 	int concave_polygonNum = 0;
 	for (int buildings_id = 0; buildings_id < local_Buildings.size(); buildings_id++)
 	{
-		int count = local_Buildings[buildings_id].upper_facePoint.size() - 1; //记录building顶面点坐标时，首末点重合，记录两次，所以 .size（）-1   顺时针顺序
+		int count = local_Buildings[buildings_id].upper_facePoint.size() - 1; //记录building顶面点坐标时，首末点重合，记录两次，所以 .size（）-1  顺序未定
 		double building_height = local_Buildings[buildings_id].height;
 		int V_size = V.size();
 		vector<int> upper_PointIndex; //  存储上顶面点的索引值，以备上顶面剖分生成面片时所用
@@ -159,24 +159,42 @@ void cityLocalModel::generateBuildingMesh()
 		if (cross)
 			continue;
 
-		//逆时针存入多边形的顶点
-		DCList polygon;
-		for (int id = count1 - 1; id >= 0; id--)
-			polygon.AddBack(upper_face[id], id+V_size);
+		//判断多边形顶点是顺时针方向还是逆时针方向读入
+		DCList polygon1;
+		for (int id = 0; id <count1; id++)
+			polygon1.AddBack(upper_face[id], id+V_size);
 
-		node *tmp = polygon.GetNodeAt(0);
-
-		while (polygon.GetLength() > 3)
+		//如果以顺时针方向读取则需要转换为以逆时针方向存储
+		DCList polygon2;
+		if (polygon1.IsClockwise())
+		{
+			int newId = 0;
+			for (int id = count1 - 1; id >= 0; id--)
+			{
+				polygon2.AddBack(upper_face[id], newId + V_size);
+				newId++;
+			}
+		}
+		else
+		{
+			for (int id = 0; id < count; id++)
+				polygon2.AddBack(upper_face[id], id + V_size);
+		}
+		
+		//剖分建筑物上顶面
+		node *tmp = polygon2.GetNodeAt(0);
+		cout << buildings_id << endl;
+		while (polygon2.GetLength() > 3)
 		{
 			//判断凹凸性
-			if (polygon.IsConvex(tmp))
+			if (polygon2.IsConvex(tmp))
 			{
 				node *judge = tmp->next->next;
 				bool flag = false;
 				while (judge != tmp->pre)
 				{
 					//判断是否在三角形内
-					if (polygon.IsInterior(tmp, judge))
+					if (polygon2.IsInterior(tmp, judge))
 					{
 						flag = true;
 						break;
@@ -196,16 +214,19 @@ void cityLocalModel::generateBuildingMesh()
 						NF.push_back(N.normalize());
 					}
 					node* n = tmp->next;
-					polygon.Delete(polygon.GetCurrPos(tmp));
+					polygon2.Delete(polygon2.GetCurrPos(tmp));
 					tmp = n;
 				}
 				else
+				{
 					tmp = tmp->next;
+				}	
 			}
 			else
+			{
 				tmp = tmp->next;
+			}
 		}
-
 		E1 = tmp->pre->v_node - tmp->v_node;
 		E2 = tmp->v_node - tmp->next->v_node;
 		N = VectorCross(E1, E2);
