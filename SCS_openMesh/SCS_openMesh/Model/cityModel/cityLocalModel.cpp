@@ -210,7 +210,7 @@ void cityLocalModel::generateBuildingMesh()
 					N = VectorCross(E1, E2);
 					if (N.norm() > DOUBLE_EPSILON)
 					{
-						F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
+						F.push_back(Vector3i(tmp->next->id, tmp->id, tmp->pre->id));
 						NF.push_back(N.normalize());
 					}
 					node* n = tmp->next;
@@ -232,7 +232,7 @@ void cityLocalModel::generateBuildingMesh()
 		N = VectorCross(E1, E2);
 		if (N.norm() > DOUBLE_EPSILON)
 		{
-			F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
+			F.push_back(Vector3i(tmp->next->id, tmp->id, tmp->pre->id));
 			NF.push_back(N.normalize());
 		}
 	}
