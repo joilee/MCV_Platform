@@ -1,0 +1,11 @@
+﻿{
+    "Name": "Hangzhou",
+    "Material": "Material/new_material_Winprop.txt",
+    "Building": [
+        "Building/buildings1"
+    ],
+    "Height": [
+        "Building/attribute1"
+    ],
+    "Plane": "Building/heights/index"
+}

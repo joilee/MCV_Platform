@@ -224,7 +224,7 @@ void computeManager::openNo_simplaneReceiver(string path)
 		string PCI = Trim(parameters[pci_id]);
 		double x = atof(str_x.c_str());
 		double y = atof(str_y.c_str());
-		double z = atof(str_z.c_str()) + glbctx->modelManager->getFirstLocal()->getAltitude(x, y);
+		double z = atof(str_z.c_str()) + glbctx->modelManager->getFirstCity()->getAltitude(x, y);
 		no_simplaneReceiver receiver;
 		receiver.position = Vector3d(x, y, z);
 		receiver.PCI = atoi(PCI.c_str());
