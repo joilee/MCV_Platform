@@ -10,6 +10,9 @@
 #include "../Manager/Model/modelManager.h"
 #include "../Manager/Computation/computeManager.h"
 #include "Manager/visualManager/visualManager.h"
+
+#define NOALTITUDE 0
+
 /************************************************************************/
 /* 单例模式                                                                     */
 /************************************************************************/
