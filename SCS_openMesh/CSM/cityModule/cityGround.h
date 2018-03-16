@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "../util/vector.h"
+#include "Configuration.h"
 using namespace std;
 class cityGround
 {

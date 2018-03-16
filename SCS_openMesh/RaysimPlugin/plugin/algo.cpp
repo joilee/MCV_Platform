@@ -2114,7 +2114,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 				{
 					int pci = cptPara->No_SimPlanePoint[j].PCI;
 
-					auto transVec = siteIterator->second->Site_Antennas;
+					std::vector<TransAntenna>& transVec = siteIterator->second->Site_Antennas;
 					//检测导入的站点文件是否包含此PCI
 					bool isPciInSite = false;
 					string cellName = "";

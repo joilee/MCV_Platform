@@ -157,6 +157,7 @@
     <ClInclude Include="cityModule\cityGround.h" />
     <ClInclude Include="cityModule\cityGroundVector.h" />
     <ClInclude Include="cityModule\cityScene.h" />
+    <ClInclude Include="cityModule\Configuration.h" />
     <ClInclude Include="cityModule\ModelType.h" />
     <ClInclude Include="material\scsMaterial.h" />
     <ClInclude Include="mesh\IO_obj.h" />

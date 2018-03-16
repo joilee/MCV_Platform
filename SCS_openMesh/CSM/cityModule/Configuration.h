@@ -1,0 +1,1 @@
+#define NO_ALTITUDE 1
