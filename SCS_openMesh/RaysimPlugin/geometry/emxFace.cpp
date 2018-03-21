@@ -10,10 +10,9 @@
  *	build the edges of this face and save the first edge reference
  */
 emxFace::emxFace (emxVertex* v0, emxVertex* v1, emxVertex* v2)
-:normalValid(false)
 {
-	assert(v0 && v1 && v2);
-	assert(v0!=v1 && v0!=v2 && v1!=v2);
+	//assert(v0 && v1 && v2);
+	//assert(v0!=v1 && v0!=v2 && v1!=v2);
 
 	// save references to vertices
 	vertex[0] = v0;
@@ -21,10 +20,9 @@ emxFace::emxFace (emxVertex* v0, emxVertex* v1, emxVertex* v2)
 	vertex[2] = v2;
 
 	// for valid face assertion
-	assert(IsValid());
+	//assert(IsValid());
 
 	//index = FACECOUNT++;
-
 }
 
 /*

@@ -168,12 +168,8 @@ void cityLocalModel::generateBuildingMesh()
 		DCList polygon2;
 		if (polygon1.IsClockwise())
 		{
-			int newId = 0;
 			for (int id = count1 - 1; id >= 0; id--)
-			{
-				polygon2.AddBack(upper_face[id], newId + V_size);
-				newId++;
-			}
+				polygon2.AddBack(upper_face[id], id + V_size);
 		}
 		else
 		{
@@ -183,9 +179,11 @@ void cityLocalModel::generateBuildingMesh()
 		
 		//剖分建筑物上顶面
 		node *tmp = polygon2.GetNodeAt(0);
-		cout << buildings_id << endl;
+
+		//判断顶点个数
 		while (polygon2.GetLength() > 3)
 		{
+		
 			//判断凹凸性
 			if (polygon2.IsConvex(tmp))
 			{
@@ -210,7 +208,7 @@ void cityLocalModel::generateBuildingMesh()
 					N = VectorCross(E1, E2);
 					if (N.norm() > DOUBLE_EPSILON)
 					{
-						F.push_back(Vector3i(tmp->next->id, tmp->id, tmp->pre->id));
+						F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
 						NF.push_back(N.normalize());
 					}
 					node* n = tmp->next;
@@ -227,12 +225,14 @@ void cityLocalModel::generateBuildingMesh()
 				tmp = tmp->next;
 			}
 		}
+
+		//加入最后一个三角形
 		E1 = tmp->pre->v_node - tmp->v_node;
 		E2 = tmp->v_node - tmp->next->v_node;
 		N = VectorCross(E1, E2);
 		if (N.norm() > DOUBLE_EPSILON)
 		{
-			F.push_back(Vector3i(tmp->next->id, tmp->id, tmp->pre->id));
+			F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
 			NF.push_back(N.normalize());
 		}
 	}
