@@ -621,7 +621,18 @@ emxModel::emxModel(BaseModel *para)
 		emxVertex* v1 = vertexVec.at(id[0]);
 		emxVertex* v2 = vertexVec.at(id[1]);
 		emxVertex* v3 = vertexVec.at(id[2]);
-		faceVec.push_back(new emxFace(v1, v2, v3));
+
+		emxFace * newFace = new emxFace(v1, v2, v3);
+		if (newFace->IsValid())
+			faceVec.push_back(newFace);
+		/*else
+		{
+			cout << id[0]<< " " << id[1] << " " << id[2] << endl;
+			cout << v1->GetPos().x << " " << v1->GetPos().y << " " << v1->GetPos().z << endl;
+			cout << v2->GetPos().x << " " << v2->GetPos().y << " " << v2->GetPos().z << endl;
+			cout << v3->GetPos().x << " " << v3->GetPos().y << " " << v3->GetPos().z << endl;
+		}
+			*/
 	}
 	// calculate the bounding box
 	std::vector<Vector3d>::const_iterator v = V.begin();

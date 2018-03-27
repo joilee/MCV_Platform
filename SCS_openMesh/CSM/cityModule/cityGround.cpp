@@ -74,9 +74,12 @@ cityGround::cityGround(const cityGround &cg, Vector3d AP_position, double LocalR
 
 double  cityGround::getPointAltitude(double x, double y)
 {
+#ifdef NO_ALTITUDE
+	return 0;
+#endif
 	if (x<xmin || y>ymax || x > xmax || y < ymin)
 	{
-		cout << "error:  wrong coordinates from building vector" << endl;
+		cout << "error:  wrong coordinates ("<<x<<","<<y<<")from building vector" << endl;
 		return 0;
 	}
 	int pointRow = int((ymax - y) / base);

@@ -159,9 +159,9 @@ emxKdTree(emxModel* mesh,
 	vector<emxFace*> prims;	
 	nMailboxes = static_cast<unsigned int>(mesh->NumF());
 	prims.reserve(nMailboxes);
-	for (unsigned int i = 0; i < nMailboxes; ++i) 
+	for (unsigned int i = 0; i < nMailboxes; ++i)
 		prims.push_back(mesh->GetFacep(i));
-	
+		
 	// Initialize mailboxes for _KdTreeAccel_
 	mailboxPrims = (emxMailboxPrim *)AllocAligned(nMailboxes * sizeof(emxMailboxPrim));
 	for (unsigned int i = 0; i < nMailboxes; ++i)

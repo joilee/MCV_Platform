@@ -55,7 +55,8 @@ public:
   Vector3i GetFace   (size_t i)       { return F[i]; }
   const Vector3i GetFace   (size_t i) const { return F[i]; }
   // get face by index
-  emxFace* GetFacep(size_t index) { assert(index < faceVec.size()); return faceVec[index]; }
+  emxFace* GetFacep(size_t index) {  return faceVec[index]; }
+  int GetFaceVecSize(){ return faceVec.size(); }
 
   Vector3d GetCenter(size_t i);
 

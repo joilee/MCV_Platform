@@ -1,6 +1,7 @@
 #include "cityScene.h"
-//#include "../../util/emxUtilityInc.h"
+#include "../util/FileEncode.h"
 #include <limits>
+#include "../util/stringUtil.h"
 #include <fstream>
 
 
@@ -48,11 +49,23 @@ void cityScene::readBuilding(const char*filename_2D, const char*filename_Height)
 		cout << "can not open file2!" << endl;
 		return;
 	}
+
+	FileEncode * encode = new FileEncode;
+	bool BOM1 = encode->checkBOM(filename_2D);
+	if (BOM1)
+	{
+		infile1.seekg(4, ios::beg);
+	}
+	bool BOM2 = encode->checkBOM(filename_Height);
+	if (BOM2)
+	{
+		infile2.seekg(3, ios::beg);
+	}
+
 	string str1, str2;
-	infile1.seekg(4, ios::beg);
-	infile2.seekg(3, ios::beg);
 	while (getline(infile1, str1))
 	{
+		str1 = Trim(str1);
 		int building_id1 = 0;
 		string sign1 = " ";
 		int point_num = 0;
@@ -207,7 +220,7 @@ cityScene::cityScene(Vector3d  AP_position, double  LocalRange, cityScene* cityA
 		if (in_range)
 		{
 			total_Buildings.push_back(cityAll->getBuildingByValue(buildings_id));
-			cout << buildings_id << " "<<tmpBuilding.height<<endl;
+			//cout << buildings_id << " "<<tmpBuilding.height<<endl;
 		}
 	}
 

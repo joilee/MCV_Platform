@@ -10,6 +10,7 @@
 #include "../Manager/Model/modelManager.h"
 #include "../Manager/Computation/computeManager.h"
 #include "Manager/visualManager/visualManager.h"
+
 /************************************************************************/
 /* 单例模式                                                                     */
 /************************************************************************/

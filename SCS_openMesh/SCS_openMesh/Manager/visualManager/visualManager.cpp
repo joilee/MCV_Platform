@@ -7,15 +7,8 @@
 #include "Context/context.h"
 #include <QDebug>
 #include <QProgressDialog>
+#include <util/stringUtil.h>
 
-string Trim(string &str)   //提取不包含空格、制表符、回车、换行符的字符串
-{
-	str.erase(0, str.find_first_not_of(" trn"));
-
-	str.erase(str.find_last_not_of(" trn") + 1);
-
-	return str;
-}
 //**************模型校正**************//
 //均值
 double mean(vector<double> &X, vector<double>&Y)
@@ -219,6 +212,37 @@ void VisualManager::loadMeasuredFile(QString path)
 
 	string str;
 	getline(infile, str);
+	//获取实测数据文件中所需信息对应所在列的ID号
+	int x_id = -1, y_id = -1, z_id = -1, pci_id = -1, rsrp_id = -1;
+	istringstream linestream1(str);
+	string parameter1;
+	int count = 0;
+	while (getline(linestream1, parameter1, ','))
+	{
+		parameter1 = Trim(parameter1);
+		if (parameter1 == "x" || parameter1 == "X")
+		{
+			x_id = count;
+		}
+		if (parameter1 == "y" || parameter1 == "Y")
+		{
+			y_id = count;
+		}
+		if (parameter1 == "z" || parameter1 == "Z")
+		{
+			z_id = count;
+		}
+		if (parameter1 == "PCI")
+		{
+			pci_id = count;
+		}
+		if (parameter1 == "RSRP(dBm)")
+		{
+			rsrp_id = count;
+		}
+		count++;
+	}
+
 	globalContext *globalCtx = globalContext::GetInstance();
 	while (getline(infile, str))
 	{
@@ -229,11 +253,11 @@ void VisualManager::loadMeasuredFile(QString path)
 		{
 			parameters.push_back(parameter);
 		}
-		string str_x = Trim(parameters[1]);
-		string str_y = Trim(parameters[2]);
-		string str_z = Trim(parameters[3]);
-		string PCI = Trim(parameters[4]);
-		string RSRP = Trim(parameters[5]);
+		string str_x = Trim(parameters[x_id]);
+		string str_y = Trim(parameters[y_id]);
+		string str_z = Trim(parameters[z_id]);
+		string PCI = Trim(parameters[pci_id]);
+		string RSRP = Trim(parameters[rsrp_id]);
 
 		double x = atof(str_x.c_str());
 		double y = atof(str_y.c_str());
