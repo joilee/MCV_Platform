@@ -2104,6 +2104,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			m_logText->addText(QStringLiteral("开始寻找有效直射、反射、透射、绕射传播路径"));
 
 			//接收点坐标设置
+
 			if (cptPara->computeEnum == ComputationEnum::ReceivePoint)  //非仿真面的接收点设置
 			{
 				bool siteNeedCompute = false;//判断该站点是否要计算
@@ -2200,10 +2201,10 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			m_logText->addText("time_RefTransPath::  " + QString::number(time_RefTransPath));
 
 			//绕射
-			/*
+			
 			if (cptPara->diffractionNumPara >= 1)
 			{
-				vector<Vedge> currentEdge = currentModel->getAP_Edge_List();
+				vector<Vedge>& currentEdge = currentModel->getAP_Edge_List();
 				//一次绕射
 				valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
 				double time13 = clock();
@@ -2212,7 +2213,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			
 				m_logText->addText(QStringLiteral("一次绕射计算完毕"));
 				m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
-
+				/*
 				//反射加绕射
 				valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
 				double time16 = clock();
@@ -2232,8 +2233,9 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 					m_logText->addText("time_multiple_diffPath :  " + QString::number(time_multiple_diffPath));
 
 				}
+				*/
 			}
-			*/
+			
 			double time18 = clock();
 			double time_totalValidPath = (time18 - time10) / 1000;
 			fout << "the end of finding valid paths" << endl;

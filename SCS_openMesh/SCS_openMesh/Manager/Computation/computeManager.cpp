@@ -280,7 +280,7 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 		{
 			height_id = count;
 		}
-		if (parameter1 == "RS Power(dBm)")
+		if (parameter1 == "RS Power(dBm)" || parameter1 == "RS Power")
 		{
 			power_id = count;
 		}
@@ -288,11 +288,11 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 		{
 			loss_id = count;
 		}
-		if (parameter1 == "X")
+		if (parameter1 == "X" || parameter1 == "x")
 		{
 			x_id = count;
 		}
-		if (parameter1 == "Y")
+		if (parameter1 == "Y" || parameter1 == "y")
 		{
 			y_id = count;
 		}
