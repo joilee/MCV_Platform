@@ -2142,6 +2142,8 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 
 						EField *s = new EField;
 						s->Position = cptPara->No_SimPlanePoint[j].position;
+
+						//存储接收点
 						m_siteData->cellsMap[pci]->efildVec.push_back(s);
 						siteNeedCompute = true;
 					}
