@@ -8,8 +8,9 @@ scsLocalModelGLWidget::scsLocalModelGLWidget(QWidget *parent /*= 0*/) :scsGLWidg
 	materials.clear();
 	defaultMaterial = 10;
 	drawLocalPoint = false;;
-	drawLocalLine = false;
-	drawLocalFace = false;
+	drawLocalLine = true;
+	drawLocalFace = true;
+	modelAlpha = 1.0;
 }
 
 scsLocalModelGLWidget::~scsLocalModelGLWidget()

@@ -159,14 +159,15 @@ void MainWindow::generateModelPara()
 void MainWindow::saveAllResult()
 {
 	
+	//选择文件夹
 	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("选择保存文件夹"),
-		"C:",QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
+		".",QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
 
 	globalContext *globalCtx = globalContext::GetInstance();
 	EFieldContainer* visualDataContainer = globalCtx->visualManager->getContainer();
 	if (!visualDataContainer->isDataExist())
 	{
-		qDebug()<< "error: no simulation data" << endl;
+		qDebug() << "error: no simulation data" << endl;
 		QMessageBox::warning(this, "Error", QStringLiteral("error: 没有仿真结果文件"));
 		return;
 	}
@@ -185,7 +186,8 @@ void MainWindow::saveAllResult()
 		vector<int> pcis = visualDataContainer->getPCIsBySiteID(siteIDs[i]);
 		for (int j = 0; j < pcis.size(); j++)
 		{
-			QString filePath = dir.append("_Site").append(QString::number(siteIDs[i])).append("_Cell");
+			//根据pci对文件进行命名
+			QString filePath = dir.append('/').append("_Site").append(QString::number(siteIDs[i])).append("_Cell");
 			filePath.append(QString::number(pcis[j])).append(".json");
 			globalCtx->visualManager->saveCellFile(filePath, pcis[j], siteIDs[i]);
 			qDebug ()<< "save cell success ! the pci is" << pcis[j] << endl;
@@ -211,7 +213,7 @@ void MainWindow::setShowLineEdit(int id)
 void MainWindow::setModelAlpha(int a)
 {
 	ui.simuArea->setModelAlpha(a);
-	outputLog(QString(QStringLiteral("设置局部模型透明度为：") + QString::number(a, 10)));
+	//outputLog(QString(QStringLiteral("设置局部模型透明度为：") + QString::number(a, 10)));
 }
 
 void MainWindow::setSimuPlane(int siteID, int PCI)
@@ -225,19 +227,25 @@ void MainWindow::setSimuPlane(int siteID, int PCI)
 void MainWindow::setDrawPointMode(bool flag)
 {
 	//用二进制表达状态
-	ui.simuArea->setPoint(flag);
+	//ui.simuArea->setPoint(flag);
+	ui.ModelView->setPoint(flag);
+	if (flag)
+		outputLog(QString(QStringLiteral("设置绘制模式为：点模式")));
 	
 }
 void MainWindow::setDrawLineMode(bool flag)
 {
 	//用二进制表达状态
+	ui.ModelView->setLine(flag);
 	ui.simuArea->setLine(flag);
+	
 	if (flag)
 		outputLog(QString(QStringLiteral("设置绘制模式为：线框模式")));
 }
 void MainWindow::setDrawFaceMode(bool flag)
 {
 	//用二进制表达状态
+	ui.ModelView->setFace(flag);
 	ui.simuArea->setFace(flag);
 	if (flag)
 		outputLog(QString(QStringLiteral("设置绘制模式为：面模式")));
@@ -387,6 +395,9 @@ void MainWindow::meshAll()
 		gctx->modelManager->loadLocalObj(center, range, siteID);
 	}
 
+	ui.action_showLine->setChecked(true);
+	ui.action_showFace->setChecked(true);
+
 }
 
 
@@ -484,4 +495,7 @@ void MainWindow::quickLoadJson()
 	}
 	load_Material(_m.toStdString());
 	outputLog(QString(QStringLiteral("sucess: json文件导入成功！")));
+
+	ui.action_showLine->setChecked(true);
+	ui.action_showFace->setChecked(true);
 }

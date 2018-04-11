@@ -46,7 +46,7 @@ scatterWidget::~scatterWidget()
 
 void scatterWidget::openTestFile()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "/", tr("All Files (*.*)"));
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("All Files (*.*)"));
 	QFile dataFile(fileName);
 	if (!dataFile.open(QIODevice::ReadOnly)){
 		qWarning("Couldn't open data file.");

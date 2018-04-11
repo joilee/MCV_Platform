@@ -1,6 +1,7 @@
 #pragma once
 #include "Model/abstractGlobalModel/abstractGlobalModel.h"
 #include <cityModule/cityScene.h>
+#include <GL/freeglut.h>
 
 
 class cityModel :public abstractGlobalModel
@@ -25,5 +26,8 @@ private:
 
 	//建筑物 
 	cityScene *city;  //整体的建筑物模型
+	vector<Building> buildings;         //场景中的建筑物
+	vector<Vector3d> upperface_points;  //场景上表面的点
+	vector<Vector3d> underface_points;  //场景下底面的点
 };
 

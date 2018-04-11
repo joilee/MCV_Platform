@@ -388,6 +388,8 @@ simuArgument::simuArgument(QWidget* parent)
 
 	lineEdit_RT_ReflectCount=new QLineEdit;
 	lineEdit_RT_RefractCount=new QLineEdit;
+
+	//绕射次数
 	lineEdit_RT_Diffraction=new QLineEdit;
 	comboBox_transmission=new QComboBox;
 	comboBox_diffraction=new QComboBox;

@@ -194,11 +194,12 @@ void objModel::getNormals()
 		Vector3d b = points[faces[i].y];
 		Vector3d c = points[faces[i].z];
 
-		Vector3d n = VectorCross(Vector3d(b.x - a.x, b.y - a.y, b.z - a.z), Vector3d(c.x - a.x, c.y - a.y, c.z - a.z));
+		Vector3d n = VectorCross(Vector3d(b.x - a.x, b.y - a.y, b.z - a.z), Vector3d(c.x - b.x, c.y - b.y, c.z - b.z));
 		n = n.normalize();
-
+		
 		if (n.z < 0)
 			n = -1.0 * n;
+
 		normals.push_back(n);
 	}
 }

@@ -311,6 +311,7 @@ void VisualManager::correct(Vector3d &before,Vector3d &after)
 				{
 					Measuredfield.push_back(measuredE->MolStrength);
 					beforeCorrection_calculationfield.push_back(simE->MolStrength);
+			
 					double afterCorrection_Molstrength = weight*simE->MolStrength + k1*log10(simE->HorizontalDis) + k2;
 					afterCorrection_calculationfield.push_back(afterCorrection_Molstrength);
 					id++;

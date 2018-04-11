@@ -1,3 +1,5 @@
+//局部场景展示模块(剖分结果）
+
 #pragma once
 #include "scsGLWidget.h"
 #include "Context/context.h"

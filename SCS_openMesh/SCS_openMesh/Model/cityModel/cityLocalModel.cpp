@@ -751,9 +751,9 @@ void cityLocalModel::writeToObj() {
 }
 
 void cityLocalModel::draw(vector<bool> mode, double alpha) {
-	if (mode[0]) { //draw vertice
+	//if (mode[0]) { //draw vertice
 
-	}
+	//}
 	if (mode[1]) { //draw line
 		//glCallList(showWireList);
 		glDisable(GL_LIGHTING);

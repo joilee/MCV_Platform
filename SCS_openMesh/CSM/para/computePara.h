@@ -26,7 +26,7 @@ public:
 
 	double  reflectNumPara;
 	double  refractNumPara;
-	double  diffractionNumPara;
+	double  diffractionNumPara;   //绕射次数
 	bool isDiffractionPara;
 	int transIndex;
 	double RT_sample;//采样球密度

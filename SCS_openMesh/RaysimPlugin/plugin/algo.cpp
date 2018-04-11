@@ -288,7 +288,7 @@ void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double Lo
 	//		*				   *
 	//		********************
 	//
-	cout<<"width: "<<width<<"  length: "<<length<<endl;
+	//cout<<"width: "<<width<<"  length: "<<length<<endl;
 	int num = length * width;
 
 	int m = length;
@@ -1997,7 +1997,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 	bool ok;
 	int totalcpu = omp_get_num_procs();
 
-	int core_nums = QInputDialog::getInt(NULL, QStringLiteral("cpu core"), QString("There are ") + QString::number(totalcpu) + " cores in this PC.\n use ", 0, 0, 100, 1, &ok);
+	int core_nums = QInputDialog::getInt(NULL, QStringLiteral("cpu core"), QString("There are ") + QString::number(totalcpu) + " cores in this PC.\n use ", 2, 1, 6, 1, &ok);
 	omp_set_num_threads(core_nums);   //指定用于并行计算的线程数目
 
 	if (modelParameter->SiteModels.empty())

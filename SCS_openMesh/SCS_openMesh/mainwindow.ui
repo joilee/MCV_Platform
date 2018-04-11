@@ -73,8 +73,6 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="separator"/>
     <addaction name="action_matFile"/>
     <addaction name="separator"/>
     <addaction name="action_3"/>
@@ -140,7 +138,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action"/>
    <addaction name="action_json"/>
    <addaction name="action_saveResult"/>
    <addaction name="action_showPoint"/>
@@ -265,13 +262,10 @@
             </property>
            </spacer>
           </item>
-          <item row="0" column="2">
-           <widget class="QSlider" name="horizontalSlider_Scene_Alpha">
+          <item row="1" column="2">
+           <widget class="QSlider" name="horizontalSlider_Plane_Alpha">
             <property name="maximum">
              <number>100</number>
-            </property>
-            <property name="pageStep">
-             <number>10</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -301,9 +295,15 @@
             </property>
            </spacer>
           </item>
-          <item row="1" column="2">
-           <widget class="QSlider" name="horizontalSlider_Plane_Alpha">
+          <item row="0" column="2">
+           <widget class="QSlider" name="horizontalSlider_Scene_Alpha">
             <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="value">
              <number>100</number>
             </property>
             <property name="orientation">
@@ -554,21 +554,6 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
-  <action name="action">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/new.ico</normaloff>Resources/new.ico</iconset>
-   </property>
-   <property name="text">
-    <string>新建</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-  </action>
   <action name="action_3">
    <property name="icon">
     <iconset>
@@ -624,16 +609,6 @@
    </property>
    <property name="text">
     <string>选项</string>
-   </property>
-  </action>
-  <action name="action_8">
-   <property name="text">
-    <string>场点</string>
-   </property>
-  </action>
-  <action name="action_11">
-   <property name="text">
-    <string>仿真参数</string>
    </property>
   </action>
   <action name="action_ShowAll">
@@ -755,6 +730,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/line.ico</normaloff>Resources/line.ico</iconset>
@@ -766,6 +744,9 @@
   <action name="action_showFace">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset>
@@ -818,6 +799,16 @@
    </property>
    <property name="text">
     <string>导入仿真数据</string>
+   </property>
+  </action>
+  <action name="action_11">
+   <property name="text">
+    <string>仿真参数</string>
+   </property>
+  </action>
+  <action name="action_8">
+   <property name="text">
+    <string>场点</string>
    </property>
   </action>
  </widget>

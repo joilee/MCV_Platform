@@ -2,6 +2,9 @@
 
 scsGlobalGL::scsGlobalGL(QWidget *parent /*= 0*/)
 {
+	drawLocalPoint = false;
+	drawLocalLine = true;
+	drawLocalFace = true;
 
 }
 
@@ -35,9 +38,9 @@ void scsGlobalGL::drawCity()
 	maxPos = tmpModel->getMaxPoint();
 	updateMesh();
 	vector<bool> mode;
-	mode.push_back(true);
-	mode.push_back(true);
-	mode.push_back(true);
+	mode.push_back(drawLocalPoint);
+	mode.push_back(drawLocalLine);
+	mode.push_back(drawLocalFace);
 	tmpModel->draw(mode, 1);
 }
 
