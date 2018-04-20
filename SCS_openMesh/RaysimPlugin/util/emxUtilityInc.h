@@ -35,7 +35,8 @@ using namespace std;
 
 static const double M_PI_180       = M_PI / 180;
 static const double M_180_PI       = 180 / M_PI;
-//static const double INFINITY       = FLT_MAX;
+static const double INFINITY_UEES  = FLT_MAX;
+
 //static const double RCS_DOUBLEZERO = 1e-10;
 static const string ROOTTEXT       = "3D Objects";
 static const string DEFAULTTEXT	   = "Default";

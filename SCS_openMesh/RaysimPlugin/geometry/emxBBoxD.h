@@ -30,8 +30,8 @@ class emxBBox {
 public:
 	// emxBBox Public Methods
 	emxBBox() {
-		pMin = Vector3d( INFINITY,  INFINITY,  INFINITY);
-		pMax = Vector3d(-INFINITY, -INFINITY, -INFINITY);
+		pMin = Vector3d(INFINITY_UEES,  INFINITY_UEES,  INFINITY_UEES);
+		pMax = Vector3d(-INFINITY_UEES, -INFINITY_UEES, -INFINITY_UEES);
 	}
 	emxBBox(const Vector3d &p) : pMin(p), pMax(p) { }
 	emxBBox(const Vector3d &p1, const Vector3d &p2) {

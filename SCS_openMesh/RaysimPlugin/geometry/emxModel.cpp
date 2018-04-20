@@ -625,6 +625,7 @@ emxModel::emxModel(BaseModel *para)
 		emxFace * newFace = new emxFace(v1, v2, v3);
 		if (newFace->IsValid())
 			faceVec.push_back(newFace);
+		
 		/*else
 		{
 			cout << id[0]<< " " << id[1] << " " << id[2] << endl;

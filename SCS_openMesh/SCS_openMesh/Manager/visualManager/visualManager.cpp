@@ -178,7 +178,7 @@ void VisualManager::saveCellFile(QString dir,int pci,int siteID)
 	}
 
 	QJsonArray data;
-	//∞¥’’ id x y z RSBP¥Ê¥¢
+	//∞¥’’ id x y z RSRP¥Ê¥¢
 	for (int i = 0; i < tmpCell->efildVec.size();i++)
 	{
 		QJsonArray dataTmp;

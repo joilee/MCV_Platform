@@ -64,19 +64,21 @@ Pot cityLocalModel::get_Normal(Pot p1, Pot p2, Pot p3) {
 
 }
 
-
+//未添加凹多边形的处理，直接删除凹点
 void cityLocalModel::generateBuildingMesh()
 {
-	vector<Building>  local_Buildings = scene->getTotal_Building();
+	vector<Building> local_Buildings = scene->getTotal_Building();
 	int concave_polygonNum = 0;
+
 	for (int buildings_id = 0; buildings_id < local_Buildings.size(); buildings_id++)
 	{
-		int count = local_Buildings[buildings_id].upper_facePoint.size() - 1; //记录building顶面点坐标时，首末点重合，记录两次，所以 .size（）-1  顺序未定
+		//首尾点是同一个，重复记录
+		int count = local_Buildings[buildings_id].upper_facePoint.size() - 1;
 		double building_height = local_Buildings[buildings_id].height;
-		int V_size = V.size();
-		vector<int> upper_PointIndex; //  存储上顶面点的索引值，以备上顶面剖分生成面片时所用
 
-		//点的存储操作
+		int V_size = V.size();
+		vector<int> upper_PointIndex;
+
 		//上顶面的点
 		for (int id = 0; id < count; id++)
 		{
@@ -92,9 +94,9 @@ void cityLocalModel::generateBuildingMesh()
 			V.push_back(Vector3d(point.x, point.y, under_height));
 		}
 
+		//生成三角形面片
+		//侧面面片
 		Vector3d E1, E2, N;
-		//面片的操作
-		//建筑物侧面剖分生成面片,分成两个三角形
 		for (int id = 0; id < count; id++)
 		{
 			int i1, i2, i3, i4;
@@ -125,205 +127,58 @@ void cityLocalModel::generateBuildingMesh()
 			}
 		}
 
-		//建筑物上顶面剖分生成面片，面片法向量均为正z轴方向即Vector3d(0,0,1),凹多边形三角化特殊处理见网址：http://blog.sina.com.cn/s/blog_5a6f39cf0101374h.html
-		bool convex = true; //为true时是凸多边形，false时是凹多边形
+		//上顶面面片
+		bool convex = true;     //true表示凸多边形，false表示凹多边形
 		vector<Vector3d> upper_face = local_Buildings[buildings_id].upper_facePoint;
-		upper_face.pop_back(); //首末点重复，所以要删掉末尾的重复点
+		upper_face.pop_back();  //首尾点重复
 		int count1 = upper_face.size();
 
-		//判断多边形是否自相交
-		bool cross = false;
-		for (int i = 0; i < count1; i++)
+		for (int id = 0; id < count1; id++)
 		{
-			Vector3d a(upper_face[i]);
-			Vector3d b(upper_face[(i + 1) % count1]);
-			for (int j = i; j < count1; j++)
+			Vector3d v1, v2, v3;
+			v1 = upper_face[id];
+			v2 = upper_face[(id + 1) % count1];
+			v3 = upper_face[(id + 2) % count1];
+
+			if (Dot(VectorCross(v2 - v1, v3 - v2), Vector3d(0, 0, -1)) < DOUBLE_EPSILON)
 			{
-				Vector3d c(upper_face[j]);
-				Vector3d d(upper_face[(j + 1) % count1]);
+				//若为凹点直接去掉
+				std::vector<Vector3d>::iterator it1 = upper_face.begin() + (id + 1) % count1;
+				upper_face.erase(it1);
+				std::vector<int>::iterator it2 = upper_PointIndex.begin() + (id + 1) % count1;
+				upper_PointIndex.erase(it2);
 
-				if ((a == c || a == d) && (b == c || b == d))
-					continue;
+				count1--;
+				id--;
 
-				if (Dot(VectorCross(d - c, a - c), VectorCross(d - c, b - c)) < 0 &&
-					Dot(VectorCross(b - a, c - a), VectorCross(b - a, d - a)) < 0)
-				{
-					cross = true;
-					break;
-				}
-			}
-			if (cross)
-				break;
-		}
-		
-		if (cross)
-			continue;
-
-		//判断多边形顶点是顺时针方向还是逆时针方向读入
-		DCList polygon1;
-		for (int id = 0; id <count1; id++)
-			polygon1.AddBack(upper_face[id], id+V_size);
-
-		//如果以顺时针方向读取则需要转换为以逆时针方向存储
-		DCList polygon2;
-		if (polygon1.IsClockwise())
-		{
-			for (int id = count1 - 1; id >= 0; id--)
-				polygon2.AddBack(upper_face[id], id + V_size);
-		}
-		else
-		{
-			for (int id = 0; id < count; id++)
-				polygon2.AddBack(upper_face[id], id + V_size);
-		}
-		
-		//剖分建筑物上顶面
-		node *tmp = polygon2.GetNodeAt(0);
-
-		//判断顶点个数
-		while (polygon2.GetLength() > 3)
-		{
-		
-			//判断凹凸性
-			if (polygon2.IsConvex(tmp))
-			{
-				node *judge = tmp->next->next;
-				bool flag = false;
-				while (judge != tmp->pre)
-				{
-					//判断是否在三角形内
-					if (polygon2.IsInterior(tmp, judge))
-					{
-						flag = true;
-						break;
-					}
-					judge = judge->next;
-				}
-
-				//加入三角面片
-				if (!flag)
-				{
-					E1 = tmp->pre->v_node - tmp->v_node;
-					E2 = tmp->v_node - tmp->next->v_node;
-					N = VectorCross(E1, E2);
-					if (N.norm() > DOUBLE_EPSILON)
-					{
-						F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
-						NF.push_back(N.normalize());
-					}
-					node* n = tmp->next;
-					polygon2.Delete(polygon2.GetCurrPos(tmp));
-					tmp = n;
-				}
-				else
-				{
-					tmp = tmp->next;
-				}	
-			}
-			else
-			{
-				tmp = tmp->next;
+				convex = false;
 			}
 		}
-
-		//加入最后一个三角形
-		E1 = tmp->pre->v_node - tmp->v_node;
-		E2 = tmp->v_node - tmp->next->v_node;
-		N = VectorCross(E1, E2);
-		if (N.norm() > DOUBLE_EPSILON)
+		if (!convex)
 		{
-			F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
-			NF.push_back(N.normalize());
+			concave_polygonNum++;
 		}
+
+		int count2 = upper_face.size();
+		for (int id = 0; id <= count2 - 3; id++)
+		{
+			E1 = V[upper_PointIndex[id + 2]] - V[upper_PointIndex[0]];
+			E2 = V[upper_PointIndex[id + 1]] - V[upper_PointIndex[id + 2]];
+			N = VectorCross(E1, E2);
+
+			if (N.norm() > DOUBLE_EPSILON)
+			{
+				F.push_back(Vector3i(upper_PointIndex[0], upper_PointIndex[id + 2], upper_PointIndex[id + 1]));
+				NF.push_back(N.normalize());
+			}
+		}	
 	}
-	////看v2是不是凹点
-	//         if (Dot(VectorCross(v2 - v1, v3 - v2), Vector3d(0, 0, -1)) < DOUBLE_EPSILON) { //判断是否为凹
-	//             //判断若为凹点，直接剔除掉v2
-	//             std::vector<Vector3d>::iterator it1 = upper_face.begin() + (id + 1) % count1;
-	//             upper_face.erase(it1);
-	//             std::vector<int>::iterator it2 = upper_PointIndex.begin() + (id + 1) % count1;
-	//             upper_PointIndex.erase(it2);
 
-	//             count1--;
-	//             id--;
-
-	//             convex = false;
-	//         }
-	//     }
-	//     if (!convex) {
-	//         concave_polygonNum++;
-	//     }
-
-	//     //凸多边形剖分，选择一个顶点，然后依次寻找下两个顶点组成一个三角形
-	//     int count2 = upper_face.size();
-	//     for (int id = 0; id <= count2 - 3; id++) {
-	//         E1 = V[upper_PointIndex[id + 2]] - V[upper_PointIndex[0]];
-	//         E2 = V[upper_PointIndex[id + 1]] - V[upper_PointIndex[id + 2]];
-	//         N = VectorCross(E1, E2);
-	//         if (N.norm() > DOUBLE_EPSILON) {
-	//             F.push_back(Vector3i(upper_PointIndex[0], upper_PointIndex[id + 2], upper_PointIndex[id + 1]));
-	//             NF.push_back(N.normalize());
-	//         }
-	//     }
-
-
-	//一栋建筑物处理完毕
 	cout << "info: 局部建筑物数量是" << local_Buildings.size() << endl;
 	cout << "info: 局部建筑物面片数量是" << F.size() << " 凹建筑物数量是" << concave_polygonNum << endl;
 
-	/*
-	int V_num = V.size();
-	int F_startNum = F.size();
-	int NF_startNum = NF.size();
-	VERTEX2D_PTR pVtx = ground_pMesh->pVerArr;
-	int numV = ground_pMesh->vertex_num;
-	for (int i = 3; i < numV + 3; i++)
-	{ //前三个点是bounding triangle
-		double x, y, z;
-		x = ((VERTEX2D_PTR)(ground_pMesh->pVerArr + i))->x;
-		y = ((VERTEX2D_PTR)(ground_pMesh->pVerArr + i))->y;
-		z = ((VERTEX2D_PTR)(ground_pMesh->pVerArr + i))->z;
-		V.push_back(Vector3d(x, y, z));
-	}
-
-	TRIANGLE_PTR pTri = ground_pMesh->pTriArr;
-	int tri_index = 0;
-	int* pi;
-	while (pTri != NULL)
-	{
-		tri_index++;
-		int id[3];
-		pi = &(pTri->i1);
-		for (int j = 0; j<3; j++)
-		{
-			id[j] = *pi++;
-			id[j] = id[j] - 3 + V_num;
-		}
-		Vector3d E1, E2, N;
-		E1 = V[id[1]] - V[id[0]];
-		E2 = V[id[2]] - V[id[1]];
-		N = VectorCross(E1, E2);
-		if (N.norm() > DOUBLE_EPSILON)
-		{
-			//对于地面的点,法向量的z必须大于0
-			if (N.z > 0) {
-				F.push_back(Vector3i(id[0], id[1], id[2]));
-				NF.push_back(N.normalize());
-			}
-			else { //换一个点的排列顺序 0 2 1
-				F.push_back(Vector3i(id[0], id[2], id[1]));
-				NF.push_back(-N.normalize());
-			}
-		}
-		pTri = pTri->pNext;
-	}
-	int F_endNum = F.size();
-	int NF_endNum = NF.size();
-	cout << "info: 地面建模点的数量 " << V.size() - V_num << "  三角形数量 " << F_endNum - F_startNum << " 法向量数量 " << NF_endNum - NF_startNum << endl;
-	*/
-	// calculate the bounding box
 	std::vector<Vector3d>::const_iterator v = V.begin();
-	MinPos = Min(MinPos,scene->getMinPoint());
+	MinPos = Min(MinPos, scene->getMinPoint());
 	MaxPos = Max(MaxPos, scene->getMaxPoint());
 	for (++v; v != V.end(); ++v)
 	{
@@ -333,6 +188,209 @@ void cityLocalModel::generateBuildingMesh()
 	cout << "info: 结点生成完毕！" << endl;
 
 }
+
+//添加对凹多边形的处理
+//void cityLocalModel::generateBuildingMesh()
+//{
+//	vector<Building>  local_Buildings = scene->getTotal_Building();
+//	int concave_polygonNum = 0;
+//	for (int buildings_id = 0; buildings_id < local_Buildings.size(); buildings_id++)
+//	{
+//		int count = local_Buildings[buildings_id].upper_facePoint.size() - 1; //记录building顶面点坐标时，首末点重合，记录两次，所以 .size（）-1  顺序未定
+//		double building_height = local_Buildings[buildings_id].height;
+//		int V_size = V.size();
+//		vector<int> upper_PointIndex; //  存储上顶面点的索引值，以备上顶面剖分生成面片时所用
+//
+//		//点的存储操作
+//		//上顶面的点
+//		for (int id = 0; id < count; id++)
+//		{
+//			Vector3d point = local_Buildings[buildings_id].upper_facePoint[id];
+//			V.push_back(point);
+//			upper_PointIndex.push_back(V.size() - 1);
+//		}
+//		//下底面的点
+//		for (int id = 0; id < count; id++)
+//		{
+//			Vector3d point = local_Buildings[buildings_id].upper_facePoint[id];
+//			double under_height = point.z - building_height;
+//			V.push_back(Vector3d(point.x, point.y, under_height));
+//		}
+//
+//		Vector3d E1, E2, N;
+//		//面片的操作
+//		//建筑物侧面剖分生成面片,分成两个三角形
+//		for (int id = 0; id < count; id++)
+//		{
+//			int i1, i2, i3, i4;
+//
+//			i1 = id + V_size;
+//			i2 = (id + 1) % count + V_size;
+//			i3 = (id + 1) % count + count + V_size;
+//			i4 = id + count + V_size;
+//
+//			E1 = V[i2] - V[i1];
+//			E2 = V[i3] - V[i2];
+//			N = VectorCross(E1, E2);
+//
+//			if (N.norm() > DOUBLE_EPSILON)
+//			{
+//				F.push_back(Vector3i(i1, i2, i3));
+//				NF.push_back(N.normalize());
+//			}
+//
+//			E1 = V[i3] - V[i1];
+//			E2 = V[i4] - V[i3];
+//			N = VectorCross(E1, E2);
+//
+//			if (N.norm() > DOUBLE_EPSILON)
+//			{
+//				F.push_back(Vector3i(i1, i3, i4));
+//				NF.push_back(N.normalize());
+//			}
+//		}
+//
+//		//建筑物上顶面剖分生成面片，面片法向量均为正z轴方向即Vector3d(0,0,1),凹多边形三角化特殊处理见网址：http://blog.sina.com.cn/s/blog_5a6f39cf0101374h.html
+//		bool convex = true; //为true时是凸多边形，false时是凹多边形
+//		vector<Vector3d> upper_face = local_Buildings[buildings_id].upper_facePoint;
+//		upper_face.pop_back(); //首末点重复，所以要删掉末尾的重复点
+//		int count1 = upper_face.size();
+//
+//		for (int id = 0; id < count1; id++)
+//		{
+//			Vector3d v1, v2, v3;
+//			v1 = upper_face[id];
+//			v2 = upper_face[(id + 1) % count1];
+//			v3 = upper_face[(id + 2) % count1];
+//
+//			if (Dot(VectorCross(v2 - v1, v3 - v2), Vector3d(0, 0, -1)) < DOUBLE_EPSILON)
+//			{
+//				concave_polygonNum++; 
+//				break;
+//			}
+//		}
+//
+//		//判断多边形是否自相交
+//		bool cross = false;
+//		for (int i = 0; i < count1; i++)
+//		{
+//			Vector3d a(upper_face[i]);
+//			Vector3d b(upper_face[(i + 1) % count1]);
+//			for (int j = i; j < count1; j++)
+//			{
+//				Vector3d c(upper_face[j]);
+//				Vector3d d(upper_face[(j + 1) % count1]);
+//
+//				if ((a == c || a == d) && (b == c || b == d))
+//					continue;
+//
+//				if (Dot(VectorCross(d - c, a - c), VectorCross(d - c, b - c)) < 0 &&
+//					Dot(VectorCross(b - a, c - a), VectorCross(b - a, d - a)) < 0)
+//				{
+//					cross = true;
+//					break;
+//				}
+//			}
+//			if (cross)
+//				break;
+//		}
+//		
+//		if (cross)
+//			continue;
+//
+//		//判断多边形顶点是顺时针方向还是逆时针方向读入
+//		DCList polygon1;
+//		for (int id = 0; id <count1; id++)
+//			polygon1.AddBack(upper_face[id], id+V_size);
+//
+//		//如果以顺时针方向读取则需要转换为以逆时针方向存储
+//		DCList polygon2;
+//		if (polygon1.IsClockwise())
+//		{
+//			for (int id = count1 - 1; id >= 0; id--)
+//				polygon2.AddBack(upper_face[id], id + V_size);
+//		}
+//		else
+//		{
+//			for (int id = 0; id < count; id++)
+//				polygon2.AddBack(upper_face[id], id + V_size);
+//		}
+//		
+//		//剖分建筑物上顶面
+//		node *tmp = polygon2.GetNodeAt(0);
+//
+//		//判断顶点个数
+//		while (polygon2.GetLength() > 3)
+//		{
+//		
+//			//判断凹凸性
+//			if (polygon2.IsConvex(tmp))
+//			{
+//				node *judge = tmp->next->next;
+//				bool flag = false;
+//				while (judge != tmp->pre)
+//				{
+//					//判断是否在三角形内
+//					if (polygon2.IsInterior(tmp, judge))
+//					{
+//						flag = true;
+//						break;
+//					}
+//					judge = judge->next;
+//				}
+//
+//				//加入三角面片
+//				if (!flag)
+//				{
+//					E1 = tmp->pre->v_node - tmp->v_node;
+//					E2 = tmp->v_node - tmp->next->v_node;
+//					N = VectorCross(E1, E2);
+//					if (N.norm() > DOUBLE_EPSILON)
+//					{
+//						F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
+//						NF.push_back(N.normalize());
+//					}
+//					node* n = tmp->next;
+//					polygon2.Delete(polygon2.GetCurrPos(tmp));
+//					tmp = n;
+//				}
+//				else
+//				{
+//					tmp = tmp->next;
+//				}
+//			}
+//			else
+//			{
+//				tmp = tmp->next;
+//			}
+//		}
+//
+//		//加入最后一个三角形
+//		E1 = tmp->pre->v_node - tmp->v_node;
+//		E2 = tmp->v_node - tmp->next->v_node;
+//		N = VectorCross(E1, E2);
+//		if (N.norm() > DOUBLE_EPSILON)
+//		{
+//			F.push_back(Vector3i(tmp->pre->id, tmp->id, tmp->next->id));
+//			NF.push_back(N.normalize());
+//		}
+//	}
+//
+//	//一栋建筑物处理完毕
+//	cout << "info: 局部建筑物数量是" << local_Buildings.size() << endl;
+//	cout << "info: 局部建筑物面片数量是" << F.size() << " 凹建筑物数量是" << concave_polygonNum << endl;
+//
+//	std::vector<Vector3d>::const_iterator v = V.begin();
+//	MinPos = Min(MinPos,scene->getMinPoint());
+//	MaxPos = Max(MaxPos, scene->getMaxPoint());
+//	for (++v; v != V.end(); ++v)
+//	{
+//		MinPos = Min(MinPos, (*v));
+//		MaxPos = Max(MaxPos, (*v));
+//	}
+//	cout << "info: 结点生成完毕！" << endl;
+//
+//}
 
 
 

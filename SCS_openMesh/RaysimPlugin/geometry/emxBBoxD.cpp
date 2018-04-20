@@ -21,7 +21,7 @@ emxBBox Union(const emxBBox &b, const emxBBox &b2)
 
 bool emxBBox::IntersectP(const emxRay &ray, double *hitt0, double *hitt1) const
 {
-	double t0 = -INFINITY, t1 = INFINITY;
+	double t0 = -INFINITY_UEES, t1 = INFINITY_UEES;
 	for (int i = 0; i < 3; ++i) {
 		if(fabs(ray.direction[i]) > 0/*DOUBLE_EPSILON*/) {
 			// Update interval for _i_th bounding box slab

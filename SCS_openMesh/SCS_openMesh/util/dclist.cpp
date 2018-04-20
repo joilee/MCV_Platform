@@ -1,5 +1,6 @@
 #include "dclist.h"
 #include <iostream>
+#include <util/emxUtilityInc.h>
 
 using namespace std;
 
@@ -128,9 +129,9 @@ bool DCList::IsConvex(node* curr)
 	Vector3d pq = getVector(curr,p);
 	Vector3d qr = getVector(r,curr);
 
-	Vector3d n(0.0, 0.0, 1.0);
+	Vector3d n(0.0, 0.0, -1.0);
 
-	if (Dot(VectorCross(pq, qr), n) >= 0)
+	if (Dot(VectorCross(pq, qr), n) < DOUBLE_EPSILON)
 		return true;
 	else
 		return false;

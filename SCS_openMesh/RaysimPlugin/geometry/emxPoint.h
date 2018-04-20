@@ -25,7 +25,7 @@ struct emxPoint {  //½ÓÊÕµãµÄÊı¾İ½á¹¹£º½ÓÊÕµãÎ»ÖÃ£¬ÉäÏß´«²¥¹ı³ÌÖĞÏà½»µÄ½»µãÊıÄ¿£
 
 	// init the size of intersection
 	void InitSize(size_t size) {
-		position = Vector3d(INFINITY, INFINITY, INFINITY);
+		position = Vector3d(INFINITY_UEES, INFINITY_UEES, INFINITY_UEES);
 		number = 0;
 		if(pIntersection != NULL) {
 			delete []pIntersection;

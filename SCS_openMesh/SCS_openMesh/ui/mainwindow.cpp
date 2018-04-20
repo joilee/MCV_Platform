@@ -400,11 +400,6 @@ void MainWindow::meshAll()
 
 }
 
-
-
-
-
-
 void MainWindow::loadPlugin()
 {
 	globalContext *gctx = globalContext::GetInstance();
