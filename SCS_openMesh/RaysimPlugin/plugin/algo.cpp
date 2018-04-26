@@ -575,7 +575,7 @@ void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField*>  &EFieldArray, vector<
 void algo::Calc_Signal(EField *NField, TransAntenna &AP, int &path_id, vector<Vedge> &Edge_list, Antenna_Para* aPara)
 {
 	Vector3d direction = (NField->Path[path_id].Path_interPoint[1] - NField->Path[path_id].Path_interPoint[0]).normalize();
-	double length = direction.norm();
+	double length = (NField->Path[path_id].Path_interPoint[1] - NField->Path[path_id].Path_interPoint[0]).norm();
 	//Tpolor是初始场强方向
 	Vector3d Tpolor = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),direction.normalize())*(direction.normalize());  //此处的direction是不是需要normalize？？
 
@@ -2169,7 +2169,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			}
 			m_logText->addText(QStringLiteral("接收点设置完毕"));
 			//接收点的内外特征判断
-			Point_In_Out( m_siteData, currentModel->getLocalScene()->getTotal_Building());
+ 			Point_In_Out( m_siteData, currentModel->getLocalScene()->getTotal_Building());
 			//接收点设置完毕
 
 		//	emxModel * LocalVirtualSimPlane = new emxModel(currentModel->getGround_Mesh(), cptPara->altitude);
@@ -2199,25 +2199,25 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			m_logText->addText("time_RefTransPath::  " + QString::number(time_RefTransPath));
 
 			//绕射
-			//
-			//if (cptPara->diffractionNumPara >= 1)
-			//{
-			//	vector<Vedge>& currentEdge = currentModel->getAP_Edge_List();
-			//	//一次绕射
-			//	valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
-			//	double time13 = clock();
-			//	double time_once_diffPath = (time13 - time12) / 1000;
-			//	fout << "time_once_diffPath:  " << time_once_diffPath << endl;
-			//
-			//	m_logText->addText(QStringLiteral("一次绕射计算完毕"));
-			//	m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
-			//	
-			//	//反射加绕射
-			//	valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
-			//	double time16 = clock();
-			//	double time_Ref_LastdiffPath = (time16 - time13) / 1000;
-			//	fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
-			//
+			
+			if (cptPara->diffractionNumPara >= 1)
+			{
+				vector<Vedge>& currentEdge = currentModel->getAP_Edge_List();
+				//一次绕射
+				valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
+				double time13 = clock();
+				double time_once_diffPath = (time13 - time12) / 1000;
+				fout << "time_once_diffPath:  " << time_once_diffPath << endl;
+			
+				m_logText->addText(QStringLiteral("一次绕射计算完毕"));
+				m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
+				
+				//反射加绕射
+				valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
+				double time16 = clock();
+				double time_Ref_LastdiffPath = (time16 - time13) / 1000;
+				fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
+			
 			//	/*m_logText->addText("time_Ref_LastdiffPath:  " + QString::number(time_Ref_LastdiffPath));
 			//	if (cptPara->diffractionNumPara>=2)
 			//	{
@@ -2232,7 +2232,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 
 			//	}
 			//	*/
-			//}
+			}
 			
 			double time18 = clock();
 			double time_totalValidPath = (time18 - time10) / 1000;
