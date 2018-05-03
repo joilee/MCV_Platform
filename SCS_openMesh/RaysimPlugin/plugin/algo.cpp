@@ -2200,39 +2200,39 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 
 			//绕射
 			
-			if (cptPara->diffractionNumPara >= 1)
-			{
-				vector<Vedge>& currentEdge = currentModel->getAP_Edge_List();
-				//一次绕射
-				valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
-				double time13 = clock();
-				double time_once_diffPath = (time13 - time12) / 1000;
-				fout << "time_once_diffPath:  " << time_once_diffPath << endl;
-			
-				m_logText->addText(QStringLiteral("一次绕射计算完毕"));
-				m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
-				
-				//反射加绕射
-				valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
-				double time16 = clock();
-				double time_Ref_LastdiffPath = (time16 - time13) / 1000;
-				fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
-			
-			//	/*m_logText->addText("time_Ref_LastdiffPath:  " + QString::number(time_Ref_LastdiffPath));
-			//	if (cptPara->diffractionNumPara>=2)
-			//	{
-			//		vector<int> edgeID = currentModel->getAP_Edge_ID();
-			//		//多次绕射
-			//		valid_NVDiffPath(edgeID, currentEdge, AP_KdTree, AP_position, m_siteData, cptPara->diffractionNumPara);
-			//		double time17 = clock();
-			//		double time_multiple_diffPath = (time17 - time16) / 1000;
-			//		fout << "time_multiple_diffPath:  " << time_multiple_diffPath << endl;
-			//		m_logText->addText(QStringLiteral("多次绕射计算完毕"));
-			//		m_logText->addText("time_multiple_diffPath :  " + QString::number(time_multiple_diffPath));
+			//if (cptPara->diffractionNumPara >= 1)
+			//{
+			//	vector<Vedge>& currentEdge = currentModel->getAP_Edge_List();
+			//	//一次绕射
+			//	valid_OnceDiffPath(currentEdge, AP_KdTree, AP_position, m_siteData);
+			//	double time13 = clock();
+			//	double time_once_diffPath = (time13 - time12) / 1000;
+			//	fout << "time_once_diffPath:  " << time_once_diffPath << endl;
+			//
+			//	m_logText->addText(QStringLiteral("一次绕射计算完毕"));
+			//	m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
+			//	
+			//	//反射加绕射
+			//	valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
+			//	double time16 = clock();
+			//	double time_Ref_LastdiffPath = (time16 - time13) / 1000;
+			//	fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
+			//
+			////	/*m_logText->addText("time_Ref_LastdiffPath:  " + QString::number(time_Ref_LastdiffPath));
+			////	if (cptPara->diffractionNumPara>=2)
+			////	{
+			////		vector<int> edgeID = currentModel->getAP_Edge_ID();
+			////		//多次绕射
+			////		valid_NVDiffPath(edgeID, currentEdge, AP_KdTree, AP_position, m_siteData, cptPara->diffractionNumPara);
+			////		double time17 = clock();
+			////		double time_multiple_diffPath = (time17 - time16) / 1000;
+			////		fout << "time_multiple_diffPath:  " << time_multiple_diffPath << endl;
+			////		m_logText->addText(QStringLiteral("多次绕射计算完毕"));
+			////		m_logText->addText("time_multiple_diffPath :  " + QString::number(time_multiple_diffPath));
 
-			//	}
-			//	*/
-			}
+			////	}
+			////	*/
+			//}
 			
 			double time18 = clock();
 			double time_totalValidPath = (time18 - time10) / 1000;
@@ -2313,7 +2313,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 
 		siteCount++;
 		siteIterator++;
-	}//
+	}
 
 	double endTime = clock();
 	double runtime = (endTime - beginTime) / 1000;
