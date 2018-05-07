@@ -257,7 +257,7 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	rightbottomX=0;
 	rightbottomY=0;
 	predictPrecision=5;
-	predictAltitude=5;
+	predictAltitude=1.5;
 
 	//布局
 	QGroupBox *firstgroupbox=new QGroupBox(QStringLiteral("仿真区域（单位：m）"));
@@ -336,7 +336,7 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	rightbottomXinput->setText("0");
 	rightbottomYinput->setText("0");
 	Precisioninput->setText("5");
-	Altitudeinput->setText("5");
+	Altitudeinput->setText("1.5");
 
 	connect(simuModeGroup, SIGNAL(buttonToggled(int, bool)), this, SLOT(computingModeButtonsToggled(int, bool)));
 	connect(loadReceieverPointFile, SIGNAL(clicked()), this, SLOT(openNo_SimplaneReceiverFile()));
@@ -460,9 +460,9 @@ simuArgument::simuArgument(QWidget* parent)
 
 void simuArgument::getSimuArgu(double &reflect,double &refract,double &diffract,bool &isDiff,int transIndex,double &sample,double &radius,double &beamNum)
 {
-	refract=lineEdit_RT_ReflectCount->text().toDouble();
-	refract=lineEdit_RT_ReflectCount->text().toDouble();
-	diffract=lineEdit_RT_RefractCount->text().toDouble();
+	reflect=lineEdit_RT_ReflectCount->text().toDouble();
+	refract=lineEdit_RT_RefractCount->text().toDouble();
+	diffract=lineEdit_RT_Diffraction->text().toDouble();
 	if (comboBox_diffraction->currentIndex()==0)
 	{
 		isDiff=false;
