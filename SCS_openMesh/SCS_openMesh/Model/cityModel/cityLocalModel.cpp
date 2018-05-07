@@ -175,7 +175,9 @@ void cityLocalModel::generateBuildingMesh()
 	}
 
 	cout << "info: 局部建筑物数量是" << local_Buildings.size() << endl;
-	cout << "info: 局部建筑物面片数量是" << F.size() << " 凹建筑物数量是" << concave_polygonNum << endl;
+	cout << " 凹建筑物数量是" << concave_polygonNum << endl;
+	cout << "info: 局部建筑物点数量是" << V.size() << endl;
+	cout << "info: 局部建筑物面片数量是" << F.size() << endl;
 
 	std::vector<Vector3d>::const_iterator v = V.begin();
 	MinPos = Min(MinPos, scene->getMinPoint());
@@ -698,7 +700,7 @@ cityLocalModel::cityLocalModel(Vector3d  AP_position, double  LocalRange, citySc
 	name = _name;
 	id = atoi(_name.c_str());
 	scene = new cityScene(AP_position, LocalRange, cityAll);
-	loadLocalGround(AP_position, LocalRange, scene);
+//	loadLocalGround(AP_position, LocalRange, scene);
 	cout << "Info: 地面场景构建完成" << endl;
 
 	clearVandF();

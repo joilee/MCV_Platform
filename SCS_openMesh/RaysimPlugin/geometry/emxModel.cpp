@@ -635,6 +635,10 @@ emxModel::emxModel(BaseModel *para)
 		}
 			*/
 	}
+
+	cout << "vertexVec的大小为：" << vertexVec.size() << endl;
+	cout << "faceVec的大小为：" << faceVec.size() << endl;
+
 	// calculate the bounding box
 	std::vector<Vector3d>::const_iterator v = V.begin();
 	minPos = (*v);

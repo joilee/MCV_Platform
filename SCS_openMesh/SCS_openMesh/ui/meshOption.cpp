@@ -160,9 +160,9 @@ void meshOptionDialog::dynamicLoadSite(int index) {
         globalContext *globalCtx=globalContext::GetInstance();
 		int siteID = globalCtx->cptManager->getContainer()->getSiteIDByOrder(index-1);
 		Vector3d AP_postion = globalCtx->cptManager->getSitePosition(siteID);
-        centerXLE->setText(QString::number(AP_postion.x));
-        centerYLE->setText(QString::number(AP_postion.y,'g',7));
-        centerZLE->setText(QString::number(AP_postion.z));
+		centerXLE->setText(QString::number(AP_postion.x, 'f', 5));
+        centerYLE->setText(QString::number(AP_postion.y,'f',5));
+		centerZLE->setText(QString::number(AP_postion.z, 'f', 5));
         centerXLE->setReadOnly(true);
         centerYLE->setReadOnly(true);
         centerZLE->setReadOnly(true);

@@ -9,16 +9,18 @@ void cityScene::readGround(string p)
 {
 	//导入海拔信息
 	ground = new cityGroundVector(p);
-	MaxPoint = Max(MaxPoint, Vector3d(ground->getXmax(), ground->getYmax(), numeric_limits<double>::min()));
-	MinPoint = Min(MinPoint, Vector3d(ground->getXmin(), ground->getYmin(), numeric_limits<double>::max()));
+	//MaxPoint = Max(MaxPoint, Vector3d(ground->getXmax(), ground->getYmax(), numeric_limits<double>::min()));
+	//MinPoint = Min(MinPoint, Vector3d(ground->getXmin(), ground->getYmin(), numeric_limits<double>::max()));
 }
 
 cityScene::cityScene(vector<string> _v, vector<string> _h, string _p)
 {
 	concave_num = 0;
-	MinPoint = Vector3d(numeric_limits<double>::max(), numeric_limits<double>::max(), numeric_limits<double>::max());
-	MaxPoint = Vector3d(numeric_limits<double>::min(), numeric_limits<double>::min(), numeric_limits<double>::min());
+	
+	MinPoint = Vector3d(INFINITY_UEES, INFINITY_UEES, INFINITY_UEES);
+	MaxPoint = Vector3d(-INFINITY_UEES, -INFINITY_UEES, -INFINITY_UEES);
 	readGround(_p);
+	
 	cout << "Info: 地面模型读入成功。" << endl;
 	string Scene2DInfoFile_path, SceneHeightInfoFile_path;
 
@@ -181,7 +183,7 @@ void cityScene::GenerateEdge()
 
 double cityScene:: getAltitude(double x, double y)
 {
-	if (ground->existed())
+	/*if (ground->existed())
 	{
 		return ground->getAltitudeFrom0(x, y);
 	}
@@ -189,13 +191,12 @@ double cityScene:: getAltitude(double x, double y)
 	{
 		cout << "error: ground is not existed!" << endl;
 		return 0;
-	 }
+	 }*/
+	return 0;
 }
 
 cityScene::cityScene(Vector3d  AP_position, double  LocalRange, cityScene* cityAll)
 {
-	MinPoint = Vector3d(DBL_MAX, DBL_MAX, DBL_MAX);
-	MaxPoint = Vector3d(DBL_MIN, DBL_MIN, DBL_MIN);
 	MinPoint = AP_position - Vector3d(LocalRange / 2, LocalRange / 2, 0);
 	MaxPoint = AP_position + Vector3d(LocalRange / 2, LocalRange / 2, 0);
 
@@ -217,9 +218,10 @@ cityScene::cityScene(Vector3d  AP_position, double  LocalRange, cityScene* cityA
 				break;
 			}
 		}
+		
 		if (in_range)
 		{
-			total_Buildings.push_back(cityAll->getBuildingByValue(buildings_id));
+			total_Buildings.push_back(tmpBuilding);
 			//cout << buildings_id << " "<<tmpBuilding.height<<endl;
 		}
 	}
@@ -227,12 +229,12 @@ cityScene::cityScene(Vector3d  AP_position, double  LocalRange, cityScene* cityA
 	//step2 生成局部的cityGround模型数据
 	//从第一个地面中实现
 	
-	cityGround * ground_1 = new cityGround(* ((cityAll->getGround()->getGroundVector())[0]) , AP_position,LocalRange);
+//	cityGround * ground_1 = new cityGround(* ((cityAll->getGround()->getGroundVector())[0]) , AP_position,LocalRange);
 
-	ground = new cityGroundVector;
-	ground->addItem(ground_1);
-	MinPoint = Min(MinPoint, Vector3d(ground->getXmin(), ground->getYmin(), DBL_MAX));
-	MaxPoint = Max(MaxPoint, Vector3d(ground->getXmax(), ground->getYmax(), DBL_MIN));
+//	ground = new cityGroundVector;
+//	ground->addItem(ground_1);
+//	MinPoint = Min(MinPoint, Vector3d(ground->getXmin(), ground->getYmin(), DBL_MAX));
+//	MaxPoint = Max(MaxPoint, Vector3d(ground->getXmax(), ground->getYmax(), DBL_MIN));
 	//step3 生成建筑物棱边
 	GenerateEdge();
 }
