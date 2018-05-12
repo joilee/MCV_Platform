@@ -175,20 +175,20 @@
         myChart = echarts.init(document.getElementById('main'));
         myChart.clear();
         myChart.setOption(defaultOption);
-        
+
         //获取数据并绘制
         var RSRP = [[1, 1], [2, 2], [3, 3]];
         var Correction = [[1, 6], [2, 1], [3, 5]];
-        var ParaBefore = [0,0,0];
-        var ParaAfter = [0,0,0];
+        var ParaBefore = [0, 0, 0];
+        var ParaAfter = [0, 0, 0];
         window.onresize = myChart.resize;
         window.onload = function () {
+            setPara();
             new QWebChannel(qt.webChannelTransport, function (channel) {
                 // make dialog object accessible globally
                 var content = channel.objects.content;
                 content.sendText.connect(getData);
             });
-            setPara();
         }
 
         //设置参数
@@ -209,6 +209,7 @@
             myChart.clear();
             defaultOption.series = tmpseries;
             myChart.setOption(defaultOption, true);
+            setPara();
         }
 
         //获取数据
@@ -218,22 +219,20 @@
             Correction = [];
             ParaBefore = [];
             ParaAfter = [];
-            
-            //存入数据
-            for (var i in param) {
 
-                if (param[i].ID == -1)
-                {
-                    ParaBefore.push(param[i].BRSP);
+            //存入数据
+            for (var i = 0; i < param.length; i++) {
+                if (param[i].ID == -1) {
+                    ParaBefore.push(param[i].RSRP);
                     ParaBefore.push(param[i].Before);
                     ParaBefore.push(param[i].Correction);
-                    param.remove(i);
+                    continue;
                 }
                 if (param[i].ID == -2) {
-                    ParaAfter.push(param[i].BRSP);
+                    ParaAfter.push(param[i].RSRP);
                     ParaAfter.push(param[i].Before);
                     ParaAfter.push(param[i].Correction);
-                    param.remove(i);
+                    continue;
                 }
 
                 if (param[i].hasOwnProperty("RSRP")) {
@@ -249,8 +248,7 @@
         }
 
         //设置参数
-        function setPara()
-        {
+        function setPara() {
             var obj = document.getElementById("before_mean");
             obj.innerText = ParaBefore[0];
 

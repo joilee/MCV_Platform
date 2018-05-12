@@ -113,16 +113,16 @@ void scatterWidget::showResult()
 	
 	QJsonObject tempObject1;
 	tempObject1.insert("ID", -1);
-	tempObject1.insert("RSRP", before.x);
-	tempObject1.insert("Before", before.y);
-	tempObject1.insert("Correction", before.z);
+	tempObject1.insert("RSRP", round(before.x*100)/100.0);
+	tempObject1.insert("Before", round(before.y*100)/100.0);
+	tempObject1.insert("Correction", round(before.z*100)/100.0);
 	dataArray.append(tempObject1);
 
 	QJsonObject tempObject2;
 	tempObject2.insert("ID", -2);
-	tempObject2.insert("RSRP", after.x);
-	tempObject2.insert("Before", after.y);
-	tempObject2.insert("Correction", after.z);
+	tempObject2.insert("RSRP", round(after.x*100)/100.0);
+	tempObject2.insert("Before", round(after.y*100)/100.0);
+	tempObject2.insert("Correction", round(after.z*100)/100.0);
 	dataArray.append(tempObject2);
 
 	m_content.setSendText(dataArray);
