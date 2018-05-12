@@ -216,7 +216,7 @@ void fieldpoint::openNo_SimplaneReceiverFile()
 	}
 	globalCtx->cptManager->openNo_simplaneReceiver(path.toStdString());
 	filePath->setText(path);
-
+	globalCtx->cptManager->setMeasuredFilePath(path.toStdString());
 	return;
 }
 

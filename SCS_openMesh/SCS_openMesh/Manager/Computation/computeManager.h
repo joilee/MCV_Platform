@@ -94,6 +94,9 @@ public:
 	PluginSubject * getPluginSubject();
 
 	void sendPluginNewState();
+
+	void setMeasuredFilePath(string path){ measuredFilePath = path; }
+	string getMeasuredFilePath(){ return measuredFilePath; }
 private:
 	SitesContainer* sitesContainer;
 	ComputePara* cptPara;
@@ -102,6 +105,7 @@ private:
 	bool siteFlag;//是否读取天线
 	bool antennaFlag;//是否读取增益
 	bool noSimFlag;
+	string measuredFilePath;
 
 	QString pluginPath;
 };

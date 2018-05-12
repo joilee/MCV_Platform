@@ -13,7 +13,6 @@ public:
 	scatterWidget(QWidget *parent = Q_NULLPTR);
 	~scatterWidget();
 
-private slots:
 	
 	/**
 	  * @Method:    openTestFile
@@ -39,17 +38,16 @@ private slots:
 	*/
 	void showResult();
 
-	void showPara();
+	//void showPara();
 
-	void modeButtonToggled(int id, bool flag);
+	//void modeButtonToggled(int id, bool flag);
 private:
 	Ui::scatterDialog *ui;
-	QButtonGroup *modeGroup;
+	//QButtonGroup *modeGroup;
 	Document m_content;
 
-	correctWidget * dataWidget;
-	//data
-	void initData();
-	void enableShowMode(bool a);
-	void enableCorrectMode(bool a);
+	//correctWidget * dataWidget;
+	//void initData();
+	//void enableShowMode(bool a);
+	//void enableCorrectMode(bool a);
 };

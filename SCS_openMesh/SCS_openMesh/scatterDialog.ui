@@ -56,7 +56,7 @@
        </size>
       </property>
       <property name="title">
-       <string>散点图</string>
+       <string/>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
@@ -67,199 +67,15 @@
            <height>460</height>
           </size>
          </property>
+         <zorder>groupBox_File</zorder>
+         <zorder>groupBox_File</zorder>
+         <zorder>groupBox_File</zorder>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
-    <item>
-     <widget class="QGroupBox" name="groupBox_File">
-      <property name="minimumSize">
-       <size>
-        <width>920</width>
-        <height>150</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>180</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>文件</string>
-      </property>
-      <widget class="QGroupBox" name="groupBox_mode">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>901</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>模式</string>
-       </property>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>3</x>
-          <y>21</y>
-          <width>563</width>
-          <height>57</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0" rowspan="2">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>14</width>
-             <height>29</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="1">
-          <widget class="QRadioButton" name="radioButton_2">
-           <property name="text">
-            <string>校正</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>38</width>
-             <height>17</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>实测文件</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="lineEdit"/>
-         </item>
-         <item row="0" column="5">
-          <widget class="QPushButton" name="pushButton">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>导入</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <spacer name="horizontalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>48</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="3" rowspan="2">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>选择站点</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>14</width>
-             <height>17</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="2" column="1">
-          <widget class="QRadioButton" name="radioButton">
-           <property name="text">
-            <string>站点展示</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4">
-          <widget class="QComboBox" name="comboBox_Site"/>
-         </item>
-         <item row="2" column="6">
-          <spacer name="horizontalSpacer_5">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>158</width>
-             <height>17</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-      <widget class="QPushButton" name="showResult_Button">
-       <property name="geometry">
-        <rect>
-         <x>790</x>
-         <y>110</y>
-         <width>75</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>展示</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="correct_Button">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>110</y>
-         <width>75</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>对比参数</string>
-       </property>
-      </widget>
-      <zorder>showResult_Button</zorder>
-      <zorder>groupBox_mode</zorder>
-      <zorder>correct_Button</zorder>
-     </widget>
-    </item>
    </layout>
-   <zorder>groupBox_File</zorder>
-   <zorder>groupBox_Scatter</zorder>
   </widget>
  </widget>
  <customwidgets>

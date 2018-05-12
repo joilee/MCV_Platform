@@ -47,7 +47,7 @@ public:
 	*/
 	void saveCellFile(QString dir, int pci,int siteID);
 
-	void loadMeasuredFile(QString file);
+	void loadMeasuredFile(string file);
 
 	void correct(Vector3d &before, Vector3d &after);
 

@@ -200,10 +200,10 @@ void VisualManager::saveCellFile(QString dir,int pci,int siteID)
 	return;
 }
 
-void VisualManager::loadMeasuredFile(QString path)
+void VisualManager::loadMeasuredFile(string path)
 {
 	visContainer->clearMeasuredData();
-	ifstream infile((path.toStdString()).c_str(), ios::in | ios::_Nocreate);
+	ifstream infile((path).c_str(), ios::in | ios::_Nocreate);
 	if (!infile)
 	{
 		cout << "can not open file!" << endl;

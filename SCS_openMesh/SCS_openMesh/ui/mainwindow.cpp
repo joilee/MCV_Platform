@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.setupUi(this);
 	init();
 	createActions();
+	setWindowIcon(QIcon("UEES.ico"));
 }
 
 MainWindow::~MainWindow()
@@ -327,6 +328,14 @@ void MainWindow::showLocal()
 void MainWindow::showScatterWidget()
 {
 	scatter->show();
+	globalContext *globalCtx = globalContext::GetInstance();
+	if (!globalCtx->visualManager->getContainer()->isDataExist())
+	{
+		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少仿真数据，请先做仿真计算！"));
+		return;
+	}
+	scatter->openMeasuredFile();
+	scatter->showResult();
 }
 
 /************************************************************************/

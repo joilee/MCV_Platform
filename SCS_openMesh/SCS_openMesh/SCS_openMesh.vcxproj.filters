@@ -221,4 +221,10 @@
       <ParseFiles>true</ParseFiles>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="myapp.ico" />
+    <Image Include="Resources\line.png" />
+    <Image Include="Resources\scatter.png" />
+  </ItemGroup>
 </Project>
