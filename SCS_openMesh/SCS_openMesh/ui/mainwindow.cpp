@@ -121,7 +121,7 @@ void MainWindow::createActions()
 	connect(ui.action_obj, SIGNAL(triggered()), this, SLOT(loadObj()));
 	connect(ui.action_9, SIGNAL(triggered()), this, SLOT(setMaterial()));
 	connect(ui.action_matFile, SIGNAL(triggered()), this, SLOT(open_material()));
-	connect(ui.action_6, SIGNAL(triggered()), this, SLOT(setMeshOption()));
+	//connect(ui.action_6, SIGNAL(triggered()), this, SLOT(setMeshOption()));
 	connect(ui.action_startMesh, SIGNAL(triggered()), this, SLOT(meshAll()));
 	connect(ui.action_saveLocal, SIGNAL(triggered()), this, SLOT(saveLocalScene()));
 	connect(ui.action_loadPlugin, SIGNAL(triggered()), this, SLOT(loadPlugin()));
@@ -130,7 +130,7 @@ void MainWindow::createActions()
 	connect(ui.action_showPoint, SIGNAL(triggered(bool)), this, SLOT(setDrawPointMode(bool)));
 	connect(ui.action_showLine, SIGNAL(triggered(bool)), this, SLOT(setDrawLineMode(bool)));
 	connect(ui.action_showFace, SIGNAL(triggered(bool)), this, SLOT(setDrawFaceMode(bool)));
-	connect(ui.action_GenerateModelPara, SIGNAL(triggered()), this, SLOT(generateModelPara()));
+	//connect(ui.action_GenerateModelPara, SIGNAL(triggered()), this, SLOT(generateModelPara()));
 	connect(ui.action_scatter, SIGNAL(triggered()), this, SLOT(showScatterWidget()));
 	connect(ui.action_saveResult, SIGNAL(triggered()), this, SLOT(saveAllResult()));
 	connect(ui.horizontalSlider_Scene_Alpha, SIGNAL(valueChanged(int)), this, SLOT(setModelAlpha(int)));
@@ -214,6 +214,7 @@ void MainWindow::setShowLineEdit(int id)
 void MainWindow::setModelAlpha(int a)
 {
 	ui.simuArea->setModelAlpha(a);
+	ui.simuPlane->setModelAlpha(a);
 	//outputLog(QString(QStringLiteral("设置局部模型透明度为：") + QString::number(a, 10)));
 }
 
@@ -361,6 +362,7 @@ void MainWindow::loadObj()
 /************************************************************************/
 void MainWindow::meshAll()
 {
+	setMeshOption();
 	setProgress(0);
 	globalContext *gctx = globalContext::GetInstance();
 	if (!gctx->modelManager->checkCityExist())
@@ -406,6 +408,9 @@ void MainWindow::meshAll()
 
 	ui.action_showLine->setChecked(true);
 	ui.action_showFace->setChecked(true);
+
+	gctx->modelManager->setModelPara();
+	outputLog(QStringLiteral("success: 生成模型参数成功！"));
 
 }
 

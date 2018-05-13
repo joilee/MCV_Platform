@@ -552,12 +552,10 @@ public:
         menuFILE->addSeparator();
         menuFILE->addAction(action_saveResult);
         menuFILE->addAction(action_loadResult);
-        menuMesh->addAction(action_6);
         menuMesh->addAction(action_startMesh);
         menuMesh->addSeparator();
         menuMesh->addAction(action_9);
         menuMesh->addSeparator();
-        menuMesh->addAction(action_GenerateModelPara);
         menuComputer->addAction(computerOption);
         menuComputer->addSeparator();
         menuComputer->addAction(action_loadPlugin);

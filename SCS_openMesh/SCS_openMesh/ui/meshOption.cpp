@@ -96,6 +96,8 @@ meshOptionDialog::meshOptionDialog(QWidget *parent): QDialog(parent) {
     okbutton=new QPushButton(QStringLiteral("确定"));
 
     exitbutton=new QPushButton(QStringLiteral("取消"));
+	okbutton->setMaximumWidth(60);
+	exitbutton->setMaximumWidth(60);
     cbo_XYZ=new QComboBox();
     cbo_XYZ->addItem(QStringLiteral("自定义"));
     refreshButton=new QPushButton(QStringLiteral("刷新"));
@@ -111,6 +113,7 @@ meshOptionDialog::meshOptionDialog(QWidget *parent): QDialog(parent) {
 
 	modelNum = ModelNum::SINGLE_MODEL;
     createActions();
+	setFixedSize(350, 180);
 }
 
 
@@ -160,9 +163,9 @@ void meshOptionDialog::dynamicLoadSite(int index) {
         globalContext *globalCtx=globalContext::GetInstance();
 		int siteID = globalCtx->cptManager->getContainer()->getSiteIDByOrder(index-1);
 		Vector3d AP_postion = globalCtx->cptManager->getSitePosition(siteID);
-		centerXLE->setText(QString::number(AP_postion.x, 'f', 5));
-        centerYLE->setText(QString::number(AP_postion.y,'f',5));
-		centerZLE->setText(QString::number(AP_postion.z, 'f', 5));
+		centerXLE->setText(QString::number(AP_postion.x, 'f', 2));
+        centerYLE->setText(QString::number(AP_postion.y,'f',2));
+		centerZLE->setText(QString::number(AP_postion.z, 'f', 2));
         centerXLE->setReadOnly(true);
         centerYLE->setReadOnly(true);
         centerZLE->setReadOnly(true);
@@ -191,7 +194,7 @@ meshOptionDialog::~meshOptionDialog() {
 
 }
 void meshOptionDialog::setTheLayout() {
-    firstGroup=new QGroupBox(QStringLiteral("剖分范围"));
+    firstGroup=new QGroupBox(QStringLiteral("剖分设置"));
 
     QHBoxLayout* minusOneLayout = new QHBoxLayout;
     minusOneLayout->addWidget(singleModelMode);
@@ -204,7 +207,7 @@ void meshOptionDialog::setTheLayout() {
     zerolayout->addWidget(refreshButton);
 
     QHBoxLayout *firstLayout=new QHBoxLayout;
-    QLabel * label1=new QLabel(QStringLiteral("中心点"));
+    QLabel * label1=new QLabel(QStringLiteral("中心点   "));
     QLabel * label2=new QLabel(QStringLiteral("X:"));
     QLabel * label3=new QLabel(QStringLiteral("Y:"));
     QLabel * label4=new QLabel(QStringLiteral("Z:"));
@@ -216,7 +219,7 @@ void meshOptionDialog::setTheLayout() {
     firstLayout->addWidget(label4);
     firstLayout->addWidget(centerZLE);
 
-    QLabel * label5=new QLabel(QStringLiteral("剖分范围"));
+    QLabel * label5=new QLabel(QStringLiteral("剖分范围    "));
     QHBoxLayout *secondLayout=new QHBoxLayout;
     secondLayout->addWidget(label5);
     secondLayout->addWidget(rangeLE);

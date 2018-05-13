@@ -89,12 +89,10 @@
     <property name="title">
      <string>模型</string>
     </property>
-    <addaction name="action_6"/>
     <addaction name="action_startMesh"/>
     <addaction name="separator"/>
     <addaction name="action_9"/>
     <addaction name="separator"/>
-    <addaction name="action_GenerateModelPara"/>
    </widget>
    <widget class="QMenu" name="menuComputer">
     <property name="title">

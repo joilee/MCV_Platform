@@ -14,18 +14,20 @@ emitSource::emitSource(QWidget* parent) :antennaObserver("emit Source")
 	angleOfNorth=90;
 
 	//first group layout
-	firstGroup=new QGroupBox(tr("emit source"));
+	firstGroup = new QGroupBox(QStringLiteral("发射源"));
 
 	//firstLayout
-	QLabel  *angleLable=new QLabel(QStringLiteral("正北方向在场景坐标系中的phi角度[0,360]"));
+	QLabel  *angleLable=new QLabel(QStringLiteral("正北方向在场景坐标系中的phi角度"));
 	angleEdit= new QLineEdit;
 	angleEdit->setText("90");
+	angleEdit->setMaximumWidth(60);
 	QHBoxLayout *firstLayout=new QHBoxLayout;
 	firstLayout->addWidget(angleLable);
 	firstLayout->addWidget(angleEdit);
 
 	QLabel  *zhandian=new QLabel(QStringLiteral("导入站点参数信息"));
 	loadSitesButton=new QPushButton(QStringLiteral("添加"));
+	loadSitesButton->setMaximumWidth(60);
 	QHBoxLayout *secondLayout=new QHBoxLayout;
 	secondLayout->addWidget(zhandian);
 	secondLayout->addWidget(loadSitesButton);
@@ -38,6 +40,7 @@ emitSource::emitSource(QWidget* parent) :antennaObserver("emit Source")
 
 	QLabel *zengyi=new QLabel(QStringLiteral("天线方向增益文件"));
 	loadTransAntennaButton=new QPushButton(QStringLiteral("添加"));
+	loadTransAntennaButton->setMaximumWidth(60);
 	QHBoxLayout *thirdLayout=new QHBoxLayout;
 	thirdLayout->addWidget(zengyi);
 	thirdLayout->addWidget(loadTransAntennaButton);
@@ -263,38 +266,44 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	QGroupBox *firstgroupbox=new QGroupBox(QStringLiteral("仿真区域（单位：m）"));
 	rangeRadioButton = new QRadioButton(QStringLiteral("仿真面计算"));
 	pointRadioButton = new QRadioButton(QStringLiteral("接收点计算"));
-	customRadioButton = new QRadioButton(QStringLiteral("自定义计算"));
+	//customRadioButton = new QRadioButton(QStringLiteral("自定义计算"));
 	simuModeGroup = new QButtonGroup(this);
 	simuModeGroup->addButton(rangeRadioButton,1);
 	simuModeGroup->addButton(pointRadioButton,2);
-	simuModeGroup->addButton(customRadioButton,3);
+	//simuModeGroup->addButton(customRadioButton,3);
 	rangeRadioButton->setChecked(true);
 
 
 	//h4属于接收点模式
-	QLabel* label4=new QLabel(QStringLiteral("导入非仿真面接收点位置"));
+	QLabel* label4=new QLabel(QStringLiteral("   导入接收点位置  "));
 	QHBoxLayout *h4=new QHBoxLayout;
 	filePath=new QLineEdit;
 	filePath->setReadOnly(true);
+	filePath->setMaximumWidth(100);
 	loadReceieverPointFile=new QPushButton(QStringLiteral("导入"));
+	loadReceieverPointFile->setMaximumWidth(40);
 	h4->addWidget(label4);
 	h4->addWidget(filePath);
 	h4->addWidget(loadReceieverPointFile);
 
 	//h5属于仿真面模式
-	QLabel* label5=new QLabel(QStringLiteral("左上角（X，Y）"));
+	QLabel* label5=new QLabel(QStringLiteral("   左上角（X，Y）"));
 	leftupXinput=new QLineEdit;
 	leftupYinput=new QLineEdit;
 	leftupXinput->setReadOnly(true);
 	leftupYinput->setReadOnly(true);
+	leftupXinput->setMaximumWidth(70);
+	leftupYinput->setMaximumWidth(70);
 	QHBoxLayout *h5=new QHBoxLayout;
 	h5->addWidget(label5);
 	h5->addWidget(leftupXinput);
 	h5->addWidget(leftupYinput);
 
-	QLabel* label6=new QLabel(QStringLiteral("右下角（X，Y）"));
+	QLabel* label6=new QLabel(QStringLiteral("   右下角（X，Y）"));
 	rightbottomXinput=new QLineEdit;
 	rightbottomYinput=new QLineEdit;
+	rightbottomXinput->setMaximumWidth(70);
+	rightbottomYinput->setMaximumWidth(70);
 	rightbottomXinput->setReadOnly(true);
 	rightbottomYinput->setReadOnly(true);
 	QHBoxLayout*h6=new QHBoxLayout;
@@ -302,14 +311,16 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	h6->addWidget(rightbottomXinput);
 	h6->addWidget(rightbottomYinput);
 
-	QLabel *label7=new QLabel(QStringLiteral("预测精度"));
+	QLabel *label7=new QLabel(QStringLiteral("   预测精度"));
 	Precisioninput=new QLineEdit;
+	Precisioninput->setMaximumWidth(145);
 	QHBoxLayout *h7=new QHBoxLayout;
 	h7->addWidget(label7);
 	h7->addWidget(Precisioninput);
 
-	QLabel *label8=new QLabel(QStringLiteral("预测高度"));
+	QLabel *label8=new QLabel(QStringLiteral("   预测高度"));
 	Altitudeinput=new QLineEdit;
+	Altitudeinput->setMaximumWidth(145);
 	QHBoxLayout *h8=new QHBoxLayout;
 	h8->addWidget(label8);
 	h8->addWidget(Altitudeinput);
@@ -320,10 +331,9 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	total->addLayout(h6);
 
 	total->addWidget(pointRadioButton);
-	total->addLayout(h4);
-
 	total->addLayout(h7);
 	total->addLayout(h8);
+	total->addLayout(h4);
 
 	firstgroupbox->setLayout(total);
 	QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -379,8 +389,8 @@ simuArgument::simuArgument(QWidget* parent)
 	QGroupBox *firstgroupbox=new QGroupBox(QStringLiteral("仿真参数"));
 	QLabel *label1=new QLabel(QStringLiteral("反射次数"));
 	QLabel*label2=new QLabel(QStringLiteral("透射次数"));
-	QLabel*label2_5=new QLabel(QStringLiteral("透射损耗"));
-	QLabel*label3=new QLabel(QStringLiteral("绕射"));
+	QLabel*label2_5=new QLabel(QStringLiteral("透射损耗计算"));
+	QLabel*label3=new QLabel(QStringLiteral("是否考虑绕射"));
 	QLabel*label4=new QLabel(QStringLiteral("绕射次数"));
 	QLabel*label5=new QLabel(QStringLiteral("采样密度"));
 	QLabel*label6=new QLabel(QStringLiteral("采样球半径"));
@@ -396,6 +406,12 @@ simuArgument::simuArgument(QWidget* parent)
 	lineEdit_RT_sample=new QLineEdit;
 	lineEdit_RT_sample_radius=new QLineEdit;
 	lineEdit_RT_sampleBeamNum=new QLineEdit;
+	lineEdit_RT_ReflectCount->setMaximumWidth(130);
+	lineEdit_RT_RefractCount->setMaximumWidth(130);
+	lineEdit_RT_Diffraction->setMaximumWidth(130);
+	lineEdit_RT_sample->setMaximumWidth(130);;
+	lineEdit_RT_sample_radius->setMaximumWidth(130);
+	lineEdit_RT_sampleBeamNum->setMaximumWidth(130);
 
 
 	comboBox_diffraction->insertItem(0,QStringLiteral("不考虑绕射"));

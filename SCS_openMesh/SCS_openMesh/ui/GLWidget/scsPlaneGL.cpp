@@ -291,7 +291,7 @@ void scsPlaneGL::setAlpha(double a)
 
 void scsPlaneGL::setModelAlpha(double a)
 {
-	model_alpha = a;
+	model_alpha = ((double)a) / 100.0;
 }
 
 void scsPlaneGL::setModel()
@@ -313,7 +313,7 @@ void scsPlaneGL::drawSite()
 {
 	globalContext *globalCtx = globalContext::GetInstance();
 	vector<bool> mode;
-	mode.push_back(true);
+	mode.push_back(false);
 	mode.push_back(true);
 	mode.push_back(true);
 	if (globalCtx->modelManager->checkLocalExistByID(model))
