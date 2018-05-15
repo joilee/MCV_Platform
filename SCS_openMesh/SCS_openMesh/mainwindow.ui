@@ -39,14 +39,14 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="scsGlobalGL" name="ModelView">
        <attribute name="title">
         <string>模型场景</string>
        </attribute>
       </widget>
-      <widget class="scsLocalModelGLWidget" name="simuArea">
+      <widget class="scsLocalGL" name="simuArea">
        <attribute name="title">
         <string>仿真场景</string>
        </attribute>
@@ -109,9 +109,6 @@
     <property name="title">
      <string>可视化</string>
     </property>
-    <addaction name="action_ShowAll"/>
-    <addaction name="action_localscene"/>
-    <addaction name="separator"/>
     <addaction name="action_showPoint"/>
     <addaction name="action_showLine"/>
     <addaction name="action_showFace"/>
@@ -146,8 +143,6 @@
    <addaction name="action_deletePlugin"/>
    <addaction name="action_run"/>
    <addaction name="action_startMesh"/>
-   <addaction name="action_ShowAll"/>
-   <addaction name="action_localscene"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_outputLog">
@@ -260,26 +255,6 @@
             </property>
            </spacer>
           </item>
-          <item row="1" column="2">
-           <widget class="QSlider" name="horizontalSlider_Plane_Alpha">
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TicksAbove</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>仿真面透明度</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
@@ -293,8 +268,34 @@
             </property>
            </spacer>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>仿真面透明度</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="2">
            <widget class="QSlider" name="horizontalSlider_Scene_Alpha">
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QSlider" name="horizontalSlider_Plane_Alpha">
             <property name="maximum">
              <number>100</number>
             </property>
@@ -609,18 +610,6 @@
     <string>选项</string>
    </property>
   </action>
-  <action name="action_ShowAll">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/all.ico</normaloff>Resources/all.ico</iconset>
-   </property>
-   <property name="text">
-    <string>整体场景展示</string>
-   </property>
-  </action>
   <action name="action_obj">
    <property name="icon">
     <iconset>
@@ -637,18 +626,6 @@
    </property>
    <property name="text">
     <string>导入材料文件</string>
-   </property>
-  </action>
-  <action name="action_localscene">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/simulation.ico</normaloff>Resources/simulation.ico</iconset>
-   </property>
-   <property name="text">
-    <string>仿真区域展示</string>
    </property>
   </action>
   <action name="action_loadPlugin">
@@ -813,9 +790,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>scsLocalModelGLWidget</class>
+   <class>scsLocalGL</class>
    <extends>QWidget</extends>
-   <header>scsLocalModelGLWidget.h</header>
+   <header location="global">scsLocalGL.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

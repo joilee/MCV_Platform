@@ -116,8 +116,6 @@ void MainWindow::createActions()
 	connect(ui.action_3, SIGNAL(triggered()), this, SLOT(openOutdoorFile()));
 	connect(ui.computerOption, SIGNAL(triggered()), this, SLOT(computerOption()));
 	connect(M_outdoorFileDialog, SIGNAL(fileIsOK(QString, QStringList, QStringList, QString)), this, SLOT(loadAllFile(QString, QStringList, QStringList, QString)));
-	connect(ui.action_ShowAll, SIGNAL(triggered()), this, SLOT(showAll()));
-	connect(ui.action_localscene, SIGNAL(triggered()), this, SLOT(showLocal()));
 	connect(ui.action_obj, SIGNAL(triggered()), this, SLOT(loadObj()));
 	connect(ui.action_9, SIGNAL(triggered()), this, SLOT(setMaterial()));
 	connect(ui.action_matFile, SIGNAL(triggered()), this, SLOT(open_material()));
@@ -125,6 +123,7 @@ void MainWindow::createActions()
 	connect(ui.action_startMesh, SIGNAL(triggered()), this, SLOT(meshAll()));
 	connect(ui.action_saveLocal, SIGNAL(triggered()), this, SLOT(saveLocalScene()));
 	connect(ui.action_loadPlugin, SIGNAL(triggered()), this, SLOT(loadPlugin()));
+	connect(ui.action_deletePlugin, SIGNAL(triggered()), this, SLOT(deletePlugin()));
 	connect(ui.action_run, SIGNAL(triggered()), this, SLOT(run()));
 	connect(ui.action_json, SIGNAL(triggered()), this, SLOT(quickLoadJson()));
 	connect(ui.action_showPoint, SIGNAL(triggered(bool)), this, SLOT(setDrawPointMode(bool)));
@@ -133,9 +132,12 @@ void MainWindow::createActions()
 	//connect(ui.action_GenerateModelPara, SIGNAL(triggered()), this, SLOT(generateModelPara()));
 	connect(ui.action_scatter, SIGNAL(triggered()), this, SLOT(showScatterWidget()));
 	connect(ui.action_saveResult, SIGNAL(triggered()), this, SLOT(saveAllResult()));
+	connect(ui.action_loadResult, SIGNAL(triggered()),this,SLOT(loadResult()));
 	connect(ui.horizontalSlider_Scene_Alpha, SIGNAL(valueChanged(int)), this, SLOT(setModelAlpha(int)));
+	connect(ui.horizontalSlider_Plane_Alpha, SIGNAL(valueChanged(int)), this, SLOT(setPlaneAlpha(int)));
 	connect(catalog, SIGNAL(modelID_ShowChanged(int)), this, SLOT(setShowLineEdit(int)));
 	connect(catalog, SIGNAL(planeID_Changed(int, int)), this, SLOT(setSimuPlane(int, int)));
+	
 }
 
 void MainWindow::generateModelPara()
@@ -159,11 +161,6 @@ void MainWindow::generateModelPara()
 */
 void MainWindow::saveAllResult()
 {
-	
-	//选择文件夹
-	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("选择保存文件夹"),
-		".",QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
-
 	globalContext *globalCtx = globalContext::GetInstance();
 	EFieldContainer* visualDataContainer = globalCtx->visualManager->getContainer();
 	if (!visualDataContainer->isDataExist())
@@ -173,6 +170,9 @@ void MainWindow::saveAllResult()
 		return;
 	}
 
+	//选择文件夹
+	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("选择保存文件夹"),
+		".",QFileDialog::ShowDirsOnly|QFileDialog::DontResolveSymlinks);
 	vector<int> siteIDs = visualDataContainer->getAllSiteID();
 
 	QProgressDialog process(this);
@@ -213,9 +213,15 @@ void MainWindow::setShowLineEdit(int id)
 
 void MainWindow::setModelAlpha(int a)
 {
+	ui.ModelView->setModelAlpha(a);
 	ui.simuArea->setModelAlpha(a);
 	ui.simuPlane->setModelAlpha(a);
 	//outputLog(QString(QStringLiteral("设置局部模型透明度为：") + QString::number(a, 10)));
+}
+
+void MainWindow::setPlaneAlpha(int a)
+{
+	ui.simuPlane->setPlaneAlpha(a);
 }
 
 void MainWindow::setSimuPlane(int siteID, int PCI)
@@ -231,6 +237,7 @@ void MainWindow::setDrawPointMode(bool flag)
 	//用二进制表达状态
 	//ui.simuArea->setPoint(flag);
 	ui.ModelView->setPoint(flag);
+	ui.simuArea->setPoint(flag);
 	if (flag)
 		outputLog(QString(QStringLiteral("设置绘制模式为：点模式")));
 	
@@ -258,13 +265,27 @@ void MainWindow::setDrawFaceMode(bool flag)
 
 void MainWindow::saveLocalScene()
 {
+	globalContext *globalCtx = globalContext::GetInstance();
+	
+	int id = globalCtx->modelManager->getLocalShowID();
+	if (id<0)
+	{
+		QMessageBox::warning(this, "Error", QStringLiteral("还未生成局部场景！"));
+		return;
+	}
+	else
+	{
+		QString path = QFileDialog::getSaveFileName(this, QStringLiteral("保存局部场景"), "./", QStringLiteral("OBJ文件(*.obj)"));
+		cityLocalModel *tmp = (cityLocalModel *)globalCtx->modelManager->getLocalModelByID(id);
+		tmp->writeToObj(path.toStdString());
+		outputLog(QString(QStringLiteral("sucess: 局部场景保存成功！")));
+	}
 	
 }
 
 
 void MainWindow::open_material()
 {
-	
 	QString path = QFileDialog::getOpenFileName(this,QStringLiteral("打开材质文件"),"./",QStringLiteral("txt 材质文件 (*.txt)"));
 	load_Material(path.toStdString());
 	outputLog(QString(QStringLiteral("sucess: 材料文件导入成功！")));
@@ -303,27 +324,37 @@ void MainWindow::setMaterial()
 /************************************************************************/
 /* 根据路径，读取文件，存放到对应的变量中                                              */
 /************************************************************************/
-void MainWindow::loadAllFile(QString _name,QStringList _v,QStringList _h,QString _p){
-	
+void MainWindow::loadAllFile(QString _name,QStringList _v,QStringList _h,QString _p)
+{	
+	globalContext *globalCtx = globalContext::GetInstance();
+	if (!globalCtx->modelManager->matManager->materialExisted())
+	{
+		QMessageBox::warning(this, "Error", QStringLiteral("缺少材质文件，请先加载材质文件！"));
+		this->close();
+		return;
+	}
+	string name = _name.toStdString();
+	string p = _p.toStdString();
+
+	vector<string> v;
+	for (int i = 0; i < _v.size();i++)
+	{
+		v.push_back(_v[i].toStdString());
+	}
+
+	vector<string> h;
+	for (int i = 0; i < _h.size(); i++)
+	{
+		h.push_back(_h[i].toStdString());
+	}
+	QMessageBox::information(this, QStringLiteral("文件导入"), QStringLiteral("场景文件导入成功！"));
+	globalCtx->modelManager->loadCityModel(name,v,h,p);
+	return;
 }
 
 void MainWindow::outputLog(QString source)
 {
 	ui.textBrowser->append(source);
-}
-
-
-/************************************************************************/
-/*    展示全部场景                                                                                       */
-/************************************************************************/
-void MainWindow::showAll()
-{
-
-}
-
-void MainWindow::showLocal()
-{
-	
 }
 
 void MainWindow::showScatterWidget()
@@ -411,6 +442,7 @@ void MainWindow::meshAll()
 
 	gctx->modelManager->setModelPara();
 	outputLog(QStringLiteral("success: 生成模型参数成功！"));
+	ui.tabWidget_Dispaly->setCurrentIndex(1);
 
 }
 
@@ -430,7 +462,9 @@ void MainWindow::loadPlugin()
 
 void MainWindow::deletePlugin()
 {
-	
+	globalContext *gctx = globalContext::GetInstance();
+	gctx->cptManager->deletePluginPath();
+	outputLog(QStringLiteral("插件卸载成功"));
 }
 
 void MainWindow::run()
@@ -452,6 +486,7 @@ void MainWindow::run()
 			gctx->visualManager->setContainerData();
 			outputLog(QStringLiteral("显示结果"));
 		}
+		ui.tabWidget_Dispaly->setCurrentIndex(2);
 	}
 	
 
@@ -507,4 +542,39 @@ void MainWindow::quickLoadJson()
 
 	ui.action_showLine->setChecked(true);
 	ui.action_showFace->setChecked(true);
+	ui.tabWidget_Dispaly->setCurrentIndex(0);
+}
+
+void MainWindow::loadResult()
+{
+	globalContext *globalCtx = globalContext::GetInstance();
+	if (globalCtx->visualManager->getVisualPara()->simuResult.size() != 0)
+	{
+		QMessageBox::warning(NULL, "Error", QStringLiteral("仿真结果已存在！"));
+		return;
+	}
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("导入仿真结果"), "./", QStringLiteral("仿真结果 (*.json)"));
+	
+	//读取文件
+	QFile file(path);
+	file.open(QIODevice::ReadWrite);
+	QByteArray json = file.readAll();
+
+	//解析json对象
+	QJsonDocument jsDoc;
+	jsDoc = QJsonDocument::fromJson(json);
+	QJsonObject jsObj = jsDoc.object();
+
+	if (jsObj.contains("data"))
+	{
+		QJsonValue data = jsObj["data"];
+		QJsonArray dataVec = data.toArray();
+		for (int i = 0; i < dataVec.size();i++)
+		{
+			QJsonArray dataPerVec = dataVec[i].toArray();
+			
+		}
+		
+	}
+
 }

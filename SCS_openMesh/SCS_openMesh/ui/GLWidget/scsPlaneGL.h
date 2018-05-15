@@ -9,7 +9,7 @@ public:
 	scsPlaneGL(QWidget *parent = 0);
 	void paintGL();
 	void setPCI(int site, int pci);
-	void setAlpha(double a);
+	void setPlaneAlpha(double a);
 	void setModelAlpha(double a);
 	void setModel();
 
@@ -36,6 +36,6 @@ private:
 	Cell_Data *cell;
 	double Tmax;
 	double Tmin;
-	double vis_factor_face;//仿真面透明度
+	double plane_alpha;//仿真面透明度
 	double model_alpha;
 };

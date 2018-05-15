@@ -47,7 +47,7 @@ public:
 	void setModelID(int a){ id = a; };
 	int getModelID(){ return id; }
 
-	void outputOBJ();
+	void outputOBJ(string name);
 
 	/************************************************************************/
 	/* 得到一个点对应的高度                                                                     */

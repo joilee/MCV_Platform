@@ -110,6 +110,14 @@ cityModel::cityModel(string jsonFile)
 	initDraw();
 }
 
+cityModel::cityModel(string mapName, vector<string> buidlingPath, vector<string> heightPath, string altitudePath)
+{
+	LoadModel(mapName, buidlingPath, heightPath, altitudePath);
+	fileType = ModelType::CITY;
+	buildings = city->getTotal_Building();
+	initDraw();
+}
+
 cityModel::~cityModel()
 {
 
@@ -176,7 +184,7 @@ void cityModel::draw(vector<bool> mode, double alpha)
 
 	//绘制点
 	if (mode[0]){
-		glColor4d(0.0, 0.0, 0.0, alpha);
+		glColor4d(0.0f, 0.0f, 0.0f, 1.0f);
 		glBegin(GL_POINTS);
 		for (int i = 0; i < upperface_points.size(); i++)
 		{
@@ -191,7 +199,7 @@ void cityModel::draw(vector<bool> mode, double alpha)
 	//绘制线框
 	if (mode[1]){
 		glLineWidth(2.0f);
-		glColor4d(0.0, 0.0, 0.0, alpha);
+		glColor4d(0.0f, 0.0f, 0.0f, 1.0f);
 
 		//上表面
 		glBegin(GL_LINES);
@@ -240,7 +248,7 @@ void cityModel::draw(vector<bool> mode, double alpha)
 		GLUtesselator* tess = tesser();
 		if (!tess)return;
 
-		glColor4d(1.0, 1.0, 1.0, alpha);
+		glColor4d(1.0f, 1.0f, 1.0f, alpha);
 		for (int buildings_id = 0; buildings_id < buildings.size(); buildings_id++)
 		{
 			int count = buildings[buildings_id].upper_facePoint.size() - 1;

@@ -33,8 +33,8 @@
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <scsGlobalGL.h>
+#include <scsLocalGL.h>
 #include <scsPlaneGL.h>
-#include "scsLocalModelGLWidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -47,10 +47,8 @@ public:
     QAction *action_startMesh;
     QAction *action_9;
     QAction *computerOption;
-    QAction *action_ShowAll;
     QAction *action_obj;
     QAction *action_matFile;
-    QAction *action_localscene;
     QAction *action_loadPlugin;
     QAction *action_deletePlugin;
     QAction *action_run;
@@ -70,7 +68,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget_Dispaly;
     scsGlobalGL *ModelView;
-    scsLocalModelGLWidget *simuArea;
+    scsLocalGL *simuArea;
     scsPlaneGL *simuPlane;
     QMenuBar *menuBar;
     QMenu *menuFILE;
@@ -97,10 +95,10 @@ public:
     QGridLayout *gridLayout;
     QLabel *label;
     QSpacerItem *horizontalSpacer;
-    QSlider *horizontalSlider_Plane_Alpha;
-    QLabel *label_2;
     QSpacerItem *horizontalSpacer_2;
+    QLabel *label_2;
     QSlider *horizontalSlider_Scene_Alpha;
+    QSlider *horizontalSlider_Plane_Alpha;
     QGroupBox *groupBox_2;
     QGroupBox *groupBox_3;
     QWidget *layoutWidget;
@@ -160,51 +158,39 @@ public:
         QIcon icon5;
         icon5.addFile(QStringLiteral("Resources/select1.ico"), QSize(), QIcon::Normal, QIcon::Off);
         computerOption->setIcon(icon5);
-        action_ShowAll = new QAction(MainWindowClass);
-        action_ShowAll->setObjectName(QStringLiteral("action_ShowAll"));
-        action_ShowAll->setCheckable(true);
-        QIcon icon6;
-        icon6.addFile(QStringLiteral("Resources/all.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_ShowAll->setIcon(icon6);
         action_obj = new QAction(MainWindowClass);
         action_obj->setObjectName(QStringLiteral("action_obj"));
-        QIcon icon7;
-        icon7.addFile(QStringLiteral("Resources/obj.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_obj->setIcon(icon7);
+        QIcon icon6;
+        icon6.addFile(QStringLiteral("Resources/obj.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_obj->setIcon(icon6);
         action_matFile = new QAction(MainWindowClass);
         action_matFile->setObjectName(QStringLiteral("action_matFile"));
-        QIcon icon8;
-        icon8.addFile(QStringLiteral("Resources/material.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_matFile->setIcon(icon8);
-        action_localscene = new QAction(MainWindowClass);
-        action_localscene->setObjectName(QStringLiteral("action_localscene"));
-        action_localscene->setCheckable(true);
-        QIcon icon9;
-        icon9.addFile(QStringLiteral("Resources/simulation.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_localscene->setIcon(icon9);
+        QIcon icon7;
+        icon7.addFile(QStringLiteral("Resources/material.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_matFile->setIcon(icon7);
         action_loadPlugin = new QAction(MainWindowClass);
         action_loadPlugin->setObjectName(QStringLiteral("action_loadPlugin"));
-        QIcon icon10;
-        icon10.addFile(QStringLiteral("Resources/pluginInsert.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_loadPlugin->setIcon(icon10);
+        QIcon icon8;
+        icon8.addFile(QStringLiteral("Resources/pluginInsert.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_loadPlugin->setIcon(icon8);
         action_deletePlugin = new QAction(MainWindowClass);
         action_deletePlugin->setObjectName(QStringLiteral("action_deletePlugin"));
         action_deletePlugin->setCheckable(true);
-        QIcon icon11;
-        icon11.addFile(QStringLiteral("Resources/delete.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_deletePlugin->setIcon(icon11);
+        QIcon icon9;
+        icon9.addFile(QStringLiteral("Resources/delete.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_deletePlugin->setIcon(icon9);
         action_run = new QAction(MainWindowClass);
         action_run->setObjectName(QStringLiteral("action_run"));
         action_run->setCheckable(true);
-        QIcon icon12;
-        icon12.addFile(QStringLiteral("Resources/run.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_run->setIcon(icon12);
+        QIcon icon10;
+        icon10.addFile(QStringLiteral("Resources/run.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_run->setIcon(icon10);
         action_json = new QAction(MainWindowClass);
         action_json->setObjectName(QStringLiteral("action_json"));
         action_json->setCheckable(true);
-        QIcon icon13;
-        icon13.addFile(QStringLiteral("Resources/json.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_json->setIcon(icon13);
+        QIcon icon11;
+        icon11.addFile(QStringLiteral("Resources/json.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_json->setIcon(icon11);
         action_SaveSimuPlane = new QAction(MainWindowClass);
         action_SaveSimuPlane->setObjectName(QStringLiteral("action_SaveSimuPlane"));
         action_loadSimuPlane = new QAction(MainWindowClass);
@@ -212,45 +198,45 @@ public:
         action_showPoint = new QAction(MainWindowClass);
         action_showPoint->setObjectName(QStringLiteral("action_showPoint"));
         action_showPoint->setCheckable(true);
-        QIcon icon14;
-        icon14.addFile(QStringLiteral("Resources/point.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_showPoint->setIcon(icon14);
+        QIcon icon12;
+        icon12.addFile(QStringLiteral("Resources/point.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_showPoint->setIcon(icon12);
         action_showLine = new QAction(MainWindowClass);
         action_showLine->setObjectName(QStringLiteral("action_showLine"));
         action_showLine->setCheckable(true);
         action_showLine->setChecked(false);
-        QIcon icon15;
-        icon15.addFile(QStringLiteral("Resources/line.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_showLine->setIcon(icon15);
+        QIcon icon13;
+        icon13.addFile(QStringLiteral("Resources/line.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_showLine->setIcon(icon13);
         action_showFace = new QAction(MainWindowClass);
         action_showFace->setObjectName(QStringLiteral("action_showFace"));
         action_showFace->setCheckable(true);
         action_showFace->setChecked(false);
-        QIcon icon16;
-        icon16.addFile(QStringLiteral("Resources/face.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_showFace->setIcon(icon16);
+        QIcon icon14;
+        icon14.addFile(QStringLiteral("Resources/face.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_showFace->setIcon(icon14);
         action_GenerateModelPara = new QAction(MainWindowClass);
         action_GenerateModelPara->setObjectName(QStringLiteral("action_GenerateModelPara"));
-        QIcon icon17;
-        icon17.addFile(QStringLiteral("Resources/generate.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_GenerateModelPara->setIcon(icon17);
+        QIcon icon15;
+        icon15.addFile(QStringLiteral("Resources/generate.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_GenerateModelPara->setIcon(icon15);
         action_scatter = new QAction(MainWindowClass);
         action_scatter->setObjectName(QStringLiteral("action_scatter"));
         action_scatter->setCheckable(true);
-        QIcon icon18;
-        icon18.addFile(QStringLiteral(":/MainWindow/Resources/scatter.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_scatter->setIcon(icon18);
+        QIcon icon16;
+        icon16.addFile(QStringLiteral(":/MainWindow/Resources/scatter.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_scatter->setIcon(icon16);
         action_saveResult = new QAction(MainWindowClass);
         action_saveResult->setObjectName(QStringLiteral("action_saveResult"));
         action_saveResult->setCheckable(true);
-        QIcon icon19;
-        icon19.addFile(QStringLiteral("Resources/sava.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_saveResult->setIcon(icon19);
+        QIcon icon17;
+        icon17.addFile(QStringLiteral("Resources/sava.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_saveResult->setIcon(icon17);
         action_loadResult = new QAction(MainWindowClass);
         action_loadResult->setObjectName(QStringLiteral("action_loadResult"));
-        QIcon icon20;
-        icon20.addFile(QStringLiteral("Resources/data.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        action_loadResult->setIcon(icon20);
+        QIcon icon18;
+        icon18.addFile(QStringLiteral("Resources/data.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_loadResult->setIcon(icon18);
         action_11 = new QAction(MainWindowClass);
         action_11->setObjectName(QStringLiteral("action_11"));
         action_8 = new QAction(MainWindowClass);
@@ -273,7 +259,7 @@ public:
         ModelView = new scsGlobalGL();
         ModelView->setObjectName(QStringLiteral("ModelView"));
         tabWidget_Dispaly->addTab(ModelView, QString());
-        simuArea = new scsLocalModelGLWidget();
+        simuArea = new scsLocalGL();
         simuArea->setObjectName(QStringLiteral("simuArea"));
         tabWidget_Dispaly->addTab(simuArea, QString());
         simuPlane = new scsPlaneGL();
@@ -375,22 +361,14 @@ public:
 
         gridLayout->addItem(horizontalSpacer, 0, 1, 1, 1);
 
-        horizontalSlider_Plane_Alpha = new QSlider(groupBox);
-        horizontalSlider_Plane_Alpha->setObjectName(QStringLiteral("horizontalSlider_Plane_Alpha"));
-        horizontalSlider_Plane_Alpha->setMaximum(100);
-        horizontalSlider_Plane_Alpha->setOrientation(Qt::Horizontal);
-        horizontalSlider_Plane_Alpha->setTickPosition(QSlider::TicksAbove);
+        horizontalSpacer_2 = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addWidget(horizontalSlider_Plane_Alpha, 1, 2, 1, 1);
+        gridLayout->addItem(horizontalSpacer_2, 1, 1, 1, 1);
 
         label_2 = new QLabel(groupBox);
         label_2->setObjectName(QStringLiteral("label_2"));
 
         gridLayout->addWidget(label_2, 1, 0, 1, 1);
-
-        horizontalSpacer_2 = new QSpacerItem(28, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout->addItem(horizontalSpacer_2, 1, 1, 1, 1);
 
         horizontalSlider_Scene_Alpha = new QSlider(groupBox);
         horizontalSlider_Scene_Alpha->setObjectName(QStringLiteral("horizontalSlider_Scene_Alpha"));
@@ -401,6 +379,16 @@ public:
         horizontalSlider_Scene_Alpha->setTickPosition(QSlider::TicksAbove);
 
         gridLayout->addWidget(horizontalSlider_Scene_Alpha, 0, 2, 1, 1);
+
+        horizontalSlider_Plane_Alpha = new QSlider(groupBox);
+        horizontalSlider_Plane_Alpha->setObjectName(QStringLiteral("horizontalSlider_Plane_Alpha"));
+        horizontalSlider_Plane_Alpha->setMaximum(100);
+        horizontalSlider_Plane_Alpha->setPageStep(10);
+        horizontalSlider_Plane_Alpha->setValue(100);
+        horizontalSlider_Plane_Alpha->setOrientation(Qt::Horizontal);
+        horizontalSlider_Plane_Alpha->setTickPosition(QSlider::TicksAbove);
+
+        gridLayout->addWidget(horizontalSlider_Plane_Alpha, 1, 2, 1, 1);
 
 
         verticalLayout_3->addLayout(gridLayout);
@@ -562,9 +550,6 @@ public:
         menuComputer->addAction(action_deletePlugin);
         menuComputer->addSeparator();
         menuComputer->addAction(action_run);
-        menuVisualize->addAction(action_ShowAll);
-        menuVisualize->addAction(action_localscene);
-        menuVisualize->addSeparator();
         menuVisualize->addAction(action_showPoint);
         menuVisualize->addAction(action_showLine);
         menuVisualize->addAction(action_showFace);
@@ -580,12 +565,10 @@ public:
         mainToolBar->addAction(action_deletePlugin);
         mainToolBar->addAction(action_run);
         mainToolBar->addAction(action_startMesh);
-        mainToolBar->addAction(action_ShowAll);
-        mainToolBar->addAction(action_localscene);
 
         retranslateUi(MainWindowClass);
 
-        tabWidget_Dispaly->setCurrentIndex(2);
+        tabWidget_Dispaly->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindowClass);
@@ -600,10 +583,8 @@ public:
         action_startMesh->setText(QApplication::translate("MainWindowClass", "\345\211\226\345\210\206", 0));
         action_9->setText(QApplication::translate("MainWindowClass", "\346\235\220\346\226\231\351\200\211\351\241\271", 0));
         computerOption->setText(QApplication::translate("MainWindowClass", "\351\200\211\351\241\271", 0));
-        action_ShowAll->setText(QApplication::translate("MainWindowClass", "\346\225\264\344\275\223\345\234\272\346\231\257\345\261\225\347\244\272", 0));
         action_obj->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245obj\346\250\241\345\236\213", 0));
         action_matFile->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\346\235\220\346\226\231\346\226\207\344\273\266", 0));
-        action_localscene->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\214\272\345\237\237\345\261\225\347\244\272", 0));
         action_loadPlugin->setText(QApplication::translate("MainWindowClass", "\345\212\240\350\275\275\347\256\227\346\263\225", 0));
         action_deletePlugin->setText(QApplication::translate("MainWindowClass", "\345\215\270\350\275\275\347\256\227\346\263\225", 0));
         action_run->setText(QApplication::translate("MainWindowClass", "\350\256\241\347\256\227", 0));

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>321</width>
-    <height>370</height>
+    <width>312</width>
+    <height>311</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -34,7 +34,7 @@
       <property name="title">
        <string>工程名</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -89,6 +89,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="buildingButton">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>打开</string>
          </property>
@@ -96,6 +102,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_deleteV">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>删除</string>
          </property>
@@ -122,6 +134,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="heightButton">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>打开</string>
          </property>
@@ -129,6 +147,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_deleteH">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>删除</string>
          </property>
@@ -155,6 +179,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="altitudeButton">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>打开</string>
          </property>
@@ -162,6 +192,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_deleteP">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="text">
           <string>删除</string>
          </property>
@@ -175,17 +211,29 @@
   <widget class="QWidget" name="layoutWidget2">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>310</y>
-     <width>164</width>
+     <x>170</x>
+     <y>270</y>
+     <width>128</width>
      <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <item>
      <widget class="QPushButton" name="pushButton_LoadFile">
+      <property name="minimumSize">
+       <size>
+        <width>60</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="text">
-       <string>OK</string>
+       <string>确定</string>
       </property>
       <property name="checkable">
        <bool>false</bool>
@@ -196,22 +244,21 @@
      </widget>
     </item>
     <item>
-     <spacer name="horizontalSpacer_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
+     <widget class="QPushButton" name="pushButton_cancel">
+      <property name="minimumSize">
        <size>
-        <width>18</width>
-        <height>20</height>
+        <width>60</width>
+        <height>0</height>
        </size>
       </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_cancel">
+      <property name="maximumSize">
+       <size>
+        <width>60</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <property name="text">
-       <string>Cancel</string>
+       <string>关闭</string>
       </property>
      </widget>
     </item>

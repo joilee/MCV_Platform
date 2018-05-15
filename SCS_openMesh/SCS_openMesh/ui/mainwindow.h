@@ -44,8 +44,6 @@ private slots:
 	void openOutdoorFile();
 	void computerOption();
 	void loadAllFile(QString _name,QStringList _v,QStringList _h,QString _p);
-	void showAll();  
-	void showLocal();
 	void showScatterWidget();
 	void loadObj();
 	void setMaterial();
@@ -64,7 +62,9 @@ private slots:
 	void saveAllResult();
 	void setShowLineEdit(int);
 	void setModelAlpha(int);
+	void setPlaneAlpha(int);
 	void setSimuPlane(int, int);
+	void loadResult();
 private:
 	void load_Material(string path);
 

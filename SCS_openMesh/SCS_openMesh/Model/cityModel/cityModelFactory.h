@@ -17,6 +17,7 @@ public:
 	@brief 调用城市场景的构造函数 
 	*/
 	abstractGlobalModel *loadModel(string path);
+	abstractGlobalModel *loadModel(string name, vector<string> bPath, vector<string> hPath, string aPath);
 
 private:
 };

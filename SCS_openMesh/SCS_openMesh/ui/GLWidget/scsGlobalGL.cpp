@@ -5,6 +5,7 @@ scsGlobalGL::scsGlobalGL(QWidget *parent /*= 0*/)
 	drawLocalPoint = false;
 	drawLocalLine = true;
 	drawLocalFace = true;
+	modelAlpha = 1.0;
 
 }
 
@@ -41,6 +42,6 @@ void scsGlobalGL::drawCity()
 	mode.push_back(drawLocalPoint);
 	mode.push_back(drawLocalLine);
 	mode.push_back(drawLocalFace);
-	tmpModel->draw(mode, 1);
+	tmpModel->draw(mode, modelAlpha);
 }
 

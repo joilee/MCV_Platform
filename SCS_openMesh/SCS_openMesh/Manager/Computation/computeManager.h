@@ -88,6 +88,7 @@ public:
 	antennaSubject * getSubject(){ return subject; }
 
 	void setPluginPath(QString path);
+	void deletePluginPath();
 
 	QString getPluginPath();
 

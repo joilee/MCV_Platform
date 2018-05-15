@@ -8,6 +8,7 @@ class cityModel :public abstractGlobalModel
 {
 public:
 	cityModel(string jsonPath);
+	cityModel(string mapName, vector<string> buidlingPath, vector<string> heightPath, string altitudePath);
 	~cityModel();
 	void draw(vector<bool> mode,double alpha);
 	void initDraw();
@@ -17,13 +18,13 @@ public:
 	 int getBuildingSize();
 	 int getConcaveSize();
 	inline cityScene* getCity(){ return city; }
+	
 private:
 
 	//城市模型场景 包括建筑物 地面模型  以及两者合成的三角面片模型
 
 	//导入模型函数
 	void LoadModel(string _name, vector<string> _v, vector<string> _h, string _p);
-
 	//建筑物 
 	cityScene *city;  //整体的建筑物模型
 	vector<Building> buildings;         //场景中的建筑物

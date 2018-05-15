@@ -1,15 +1,15 @@
 //局部场景展示模块(剖分结果）
 
 #pragma once
-#include "scsGLWidget.h"
+#include "ui/scsGLWidget.h"
 #include "Context/context.h"
 struct  scsMaterial;
 
-class scsLocalModelGLWidget:public scsGLWidget
+class scsLocalGL:public scsGLWidget
 {
 public:
-	scsLocalModelGLWidget(QWidget *parent = 0);
-	~scsLocalModelGLWidget();
+	scsLocalGL(QWidget *parent = 0);
+	~scsLocalGL();
 	void setMaterial(vector<scsMaterial> &materialdatabase)
 	{
 		materials = materialdatabase;

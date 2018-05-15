@@ -33,7 +33,7 @@ public:
     QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QSpacerItem *horizontalSpacer;
@@ -56,14 +56,13 @@ public:
     QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout_4;
     QPushButton *pushButton_LoadFile;
-    QSpacerItem *horizontalSpacer_4;
     QPushButton *pushButton_cancel;
 
     void setupUi(QDialog *outdoorFile)
     {
         if (outdoorFile->objectName().isEmpty())
             outdoorFile->setObjectName(QStringLiteral("outdoorFile"));
-        outdoorFile->resize(321, 370);
+        outdoorFile->resize(312, 311);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -77,13 +76,13 @@ public:
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         groupBox = new QGroupBox(layoutWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(10, 20, 177, 22));
-        horizontalLayout = new QHBoxLayout(widget);
+        layoutWidget1 = new QWidget(groupBox);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(10, 20, 177, 22));
+        horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget1);
         label->setObjectName(QStringLiteral("label"));
 
         horizontalLayout->addWidget(label);
@@ -92,7 +91,7 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        lineEdit_name = new QLineEdit(widget);
+        lineEdit_name = new QLineEdit(layoutWidget1);
         lineEdit_name->setObjectName(QStringLiteral("lineEdit_name"));
 
         horizontalLayout->addWidget(lineEdit_name);
@@ -112,11 +111,13 @@ public:
 
         buildingButton = new QPushButton(groupBox_3);
         buildingButton->setObjectName(QStringLiteral("buildingButton"));
+        buildingButton->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_3->addWidget(buildingButton);
 
         pushButton_deleteV = new QPushButton(groupBox_3);
         pushButton_deleteV->setObjectName(QStringLiteral("pushButton_deleteV"));
+        pushButton_deleteV->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_3->addWidget(pushButton_deleteV);
 
@@ -135,11 +136,13 @@ public:
 
         heightButton = new QPushButton(groupBox_4);
         heightButton->setObjectName(QStringLiteral("heightButton"));
+        heightButton->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_5->addWidget(heightButton);
 
         pushButton_deleteH = new QPushButton(groupBox_4);
         pushButton_deleteH->setObjectName(QStringLiteral("pushButton_deleteH"));
+        pushButton_deleteH->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_5->addWidget(pushButton_deleteH);
 
@@ -158,11 +161,13 @@ public:
 
         altitudeButton = new QPushButton(groupBox_2);
         altitudeButton->setObjectName(QStringLiteral("altitudeButton"));
+        altitudeButton->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_2->addWidget(altitudeButton);
 
         pushButton_deleteP = new QPushButton(groupBox_2);
         pushButton_deleteP->setObjectName(QStringLiteral("pushButton_deleteP"));
+        pushButton_deleteP->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_2->addWidget(pushButton_deleteP);
 
@@ -171,22 +176,22 @@ public:
 
         layoutWidget2 = new QWidget(outdoorFile);
         layoutWidget2->setObjectName(QStringLiteral("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(130, 310, 164, 31));
+        layoutWidget2->setGeometry(QRect(170, 270, 128, 31));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         pushButton_LoadFile = new QPushButton(layoutWidget2);
         pushButton_LoadFile->setObjectName(QStringLiteral("pushButton_LoadFile"));
+        pushButton_LoadFile->setMinimumSize(QSize(60, 0));
+        pushButton_LoadFile->setMaximumSize(QSize(60, 16777215));
         pushButton_LoadFile->setCheckable(false);
 
         horizontalLayout_4->addWidget(pushButton_LoadFile);
 
-        horizontalSpacer_4 = new QSpacerItem(18, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer_4);
-
         pushButton_cancel = new QPushButton(layoutWidget2);
         pushButton_cancel->setObjectName(QStringLiteral("pushButton_cancel"));
+        pushButton_cancel->setMinimumSize(QSize(60, 0));
+        pushButton_cancel->setMaximumSize(QSize(60, 16777215));
 
         horizontalLayout_4->addWidget(pushButton_cancel);
 
@@ -216,8 +221,8 @@ public:
         checkBox_3->setText(QApplication::translate("outdoorFile", "\347\212\266\346\200\201", 0));
         altitudeButton->setText(QApplication::translate("outdoorFile", "\346\211\223\345\274\200", 0));
         pushButton_deleteP->setText(QApplication::translate("outdoorFile", "\345\210\240\351\231\244", 0));
-        pushButton_LoadFile->setText(QApplication::translate("outdoorFile", "OK", 0));
-        pushButton_cancel->setText(QApplication::translate("outdoorFile", "Cancel", 0));
+        pushButton_LoadFile->setText(QApplication::translate("outdoorFile", "\347\241\256\345\256\232", 0));
+        pushButton_cancel->setText(QApplication::translate("outdoorFile", "\345\205\263\351\227\255", 0));
     } // retranslateUi
 
 };

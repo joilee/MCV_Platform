@@ -70,6 +70,12 @@ void computeManager::setPluginPath(QString path)
 	sendPluginNewState();
 }
 
+void computeManager::deletePluginPath()
+{
+	pluginPath.clear();
+	sendPluginNewState();
+
+}
 
 QString computeManager::getPluginPath()
 {
@@ -361,3 +367,5 @@ vector<Site*>  computeManager::getSite()
 {
 	return sitesContainer->getAllSites();
 }
+
+

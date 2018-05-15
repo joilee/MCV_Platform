@@ -17,6 +17,7 @@ public:
 	void setModels(vector<BaseModel*> &a){ SiteModels = a; }
 	void addModel(BaseModel* a){ SiteModels.push_back(a); }
 	void clearModel(){ SiteModels.clear(); }
+	BaseModel* getModelById(int id);
 public:
 
 	//材料数组，来自于文件

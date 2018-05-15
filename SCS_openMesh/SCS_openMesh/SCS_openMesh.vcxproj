@@ -60,7 +60,7 @@
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -182,6 +182,7 @@
     <ClCompile Include="ui\computeOptionPage.cpp" />
     <ClCompile Include="ui\computerOptionDialog.cpp" />
     <ClCompile Include="ui\GLWidget\scsGlobalGL.cpp" />
+    <ClCompile Include="ui\GLWidget\scsLocalGL.cpp" />
     <ClCompile Include="ui\GLWidget\scsPlaneGL.cpp" />
     <ClCompile Include="ui\InfoPage.cpp" />
     <ClCompile Include="ui\mainwindow.cpp" />
@@ -191,9 +192,7 @@
     <ClCompile Include="ui\scatterWidget\Document.cpp" />
     <ClCompile Include="ui\scatterWidget\scatterWidget.cpp" />
     <ClCompile Include="ui\scsGLWidget.cpp" />
-    <ClCompile Include="ui\scsLocalModelGLWidget.cpp" />
     <ClCompile Include="ui\scsModelTable.cpp" />
-    <ClCompile Include="ui\scsSimuPlaneGLWidget.cpp" />
     <ClCompile Include="util\ArcBall.cpp" />
     <ClCompile Include="util\dclist.cpp" />
     <ClCompile Include="util\emxCamera.cpp" />
@@ -530,22 +529,6 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing scsGLWidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-    </CustomBuild>
-    <CustomBuild Include="ui\scsSimuPlaneGLWidget.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="util\emxRenderUtility.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -1568,22 +1551,6 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </AdditionalInputs>
     </CustomBuild>
-    <CustomBuild Include="ui\scsLocalModelGLWidget.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing Custom Build Tools</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Performing Custom Build Tools</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </AdditionalInputs>
-    </CustomBuild>
     <CustomBuild Include="visualData\LocalModelItem.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </Command>
@@ -1667,6 +1634,9 @@
     <Image Include="myapp.ico" />
     <Image Include="Resources\line.png" />
     <Image Include="Resources\scatter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ui\GLWidget\scsLocalGL.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

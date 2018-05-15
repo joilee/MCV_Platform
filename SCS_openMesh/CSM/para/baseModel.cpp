@@ -30,10 +30,10 @@ double BaseModel::getPointAltitude(double x, double y)
 
 }
 
-void BaseModel::outputOBJ()
+void BaseModel::outputOBJ(string name)
 {
 	ofstream outfile;
-	outfile.open("mesh.obj"); 
+	outfile.open(name); 
 	outfile.setf(ios::fixed,ios::floatfield);
 	outfile.precision(8);
 	for (int i = 0; i < V.size(); i++)

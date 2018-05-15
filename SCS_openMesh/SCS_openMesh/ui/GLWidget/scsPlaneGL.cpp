@@ -2,8 +2,8 @@
 
 scsPlaneGL::scsPlaneGL(QWidget *parent /*= 0*/)
 {
-	vis_factor_face = 1;
-	model_alpha = 1;
+	plane_alpha = 1.0;
+	model_alpha = 1.0;
 	Tmax = 100;
 	Tmin = 0;
 	pci = -1;
@@ -114,16 +114,16 @@ void scsPlaneGL::drawPlane()
 
 				Color result(0.5, 0.0, 0.0);				
 				LoadUniformColor(c3, result);
-				glColor4d(result.r, result.g, result.b, vis_factor_face);
+				glColor4d(result.r, result.g, result.b, plane_alpha);
 				glVertex3d(v3.x, v3.y, v3.z);
 				LoadUniformColor(c4, result);
-				glColor4d(result.r, result.g, result.b, vis_factor_face);
+				glColor4d(result.r, result.g, result.b, plane_alpha);
 				glVertex3d(v4.x, v4.y, v4.z);
 				LoadUniformColor(c2, result);
-				glColor4d(result.r, result.g, result.b, vis_factor_face);
+				glColor4d(result.r, result.g, result.b, plane_alpha);
 				glVertex3d(v2.x, v2.y, v2.z);
 				LoadUniformColor(c1, result);
-				glColor4d(result.r, result.g, result.b, vis_factor_face);
+				glColor4d(result.r, result.g, result.b, plane_alpha);
 				glVertex3d(v1.x, v1.y, v1.z);
 			}
 		}
@@ -284,9 +284,9 @@ void scsPlaneGL::drawColorBar()
 
 }
 
-void scsPlaneGL::setAlpha(double a)
+void scsPlaneGL::setPlaneAlpha(double a)
 {
-	vis_factor_face = a;
+	plane_alpha = ((double)a) / 100.0;
 }
 
 void scsPlaneGL::setModelAlpha(double a)
@@ -314,11 +314,13 @@ void scsPlaneGL::drawSite()
 	globalContext *globalCtx = globalContext::GetInstance();
 	vector<bool> mode;
 	mode.push_back(false);
-	mode.push_back(true);
+	mode.push_back(false);
 	mode.push_back(true);
 	if (globalCtx->modelManager->checkLocalExistByID(model))
 	{
+		glEnable(GL_BLEND);
 		globalCtx->modelManager->getLocalModelByID(model)->draw(mode, model_alpha);
+		glDisable(GL_BLEND);
 	}
 }
 

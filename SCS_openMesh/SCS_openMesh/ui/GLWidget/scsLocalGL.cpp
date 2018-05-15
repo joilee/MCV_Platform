@@ -1,8 +1,6 @@
-#include "scsLocalModelGLWidget.h"
+#include "scsLocalGL.h"
 
-
-
-scsLocalModelGLWidget::scsLocalModelGLWidget(QWidget *parent /*= 0*/) :scsGLWidget(parent)
+scsLocalGL::scsLocalGL(QWidget *parent /*= 0*/) :scsGLWidget(parent)
 {
 	LocalModelID = -111;
 	materials.clear();
@@ -13,17 +11,17 @@ scsLocalModelGLWidget::scsLocalModelGLWidget(QWidget *parent /*= 0*/) :scsGLWidg
 	modelAlpha = 1.0;
 }
 
-scsLocalModelGLWidget::~scsLocalModelGLWidget()
+scsLocalGL::~scsLocalGL()
 {
 
 }
 
-void scsLocalModelGLWidget::setModelAlpha(int a)
+void scsLocalGL::setModelAlpha(int a)
 {
 	modelAlpha =( (double)a )/ 100.0;
 }
 
-void scsLocalModelGLWidget::drawLocalScene()
+void scsLocalGL::drawLocalScene()
 {
 	globalContext *globalCtx = globalContext::GetInstance();
 	minPos = globalCtx->modelManager->getLocalModelByID(LocalModelID)->getMin();
@@ -36,7 +34,7 @@ void scsLocalModelGLWidget::drawLocalScene()
 	globalCtx->modelManager->getLocalModelByID(LocalModelID)->draw(mode,modelAlpha);
 }
 
-void scsLocalModelGLWidget::paintGL()
+void scsLocalGL::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  //用设定的当前清除值清除指定的缓冲区
 

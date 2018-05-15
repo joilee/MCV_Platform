@@ -96,6 +96,13 @@ void ModelManager::loadCityModel(string path)
 	insertGlobalModel(tmp);
 }
 
+void ModelManager::loadCityModel(string name, vector<string> bPath, vector<string> hPath, string aPath)
+{
+	abstractGlobalModel * tmp = cityFac->loadModel(name,bPath,hPath,aPath);
+	cout << "success: 模型已经读入" << endl;
+	insertGlobalModel(tmp);
+}
+
 //读入obj模型
 void ModelManager::loadGlobalObj(string objPath)
 {
@@ -299,7 +306,7 @@ void ModelManager:: setModelPara()
 			tmpBase->setModelID(tmp->getID());
 
 			modelPara->addModel(tmpBase);
-			tmpBase->outputOBJ();
+			//tmpBase->outputOBJ();
 			count++;
 			modelPara->mType = ModelType::CITY_LOCAL;
 		}

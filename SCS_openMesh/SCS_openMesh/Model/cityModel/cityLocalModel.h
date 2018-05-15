@@ -23,7 +23,7 @@ public:
     /*
     @brief 输出obj文件
     */
-    void writeToObj();
+    void writeToObj(string path);
 
 private:
     std::vector<vector<GLfloat> > faceColor;//每个面的颜色

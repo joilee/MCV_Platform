@@ -62,6 +62,7 @@ public:
 	@brief 载入城市模型
 	*/
 	void loadCityModel(string path);
+	void loadCityModel(string name, vector<string> bPath, vector<string> hPath, string aPath);
 	
 	/*
 	@brief 从城市场景中构造局部场景
