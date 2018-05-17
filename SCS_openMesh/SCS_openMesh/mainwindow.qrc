@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/MainWindow">
-        <file>Resources/scatter.ico</file>
+        <file>Resources/result.ico</file>
         <file>Resources/face.ico</file>
         <file>Resources/line.ico</file>
         <file>Resources/pluginInsert.ico</file>

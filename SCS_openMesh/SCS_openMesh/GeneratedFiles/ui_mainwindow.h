@@ -53,8 +53,6 @@ public:
     QAction *action_deletePlugin;
     QAction *action_run;
     QAction *action_json;
-    QAction *action_SaveSimuPlane;
-    QAction *action_loadSimuPlane;
     QAction *action_showPoint;
     QAction *action_showLine;
     QAction *action_showFace;
@@ -62,8 +60,6 @@ public:
     QAction *action_scatter;
     QAction *action_saveResult;
     QAction *action_loadResult;
-    QAction *action_11;
-    QAction *action_8;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout;
     QTabWidget *tabWidget_Dispaly;
@@ -144,7 +140,6 @@ public:
         action_6->setIcon(icon2);
         action_startMesh = new QAction(MainWindowClass);
         action_startMesh->setObjectName(QStringLiteral("action_startMesh"));
-        action_startMesh->setCheckable(true);
         QIcon icon3;
         icon3.addFile(QStringLiteral("Resources/grid.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_startMesh->setIcon(icon3);
@@ -175,26 +170,19 @@ public:
         action_loadPlugin->setIcon(icon8);
         action_deletePlugin = new QAction(MainWindowClass);
         action_deletePlugin->setObjectName(QStringLiteral("action_deletePlugin"));
-        action_deletePlugin->setCheckable(true);
         QIcon icon9;
         icon9.addFile(QStringLiteral("Resources/delete.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_deletePlugin->setIcon(icon9);
         action_run = new QAction(MainWindowClass);
         action_run->setObjectName(QStringLiteral("action_run"));
-        action_run->setCheckable(true);
         QIcon icon10;
         icon10.addFile(QStringLiteral("Resources/run.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_run->setIcon(icon10);
         action_json = new QAction(MainWindowClass);
         action_json->setObjectName(QStringLiteral("action_json"));
-        action_json->setCheckable(true);
         QIcon icon11;
         icon11.addFile(QStringLiteral("Resources/json.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_json->setIcon(icon11);
-        action_SaveSimuPlane = new QAction(MainWindowClass);
-        action_SaveSimuPlane->setObjectName(QStringLiteral("action_SaveSimuPlane"));
-        action_loadSimuPlane = new QAction(MainWindowClass);
-        action_loadSimuPlane->setObjectName(QStringLiteral("action_loadSimuPlane"));
         action_showPoint = new QAction(MainWindowClass);
         action_showPoint->setObjectName(QStringLiteral("action_showPoint"));
         action_showPoint->setCheckable(true);
@@ -224,11 +212,10 @@ public:
         action_scatter->setObjectName(QStringLiteral("action_scatter"));
         action_scatter->setCheckable(true);
         QIcon icon16;
-        icon16.addFile(QStringLiteral(":/MainWindow/Resources/scatter.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        icon16.addFile(QStringLiteral("Resources/result.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_scatter->setIcon(icon16);
         action_saveResult = new QAction(MainWindowClass);
         action_saveResult->setObjectName(QStringLiteral("action_saveResult"));
-        action_saveResult->setCheckable(true);
         QIcon icon17;
         icon17.addFile(QStringLiteral("Resources/sava.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_saveResult->setIcon(icon17);
@@ -237,10 +224,6 @@ public:
         QIcon icon18;
         icon18.addFile(QStringLiteral("Resources/data.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_loadResult->setIcon(icon18);
-        action_11 = new QAction(MainWindowClass);
-        action_11->setObjectName(QStringLiteral("action_11"));
-        action_8 = new QAction(MainWindowClass);
-        action_8->setObjectName(QStringLiteral("action_8"));
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         horizontalLayout = new QHBoxLayout(centralWidget);
@@ -557,14 +540,19 @@ public:
         menuVisualize->addAction(action_scatter);
         mainToolBar->addAction(action_json);
         mainToolBar->addAction(action_saveResult);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(computerOption);
+        mainToolBar->addAction(action_startMesh);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(action_loadPlugin);
+        mainToolBar->addAction(action_run);
+        mainToolBar->addAction(action_deletePlugin);
+        mainToolBar->addSeparator();
         mainToolBar->addAction(action_showPoint);
         mainToolBar->addAction(action_showLine);
         mainToolBar->addAction(action_showFace);
         mainToolBar->addAction(action_scatter);
-        mainToolBar->addAction(action_loadPlugin);
-        mainToolBar->addAction(action_deletePlugin);
-        mainToolBar->addAction(action_run);
-        mainToolBar->addAction(action_startMesh);
+        mainToolBar->addSeparator();
 
         retranslateUi(MainWindowClass);
 
@@ -591,18 +579,17 @@ public:
         action_run->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+R", 0));
         action_json->setText(QApplication::translate("MainWindowClass", "\345\277\253\351\200\237\345\257\274\345\205\245\345\234\272\346\231\257(.json)", 0));
         action_json->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+J", 0));
-        action_SaveSimuPlane->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\344\273\277\347\234\237\351\235\242", 0));
-        action_loadSimuPlane->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\344\273\277\347\234\237\351\235\242", 0));
         action_showPoint->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\347\202\271", 0));
         action_showLine->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\347\272\277", 0));
         action_showFace->setText(QApplication::translate("MainWindowClass", "\346\230\276\347\244\272\351\235\242", 0));
         action_GenerateModelPara->setText(QApplication::translate("MainWindowClass", "\347\224\237\346\210\220\346\250\241\345\236\213\345\217\202\346\225\260", 0));
-        action_scatter->setText(QApplication::translate("MainWindowClass", "\346\216\245\346\224\266\347\202\271\346\225\243\347\202\271\345\233\276", 0));
+        action_scatter->setText(QApplication::translate("MainWindowClass", "\346\225\243\347\202\271\346\212\230\347\272\277\345\233\276", 0));
+#ifndef QT_NO_TOOLTIP
+        action_scatter->setToolTip(QApplication::translate("MainWindowClass", "\346\225\243\347\202\271\346\212\230\347\272\277\345\233\276", 0));
+#endif // QT_NO_TOOLTIP
         action_saveResult->setText(QApplication::translate("MainWindowClass", "\344\277\235\345\255\230\344\273\277\347\234\237\346\225\260\346\215\256", 0));
         action_saveResult->setShortcut(QApplication::translate("MainWindowClass", "Ctrl+S", 0));
         action_loadResult->setText(QApplication::translate("MainWindowClass", "\345\257\274\345\205\245\344\273\277\347\234\237\346\225\260\346\215\256", 0));
-        action_11->setText(QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\217\202\346\225\260", 0));
-        action_8->setText(QApplication::translate("MainWindowClass", "\345\234\272\347\202\271", 0));
         tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(ModelView), QApplication::translate("MainWindowClass", "\346\250\241\345\236\213\345\234\272\346\231\257", 0));
         tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuArea), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\345\234\272\346\231\257", 0));
         tabWidget_Dispaly->setTabText(tabWidget_Dispaly->indexOf(simuPlane), QApplication::translate("MainWindowClass", "\344\273\277\347\234\237\351\235\242", 0));

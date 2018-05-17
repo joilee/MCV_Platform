@@ -84,7 +84,7 @@ void scatterWidget::openMeasuredFile()
 	globalCtx->visualManager->loadMeasuredFile(fileName);
 }
 
-void scatterWidget::showResult()
+void scatterWidget::showSimuResult()
 {
 	//int mode = modeGroup->checkedId();
 	QJsonArray dataArray;
@@ -123,6 +123,99 @@ void scatterWidget::showResult()
 	tempObject2.insert("RSRP", round(after.x*100)/100.0);
 	tempObject2.insert("Before", round(after.y*100)/100.0);
 	tempObject2.insert("Correction", round(after.z*100)/100.0);
+	dataArray.append(tempObject2);
+
+	m_content.setSendText(dataArray);
+}
+
+void scatterWidget::showLoadResult(QString path)
+{
+	globalContext *globalCtx = globalContext::GetInstance();
+	ifstream in;
+	in.open(path.toStdString(), ios::in);
+
+	if (!in.is_open())
+	{
+		cout << "仿真文件打开失败！" << endl;
+		return;
+	}
+
+	vector<double>beforeVector;
+	vector<double>afterVector;
+	vector<double>measuredVector;
+
+	double before_mean;
+	double before_deviation;
+	double before_coefficient;
+	double after_mean;
+	double after_deviation;
+	double after_coefficient;
+
+	//读取文件头信息，判断是仿真面还是接收点
+	string line;
+	while (getline(in, line))
+	{
+		if (line.length() == 0)
+			break;
+		string fieldName;
+		int fieldValue;
+
+		istringstream istrm(line);
+		istrm >> fieldName >> fieldValue;
+
+		if (fieldName == "Computation_type" && fieldValue == 1)
+		{
+			QMessageBox::warning(NULL, "Error", QStringLiteral("仿真面缺少实测数据，无法显示！"));
+			return;
+		}
+		if (fieldName == "Computation_type" && fieldValue == 2)
+		{
+			in >> fieldName >> before_mean >> after_mean;
+			getline(in, line);
+			in >> fieldName >> before_deviation >> after_deviation;
+			getline(in, line);
+			in >> fieldName >> before_coefficient >> after_coefficient;
+			getline(in, line);
+		}
+	}
+	
+	//读取实测数据和仿真结果
+	getline(in, line);       //跳过数据头部分(id,x,y,z,pci,real,simu)
+	int id, pci;
+	Vector3d position;
+	double real, simu;
+	while (!in.eof())
+	{
+		in >> id >> position.x >> position.y >> position.z >> pci >> real >> simu;
+		measuredVector.push_back(real);
+		beforeVector.push_back(0);
+		afterVector.push_back(simu);
+	}
+
+	//生成json
+	QJsonArray dataArray;
+	for (int i = 0;  i < measuredVector.size(); i++)
+	{
+		QJsonObject tempObject;
+		tempObject.insert("ID", i);
+		tempObject.insert("RSRP", measuredVector[i]);
+		tempObject.insert("Before", beforeVector[i]);
+		tempObject.insert("Correction", afterVector[i]);
+		dataArray.append(tempObject);
+	}
+
+	QJsonObject tempObject1;
+	tempObject1.insert("ID", -1);
+	tempObject1.insert("RSRP", round( before_mean* 100) / 100.0);
+	tempObject1.insert("Before", round(before_deviation * 100) / 100.0);
+	tempObject1.insert("Correction", round(before_coefficient * 100) / 100.0);
+	dataArray.append(tempObject1);
+
+	QJsonObject tempObject2;
+	tempObject2.insert("ID", -2);
+	tempObject2.insert("RSRP", round(after_mean * 100) / 100.0);
+	tempObject2.insert("Before", round(after_deviation * 100) / 100.0);
+	tempObject2.insert("Correction", round(after_coefficient * 100) / 100.0);
 	dataArray.append(tempObject2);
 
 	m_content.setSendText(dataArray);

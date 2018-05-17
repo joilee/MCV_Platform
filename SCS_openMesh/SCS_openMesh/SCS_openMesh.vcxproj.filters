@@ -144,7 +144,6 @@
     <CustomBuild Include="ImageFIle\StartExe\start.png" />
     <CustomBuild Include="mainwindow.ui" />
     <CustomBuild Include="outdoorFile.ui" />
-    <CustomBuild Include="Resources\scatter.ico" />
     <CustomBuild Include="mainwindow.qrc" />
     <CustomBuild Include="ui\scatterWidget\Document.h" />
     <CustomBuild Include="echartsWidget.ui" />
@@ -225,6 +224,7 @@
     <Image Include="myapp.ico" />
     <Image Include="Resources\line.png" />
     <Image Include="Resources\scatter.png" />
+    <Image Include="Resources\result.ico" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ui\GLWidget\scsLocalGL.h">

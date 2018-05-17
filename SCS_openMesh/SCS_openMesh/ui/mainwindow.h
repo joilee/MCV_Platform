@@ -88,6 +88,7 @@ private:
 	 /************************************************************************/
 	 QString objName;
 	 QString OBJFile_path;
+	 QString result_path;
  
 	 void init();
 	 void createActions();

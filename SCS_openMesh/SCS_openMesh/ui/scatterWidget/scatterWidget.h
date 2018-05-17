@@ -36,7 +36,8 @@ public:
 	  * @Returns:   void
 	  * @Qualifier:
 	*/
-	void showResult();
+	void showSimuResult();
+	void showLoadResult(QString path);
 
 	//void showPara();
 
