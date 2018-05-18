@@ -65,6 +65,7 @@ private slots:
 	void setPlaneAlpha(int);
 	void setSimuPlane(int, int);
 	void loadResult();
+	void updateScatter(bool);
 private:
 	void load_Material(string path);
 

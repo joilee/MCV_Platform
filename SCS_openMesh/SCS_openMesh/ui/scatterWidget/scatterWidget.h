@@ -12,7 +12,6 @@ class scatterWidget : public QDialog
 public:
 	scatterWidget(QWidget *parent = Q_NULLPTR);
 	~scatterWidget();
-
 	
 	/**
 	  * @Method:    openTestFile
@@ -38,6 +37,10 @@ public:
 	*/
 	void showSimuResult();
 	void showLoadResult(QString path);
+	void closeEvent(QCloseEvent *e);
+
+signals:
+	void sendFlag(bool);
 
 	//void showPara();
 
@@ -46,7 +49,6 @@ private:
 	Ui::scatterDialog *ui;
 	//QButtonGroup *modeGroup;
 	Document m_content;
-
 	//correctWidget * dataWidget;
 	//void initData();
 	//void enableShowMode(bool a);

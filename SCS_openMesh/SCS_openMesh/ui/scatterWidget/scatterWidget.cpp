@@ -37,8 +37,6 @@ scatterWidget::scatterWidget(QWidget *parent) :QDialog(parent), ui(new Ui::scatt
 	//initData();
 }
 
-
-
 scatterWidget::~scatterWidget()
 {
 	delete ui;
@@ -221,7 +219,10 @@ void scatterWidget::showLoadResult(QString path)
 	m_content.setSendText(dataArray);
 }
 
-
+void scatterWidget::closeEvent(QCloseEvent *e)
+{
+	emit sendFlag(true);
+}
 
 //void scatterWidget::showPara()
 //{

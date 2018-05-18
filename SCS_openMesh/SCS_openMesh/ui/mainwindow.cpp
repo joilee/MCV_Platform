@@ -137,7 +137,7 @@ void MainWindow::createActions()
 	connect(ui.horizontalSlider_Plane_Alpha, SIGNAL(valueChanged(int)), this, SLOT(setPlaneAlpha(int)));
 	connect(catalog, SIGNAL(modelID_ShowChanged(int)), this, SLOT(setShowLineEdit(int)));
 	connect(catalog, SIGNAL(planeID_Changed(int, int)), this, SLOT(setSimuPlane(int, int)));
-
+	connect(scatter, SIGNAL(sendFlag(bool)), this, SLOT(updateScatter(bool)));
 }
 
 void MainWindow::generateModelPara()
@@ -202,12 +202,6 @@ void MainWindow::saveAllResult()
 
 void MainWindow::loadResult()
 {
-	globalContext *globalCtx = globalContext::GetInstance();
-	if (globalCtx->visualManager->getVisualPara()->simuResult.size() != 0)
-	{
-		QMessageBox::warning(NULL, "Error", QStringLiteral("仿真结果已存在！"));
-		return;
-	}
 	result_path = QFileDialog::getOpenFileName(this, QStringLiteral("导入仿真结果"), "./", QStringLiteral("仿真结果 (*.dat)"));
 }
 
@@ -267,9 +261,6 @@ void MainWindow::setDrawFaceMode(bool flag)
 		outputLog(QString(QStringLiteral("设置绘制模式为：面模式")));
 }
 
-
-
-
 void MainWindow::saveLocalScene()
 {
 	globalContext *globalCtx = globalContext::GetInstance();
@@ -299,6 +290,7 @@ void MainWindow::open_material()
 }
 void MainWindow::load_Material(string path)
 {
+
 	globalContext *globalCtx = globalContext::GetInstance();
 	globalCtx->modelManager->matManager->addMatertial(path);
 }
@@ -373,17 +365,18 @@ void MainWindow::showScatterWidget()
 		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少仿真数据，请先做仿真计算！"));
 		return;
 	}
-	if (result_path.length()==0)
+	if (result_path.length() == 0)
 	{
 		scatter->openMeasuredFile();
 		scatter->showSimuResult();
 	}
-	else
+	else 
 	{
 		scatter->showLoadResult(result_path);
 		result_path.clear();
 	}
 }
+
 
 /************************************************************************/
 /* 导入obj文件                                                                     */
@@ -514,7 +507,6 @@ void MainWindow::run()
 /************************************************************************/
 void MainWindow::quickLoadJson()
 {
-
 	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("快速导入场景"), "./", QStringLiteral("场景文件 (*.json)"));
 	if (path.isNull())
 	{
@@ -559,5 +551,16 @@ void MainWindow::quickLoadJson()
 	ui.action_showLine->setChecked(true);
 	ui.action_showFace->setChecked(true);
 	ui.tabWidget_Dispaly->setCurrentIndex(0);
+}
+
+void MainWindow::updateScatter(bool flag)
+{
+	if (flag)
+	{
+		delete scatter;
+		scatter = new scatterWidget(this);
+		connect(scatter, SIGNAL(sendFlag(bool)), this, SLOT(updateScatter(bool)));
+	}
+
 }
 

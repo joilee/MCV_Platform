@@ -210,7 +210,6 @@ public:
         action_GenerateModelPara->setIcon(icon15);
         action_scatter = new QAction(MainWindowClass);
         action_scatter->setObjectName(QStringLiteral("action_scatter"));
-        action_scatter->setCheckable(true);
         QIcon icon16;
         icon16.addFile(QStringLiteral("Resources/result.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_scatter->setIcon(icon16);

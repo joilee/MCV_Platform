@@ -724,9 +724,6 @@
    </property>
   </action>
   <action name="action_scatter">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/result.ico</normaloff>Resources/result.ico</iconset>
