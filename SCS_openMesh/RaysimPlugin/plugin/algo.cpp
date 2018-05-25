@@ -2064,7 +2064,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			emxKdTree *AP_KdTree = new emxKdTree(trianglePara, 80, 1, 0.5, 1, -1);
 			double  time2 = clock();
 			double time_kd_tree = (time2 - time1) / 1000;
-			fout << "time_kd_tree:  " << time_kd_tree << endl;
+			fout << "time_kd_tree: " << time_kd_tree << endl;
 			fout << "begin to find all possible propagation path" << endl;
 			m_logText->addText("time_kd_tree: "+QString::number(time_kd_tree)+"s");
 
@@ -2076,7 +2076,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			m_logText->addText("pRootBeams Number: " + QString::number(pRootBeams.size()));
 			double time7 = clock();
 			double time_initialBeam = (time7 - time6) / 1000;
-			fout << "time_initialBeam:  " << time_initialBeam << endl;
+			fout << "time_initialBeam: " << time_initialBeam << endl;
 			m_logText->addText("time_initialBeam: " + QString::number(time_initialBeam) + "s");
 			double time8 = clock();
 			vector< vector<beamNode> >  AP_route;  //route
@@ -2091,7 +2091,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			}
 			double time9 = clock();
 			double time_Beamtracing = (time9 - time8) / 1000;
-			fout << "time_Beamtracing:  " << time_Beamtracing << endl;
+			fout << "time_Beamtracing: " << time_Beamtracing << endl;
 			m_logText->addText("time_Beamtracing: " + QString::number(time_Beamtracing) + "s");
 
 			totalpathnum = AP_route.size();
@@ -2180,7 +2180,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			valid_DirPath(AP_KdTree, AP_position,m_siteData );
 			double time11 = clock();
 			double time_DirPath = (time11 - time10) / 1000;
-			fout << "time_DirPath:  " << time_DirPath << endl;
+			fout << "time_DirPath: " << time_DirPath << endl;
 			m_logText->addText(QStringLiteral("直射计算完毕"));
 			m_logText->addText("time_DirPath: " + QString::number(time_DirPath) + "s");
 
@@ -2195,7 +2195,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			valid_RefTransPath(currentModel, AP_KdTree, AP_position, m_siteData, AP_route);
 			double time12 = clock();
 			double time_RefTransPath = (time12 - time11) / 1000;
-			fout << "time_RefTransPath:  " << time_RefTransPath << endl;
+			fout << "time_RefTransPath: " << time_RefTransPath << endl;
 			m_logText->addText(QStringLiteral("反射透射计算完毕"));
 			m_logText->addText("time_RefTransPath: " + QString::number(time_RefTransPath) + "s");
 
