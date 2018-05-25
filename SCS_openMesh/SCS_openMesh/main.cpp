@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
 	QApplication a(argc, argv);
 	a.setStyleSheet("QLineEdit{selection-color:yellow;selection-background-color:rgb(0,0,58);border:1px groove gray;border-radius:5px;}"); //background-color:rgb(255,255,241);color:rgb(127,0,63);
-	QPixmap pixmap("ImageFile\\StartExe\\start.png");
+	QPixmap pixmap("ImageFile\\StartExe\\start.jpg");
 	QSplashScreen screen(pixmap);
 	screen.show();
 	int delayTime =0.5;

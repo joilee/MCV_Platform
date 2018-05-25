@@ -118,7 +118,7 @@ void ModelManager::loadLocalObj(vector<Vector3d> center, double localRange, vect
 	abstractGlobalModel * city = modelContainer->getFirstCity();
 	if (city == nullptr)
 	{
-		QMessageBox::critical(NULL, QStringLiteral("模型"), QStringLiteral("没有城市场景！请重新读入！"), QMessageBox::Yes, QMessageBox::Yes);
+		QMessageBox::warning(NULL, "Error", QStringLiteral("室外场景加载有误，请重新导入！"));
 		return ;
 	}
 	cout << "开始生成新场景,共" << center.size() << "个场景" << endl;
@@ -148,7 +148,7 @@ bool ModelManager::generateLocalModel(vector<Vector3d> center, vector<int> siteN
 
 	if (city ==nullptr)
 	{
-		QMessageBox::critical(NULL, QStringLiteral("模型"), QStringLiteral("没有城市场景！请重新读入！"), QMessageBox::Yes, QMessageBox::Yes);
+		QMessageBox::warning(NULL, "Error", QStringLiteral("室外场景加载有误，请重新导入！"));
 		return false;
 	}
 	cout << "开始生成新场景,共" << center.size() << "个场景" << endl;
@@ -332,10 +332,10 @@ void ModelManager:: setModelPara()
 
 	modelPara->setMaterialVector(matManager->getMaterialVector());
 	cout << "设置模型参数成功" << endl;
-	QString s(QStringLiteral("模型参数加载成功,共有"));
-	s.append(QString::number(count)).append(QStringLiteral("个站点。"));
+	QString s(QStringLiteral("模型剖分完成，共生成"));
+	s.append(QString::number(count)).append(QStringLiteral("个站点！"));
 
-	QMessageBox::information(NULL, QStringLiteral("模型参数"), s);
+	QMessageBox::information(NULL, "Info", s);
 }
 
 

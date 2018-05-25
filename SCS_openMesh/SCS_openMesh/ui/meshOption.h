@@ -19,12 +19,15 @@ public:
 	vector<int> siteName;
 	double range;
 	bool inputFlag;
+signals:
+	void sendFlag(bool);
 
 private slots:
 	void onOkbutton();
 	void onRefreshButton();
 	void dynamicLoadSite(int);
 	void meshModeButtonToggled(int, bool);
+	void onExitbutton();
 public:
 	void createActions();
 	void setTheLayout();

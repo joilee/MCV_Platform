@@ -50,8 +50,6 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 
 	 connect(contentsWidget,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),this,SLOT(changePage(QListWidgetItem*,QListWidgetItem*)));
 
-
-
 	 //设定初始row
 	 contentsWidget->setCurrentRow(0);
 
@@ -119,7 +117,8 @@ void computerOptionDialog::getPara()
 	gctx->cptManager->transferContainerToPara();
 
 	//根据计算类型(仿真面,或者接受点,或者自定义,来确定设置哪一类参数)
-	QMessageBox::information(this, QStringLiteral("计算参数"), QStringLiteral("参数设置成功"), QMessageBox::Yes , QMessageBox::Yes);
+	QMessageBox::information(this, "Info", QStringLiteral("计算参数设置成功！"));
+	emit sendFlag(true);
 	this->close();
 }
 

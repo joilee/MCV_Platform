@@ -69,7 +69,7 @@ emitSource::emitSource(QWidget* parent) :antennaObserver("emit Source")
 
 void emitSource::openTransAntennas_DirGain()
 {
-	QStringList paths = QFileDialog::getOpenFileNames(this, QStringLiteral("批量导入天线方向增益文件"), "./", QStringLiteral("txt  天线方向增益文件 (*.txt)"));
+	QStringList paths = QFileDialog::getOpenFileNames(this, QStringLiteral("导入天线方向增益文件"), "./", QStringLiteral("天线方向增益文件 (*.txt)"));
 	if (paths.isEmpty())
 		return;
 	globalContext *glbctx = globalContext::GetInstance();
@@ -85,10 +85,10 @@ void emitSource::openTransAntenna_ParamFile()
 	globalContext *globalCtx = globalContext::GetInstance();
 	if (!globalCtx->modelManager->checkCityExist())
 	{
-		QMessageBox::warning(this, QStringLiteral("发射天线设置"), QStringLiteral("请先加载场景"));
+		QMessageBox::warning(this, "Info", QStringLiteral("请先加载室外场景！"));
 		return;
 	}
-	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("导入发射天线（站点）参数信息文件"), "./", QStringLiteral("csv 发射天线（站点）参数信息文件 (*.csv)"));
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("导入发射天线（站点）参数信息文件"), "./", QStringLiteral("发射天线（站点）参数信息文件 (*.csv)"));
 	if (path.isEmpty())
 		return;
 	globalCtx->cptManager->openTransAntenna_ParamFile(path);
@@ -208,13 +208,13 @@ void fieldpoint::computingModeButtonsToggled(int id, bool flag)
 
 void fieldpoint::openNo_SimplaneReceiverFile()
 {
-	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开非仿真面设置的接收点文件"), "./", QStringLiteral("csv 非仿真面接收点文件 (*.csv)"));
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("导入非仿真面设置的接收点文件"), "./", QStringLiteral("非仿真面接收点文件 (*.csv)"));
 	if (path.isEmpty())
 		return;
 	globalContext *globalCtx = globalContext::GetInstance();
 	if (!globalCtx->modelManager->checkCityExist())
 	{
-		QMessageBox::warning(this, QStringLiteral("发射天线设置"), QStringLiteral("请先加载场景"));
+		QMessageBox::warning(this, "Info", QStringLiteral("请先加载室外场景！"));
 		return;
 	}
 	globalCtx->cptManager->openNo_simplaneReceiver(path.toStdString());
@@ -229,6 +229,9 @@ void fieldpoint::enableRangeMode(bool flag)
 	leftupYinput->setEnabled(flag);
 	rightbottomXinput->setEnabled(flag);
 	rightbottomYinput->setEnabled(flag);
+	Precisioninput->setEnabled(flag);
+	Altitudeinput->setEnabled(flag);
+
 }
 
 void fieldpoint::enablePointMode(bool flag)
@@ -329,10 +332,9 @@ fieldpoint::fieldpoint(QWidget* parent) :LocalModelObserver("scFieldPointRange")
 	total->addWidget(rangeRadioButton);
 	total->addLayout(h5);
 	total->addLayout(h6);
-
-	total->addWidget(pointRadioButton);
 	total->addLayout(h7);
 	total->addLayout(h8);
+	total->addWidget(pointRadioButton);
 	total->addLayout(h4);
 
 	firstgroupbox->setLayout(total);

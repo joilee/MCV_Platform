@@ -127,21 +127,21 @@ void cityModel::LoadModel(string _name, vector<string> _v, vector<string> _h, st
 {
 	name = _name;
 
-	if (_v.empty())
-	{
-		QMessageBox::warning(NULL, QStringLiteral("文件导入"), QStringLiteral("请先导入建筑物二维信息文件"));
-		return;
-	}
-	if (_h.empty())
-	{
-		QMessageBox::warning(NULL, QStringLiteral("文件导入"), QStringLiteral("请先导入建筑物高度信息文件"));
-		return;
-	}
-	if (_p.empty())
-	{
-		QMessageBox::warning(NULL, QStringLiteral("文件导入"), QStringLiteral("请先导入海拔信息文件"));
-		return;
-	}
+	//if (_v.empty())
+	//{
+	//	QMessageBox::warning(NULL, "Error", QStringLiteral("请先导入建筑物二维信息文件"));
+	//	return;
+	//}
+	//if (_h.empty())
+	//{
+	//	QMessageBox::warning(NULL, "Error", QStringLiteral("请先导入建筑物高度信息文件"));
+	//	return;
+	//}
+	//if (_p.empty())
+	//{
+	//	QMessageBox::warning(NULL, "Error", QStringLiteral("请先导入海拔信息文件"));
+	//	return;
+	//}
 	DWORD start_time = GetTickCount();
 	city = new cityScene(_v, _h, _p);
 	DWORD end_time = GetTickCount();

@@ -27,12 +27,12 @@ bool computeManager::checkPara()
 	if (antennaFlag==false)
 	{
 		cout << "error: 没有天线增益文件" << endl;
-		QMessageBox::warning(nullptr, QStringLiteral("天线参数"), QStringLiteral("缺少天线增益文件"));
+		QMessageBox::warning(nullptr, "Info", QStringLiteral("天线增益文件还未导入！"));
 		return false;
 	}
 	if (siteFlag==false)
 	{
-		QMessageBox::warning(nullptr, QStringLiteral("天线参数"), QStringLiteral("缺少站点site文件"));
+		QMessageBox::warning(nullptr, "Info", QStringLiteral("站点参数信息文件还未导入！"));
 		return false;
 	}
 	return true;
@@ -171,7 +171,7 @@ void computeManager::openTransAntennas_DirGain(QStringList paths)
 			}
 		}
 	}
-	QMessageBox::warning(NULL, QStringLiteral("多个站点方向增益文件"), QStringLiteral("加载成功"));
+	QMessageBox::information(NULL, "Info", QStringLiteral("天线增益文件加载成功！"));
 	antennaFlag = true;
 }
 
@@ -348,8 +348,8 @@ void computeManager:: openTransAntenna_ParamFile(QString path)
 
 		if (new_antenna.polor_direction.norm() < 1e-10)
 		{
-			QMessageBox::warning(NULL, QStringLiteral("发射天线属性设置"), QStringLiteral("请输入正确的极化方向"));
-			cout << "error : 天线文件读取错误。已返回！" << endl;
+			QMessageBox::warning(NULL, "Error", QStringLiteral("请输入正确的极化方向！"));
+			cout << "error : 天线文件读取错误,已返回！" << endl;
 			return;
 		}	
 		//针对新获得的cell，检测是否存在一个已知的site中，如果是，则插入，否则新建

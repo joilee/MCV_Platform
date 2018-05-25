@@ -787,6 +787,9 @@ void cityLocalModel::initDraw() {
 
 void cityLocalModel::writeToObj(string path) {
 	ofstream fout(path);
+
+	fout.precision(2);
+	fout.setf(ofstream::fixed);
 	for (int i = 0; i < F.size(); i++) {
 		Vector3i vIndex = F[i];//3¸öµã
 		for (int j = 0; j < 3; j++) {
@@ -794,16 +797,12 @@ void cityLocalModel::writeToObj(string path) {
 			fout << "v " << V[vIndex[j]].x << " " << V[vIndex[j]].y << " " << V[vIndex[j]].z << endl;
 		}
 	}
-	for (int i = 0; i < F.size(); i++) {
-		for (int j = 0; j < 3; j++) {
-			fout << "vn " << NF[i].x << " " << NF[i].y << " " << NF[i].z << endl;
-		}
-	}
 
+	fout.precision(0);
 	for (int i = 0; i < F.size(); i++) {
 		fout << "f ";
 		for (int j = 0; j < 3; j++) {
-			fout << i * 3 + j + 1 << "/" << i * 3 + j + 1 << " ";
+			fout << i * 3 + j + 1<<" ";
 		}
 		fout << endl;
 	}

@@ -74,8 +74,8 @@
      <string>文件</string>
     </property>
     <addaction name="action_matFile"/>
-    <addaction name="separator"/>
     <addaction name="action_3"/>
+    <addaction name="separator"/>
     <addaction name="action_obj"/>
     <addaction name="separator"/>
     <addaction name="action_json"/>
@@ -119,6 +119,7 @@
     <property name="title">
      <string>关于</string>
     </property>
+    <addaction name="actionHelp"/>
    </widget>
    <addaction name="menuFILE"/>
    <addaction name="menuMesh"/>
@@ -134,11 +135,13 @@
     <bool>false</bool>
    </attribute>
    <addaction name="action_json"/>
+   <addaction name="action_saveLocal"/>
    <addaction name="action_saveResult"/>
+   <addaction name="action_loadResult"/>
    <addaction name="separator"/>
-   <addaction name="computerOption"/>
    <addaction name="action_startMesh"/>
    <addaction name="separator"/>
+   <addaction name="computerOption"/>
    <addaction name="action_loadPlugin"/>
    <addaction name="action_run"/>
    <addaction name="action_deletePlugin"/>
@@ -593,6 +596,9 @@
    <property name="text">
     <string>剖分</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
   </action>
   <action name="action_9">
    <property name="icon">
@@ -609,7 +615,7 @@
      <normaloff>Resources/select1.ico</normaloff>Resources/select1.ico</iconset>
    </property>
    <property name="text">
-    <string>选项</string>
+    <string>设置</string>
    </property>
   </action>
   <action name="action_obj">
@@ -618,7 +624,7 @@
      <normaloff>Resources/obj.ico</normaloff>Resources/obj.ico</iconset>
    </property>
    <property name="text">
-    <string>导入obj模型</string>
+    <string>导入obj模型(仅查看）</string>
    </property>
   </action>
   <action name="action_matFile">
@@ -627,7 +633,7 @@
      <normaloff>Resources/material.ico</normaloff>Resources/material.ico</iconset>
    </property>
    <property name="text">
-    <string>导入材料文件</string>
+    <string>导入材质文件</string>
    </property>
   </action>
   <action name="action_loadPlugin">
@@ -754,6 +760,11 @@
    </property>
    <property name="text">
     <string>导入仿真数据</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>用户手册</string>
    </property>
   </action>
  </widget>

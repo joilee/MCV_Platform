@@ -66,6 +66,9 @@ private slots:
 	void setSimuPlane(int, int);
 	void loadResult();
 	void updateScatter(bool);
+	void setMeshOptionLog(bool);
+	void setCalOptionLog(bool);
+	void openManual();
 private:
 	void load_Material(string path);
 
@@ -80,6 +83,7 @@ private:
 	scatterWidget *scatter;
 	scsModelTable* modelTable;
 	catalogWidget * catalog;
+	QProcess *pro;
 	//内部变量
  private:
 	 QString material_path;

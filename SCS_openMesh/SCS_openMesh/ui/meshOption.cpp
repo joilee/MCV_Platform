@@ -30,7 +30,7 @@ void meshOptionDialog::onOkbutton() {
 	{
         if (centerXLE->text().isEmpty() || centerYLE->text().isEmpty() || centerZLE->text().isEmpty() || rangeLE->text().isEmpty())
 		{
-            QMessageBox::critical(this, QStringLiteral("输入"), QStringLiteral("中心点或者范围输入为空，请重新输入"), QMessageBox::Yes, QMessageBox::Yes);
+            QMessageBox::warning(this, "Error", QStringLiteral("中心点或者范围输入为空，请输入！"));
 			inputFlag = false;
             return;
         }
@@ -46,7 +46,7 @@ void meshOptionDialog::onOkbutton() {
 	{
         if (rangeLE->text().isEmpty()) 
 		{
-            QMessageBox::critical(this, QStringLiteral("输入"), QStringLiteral("范围输入为空，请重新输入"), QMessageBox::Yes, QMessageBox::Yes);
+			QMessageBox::warning(this, "Error", QStringLiteral("中心点或者范围输入为空，请输入！"));
 			inputFlag = false;
             return;
         }
@@ -63,16 +63,15 @@ void meshOptionDialog::onOkbutton() {
         } 
 		else 
 		{
-            QMessageBox::critical(this, QStringLiteral("基站"), QStringLiteral("基站为空，请导入站点文件"), QMessageBox::Yes, QMessageBox::Yes);
+			QMessageBox::warning(this, "Error", QStringLiteral("未导入站点文件，请导入！"));
         }
 		inputFlag = true;
     }
 	QString s;
 	s.append(QStringLiteral("成功添加"));
 	s.append(QString::number(center.size())).append(QStringLiteral("个剖分中心点"));
-
-
-	QMessageBox::information(this, QStringLiteral("剖分选项"), s);
+	QMessageBox::information(this, "Info", s);
+	emit sendFlag(true);
     this->close();
 }
 
@@ -83,7 +82,6 @@ meshOptionDialog::meshOptionDialog(QWidget *parent): QDialog(parent) {
     center.clear();
     range=0;
     inputFlag=false;
-
     centerXLE=new QLineEdit;
     centerXLE->setValidator(pReg);
     centerYLE=new QLineEdit;
@@ -121,7 +119,7 @@ meshOptionDialog::meshOptionDialog(QWidget *parent): QDialog(parent) {
 
 void meshOptionDialog::createActions() {
     connect(this->okbutton,SIGNAL(clicked()),this,SLOT(onOkbutton()));
-    connect(this->exitbutton,SIGNAL(clicked()),this,SLOT(reject()));
+    connect(this->exitbutton,SIGNAL(clicked()),this,SLOT(onExitbutton()));
     connect(this->refreshButton,SIGNAL(clicked()),this,SLOT(onRefreshButton()));
     connect(cbo_XYZ,SIGNAL(currentIndexChanged(int)),this,SLOT(dynamicLoadSite(int)));
     connect(meshModeGroup, SIGNAL(buttonToggled(int, bool)), this, SLOT(meshModeButtonToggled(int, bool)));
@@ -241,4 +239,10 @@ void meshOptionDialog::setTheLayout() {
     mainLayout->addWidget(firstGroup);
     mainLayout->addLayout(thirdlayout);
     setLayout(mainLayout);
+}
+
+void meshOptionDialog::onExitbutton()
+{
+	this->close();
+	return;
 }
