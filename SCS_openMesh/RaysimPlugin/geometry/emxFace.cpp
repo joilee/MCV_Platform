@@ -19,6 +19,8 @@ emxFace::emxFace (emxVertex* v0, emxVertex* v1, emxVertex* v2)
 	vertex[1] = v1;
 	vertex[2] = v2;
 
+	normalValid = false;
+
 	// for valid face assertion
 	//assert(IsValid());
 

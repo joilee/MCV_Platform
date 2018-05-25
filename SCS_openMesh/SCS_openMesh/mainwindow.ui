@@ -39,14 +39,14 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="scsGlobalGL" name="ModelView">
        <attribute name="title">
         <string>模型场景</string>
        </attribute>
       </widget>
-      <widget class="scsLocalModelGLWidget" name="simuArea">
+      <widget class="scsLocalGL" name="simuArea">
        <attribute name="title">
         <string>仿真场景</string>
        </attribute>
@@ -73,11 +73,9 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="separator"/>
     <addaction name="action_matFile"/>
-    <addaction name="separator"/>
     <addaction name="action_3"/>
+    <addaction name="separator"/>
     <addaction name="action_obj"/>
     <addaction name="separator"/>
     <addaction name="action_json"/>
@@ -91,12 +89,10 @@
     <property name="title">
      <string>模型</string>
     </property>
-    <addaction name="action_6"/>
     <addaction name="action_startMesh"/>
     <addaction name="separator"/>
     <addaction name="action_9"/>
     <addaction name="separator"/>
-    <addaction name="action_GenerateModelPara"/>
    </widget>
    <widget class="QMenu" name="menuComputer">
     <property name="title">
@@ -113,9 +109,6 @@
     <property name="title">
      <string>可视化</string>
     </property>
-    <addaction name="action_ShowAll"/>
-    <addaction name="action_localscene"/>
-    <addaction name="separator"/>
     <addaction name="action_showPoint"/>
     <addaction name="action_showLine"/>
     <addaction name="action_showFace"/>
@@ -126,6 +119,7 @@
     <property name="title">
      <string>关于</string>
     </property>
+    <addaction name="actionHelp"/>
    </widget>
    <addaction name="menuFILE"/>
    <addaction name="menuMesh"/>
@@ -140,19 +134,23 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action"/>
    <addaction name="action_json"/>
+   <addaction name="action_saveLocal"/>
    <addaction name="action_saveResult"/>
+   <addaction name="action_loadResult"/>
+   <addaction name="separator"/>
+   <addaction name="action_startMesh"/>
+   <addaction name="separator"/>
+   <addaction name="computerOption"/>
+   <addaction name="action_loadPlugin"/>
+   <addaction name="action_run"/>
+   <addaction name="action_deletePlugin"/>
+   <addaction name="separator"/>
    <addaction name="action_showPoint"/>
    <addaction name="action_showLine"/>
    <addaction name="action_showFace"/>
    <addaction name="action_scatter"/>
-   <addaction name="action_loadPlugin"/>
-   <addaction name="action_deletePlugin"/>
-   <addaction name="action_run"/>
-   <addaction name="action_startMesh"/>
-   <addaction name="action_ShowAll"/>
-   <addaction name="action_localscene"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_outputLog">
@@ -265,29 +263,6 @@
             </property>
            </spacer>
           </item>
-          <item row="0" column="2">
-           <widget class="QSlider" name="horizontalSlider_Scene_Alpha">
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="pageStep">
-             <number>10</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="tickPosition">
-             <enum>QSlider::TicksAbove</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>仿真面透明度</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
@@ -301,9 +276,41 @@
             </property>
            </spacer>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>仿真面透明度</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSlider" name="horizontalSlider_Scene_Alpha">
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="tickPosition">
+             <enum>QSlider::TicksAbove</enum>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="2">
            <widget class="QSlider" name="horizontalSlider_Plane_Alpha">
             <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="value">
              <number>100</number>
             </property>
             <property name="orientation">
@@ -554,21 +561,6 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_4"/>
   </widget>
-  <action name="action">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/new.ico</normaloff>Resources/new.ico</iconset>
-   </property>
-   <property name="text">
-    <string>新建</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
-  </action>
   <action name="action_3">
    <property name="icon">
     <iconset>
@@ -597,15 +589,15 @@
    </property>
   </action>
   <action name="action_startMesh">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/grid.ico</normaloff>Resources/grid.ico</iconset>
    </property>
    <property name="text">
     <string>剖分</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
   <action name="action_9">
@@ -623,29 +615,7 @@
      <normaloff>Resources/select1.ico</normaloff>Resources/select1.ico</iconset>
    </property>
    <property name="text">
-    <string>选项</string>
-   </property>
-  </action>
-  <action name="action_8">
-   <property name="text">
-    <string>场点</string>
-   </property>
-  </action>
-  <action name="action_11">
-   <property name="text">
-    <string>仿真参数</string>
-   </property>
-  </action>
-  <action name="action_ShowAll">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/all.ico</normaloff>Resources/all.ico</iconset>
-   </property>
-   <property name="text">
-    <string>整体场景展示</string>
+    <string>设置</string>
    </property>
   </action>
   <action name="action_obj">
@@ -654,7 +624,7 @@
      <normaloff>Resources/obj.ico</normaloff>Resources/obj.ico</iconset>
    </property>
    <property name="text">
-    <string>导入obj模型</string>
+    <string>导入obj模型(仅查看）</string>
    </property>
   </action>
   <action name="action_matFile">
@@ -663,19 +633,7 @@
      <normaloff>Resources/material.ico</normaloff>Resources/material.ico</iconset>
    </property>
    <property name="text">
-    <string>导入材料文件</string>
-   </property>
-  </action>
-  <action name="action_localscene">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/simulation.ico</normaloff>Resources/simulation.ico</iconset>
-   </property>
-   <property name="text">
-    <string>仿真区域展示</string>
+    <string>导入材质文件</string>
    </property>
   </action>
   <action name="action_loadPlugin">
@@ -688,9 +646,6 @@
    </property>
   </action>
   <action name="action_deletePlugin">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/delete.ico</normaloff>Resources/delete.ico</iconset>
@@ -700,9 +655,6 @@
    </property>
   </action>
   <action name="action_run">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/run.ico</normaloff>Resources/run.ico</iconset>
@@ -715,9 +667,6 @@
    </property>
   </action>
   <action name="action_json">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/json.ico</normaloff>Resources/json.ico</iconset>
@@ -727,16 +676,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+J</string>
-   </property>
-  </action>
-  <action name="action_SaveSimuPlane">
-   <property name="text">
-    <string>保存仿真面</string>
-   </property>
-  </action>
-  <action name="action_loadSimuPlane">
-   <property name="text">
-    <string>导入仿真面</string>
    </property>
   </action>
   <action name="action_showPoint">
@@ -755,6 +694,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/line.ico</normaloff>Resources/line.ico</iconset>
@@ -766,6 +708,9 @@
   <action name="action_showFace">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset>
@@ -785,21 +730,18 @@
    </property>
   </action>
   <action name="action_scatter">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
-    <iconset resource="mainwindow.qrc">
-     <normaloff>:/MainWindow/Resources/scatter.ico</normaloff>:/MainWindow/Resources/scatter.ico</iconset>
+    <iconset>
+     <normaloff>Resources/result.ico</normaloff>Resources/result.ico</iconset>
    </property>
    <property name="text">
-    <string>接收点散点图</string>
+    <string>散点折线图</string>
+   </property>
+   <property name="toolTip">
+    <string>散点折线图</string>
    </property>
   </action>
   <action name="action_saveResult">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset>
      <normaloff>Resources/sava.ico</normaloff>Resources/sava.ico</iconset>
@@ -820,13 +762,18 @@
     <string>导入仿真数据</string>
    </property>
   </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>用户手册</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>scsLocalModelGLWidget</class>
+   <class>scsLocalGL</class>
    <extends>QWidget</extends>
-   <header>scsLocalModelGLWidget.h</header>
+   <header location="global">scsLocalGL.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

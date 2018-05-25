@@ -15,7 +15,7 @@ void SitesContainer::addSite(Site *s)
 	int id = s->Site_Name;
 	if (isSiteExist(id))
 	{
-		QMessageBox::warning(NULL, "Error", QStringLiteral("站点id重复，请检查站点文件"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("站点id重复，请检查站点文件！"));
 	}
 	Sites.insert(make_pair(id, s));
 }
@@ -81,7 +81,7 @@ void SitesContainer::setInitialGain(int SiteID, int AntennasID, double value)
 	if (!isSiteAndAntennaExist(SiteID,AntennasID))
 	{
 		//如果不存在
-		QMessageBox::warning(NULL, "Error", QStringLiteral("站点id或者天线id错误，请检查文件"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("站点id或者天线id错误，请检查文件！"));
 		return;
 	}
 	map<int, Site*>::iterator it = Sites.find(SiteID);
@@ -94,7 +94,7 @@ void SitesContainer::addDirectionGain(int SiteID, int AntennasID, vector<double>
 	if (!isSiteAndAntennaExist(SiteID, AntennasID))
 	{
 		//如果不存在
-		QMessageBox::warning(NULL, "Error", QStringLiteral("站点id或者天线id错误，请检查文件"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("站点id或者天线id错误，请检查文件！"));
 		return;
 	}
 	map<int, Site*>::iterator it = Sites.find(SiteID);
@@ -155,7 +155,7 @@ Vector3d SitesContainer::getSitePositionById(int id)
 	map<int, Site*>::iterator it = Sites.find(id);
 	if (it==Sites.end())
 	{
-		QMessageBox::critical(NULL, QStringLiteral("错误"), QStringLiteral("获取Site位置出错，数组下标超出范围！"));
+		QMessageBox::warning(NULL,"Error", QStringLiteral("Site位置获取有误，数组下标超出范围！"));
 		return Vector3d(0, 0, 0);
 	}
 	Vector3d res = it->second->Site_Antennas[0].position;

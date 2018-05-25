@@ -22,7 +22,7 @@ int ModelIdManager::getModelID(string name,int id)
 
 	if (isNameExist(name))
 	{
-		QMessageBox::warning(NULL, "Error", QStringLiteral("重复的模型名称！"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("模型名字重复！"));
 		cout << "获取Id失败，模型名称重复，ModelName is"<<name << endl;
 		return -1;
 	}
@@ -66,7 +66,7 @@ void ModelIdManager::addIDandName(int id, string name)
 {
 	if (isIDExist(id)||isNameExist(name))
 	{
-		QMessageBox::warning(NULL, "Error", QStringLiteral("重复的ID或者Name！"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("模型id或者name重复！"));
 		return;
 	}
 	IdToName.insert(make_pair(id, name));

@@ -44,8 +44,6 @@ private slots:
 	void openOutdoorFile();
 	void computerOption();
 	void loadAllFile(QString _name,QStringList _v,QStringList _h,QString _p);
-	void showAll();  
-	void showLocal();
 	void showScatterWidget();
 	void loadObj();
 	void setMaterial();
@@ -64,7 +62,13 @@ private slots:
 	void saveAllResult();
 	void setShowLineEdit(int);
 	void setModelAlpha(int);
+	void setPlaneAlpha(int);
 	void setSimuPlane(int, int);
+	void loadResult();
+	void updateScatter(bool);
+	void setMeshOptionLog(bool);
+	void setCalOptionLog(bool);
+	void openManual();
 private:
 	void load_Material(string path);
 
@@ -79,6 +83,7 @@ private:
 	scatterWidget *scatter;
 	scsModelTable* modelTable;
 	catalogWidget * catalog;
+	QProcess *pro;
 	//内部变量
  private:
 	 QString material_path;
@@ -88,6 +93,7 @@ private:
 	 /************************************************************************/
 	 QString objName;
 	 QString OBJFile_path;
+	 QString result_path;
  
 	 void init();
 	 void createActions();

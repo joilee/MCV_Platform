@@ -58,6 +58,13 @@ VisualManager::VisualManager()
 	m_SiteCellSubject = new SiteCellSubject;
 	visContainer = new EFieldContainer;
 	para = new visPara;
+
+	beforeCorrection_mean_value = 0;
+	beforeCorrection_Standard_Deviation_value = 0;
+	beforeCorrection_Correlation_Coefficient_value = 0;
+	afterCorrection_mean_value = 0;
+	afterCorrection_Standard_Deviation_value = 0;
+	afterCorrection_Correlation_Coefficient_value = 0;
 }
 
 
@@ -68,9 +75,9 @@ VisualManager::~VisualManager()
 
 void VisualManager::setContainerData()
 {
-	if (para==nullptr||para->simuResult.size()==0)
+	if (para == nullptr || para->simuResult.size() == 0)
 	{
-		qDebug() << "para为null"<< para->simuResult.size();
+		qDebug() << "para为null" << para->simuResult.size();
 		return;
 	}
 
@@ -82,12 +89,12 @@ void VisualManager::setContainerData()
 	visContainer->deleteAllSimuData();
 
 	//遍历站点
-	for (; it != visRes.end();it++)
+	for (; it != visRes.end(); it++)
 	{
 		int siteID = it->second->siteID;
 		//遍历cell
 		auto cell_Iterator = it->second->cellsMap.begin();
-		for (; cell_Iterator != it->second->cellsMap.end();cell_Iterator++)
+		for (; cell_Iterator != it->second->cellsMap.end(); cell_Iterator++)
 		{
 			Cell_Data * cell = cell_Iterator->second;//旧cell
 			Cell_Data * newCell = new Cell_Data(cell->pci);//新cell
@@ -99,7 +106,7 @@ void VisualManager::setContainerData()
 
 			//遍历每一个仿真点，深拷贝
 			auto eField_Iterator = cell->efildVec.begin();
-			for (; eField_Iterator != cell->efildVec.end();eField_Iterator++)
+			for (; eField_Iterator != cell->efildVec.end(); eField_Iterator++)
 			{
 				EField *source = *eField_Iterator;
 				EField * tmp = new EField(*source);//解引用
@@ -123,13 +130,13 @@ void VisualManager::sendSiteCellName()
 	{
 		m_SiteCellSubject->clearItem();
 		vector<int> siteIDS = visContainer->getAllSiteID();
-		for (int i = 0; i < siteIDS.size();i++)
+		for (int i = 0; i < siteIDS.size(); i++)
 		{
 			Site_Data * tmpSite = visContainer->getSiteDataByID(siteIDS[i]);
 			auto ite = tmpSite->cellsMap.begin();
 			while (ite != tmpSite->cellsMap.end())
 			{
-				m_SiteCellSubject->siteAndCellData->addCell(siteIDS[i],ite->second->pci,ite->second->cell_name);
+				m_SiteCellSubject->siteAndCellData->addCell(siteIDS[i], ite->second->pci, ite->second->cell_name);
 				m_SiteCellSubject->siteAndCellData->setFlag(true);
 				ite++;
 			}
@@ -139,12 +146,12 @@ void VisualManager::sendSiteCellName()
 	{
 		m_SiteCellSubject->siteAndCellData->setFlag(false);
 		m_SiteCellSubject->clearItem();
-		
+
 	}
 	m_SiteCellSubject->notify();
 }
 
-void VisualManager::saveCellFile(QString dir,int pci,int siteID)
+void VisualManager::saveSiteFile(QString dir, int siteID)
 {
 
 	QFile f(dir);
@@ -159,51 +166,129 @@ void VisualManager::saveCellFile(QString dir,int pci,int siteID)
 	{
 		qDebug() << "No computation para" << endl;
 	}
-	QJsonObject json;
-	json.insert("File_Type", "仿真结果文件");
-	json.insert("Site_ID", siteID);
-	json.insert("Cell_PCI", pci);
-	json.insert("reflect_count", cptPara->reflectNumPara);
-	json.insert("sample_count", cptPara->RT_sample);
-	json.insert("sampleRayNum", cptPara->RT_BeamNum);
-	json.insert("computation_Enum", (int)(cptPara->computeEnum));
-	json.insert("runtime", para->runTime);
 
-	Cell_Data * tmpCell = visContainer->getCellDataByPCI(pci);
-	if (cptPara->computeEnum==ComputationEnum::SimuPlane)
-	{
-		json.insert("simuPlane_row", tmpCell->row);//
-		json.insert("simuPlane_col", tmpCell->col);
-		json.insert("smuPlane_pricison", tmpCell->pricision);
-	}
+	//  //json格式保存
+	//	QJsonObject json;
+	//	json.insert("File_Type", "仿真结果文件");
+	//	json.insert("Site_ID", siteID);
+	//	json.insert("Cell_PCI", pci);
+	//	json.insert("reflect_count", cptPara->reflectNumPara);
+	//	json.insert("sample_count", cptPara->RT_sample);
+	//	json.insert("sampleRayNum", cptPara->RT_BeamNum);
+	//	json.insert("computation_Enum", (int)(cptPara->computeEnum));
+	//	json.insert("runtime", para->runTime);
+	//
+	//	Cell_Data * tmpCell = visContainer->getCellDataByPCI(pci);
+	//	if (cptPara->computeEnum==ComputationEnum::SimuPlane)
+	//	{
+	//		json.insert("simuPlane_row", tmpCell->row);//
+	//		json.insert("simuPlane_col", tmpCell->col);
+	//		json.insert("smuPlane_pricison", tmpCell->pricision);
+	//	}
+	//
+	//	QJsonArray data;
+	//	//按照 id x y z RSRP存储
+	//	for (int i = 0; i < tmpCell->efildVec.size();i++)
+	//	{
+	//		QJsonArray dataTmp;
+	//		dataTmp.push_back(i);
+	//		dataTmp.push_back(tmpCell->efildVec[i]->Position.x);
+	//		dataTmp.push_back(tmpCell->efildVec[i]->Position.y);
+	//		dataTmp.push_back(tmpCell->efildVec[i]->Position.z);
+	//		dataTmp.push_back(tmpCell->efildVec[i]->MolStrength);
+	//		data.push_back(dataTmp);
+	//	}
+	//	json.insert("data", data);
+	//	QJsonDocument document;
+	//	document.setObject(json);
+	//	QByteArray byte_array = document.toJson(QJsonDocument::Indented);
+	////	QString json_str(byte_array);
+	//	QTextStream st(&f);
+	//	st << byte_array;
 
-	QJsonArray data;
-	//按照 id x y z RSBP存储
-	for (int i = 0; i < tmpCell->efildVec.size();i++)
-	{
-		QJsonArray dataTmp;
-		dataTmp.push_back(i);
-		dataTmp.push_back(tmpCell->efildVec[i]->Position.x);
-		dataTmp.push_back(tmpCell->efildVec[i]->Position.y);
-		dataTmp.push_back(tmpCell->efildVec[i]->Position.z);
-		dataTmp.push_back(tmpCell->efildVec[i]->MolStrength);
-		data.push_back(dataTmp);
-	}
-	json.insert("data", data);
-	QJsonDocument document;
-	document.setObject(json);
-	QByteArray byte_array = document.toJson(QJsonDocument::Indented);
-//	QString json_str(byte_array);
+	Site_Data* tmpSite = visContainer->getSiteDataByID(siteID);
+	auto it = tmpSite->cellsMap.begin();
+
 	QTextStream st(&f);
-	st << byte_array;
-	f.close();
+	st << "Site_ID " << siteID << endl;
+
+	int type = (int)cptPara->computeEnum;
+	if (type==1)
+	{
+		st << "Computation_type " << type << endl;
+		st << "SimuPlane_row " << it->second->row << endl;
+		st << "SimuPlane_col " << it->second->col << endl;
+		st << "SmuPlane_pricison " << it->second->pricision << endl;
+	}
+	if (type==2)
+	{
+		st << "Computation_type " << type << endl;
+		st << "Mean " << beforeCorrection_mean_value << " " << afterCorrection_mean_value << endl;
+		st << "Standard_Deviation " << beforeCorrection_Standard_Deviation_value << " " << afterCorrection_Standard_Deviation_value << endl;
+		st << "Correction_Coefficient " << beforeCorrection_Correlation_Coefficient_value << " " << afterCorrection_Correlation_Coefficient_value << endl;
+	}
+	
+	st << "Reflection_count " << (int)cptPara->reflectNumPara << endl;
+	st << "Transmission_count " << (int)cptPara->refractNumPara << endl;
+	st << "Diffraction_count " << (int)cptPara->diffractionNumPara << endl;
+	st << "RT_BeamNum " << cptPara->RT_BeamNum << endl;
+	st << "RT_Radius " << cptPara->RT_radius << endl << endl;
+
+	if (type == 1)
+	{
+		st.setRealNumberNotation(QTextStream::FixedNotation);
+		st << "   ID" << "           X" << "           Y" << "           Z" << "  PCI" << "   Sium(dBm)" << endl;
+		int id = 0;
+		while (it!=tmpSite->cellsMap.end())
+		{
+			Cell_Data *tmpCell = it->second; 
+			for (int i = 0; i < tmpCell->efildVec.size();i++)
+			{
+				st.setFieldWidth(5);
+				st.setRealNumberPrecision(0);
+				st << id;
+				st.setFieldWidth(12);
+				st.setRealNumberPrecision(2);
+				st << tmpCell->efildVec[i]->Position.x << tmpCell->efildVec[i]->Position.y << tmpCell->efildVec[i]->Position.z;
+				st.setFieldWidth(5);
+				st.setRealNumberPrecision(0);
+				st << tmpCell->pci;
+				st.setFieldWidth(12);
+				st.setRealNumberPrecision(4);
+				st<< tmpCell->efildVec[i]->MolStrength << endl;
+				id++;
+			}
+			it++;
+		}
+	}
+	if (type == 2)
+	{
+		st.setRealNumberNotation(QTextStream::FixedNotation);
+		st << "   ID" << "           X" << "           Y" << "          Z" << "  PCI" << "   Real(dBm)" << "   Sium(dBm)" << endl;
+
+		for (int i = 0; i < PCI.size(); i++)
+		{
+			st.setFieldWidth(5);
+			st.setRealNumberPrecision(0);
+			st << i;
+			st.setFieldWidth(12);
+			st.setRealNumberPrecision(2);
+			st << position[i].x << position[i].y << position[i].z;
+			st.setFieldWidth(5);
+			st.setRealNumberPrecision(0); 
+			st << PCI[i];
+			st.setFieldWidth(12);
+			st.setRealNumberPrecision(4);
+			st<< Measuredfield[i] << afterCorrection_calculationfield[i] << endl;
+		}
+	}
 	return;
 }
 
-void VisualManager::loadMeasuredFile(QString path)
+void VisualManager::loadMeasuredFile(string path)
 {
 	visContainer->clearMeasuredData();
-	ifstream infile((path.toStdString()).c_str(), ios::in | ios::_Nocreate);
+	ifstream infile((path).c_str(), ios::in | ios::_Nocreate);
 	if (!infile)
 	{
 		cout << "can not open file!" << endl;
@@ -264,18 +349,18 @@ void VisualManager::loadMeasuredFile(QString path)
 		double z = atof(str_z.c_str()) + globalCtx->modelManager->getFirstCity()->getAltitude(x, y);
 		int current_PCI = atoi(PCI.c_str());
 		EField * tmpEfield = new EField;
-		tmpEfield->Position = Vector3d(x,y,z);
+		tmpEfield->Position = Vector3d(x, y, z);
 		tmpEfield->MolStrength = atof(RSRP.c_str());
 		visContainer->addEfield_Measured(tmpEfield, current_PCI);
 	}
 	infile.close();
 }
 
-void VisualManager::correct(Vector3d &before,Vector3d &after)
+void VisualManager::correct(Vector3d &before, Vector3d &after)
 {
 	int site_id = 0, PCI_id = 0, Field_id = 0;   //记录后面用于测试的30%数据的起始site_id、PCI_id和field_id
 	double k1 = 0, k2 = 0, weight = 0;
-	leastSquare(k1, k2, weight ,site_id, PCI_id, Field_id);
+	leastSquare(k1, k2, weight, site_id, PCI_id, Field_id);
 
 	beforeCorrection_calculationfield.clear();
 	afterCorrection_calculationfield.clear();
@@ -288,11 +373,11 @@ void VisualManager::correct(Vector3d &before,Vector3d &after)
 	auto it2 = it1->second->cellsMap.find(PCI_id);
 	int id3 = Field_id;
 	int id = 0;
-	bool startFlag=true;
-	for (; it1 != tmpMeasured.end();it1++)
+	bool startFlag = true;
+	for (; it1 != tmpMeasured.end(); it1++)
 	{
 
-		if (startFlag==true)
+		if (startFlag == true)
 		{
 			it2 = it1->second->cellsMap.find(PCI_id);
 		}
@@ -307,10 +392,14 @@ void VisualManager::correct(Vector3d &before,Vector3d &after)
 			{
 				EField * measuredE = it2->second->efildVec[id3];
 				EField *simE = tmpSim[it1->first]->cellsMap[it2->first]->efildVec[id3];
-				if (simE->Path.size()!=0)
+				if (simE->Path.size() != 0)
 				{
+					position.push_back(simE->Position);
+					PCI.push_back(it2->second->pci);
+
 					Measuredfield.push_back(measuredE->MolStrength);
 					beforeCorrection_calculationfield.push_back(simE->MolStrength);
+
 					double afterCorrection_Molstrength = weight*simE->MolStrength + k1*log10(simE->HorizontalDis) + k2;
 					afterCorrection_calculationfield.push_back(afterCorrection_Molstrength);
 					id++;
@@ -322,18 +411,19 @@ void VisualManager::correct(Vector3d &before,Vector3d &after)
 		startFlag = false;
 	}
 
-	double beforeCorrection_mean_value = mean(Measuredfield, beforeCorrection_calculationfield);
-	double beforeCorrection_Standard_Deviation_value = Standard_Deviation(Measuredfield, beforeCorrection_calculationfield);
-	double beforeCorrection_Correlation_Coefficient_value = Correlation_Coefficient(Measuredfield, beforeCorrection_calculationfield);
+	beforeCorrection_mean_value = mean(Measuredfield, beforeCorrection_calculationfield);
+	beforeCorrection_Standard_Deviation_value = Standard_Deviation(Measuredfield, beforeCorrection_calculationfield);
+	beforeCorrection_Correlation_Coefficient_value = Correlation_Coefficient(Measuredfield, beforeCorrection_calculationfield);
 	cout << endl;
 	cout << "Before the model correction:" << endl;
 	cout << "Mean Value:  " << beforeCorrection_mean_value << endl;
 	cout << "Standard Deviation:  " << beforeCorrection_Standard_Deviation_value << endl;
 	cout << "Correction Coefficient:  " << beforeCorrection_Correlation_Coefficient_value << endl;
 	//after correction
-	double afterCorrection_mean_value = mean(Measuredfield, afterCorrection_calculationfield);
-	double afterCorrection_Standard_Deviation_value = Standard_Deviation(Measuredfield, afterCorrection_calculationfield);
-	double afterCorrection_Correlation_Coefficient_value = Correlation_Coefficient(Measuredfield, afterCorrection_calculationfield);
+	afterCorrection_mean_value = mean(Measuredfield, afterCorrection_calculationfield);
+	afterCorrection_Standard_Deviation_value = Standard_Deviation(Measuredfield, afterCorrection_calculationfield);
+	afterCorrection_Correlation_Coefficient_value = Correlation_Coefficient(Measuredfield, afterCorrection_calculationfield);
+
 	cout << endl;
 	cout << "After the model correction:" << endl;
 	cout << "Mean Value:  " << afterCorrection_mean_value << endl;
@@ -342,7 +432,7 @@ void VisualManager::correct(Vector3d &before,Vector3d &after)
 
 	before = Vector3d(beforeCorrection_mean_value, beforeCorrection_Standard_Deviation_value, beforeCorrection_Correlation_Coefficient_value);
 	after = Vector3d(afterCorrection_mean_value, afterCorrection_Standard_Deviation_value, afterCorrection_Correlation_Coefficient_value);
-	cout << "end of correction"<< endl;
+	cout << "end of correction" << endl;
 }
 
 void VisualManager::leastSquare(double &a, double &b, double &weight, int &site_id, int &PCI_id, int &Field_id)
@@ -351,13 +441,13 @@ void VisualManager::leastSquare(double &a, double &b, double &weight, int &site_
 	int total_ReceiverNum = 0;
 	map<int, Site_Data*> &tmpMeasured = visContainer->getMeasuredData();
 	map<int, Site_Data*> &tmpSim = visContainer->getSimData();
-	for (auto it = tmpMeasured.begin(); it != tmpMeasured.end();it++)//遍历站点
+	for (auto it = tmpMeasured.begin(); it != tmpMeasured.end(); it++)//遍历站点
 	{
-		for (auto it2 = it->second->cellsMap.begin(); it2 != it->second->cellsMap.end();it2++)//遍历pci
+		for (auto it2 = it->second->cellsMap.begin(); it2 != it->second->cellsMap.end(); it2++)//遍历pci
 		{
-			for (int  it3 =0; it3 < it2->second->efildVec.size();it3++)//遍历所有接收点
+			for (int it3 = 0; it3 < it2->second->efildVec.size(); it3++)//遍历所有接收点
 			{
-				if (tmpSim[it->first]->cellsMap[it2->first]->efildVec[it3]->Path.size()!=0)//接收点有效
+				if (tmpSim[it->first]->cellsMap[it2->first]->efildVec[it3]->Path.size() != 0)//接收点有效
 				{
 					total_ReceiverNum++;
 				}
@@ -368,7 +458,7 @@ void VisualManager::leastSquare(double &a, double &b, double &weight, int &site_
 	weight = 0.5;
 	int n = 0;
 	bool flag = true;
-	for (auto it = tmpMeasured.begin();flag && it != tmpMeasured.end(); it++)//遍历站点
+	for (auto it = tmpMeasured.begin(); flag && it != tmpMeasured.end(); it++)//遍历站点
 	{
 		for (auto it2 = it->second->cellsMap.begin(); flag && it2 != it->second->cellsMap.end(); it2++)//遍历pci
 		{
@@ -386,11 +476,11 @@ void VisualManager::leastSquare(double &a, double &b, double &weight, int &site_
 					t3 += x*y;
 					t4 += y;
 
-					if (n>=0.7*total_ReceiverNum)
+					if (n >= 0.7*total_ReceiverNum)
 					{
-						if (it3==it2->second->efildVec.size()-1)
+						if (it3 == it2->second->efildVec.size() - 1)
 						{
-							Field_id = it3 ;
+							Field_id = it3;
 						}
 						else
 						{

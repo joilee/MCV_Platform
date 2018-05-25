@@ -21,6 +21,8 @@ public:
 	fieldpoint *fp;
 	simuArgument *sa;
 	
+signals:
+	void sendFlag(bool);
 	public slots:
 			void changePage(QListWidgetItem *current, QListWidgetItem *previous);
 			void getPara();

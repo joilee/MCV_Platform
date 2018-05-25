@@ -12,8 +12,6 @@ class scatterWidget : public QDialog
 public:
 	scatterWidget(QWidget *parent = Q_NULLPTR);
 	~scatterWidget();
-
-private slots:
 	
 	/**
 	  * @Method:    openTestFile
@@ -37,19 +35,22 @@ private slots:
 	  * @Returns:   void
 	  * @Qualifier:
 	*/
-	void showResult();
+	void showSimuResult();
+	void showLoadResult(QString path);
+	void closeEvent(QCloseEvent *e);
 
-	void showPara();
+signals:
+	void sendFlag(bool);
 
-	void modeButtonToggled(int id, bool flag);
+	//void showPara();
+
+	//void modeButtonToggled(int id, bool flag);
 private:
 	Ui::scatterDialog *ui;
-	QButtonGroup *modeGroup;
+	//QButtonGroup *modeGroup;
 	Document m_content;
-
-	correctWidget * dataWidget;
-	//data
-	void initData();
-	void enableShowMode(bool a);
-	void enableCorrectMode(bool a);
+	//correctWidget * dataWidget;
+	//void initData();
+	//void enableShowMode(bool a);
+	//void enableCorrectMode(bool a);
 };

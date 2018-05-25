@@ -252,7 +252,7 @@ void emxKdTree::buildTree(int nodeNum, const emxBBox &nodeBounds,
 	// Initialize interior node and continue recursion
 	// Choose split axis position for interior node
 	int bestAxis = -1, bestOffset = -1;
-	double bestCost = INFINITY;
+	double bestCost = INFINITY_UEES;
 	double oldCost = isectCost * double(nPrims);
 	Vector3d d = nodeBounds.pMax - nodeBounds.pMin;
 	double totalSA = (2.f * (d.x*d.y + d.x*d.z + d.y*d.z));
@@ -835,8 +835,8 @@ bool emxKdTree::BeamVsAABBox(const emxBeam *curBeam, const emxBBox& bounds, Vect
 {
 	// if the ray miss the kd-node slabs, ray direction parallels axis
 	tmin[0] = tmin[1] = tmin[2] = tmin[3] = Vector3d(0, 0, 0);
-	tmax[0] = tmax[1] = tmax[2] = tmax[3] = Vector3d(INFINITY, INFINITY, INFINITY);
-	int      cornerNum = curBeam->cornerNum;
+	tmax[0] = tmax[1] = tmax[2] = tmax[3] = Vector3d(INFINITY_UEES, INFINITY_UEES, INFINITY_UEES);
+	int cornerNum = curBeam->cornerNum;
 	
 
 	// check if curBeam hits the scene's bounding box
@@ -922,7 +922,7 @@ void emxKdTree::IntersectSplitPlane(const emxKdTreeNode* node, const emxBeam* cu
 			/*tplane[i] = (splitPos - curBeam->BeamVertex[i][axis]) * curBeam->invDir[i][axis];*/
 				tplane[i] = (splitPos - curBeam->BeamVertex[i][axis]) / curBeam->dir[i][axis];
 		else
-			tplane[i] = INFINITY;
+			tplane[i] = INFINITY_UEES;
 	}
 }
 
@@ -1475,13 +1475,13 @@ void emxKdTree::GenerateBeams(emxBeam *parentBeam, Vector3d beamVertex[8], int b
 		beam->cornerNum  = beamVertexNum - i + 1;
 		beam->cornerNum  = beam->cornerNum > 4 ? 4 : beam->cornerNum;
 		beam->BeamVertex[0]  = beamVertex[0];
-		beam->maxDist[0] = hitBeam ? tmax[0] : INFINITY;
+		beam->maxDist[0] = hitBeam ? tmax[0] : INFINITY_UEES;
 		beam->dir[0] = (beamVertex[0] - parentBeam->origin).normalize();
 		//beam->invDir[0] = Vector3d(1.0 / beam->dir[0].x, 1.0 / beam->dir[0].y, 1.0 / beam->dir[0].z);
 		for(int j = 1; j < beam->cornerNum; ++j) 
 		{
 			beam->BeamVertex[j]  = beamVertex[i + j - 1];
-			beam->maxDist[j] = hitBeam ? tmax[i + j - 1] : INFINITY;
+			beam->maxDist[j] = hitBeam ? tmax[i + j - 1] : INFINITY_UEES;
 			beam->dir[j] = (beamVertex[i + j - 1] - parentBeam->origin).normalize();
 			//beam->invDir[j] = Vector3d(1.0 / beam->dir[j].x, 1.0 / beam->dir[j].y, 1.0 / beam->dir[j].z);
 		}
@@ -1668,8 +1668,4 @@ void emxKdTree::CheckHitBeam(emxBeam *curBeam, emxMailboxPrim *mp, vector<emxBea
 			curBeam->maxDist[i] = tmax[i];
 	}
 }
-
-
-
-
 

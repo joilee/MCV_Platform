@@ -22,7 +22,7 @@ class emxBeam
 {
 public:
 	// constructor
-	emxBeam() { beam_depth = 0; beam_type = -1; hitFaceID = -1; hitFace = NULL; parentBeam = NULL; bounce = 1; reflectedBeam = NULL; transmittedBeam = NULL; index = beamIndex++; maxDist[0] = maxDist[1] = maxDist[2] = maxDist[3] = INFINITY; }
+	emxBeam() { beam_depth = 0; beam_type = -1; hitFaceID = -1; hitFace = NULL; parentBeam = NULL; bounce = 1; reflectedBeam = NULL; transmittedBeam = NULL; index = beamIndex++; maxDist[0] = maxDist[1] = maxDist[2] = maxDist[3] = INFINITY_UEES; }
 	~emxBeam() {
 		for(size_t i = 0; i < childBeams.size(); ++i)
 			delete childBeams[i];

@@ -64,7 +64,134 @@ Pot cityLocalModel::get_Normal(Pot p1, Pot p2, Pot p3) {
 
 }
 
+////未添加凹多边形的处理，直接删除凹点
+//void cityLocalModel::generateBuildingMesh()
+//{
+//	vector<Building> local_Buildings = scene->getTotal_Building();
+//	int concave_polygonNum = 0;
+//
+//	for (int buildings_id = 0; buildings_id < local_Buildings.size(); buildings_id++)
+//	{
+//		//首尾点是同一个，重复记录
+//		int count = local_Buildings[buildings_id].upper_facePoint.size() - 1;
+//		double building_height = local_Buildings[buildings_id].height;
+//
+//		int V_size = V.size();
+//		vector<int> upper_PointIndex;
+//
+//		//上顶面的点
+//		for (int id = 0; id < count; id++)
+//		{
+//			Vector3d point = local_Buildings[buildings_id].upper_facePoint[id];
+//			V.push_back(point);
+//			upper_PointIndex.push_back(V.size() - 1);
+//		}
+//		//下底面的点
+//		for (int id = 0; id < count; id++)
+//		{
+//			Vector3d point = local_Buildings[buildings_id].upper_facePoint[id];
+//			double under_height = point.z - building_height;
+//			V.push_back(Vector3d(point.x, point.y, under_height));
+//		}
+//
+//		//生成三角形面片
+//		//侧面面片
+//		Vector3d E1, E2, N;
+//		for (int id = 0; id < count; id++)
+//		{
+//			int i1, i2, i3, i4;
+//
+//			i1 = id + V_size;
+//			i2 = (id + 1) % count + V_size;
+//			i3 = (id + 1) % count + count + V_size;
+//			i4 = id + count + V_size;
+//
+//			E1 = V[i2] - V[i1];
+//			E2 = V[i3] - V[i2];
+//			N = VectorCross(E1, E2);
+//
+//			if (N.norm() > DOUBLE_EPSILON)
+//			{
+//				F.push_back(Vector3i(i1, i2, i3));
+//				NF.push_back(N.normalize());
+//			}
+//
+//			E1 = V[i3] - V[i1];
+//			E2 = V[i4] - V[i3];
+//			N = VectorCross(E1, E2);
+//
+//			if (N.norm() > DOUBLE_EPSILON)
+//			{
+//				F.push_back(Vector3i(i1, i3, i4));
+//				NF.push_back(N.normalize());
+//			}
+//		}
+//
+//		//上顶面面片
+//		bool convex = true;     //true表示凸多边形，false表示凹多边形
+//		vector<Vector3d> upper_face = local_Buildings[buildings_id].upper_facePoint;
+//		upper_face.pop_back();  //首尾点重复
+//		int count1 = upper_face.size();
+//
+//		for (int id = 0; id < count1; id++)
+//		{
+//			Vector3d v1, v2, v3;
+//			v1 = upper_face[id];
+//			v2 = upper_face[(id + 1) % count1];
+//			v3 = upper_face[(id + 2) % count1];
+//
+//			if (Dot(VectorCross(v2 - v1, v3 - v2), Vector3d(0, 0, -1)) < DOUBLE_EPSILON)
+//			{
+//				//若为凹点直接去掉
+//				std::vector<Vector3d>::iterator it1 = upper_face.begin() + (id + 1) % count1;
+//				upper_face.erase(it1);
+//				std::vector<int>::iterator it2 = upper_PointIndex.begin() + (id + 1) % count1;
+//				upper_PointIndex.erase(it2);
+//
+//				count1--;
+//				id--;
+//
+//				convex = false;
+//			}
+//		}
+//		if (!convex)
+//		{
+//			concave_polygonNum++;
+//		}
+//
+//		int count2 = upper_face.size();
+//		for (int id = 0; id <= count2 - 3; id++)
+//		{
+//			E1 = V[upper_PointIndex[id + 2]] - V[upper_PointIndex[0]];
+//			E2 = V[upper_PointIndex[id + 1]] - V[upper_PointIndex[id + 2]];
+//			N = VectorCross(E1, E2);
+//
+//			if (N.norm() > DOUBLE_EPSILON)
+//			{
+//				F.push_back(Vector3i(upper_PointIndex[0], upper_PointIndex[id + 2], upper_PointIndex[id + 1]));
+//				NF.push_back(N.normalize());
+//			}
+//		}	
+//	}
+//
+//	cout << "info: 局部建筑物数量是" << local_Buildings.size() << endl;
+//	cout << " 凹建筑物数量是" << concave_polygonNum << endl;
+//	cout << "info: 局部建筑物点数量是" << V.size() << endl;
+//	cout << "info: 局部建筑物面片数量是" << F.size() << endl;
+//
+//	std::vector<Vector3d>::const_iterator v = V.begin();
+//	MinPos = Min(MinPos, scene->getMinPoint());
+//	MaxPos = Max(MaxPos, scene->getMaxPoint());
+//	for (++v; v != V.end(); ++v)
+//	{
+//		MinPos = Min(MinPos, (*v));
+//		MaxPos = Max(MaxPos, (*v));
+//	}
+//	cout << "info: 结点生成完毕！" << endl;
+//
+//}
 
+//添加对凹多边形的处理
 void cityLocalModel::generateBuildingMesh()
 {
 	vector<Building>  local_Buildings = scene->getTotal_Building();
@@ -130,6 +257,20 @@ void cityLocalModel::generateBuildingMesh()
 		vector<Vector3d> upper_face = local_Buildings[buildings_id].upper_facePoint;
 		upper_face.pop_back(); //首末点重复，所以要删掉末尾的重复点
 		int count1 = upper_face.size();
+
+		for (int id = 0; id < count1; id++)
+		{
+			Vector3d v1, v2, v3;
+			v1 = upper_face[id];
+			v2 = upper_face[(id + 1) % count1];
+			v3 = upper_face[(id + 2) % count1];
+
+			if (Dot(VectorCross(v2 - v1, v3 - v2), Vector3d(0, 0, -1)) < DOUBLE_EPSILON)
+			{
+				concave_polygonNum++; 
+				break;
+			}
+		}
 
 		//判断多边形是否自相交
 		bool cross = false;
@@ -218,7 +359,7 @@ void cityLocalModel::generateBuildingMesh()
 				else
 				{
 					tmp = tmp->next;
-				}	
+				}
 			}
 			else
 			{
@@ -236,92 +377,11 @@ void cityLocalModel::generateBuildingMesh()
 			NF.push_back(N.normalize());
 		}
 	}
-	////看v2是不是凹点
-	//         if (Dot(VectorCross(v2 - v1, v3 - v2), Vector3d(0, 0, -1)) < DOUBLE_EPSILON) { //判断是否为凹
-	//             //判断若为凹点，直接剔除掉v2
-	//             std::vector<Vector3d>::iterator it1 = upper_face.begin() + (id + 1) % count1;
-	//             upper_face.erase(it1);
-	//             std::vector<int>::iterator it2 = upper_PointIndex.begin() + (id + 1) % count1;
-	//             upper_PointIndex.erase(it2);
-
-	//             count1--;
-	//             id--;
-
-	//             convex = false;
-	//         }
-	//     }
-	//     if (!convex) {
-	//         concave_polygonNum++;
-	//     }
-
-	//     //凸多边形剖分，选择一个顶点，然后依次寻找下两个顶点组成一个三角形
-	//     int count2 = upper_face.size();
-	//     for (int id = 0; id <= count2 - 3; id++) {
-	//         E1 = V[upper_PointIndex[id + 2]] - V[upper_PointIndex[0]];
-	//         E2 = V[upper_PointIndex[id + 1]] - V[upper_PointIndex[id + 2]];
-	//         N = VectorCross(E1, E2);
-	//         if (N.norm() > DOUBLE_EPSILON) {
-	//             F.push_back(Vector3i(upper_PointIndex[0], upper_PointIndex[id + 2], upper_PointIndex[id + 1]));
-	//             NF.push_back(N.normalize());
-	//         }
-	//     }
-
 
 	//一栋建筑物处理完毕
 	cout << "info: 局部建筑物数量是" << local_Buildings.size() << endl;
 	cout << "info: 局部建筑物面片数量是" << F.size() << " 凹建筑物数量是" << concave_polygonNum << endl;
 
-	/*
-	int V_num = V.size();
-	int F_startNum = F.size();
-	int NF_startNum = NF.size();
-	VERTEX2D_PTR pVtx = ground_pMesh->pVerArr;
-	int numV = ground_pMesh->vertex_num;
-	for (int i = 3; i < numV + 3; i++)
-	{ //前三个点是bounding triangle
-		double x, y, z;
-		x = ((VERTEX2D_PTR)(ground_pMesh->pVerArr + i))->x;
-		y = ((VERTEX2D_PTR)(ground_pMesh->pVerArr + i))->y;
-		z = ((VERTEX2D_PTR)(ground_pMesh->pVerArr + i))->z;
-		V.push_back(Vector3d(x, y, z));
-	}
-
-	TRIANGLE_PTR pTri = ground_pMesh->pTriArr;
-	int tri_index = 0;
-	int* pi;
-	while (pTri != NULL)
-	{
-		tri_index++;
-		int id[3];
-		pi = &(pTri->i1);
-		for (int j = 0; j<3; j++)
-		{
-			id[j] = *pi++;
-			id[j] = id[j] - 3 + V_num;
-		}
-		Vector3d E1, E2, N;
-		E1 = V[id[1]] - V[id[0]];
-		E2 = V[id[2]] - V[id[1]];
-		N = VectorCross(E1, E2);
-		if (N.norm() > DOUBLE_EPSILON)
-		{
-			//对于地面的点,法向量的z必须大于0
-			if (N.z > 0) {
-				F.push_back(Vector3i(id[0], id[1], id[2]));
-				NF.push_back(N.normalize());
-			}
-			else { //换一个点的排列顺序 0 2 1
-				F.push_back(Vector3i(id[0], id[2], id[1]));
-				NF.push_back(-N.normalize());
-			}
-		}
-		pTri = pTri->pNext;
-	}
-	int F_endNum = F.size();
-	int NF_endNum = NF.size();
-	cout << "info: 地面建模点的数量 " << V.size() - V_num << "  三角形数量 " << F_endNum - F_startNum << " 法向量数量 " << NF_endNum - NF_startNum << endl;
-	*/
-	// calculate the bounding box
 	std::vector<Vector3d>::const_iterator v = V.begin();
 	MinPos = Min(MinPos,scene->getMinPoint());
 	MaxPos = Max(MaxPos, scene->getMaxPoint());
@@ -640,7 +700,7 @@ cityLocalModel::cityLocalModel(Vector3d  AP_position, double  LocalRange, citySc
 	name = _name;
 	id = atoi(_name.c_str());
 	scene = new cityScene(AP_position, LocalRange, cityAll);
-	loadLocalGround(AP_position, LocalRange, scene);
+//	loadLocalGround(AP_position, LocalRange, scene);
 	cout << "Info: 地面场景构建完成" << endl;
 
 	clearVandF();
@@ -725,8 +785,11 @@ void cityLocalModel::initDraw() {
 	cout << "info:局部场景openGL数据初始化完成，共耗时" << (this_time - last_time) / 1000 << "s" << endl;
 }
 
-void cityLocalModel::writeToObj() {
-	ofstream fout("D:\\test.obj");
+void cityLocalModel::writeToObj(string path) {
+	ofstream fout(path);
+
+	fout.precision(2);
+	fout.setf(ofstream::fixed);
 	for (int i = 0; i < F.size(); i++) {
 		Vector3i vIndex = F[i];//3个点
 		for (int j = 0; j < 3; j++) {
@@ -734,16 +797,12 @@ void cityLocalModel::writeToObj() {
 			fout << "v " << V[vIndex[j]].x << " " << V[vIndex[j]].y << " " << V[vIndex[j]].z << endl;
 		}
 	}
-	for (int i = 0; i < F.size(); i++) {
-		for (int j = 0; j < 3; j++) {
-			fout << "vn " << NF[i].x << " " << NF[i].y << " " << NF[i].z << endl;
-		}
-	}
 
+	fout.precision(0);
 	for (int i = 0; i < F.size(); i++) {
 		fout << "f ";
 		for (int j = 0; j < 3; j++) {
-			fout << i * 3 + j + 1 << "/" << i * 3 + j + 1 << " ";
+			fout << i * 3 + j + 1<<" ";
 		}
 		fout << endl;
 	}
@@ -752,6 +811,13 @@ void cityLocalModel::writeToObj() {
 
 void cityLocalModel::draw(vector<bool> mode, double alpha) {
 	if (mode[0]) { //draw vertice
+		glColor4d(0.0f, 0.0f, 0.0f, 1.0f);
+		glBegin(GL_POINTS);
+		for (int i = 0; i < V.size(); i++)
+		{
+			glVertex3d((GLdouble)V[i].x, (GLdouble)V[i].y, (GLdouble)V[i].z);
+		}
+		glEnd();
 
 	}
 	if (mode[1]) { //draw line

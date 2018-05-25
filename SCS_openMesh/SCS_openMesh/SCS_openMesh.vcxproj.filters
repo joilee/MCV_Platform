@@ -70,9 +70,7 @@
     <ClCompile Include="ui\scatterWidget\Document.cpp" />
     <ClCompile Include="ui\scatterWidget\scatterWidget.cpp" />
     <ClCompile Include="ui\scsGLWidget.cpp" />
-    <ClCompile Include="ui\scsLocalModelGLWidget.cpp" />
     <ClCompile Include="ui\scsModelTable.cpp" />
-    <ClCompile Include="ui\scsSimuPlaneGLWidget.cpp" />
     <ClCompile Include="util\ArcBall.cpp" />
     <ClCompile Include="util\emxCamera.cpp" />
     <ClCompile Include="util\HsvToRgb.cpp" />
@@ -93,6 +91,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_scsGLWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\GLWidget\scsLocalGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -118,7 +119,6 @@
     <CustomBuild Include="observer\modelSubject.h" />
     <CustomBuild Include="ui\scsModelTable.h" />
     <CustomBuild Include="ui\scsGLWidget.h" />
-    <CustomBuild Include="ui\scsSimuPlaneGLWidget.h" />
     <CustomBuild Include="util\emxRenderUtility.h" />
     <CustomBuild Include="visualData\visualAntennaItem.h" />
     <CustomBuild Include="visualData\visualModelItem.h" />
@@ -144,7 +144,6 @@
     <CustomBuild Include="ImageFIle\StartExe\start.png" />
     <CustomBuild Include="mainwindow.ui" />
     <CustomBuild Include="outdoorFile.ui" />
-    <CustomBuild Include="Resources\scatter.ico" />
     <CustomBuild Include="mainwindow.qrc" />
     <CustomBuild Include="ui\scatterWidget\Document.h" />
     <CustomBuild Include="echartsWidget.ui" />
@@ -189,7 +188,6 @@
     <CustomBuild Include="ui\scatterWidget\correctWidget.h" />
     <CustomBuild Include="visualData\visualPluginItem.h" />
     <CustomBuild Include="visualData\visualResultItem.h" />
-    <CustomBuild Include="ui\scsLocalModelGLWidget.h" />
     <CustomBuild Include="visualData\LocalModelItem.h" />
     <CustomBuild Include="Resources\face.ico" />
     <CustomBuild Include="Resources\line.ico" />
@@ -220,5 +218,17 @@
       <Extensions>cpp;cxx;c;def</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="myapp.ico" />
+    <Image Include="Resources\line.png" />
+    <Image Include="Resources\scatter.png" />
+    <Image Include="Resources\result.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ui\GLWidget\scsLocalGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

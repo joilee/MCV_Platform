@@ -276,7 +276,7 @@ void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double Lo
  
 	if (cptPara->precision <= 0.0)
 	{
-		QMessageBox::warning(NULL, QStringLiteral("接收处预测点分布"), QStringLiteral("请输入合适的分布精度"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("请输入合适的分布精度！"));
 		return;
 	}
 	int width = (int)((Left_Up_Y - Right_Down_Y)/cptPara->precision);//row
@@ -288,7 +288,7 @@ void algo::SetEFieldPoint(Site_Data* m_siteData, Vector3d AP_position, double Lo
 	//		*				   *
 	//		********************
 	//
-	cout<<"width: "<<width<<"  length: "<<length<<endl;
+	//cout<<"width: "<<width<<"  length: "<<length<<endl;
 	int num = length * width;
 
 	int m = length;
@@ -510,7 +510,8 @@ void algo::valid_DirPath(emxKdTree* pKdTree, Vector3d AP_position, Site_Data *m_
 //计算反射、透射、绕射路径到达接收点的信号强度
 void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField*>  &EFieldArray, vector<Vedge> &Edge_list, Antenna_Para * A_Para)
 {
-	A_Para->frequency = AP.frequency * 1e6;
+	AP.frequency *= 1e6;    //单位从MHZ变为HZ
+	A_Para->frequency = AP.frequency;
 	A_Para->light_speed = 299792458;
 	A_Para->epsilon0 =  1e-9/(36*M_PI);
 	A_Para->lamda = A_Para->light_speed/A_Para->frequency;
@@ -575,7 +576,7 @@ void  algo::Calc_GO_UTD(TransAntenna &AP, vector<EField*>  &EFieldArray, vector<
 void algo::Calc_Signal(EField *NField, TransAntenna &AP, int &path_id, vector<Vedge> &Edge_list, Antenna_Para* aPara)
 {
 	Vector3d direction = (NField->Path[path_id].Path_interPoint[1] - NField->Path[path_id].Path_interPoint[0]).normalize();
-	double length = direction.norm();
+	double length = (NField->Path[path_id].Path_interPoint[1] - NField->Path[path_id].Path_interPoint[0]).norm();
 	//Tpolor是初始场强方向
 	Vector3d Tpolor = AP.polor_direction.normalize() - Dot(AP.polor_direction.normalize(),direction.normalize())*(direction.normalize());  //此处的direction是不是需要normalize？？
 
@@ -1997,22 +1998,22 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 	bool ok;
 	int totalcpu = omp_get_num_procs();
 
-	int core_nums = QInputDialog::getInt(NULL, QStringLiteral("cpu core"), QString("There are ") + QString::number(totalcpu) + " cores in this PC.\n use ", 0, 0, 100, 1, &ok);
+	int core_nums = QInputDialog::getInt(NULL, QStringLiteral("cpu core"), QString("There are ") + QString::number(totalcpu) + " cores in this PC.\n use ", 2, 1, 6, 1, &ok);
 	omp_set_num_threads(core_nums);   //指定用于并行计算的线程数目
 
 	if (modelParameter->SiteModels.empty())
 	{
-		QMessageBox::warning(NULL, QStringLiteral("模型文件"), QStringLiteral("请加载模型文件"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少模型信息，请导入室外场景文件！"));
 		return;
 	}
 	if (cptPara->Sites.size() == 0)
 	{
-		QMessageBox::warning(NULL, QStringLiteral("发射天线"), QStringLiteral("请添加发射天线文件"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少天线信息，请导入发射天线文件！"));
 		return;
 	}
 	if (modelParameter->materialdatabase.size() == 0)
 	{
-		QMessageBox::warning(NULL, QStringLiteral("材质文件"), QStringLiteral("请加载材质文件"));
+		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少材质信息，请导入材质文件！"));
 		return;
 	}
 	map<int, Site_Data *> &AP_EFieldMap = vPara->simuResult;
@@ -2065,7 +2066,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			double time_kd_tree = (time2 - time1) / 1000;
 			fout << "time_kd_tree:  " << time_kd_tree << endl;
 			fout << "begin to find all possible propagation path" << endl;
-			m_logText->addText("time_kd_tree :"+QString::number(time_kd_tree)+"s");
+			m_logText->addText("time_kd_tree: "+QString::number(time_kd_tree)+"s");
 
 
 			vector<emxBeam*> pRootBeams;
@@ -2076,7 +2077,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			double time7 = clock();
 			double time_initialBeam = (time7 - time6) / 1000;
 			fout << "time_initialBeam:  " << time_initialBeam << endl;
-			m_logText->addText("time_initialBeam:  " + QString::number(time_initialBeam));
+			m_logText->addText("time_initialBeam: " + QString::number(time_initialBeam) + "s");
 			double time8 = clock();
 			vector< vector<beamNode> >  AP_route;  //route
 			int totalpathnum = 0;  //the number of available path
@@ -2091,9 +2092,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			double time9 = clock();
 			double time_Beamtracing = (time9 - time8) / 1000;
 			fout << "time_Beamtracing:  " << time_Beamtracing << endl;
-			m_logText->addText("time_Beamtracing:" + QString::number(time_Beamtracing));
-
-
+			m_logText->addText("time_Beamtracing: " + QString::number(time_Beamtracing) + "s");
 
 			totalpathnum = AP_route.size();
 			fout << "the total possible path number is " << totalpathnum * 2 << endl;
@@ -2171,7 +2170,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			}
 			m_logText->addText(QStringLiteral("接收点设置完毕"));
 			//接收点的内外特征判断
-			Point_In_Out( m_siteData, currentModel->getLocalScene()->getTotal_Building());
+ 			Point_In_Out( m_siteData, currentModel->getLocalScene()->getTotal_Building());
 			//接收点设置完毕
 
 		//	emxModel * LocalVirtualSimPlane = new emxModel(currentModel->getGround_Mesh(), cptPara->altitude);
@@ -2183,7 +2182,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			double time_DirPath = (time11 - time10) / 1000;
 			fout << "time_DirPath:  " << time_DirPath << endl;
 			m_logText->addText(QStringLiteral("直射计算完毕"));
-			m_logText->addText("time_DirPath:  "+QString::number(time_DirPath));
+			m_logText->addText("time_DirPath: " + QString::number(time_DirPath) + "s");
 
 			for (int i = 0; i < pRootBeams.size(); i++)
 			{
@@ -2198,7 +2197,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			double time_RefTransPath = (time12 - time11) / 1000;
 			fout << "time_RefTransPath:  " << time_RefTransPath << endl;
 			m_logText->addText(QStringLiteral("反射透射计算完毕"));
-			m_logText->addText("time_RefTransPath::  " + QString::number(time_RefTransPath));
+			m_logText->addText("time_RefTransPath: " + QString::number(time_RefTransPath) + "s");
 
 			//绕射
 			
@@ -2212,15 +2211,15 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 				fout << "time_once_diffPath:  " << time_once_diffPath << endl;
 			
 				m_logText->addText(QStringLiteral("一次绕射计算完毕"));
-				m_logText->addText("time_once_diffPath:  " + QString::number(time_once_diffPath));
-				/*
+				m_logText->addText("time_once_diffPath: " + QString::number(time_once_diffPath) + "s");
+				
 				//反射加绕射
 				valid_RefDiffPath(AP_KdTree, currentEdge, AP_position, m_siteData, AP_route);
 				double time16 = clock();
 				double time_Ref_LastdiffPath = (time16 - time13) / 1000;
 				fout << "time_Ref_LastdiffPath:  " << time_Ref_LastdiffPath << endl;
+				m_logText->addText("time_Ref_LastdiffPath: " + QString::number(time_Ref_LastdiffPath) + "s");
 			
-				m_logText->addText("time_Ref_LastdiffPath:  " + QString::number(time_Ref_LastdiffPath));
 				if (cptPara->diffractionNumPara>=2)
 				{
 					vector<int> edgeID = currentModel->getAP_Edge_ID();
@@ -2230,10 +2229,10 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 					double time_multiple_diffPath = (time17 - time16) / 1000;
 					fout << "time_multiple_diffPath:  " << time_multiple_diffPath << endl;
 					m_logText->addText(QStringLiteral("多次绕射计算完毕"));
-					m_logText->addText("time_multiple_diffPath :  " + QString::number(time_multiple_diffPath));
+					m_logText->addText("time_multiple_diffPath: " + QString::number(time_multiple_diffPath) + "s");
 
 				}
-				*/
+				
 			}
 			
 			double time18 = clock();
@@ -2241,7 +2240,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 			fout << "the end of finding valid paths" << endl;
 			fout << "time_totalValidPath:  " << time_totalValidPath << endl;
 			m_logText->addText(QStringLiteral("路径搜索完成"));
-			m_logText->addText("time_totalValidPath :  " + QString::number(time_totalValidPath));
+			m_logText->addText("time_totalValidPath: " + QString::number(time_totalValidPath) + "s");
 
 			fout << "Begin to calculate the signal strength of receivers in  site  " << siteIterator->first<< endl;
 			m_logText->addText(QStringLiteral("准备计算信号点接收强度"));
@@ -2288,7 +2287,7 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 				fout << "time_totalSignalCalculation:  " << time_totalSignalCalculation << endl;
 
 				m_logText->addText(QStringLiteral("当前站点信号强度计算完成"));
-				m_logText->addText("time_totalSignalCalculation: " + QString::number(time_totalSignalCalculation));
+				m_logText->addText("time_totalSignalCalculation: " + QString::number(time_totalSignalCalculation) + "s");
 
 				int total_validpathnum = 0;
 				for (int id = 0; id < EfieldArray_tmpCell.size(); id++)
@@ -2315,13 +2314,13 @@ void algo::pluginAlgo(ModelPara *mmmm, ComputePara *cccc, visPara *vvvv)
 
 		siteCount++;
 		siteIterator++;
-	}//
+	}
 
 	double endTime = clock();
 	double runtime = (endTime - beginTime) / 1000;
 	vPara->runTime = runtime;
 	fout << "the total  runtime is  " << runtime << endl;
 	m_logText->addText(QStringLiteral("所有计算结束！"));
-	m_logText->addText("the total  runtime is " + QString::number(runtime));
+	m_logText->addText("the total  runtime is " + QString::number(runtime) + "s");
 	fout.close();
 }

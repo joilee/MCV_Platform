@@ -21,6 +21,7 @@ private slots:
 		void deleteBuilding();
 		void deleteHeight();
 		void deletePlane();
+		void onCancelButton();
 signals:  
 		void  fileIsOK(QString name,QStringList v,QStringList h,QString p);  
 

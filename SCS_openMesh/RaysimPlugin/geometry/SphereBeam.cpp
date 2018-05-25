@@ -51,7 +51,7 @@ int SphereBeam::LineIndex(emxVertex* p1, emxVertex* p2)
 void SphereBeam::SphereInit(int desity, double radius, vector<emxVertex *> &vertexVec)
 {
 	//以坐标轴分八区，作为初始源beam
-	Vector3d positions[] = { Vector3d(1, 0, 0), Vector3d(0, 1, 0), Vector3d(-1,0,0) , Vector3d(0,-1,0), Vector3d(0,0,1), Vector3d(0,0,-1) };
+	/*Vector3d positions[] = { Vector3d(1, 0, 0), Vector3d(0, 1, 0), Vector3d(-1,0,0) , Vector3d(0,-1,0), Vector3d(0,0,1), Vector3d(0,0,-1) };
 	for (size_t i = 0; i < 6; ++i)
 	{
 		Vector3d pos = positions[i].normalize();
@@ -70,34 +70,34 @@ void SphereBeam::SphereInit(int desity, double radius, vector<emxVertex *> &vert
 		f.p2 = vertexVec[faces[i][1]];
 		f.p3 = vertexVec[faces[i][2]];
 		Faces.push_back(f);
+	}*/
+
+	// 初始化模型为一个二十面体  12个顶点、20个面、30条边  球心即正20面体的中心在原点处，则球上点的坐标即可表示射线的方向向量
+	double phi = 0.5 * (1.0 + sqrt(5.0));
+	Vector3d positions[] = { Vector3d(0, -1, phi), Vector3d(0, 1, phi), Vector3d(0, -1, -phi), Vector3d(0, 1, -phi),
+		Vector3d(phi, 0,  1), Vector3d(phi, 0, -1), Vector3d(-phi, 0,  1), Vector3d(-phi, 0, -1), 
+		Vector3d(1,  phi, 0), Vector3d(1, -phi, 0), Vector3d(-1,  phi, 0), Vector3d(-1, -phi, 0) };
+	for(size_t i = 0; i < 12; ++i) 
+	{
+		Vector3d pos = positions[i].normalize();
+		pos =  pos * radius;
+		vertexVec.push_back(new emxVertex(pos.x, pos.y, pos.z));
 	}
 
-	//// 初始化模型为一个二十面体  12个顶点、20个面、30条边  球心即正20面体的中心在原点处，则球上点的坐标即可表示射线的方向向量
-	//double phi = 0.5 * (1.0 + sqrt(5.0));
-	//Vector3d positions[] = { Vector3d(0, -1, phi), Vector3d(0, 1, phi), Vector3d(0, -1, -phi), Vector3d(0, 1, -phi),
-	//	Vector3d(phi, 0,  1), Vector3d(phi, 0, -1), Vector3d(-phi, 0,  1), Vector3d(-phi, 0, -1), 
-	//	Vector3d(1,  phi, 0), Vector3d(1, -phi, 0), Vector3d(-1,  phi, 0), Vector3d(-1, -phi, 0) };
-	//for(size_t i = 0; i < 12; ++i) 
-	//{
-	//	Vector3d pos = positions[i].normalize();
-	//	pos =  pos * radius;
-	//	vertexVec.push_back(new emxVertex(pos.x, pos.y, pos.z));
-	//}
-
-	//size_t faces[][3] = { 0, 4, 1, 0, 9, 4, 9, 5, 4, 4, 5, 8, 4, 8, 1, 8, 10, 1, 8, 3, 10, 5, 3, 8, 5, 2, 3, 
-	//	2, 7, 3, 7, 10, 3, 7, 6, 10, 7, 11, 6, 11, 0, 6, 0, 1, 6, 6, 1, 10, 9, 0, 11, 
-	//	9, 11, 2, 9, 2, 5,7, 2, 11 };
-	//face f;
-	//for(size_t i = 0; i < 20; ++i) 
-	//{
-	//	f.l1 = LineIndex(vertexVec[faces[i][0]], vertexVec[faces[i][1]]);
-	//	f.l2 = LineIndex(vertexVec[faces[i][1]], vertexVec[faces[i][2]]);
-	//	f.l3 = LineIndex(vertexVec[faces[i][2]], vertexVec[faces[i][0]]);
-	//	f.p1 = vertexVec[faces[i][0]]; 
-	//	f.p2 = vertexVec[faces[i][1]]; 
-	//	f.p3 = vertexVec[faces[i][2]];
-	//	Faces.push_back(f);
-	//}
+	size_t faces[][3] = { 0, 4, 1, 0, 9, 4, 9, 5, 4, 4, 5, 8, 4, 8, 1, 8, 10, 1, 8, 3, 10, 5, 3, 8, 5, 2, 3, 
+		2, 7, 3, 7, 10, 3, 7, 6, 10, 7, 11, 6, 11, 0, 6, 0, 1, 6, 6, 1, 10, 9, 0, 11, 
+		9, 11, 2, 9, 2, 5,7, 2, 11 };
+	face f;
+	for(size_t i = 0; i < 20; ++i) 
+	{
+		f.l1 = LineIndex(vertexVec[faces[i][0]], vertexVec[faces[i][1]]);
+		f.l2 = LineIndex(vertexVec[faces[i][1]], vertexVec[faces[i][2]]);
+		f.l3 = LineIndex(vertexVec[faces[i][2]], vertexVec[faces[i][0]]);
+		f.p1 = vertexVec[faces[i][0]]; 
+		f.p2 = vertexVec[faces[i][1]]; 
+		f.p3 = vertexVec[faces[i][2]];
+		Faces.push_back(f);
+	}
 
 	//if (desity == -1)
 	//{

@@ -45,9 +45,9 @@ public:
 	  * @ Date:     2017/12/12
 	  * @Returns:   void
 	*/
-	void saveCellFile(QString dir, int pci,int siteID);
+	void saveSiteFile(QString dir,int siteID);
 
-	void loadMeasuredFile(QString file);
+	void loadMeasuredFile(string file);
 
 	void correct(Vector3d &before, Vector3d &after);
 
@@ -82,5 +82,14 @@ private:
 	vector<double>beforeCorrection_calculationfield;
 	vector<double>afterCorrection_calculationfield;
 	vector<double>Measuredfield;
+	vector<Vector3d>position;
+	vector<int>PCI;
+
+	double beforeCorrection_mean_value;
+	double beforeCorrection_Standard_Deviation_value;
+	double beforeCorrection_Correlation_Coefficient_value;
+	double afterCorrection_mean_value;
+	double afterCorrection_Standard_Deviation_value;
+	double afterCorrection_Correlation_Coefficient_value;
 };
 

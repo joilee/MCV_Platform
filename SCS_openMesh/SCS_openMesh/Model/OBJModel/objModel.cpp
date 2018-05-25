@@ -7,7 +7,7 @@ objModel::objModel(string objPath)
 	fileType = ModelType::OBJ;
 	int lPos = objPath.find_last_of('\\');
 	int rPos = objPath.find('.');
-	name = objPath.substr(lPos+1,rPos-1);
+	name = objPath.substr(lPos + 1, rPos - 1);
 
 	readObj(objPath);
 	uniformColor = Color(0.0f, 0.0f, 0.0f);
@@ -47,8 +47,26 @@ void objModel::readObj(string objPath)
 		if (line.find_first_of('f') == 0)
 		{
 			istringstream lineStream(line);
-			lineStream >> type >> v1 >> v2 >> v3;
-			faces.push_back(Vector3i(v1-1,v2-1,v3-1));
+
+			string s1, s2, s3;
+			lineStream >> type >> s1 >> s2 >> s3;
+
+			int i1 = s1.find_first_of('/');
+			if (i1 != string::npos)
+				s1 = s1.substr(0, i1);
+			v1 = atoi(s1.c_str());
+
+			int i2 = s2.find_first_of('/');
+			if (i2 != string::npos)
+				s2 = s2.substr(0, i2);
+			v2 = atoi(s2.c_str());
+
+			int i3 = s3.find_first_of('/');
+			if (i3 != string::npos)
+				s3 = s3.substr(0, i3);
+			v3 = atoi(s3.c_str());
+
+			faces.push_back(Vector3i(v1 - 1, v2 - 1, v3 - 1));
 		}
 	}
 	fin.close();
@@ -91,7 +109,7 @@ void objModel::draw(vector<bool> mode, double alpha)
 void objModel::initDraw()
 {
 	globalContext *globalCtx = globalContext::GetInstance();
-	
+
 	uniform_alpha = 1;
 	int defaultID = globalCtx->modelManager->matManager->getDefaultMaterial();
 	int index = globalCtx->modelManager->matManager->getVectorIndexFromID(defaultID);
@@ -99,7 +117,7 @@ void objModel::initDraw()
 
 	f_materialId = vector<int>(faces.size(), defaultID);
 
-	for (int i = 0; i < faces.size();i++)
+	for (int i = 0; i < faces.size(); i++)
 	{
 		int index = globalCtx->modelManager->matManager->getVectorIndexFromID(f_materialId[i]);
 		Color tmp = globalCtx->modelManager->matManager->getColor(index);
@@ -148,30 +166,31 @@ void objModel::initDraw()
 //计算高度
 double objModel::getAltitude(double x, double y)
 {
-	double minZ = DBL_MAX;
-	for (int i = 0; i < faces.size(); i++)
-	{
-		Vector3d a = points[faces[i].x];
-		Vector3d b = points[faces[i].y];
-		Vector3d c = points[faces[i].z];
-		Vector3d p = Vector3d(x, y, 0.0);
+	//double minZ = DBL_MAX;
+	//for (int i = 0; i < faces.size(); i++)
+	//{
+	//	Vector3d a = points[faces[i].x];
+	//	Vector3d b = points[faces[i].y];
+	//	Vector3d c = points[faces[i].z];
+	//	Vector3d p = Vector3d(x, y, 0.0);
 
-		Vector3d ab(b.x - a.x, b.y - a.y, b.z - a.z);
-		Vector3d ap(p.x - a.x, p.y - a.y, p.z - a.z);
-		Vector3d ac(c.x - a.x, c.y - a.y, c.z - a.z);
+	//	Vector3d ab(b.x - a.x, b.y - a.y, b.z - a.z);
+	//	Vector3d ap(p.x - a.x, p.y - a.y, p.z - a.z);
+	//	Vector3d ac(c.x - a.x, c.y - a.y, c.z - a.z);
 
-		double u = (ap.x*ab.y - ab.x*ap.y) / (ac.x*ab.y - ab.x*ac.y);
-		double v = (ap.x*ac.y - ac.x*ap.y) / (ab.x*ac.y - ac.x*ab.y);
+	//	double u = (ap.x*ab.y - ab.x*ap.y) / (ac.x*ab.y - ab.x*ac.y);
+	//	double v = (ap.x*ac.y - ac.x*ap.y) / (ab.x*ac.y - ac.x*ab.y);
 
-		if (!(u < 0 || v<0 || (u + v)>1))
-		{
-			vector<double> coffs(4);
-			coffs = calculateCoffs(a, b, c);
-			double z = (-coffs[3] - x*coffs[0] - y* coffs[1]) / coffs[2];
-			if (z < minZ) minZ = z;
-		}
-	}
-	return minZ;
+	//	if (!(u < 0 || v<0 || (u + v)>1))
+	//	{
+	//		vector<double> coffs(4);
+	//		coffs = calculateCoffs(a, b, c);
+	//		double z = (-coffs[3] - x*coffs[0] - y* coffs[1]) / coffs[2];
+	//		if (z < minZ) minZ = z;
+	//	}
+	//}
+	//return minZ;
+	return 0;
 }
 
 //返回坐标最大值
@@ -188,17 +207,18 @@ Vector3d objModel::getMinPoint()
 
 void objModel::getNormals()
 {
-	for (int i = 0; i < faces.size();i++)
+	for (int i = 0; i < faces.size(); i++)
 	{
 		Vector3d a = points[faces[i].x];
 		Vector3d b = points[faces[i].y];
 		Vector3d c = points[faces[i].z];
 
-		Vector3d n = VectorCross(Vector3d(b.x - a.x, b.y - a.y, b.z - a.z), Vector3d(c.x - a.x, c.y - a.y, c.z - a.z));
+		Vector3d n = VectorCross(Vector3d(b.x - a.x, b.y - a.y, b.z - a.z), Vector3d(c.x - b.x, c.y - b.y, c.z - b.z));
 		n = n.normalize();
 
 		if (n.z < 0)
 			n = -1.0 * n;
+
 		normals.push_back(n);
 	}
 }

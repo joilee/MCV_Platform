@@ -12,46 +12,46 @@
   * @Qualifier: 
   * @Parameter: GLvoid * vertex
 */
-void  CALLBACK vertexCallbackFunction(GLvoid *vertex)  //点坐标信息
-{
-	const GLdouble *pointer = (GLdouble *)vertex;
-	//glColor3dv(pointer + 3);//在此设置颜色  
-	glVertex3dv(pointer);
-}
-void CALLBACK  beginCallbackFunction(GLenum which)
-{
-	glBegin(which);
-}
-void CALLBACK endCallbackFunction()
-{
-	glEnd();
-}
-void CALLBACK errorCallbackFunction(GLenum errorCode)
-{
-	const GLubyte *estring;
-	estring = gluErrorString(errorCode);
-	fprintf(stderr, "Tessellation Error: %s\n", estring);
-	exit(0);
-}
-void CALLBACK combineCallbackFunction(GLdouble coords[3],
-	GLdouble *vertex_data[4],
-	GLfloat weight[4], GLdouble **dataOut)
-{
-	GLdouble *vertex;
-	int i;
-	vertex = (GLdouble *)malloc(6 * sizeof(GLdouble));
-	vertex[0] = coords[0];
-	vertex[1] = coords[1];
-	vertex[2] = coords[2];
-	for (i = 3; i < 7; i++)
-	{
-		vertex[i] = weight[0] * vertex_data[0][i]
-			+ weight[1] * vertex_data[1][i]
-			+ weight[2] * vertex_data[2][i]
-			+ weight[3] * vertex_data[3][i];
-	}
-	*dataOut = vertex;
-}
+//void  CALLBACK vertexCallbackFunction(GLvoid *vertex)  //点坐标信息
+//{
+//	const GLdouble *pointer = (GLdouble *)vertex;
+//	//glColor3dv(pointer + 3);//在此设置颜色  
+//	glVertex3dv(pointer);
+//}
+//void CALLBACK  beginCallbackFunction(GLenum which)
+//{
+//	glBegin(which);
+//}
+//void CALLBACK endCallbackFunction()
+//{
+//	glEnd();
+//}
+//void CALLBACK errorCallbackFunction(GLenum errorCode)
+//{
+//	const GLubyte *estring;
+//	estring = gluErrorString(errorCode);
+//	fprintf(stderr, "Tessellation Error: %s\n", estring);
+//	exit(0);
+//}
+//void CALLBACK combineCallbackFunction(GLdouble coords[3],
+//	GLdouble *vertex_data[4],
+//	GLfloat weight[4], GLdouble **dataOut)
+//{
+//	GLdouble *vertex;
+//	int i;
+//	vertex = (GLdouble *)malloc(6 * sizeof(GLdouble));
+//	vertex[0] = coords[0];
+//	vertex[1] = coords[1];
+//	vertex[2] = coords[2];
+//	for (i = 3; i < 7; i++)
+//	{
+//		vertex[i] = weight[0] * vertex_data[0][i]
+//			+ weight[1] * vertex_data[1][i]
+//			+ weight[2] * vertex_data[2][i]
+//			+ weight[3] * vertex_data[3][i];
+//	}
+//	*dataOut = vertex;
+//}
 
 
 scsGLWidget::scsGLWidget(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)

@@ -11,9 +11,11 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 	es=new emitSource(parent);
 	fp=new fieldpoint;
 	sa=new simuArgument;
-	 QPushButton *closeButton = new QPushButton(tr("Close"));
-	 okButton = new QPushButton(QStringLiteral("生成算法参数"));
-	 okButton->setToolTip(QStringLiteral("更新参数"));
+	QPushButton *closeButton = new QPushButton(QStringLiteral("关闭"));
+	 okButton = new QPushButton(QStringLiteral("确定"));
+	 okButton->setToolTip(QStringLiteral("生成算法参数"));
+	 closeButton->setMaximumWidth(60);
+	 okButton->setMaximumWidth(60);
 	// check = new QPushButton(tr("Check"));
 	 //check->setToolTip(QStringLiteral("检查参数是否完整"));
 	 connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
@@ -22,7 +24,7 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 	contentsWidget = new QListWidget;
 	//layout
 	contentsWidget->setMovement(QListView::Static);
-	contentsWidget->setMaximumWidth(128);
+	contentsWidget->setMaximumWidth(100);
 	contentsWidget->setSpacing(12);
 	//
 	 pagesWidget = new QStackedWidget;
@@ -48,8 +50,6 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 
 	 connect(contentsWidget,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),this,SLOT(changePage(QListWidgetItem*,QListWidgetItem*)));
 
-
-
 	 //设定初始row
 	 contentsWidget->setCurrentRow(0);
 
@@ -68,6 +68,7 @@ computerOptionDialog::computerOptionDialog(QWidget *parent){
 	   mainLayout->addLayout(buttonsLayout);
 	    setLayout(mainLayout);
 		setWindowTitle(tr("Option"));
+		setFixedSize(430, 360);
 }
 
 bool computerOptionDialog::checkSiteAndAnte()
@@ -116,7 +117,9 @@ void computerOptionDialog::getPara()
 	gctx->cptManager->transferContainerToPara();
 
 	//根据计算类型(仿真面,或者接受点,或者自定义,来确定设置哪一类参数)
-	QMessageBox::information(this, QStringLiteral("计算参数"), QStringLiteral("参数设置成功"), QMessageBox::Yes , QMessageBox::Yes);
+	QMessageBox::information(this, "Info", QStringLiteral("计算参数设置成功！"));
+	emit sendFlag(true);
+	this->close();
 }
 
 
