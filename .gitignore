@@ -239,4 +239,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-SCS_openMesh/SCS_openMesh/testSource/malaysia/Json/Building/heights/raster.bin
+SCS_openMesh/SCS_openMesh/testSource
+SCS_openMesh/SCS_openMesh/ImageFile
+SCS_openMesh/SCS_openMesh/dll_plugins
+SCS_openMesh/Encrypt
+
+
