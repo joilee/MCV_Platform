@@ -60,6 +60,15 @@ dlldata.c
 *.svclog
 *.scc
 *.chm
+*.dat
+*.lib
+*.dll
+*.ico
+*.jpg
+*.json
+*.txt
+*.csv
+*.bak
 
 # Chutzpah Test files
 _Chutzpah*
