@@ -309,6 +309,7 @@ void MainWindow::saveAllResult()
 		s.append(QString::number(siteIDs[i])).append(QStringLiteral("的站点仿真结果保存成功!"));
 		outputLog(QString(s));
 	}
+	QMessageBox::information(NULL, "Info", QStringLiteral("仿真结果保存成功！"));
 	return;
 }
 
@@ -499,17 +500,19 @@ void MainWindow::outputLog(QString source)
 void MainWindow::showScatterWidget()
 {
 	globalContext *globalCtx = globalContext::GetInstance();
-	if ((int)globalCtx->cptManager->getComputationPara()->computeEnum == 1)
-	{
-		QMessageBox::warning(NULL, "Info", QStringLiteral("基于仿真面的计算不能显示散点折线图！"));
-		return;
-	}
-	scatter->show();	
+
 	if (!globalCtx->visualManager->getContainer()->isDataExist() && result_path.length() == 0)
 	{
 		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少仿真数据，请先做仿真计算！"));
 		return;
 	}
+	if ((int)globalCtx->cptManager->getComputationPara()->computeEnum == 1)
+	{
+		QMessageBox::warning(NULL, "Info", QStringLiteral("基于仿真面的计算不能显示散点折线图！"));
+		return;
+	}
+	
+	scatter->show();	
 	if (result_path.length() == 0)
 	{
 		scatter->openMeasuredFile();
