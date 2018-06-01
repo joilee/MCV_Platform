@@ -11,18 +11,19 @@
 #include <QElapsedTimer>  
 #include <QDateTime>  
 #include <QTreeView>
+#include <iostream>
+using namespace std;
 
 #define USE_LICENSE_MANAGE
-//#define USE_GPU_CUDA
 #ifdef USE_LICENSE_MANAGE
 #include "../Encrypt/QtLicenseManager.h"
 #include "../Encrypt/messageHandler.h"
 #endif
 #include "../Encrypt/registerDialog.h"
-
+#include <DbgHelp.h>
+#include <QTime>
 
 globalContext *globalContext::ctx = NULL;
-
 int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);
@@ -30,7 +31,7 @@ int main(int argc, char *argv[])
 
 	QApplication a(argc, argv);
 	MainWindow w;
-
+	
 //封装代码-------------开始
 	qRegisterMetaType<QItemSelection>("QItemSelection");
 	qRegisterMetaType<QMessageBox::StandardButton>("QMessageBox::StandardButton");
@@ -58,18 +59,19 @@ int main(int argc, char *argv[])
 //封装代码---------------结束
 
 	a.setStyleSheet("QLineEdit{selection-color:yellow;selection-background-color:rgb(0,0,58);border:1px groove gray;border-radius:5px;}"); //background-color:rgb(255,255,241);color:rgb(127,0,63);
-	QPixmap pixmap("ImageFile\\StartExe\\start.jpg");
+	QPixmap pixmap(":/MainWindow/image/StartExe/start.jpg");
 	QSplashScreen screen(pixmap);
 	screen.show();
-	int delayTime =0.5;
+
+	int delayTime = 2;
 	QElapsedTimer timer;
 	timer.start();
 	while (timer.elapsed() < (delayTime * 500))
 	{
 		a.processEvents();
 	}
+	a.setWindowIcon(QIcon(":/MainWindow/image/appIcon/myapp.ico"));
 	w.show();
-	w.setWindowIcon(QIcon("myapp.ico"));
 	screen.finish(&w);
 	return a.exec();
 

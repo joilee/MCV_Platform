@@ -1,15 +1,29 @@
 <RCC>
     <qresource prefix="/MainWindow">
-        <file>Resources/result.ico</file>
-        <file>Resources/face.ico</file>
-        <file>Resources/line.ico</file>
-        <file>Resources/pluginInsert.ico</file>
-        <file>Resources/point.ico</file>
-        <file>Resources/run.ico</file>
         <file>Resources/echarts/echarts.js</file>
         <file>Resources/echarts/index.html</file>
         <file>Resources/echarts/jquery.js</file>
         <file>Resources/echarts/qwebchannel.js</file>
         <file>Resources/echarts/require.js</file>
+        <file>image/ico/data.ico</file>
+        <file>image/ico/delete.ico</file>
+        <file>image/ico/face.ico</file>
+        <file>image/ico/grid.ico</file>
+        <file>image/ico/help.ico</file>
+		<file>image/ico/json.ico</file>
+		<file>image/ico/line.ico</file>
+		<file>image/ico/material.ico</file>
+        <file>image/ico/obj.ico</file>
+        <file>image/ico/pluginInsert.ico</file>
+        <file>image/ico/point.ico</file>
+        <file>image/ico/result.ico</file>
+		<file>image/ico/run.ico</file>
+		<file>image/ico/save.ico</file>
+		<file>image/ico/saveLocal.ico</file>
+        <file>image/ico/scene.ico</file>
+		<file>image/ico/select.ico</file>
+		<file>image/ico/setting.ico</file>
+		<file>image/StartExe/start.jpg</file>
+		<file>image/appIcon/myapp.ico</file>
     </qresource>
 </RCC>

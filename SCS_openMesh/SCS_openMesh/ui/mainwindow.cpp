@@ -13,7 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
 	ui.setupUi(this);
 	init();
 	createActions();
-	setWindowIcon(QIcon("UEES.ico"));
 	pro = NULL;
 }
 

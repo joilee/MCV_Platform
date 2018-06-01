@@ -564,7 +564,7 @@
   <action name="action_3">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/scene.ico</normaloff>Resources/scene.ico</iconset>
+     <normaloff>image/ico/scene.ico</normaloff>image/ico/scene.ico</iconset>
    </property>
    <property name="text">
     <string>导入室外场景</string>
@@ -573,25 +573,16 @@
   <action name="action_saveLocal">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/saveLocal.ico</normaloff>Resources/saveLocal.ico</iconset>
+     <normaloff>image/ico/saveLocal.ico</normaloff>image/ico/saveLocal.ico</iconset>
    </property>
    <property name="text">
     <string>保存局部场景</string>
    </property>
   </action>
-  <action name="action_6">
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/setting.ico</normaloff>Resources/setting.ico</iconset>
-   </property>
-   <property name="text">
-    <string>剖分参数</string>
-   </property>
-  </action>
   <action name="action_startMesh">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/grid.ico</normaloff>Resources/grid.ico</iconset>
+     <normaloff>image/ico/grid.ico</normaloff>image/ico/grid.ico</iconset>
    </property>
    <property name="text">
     <string>剖分</string>
@@ -603,7 +594,7 @@
   <action name="action_9">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/select.ico</normaloff>Resources/select.ico</iconset>
+     <normaloff>image/ico/select.ico</normaloff>image/ico/select.ico</iconset>
    </property>
    <property name="text">
     <string>材料选项</string>
@@ -612,7 +603,7 @@
   <action name="computerOption">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/select1.ico</normaloff>Resources/select1.ico</iconset>
+     <normaloff>image/ico/setting.ico</normaloff>image/ico/setting.ico</iconset>
    </property>
    <property name="text">
     <string>设置</string>
@@ -621,7 +612,7 @@
   <action name="action_obj">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/obj.ico</normaloff>Resources/obj.ico</iconset>
+     <normaloff>image/ico/obj.ico</normaloff>image/ico/obj.ico</iconset>
    </property>
    <property name="text">
     <string>导入obj模型(仅查看）</string>
@@ -630,7 +621,7 @@
   <action name="action_matFile">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/material.ico</normaloff>Resources/material.ico</iconset>
+     <normaloff>image/ico/material.ico</normaloff>image/ico/material.ico</iconset>
    </property>
    <property name="text">
     <string>导入材质文件</string>
@@ -639,7 +630,7 @@
   <action name="action_loadPlugin">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/pluginInsert.ico</normaloff>Resources/pluginInsert.ico</iconset>
+     <normaloff>image/ico/pluginInsert.ico</normaloff>image/ico/pluginInsert.ico</iconset>
    </property>
    <property name="text">
     <string>加载算法</string>
@@ -648,7 +639,7 @@
   <action name="action_deletePlugin">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/delete.ico</normaloff>Resources/delete.ico</iconset>
+     <normaloff>image/ico/delete.ico</normaloff>image/ico/delete.ico</iconset>
    </property>
    <property name="text">
     <string>卸载算法</string>
@@ -657,7 +648,7 @@
   <action name="action_run">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/run.ico</normaloff>Resources/run.ico</iconset>
+     <normaloff>image/ico/run.ico</normaloff>image/ico/run.ico</iconset>
    </property>
    <property name="text">
     <string>计算</string>
@@ -669,7 +660,7 @@
   <action name="action_json">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/json.ico</normaloff>Resources/json.ico</iconset>
+     <normaloff>image/ico/json.ico</normaloff>image/ico/json.ico</iconset>
    </property>
    <property name="text">
     <string>快速导入场景(.json)</string>
@@ -684,7 +675,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>Resources/point.ico</normaloff>Resources/point.ico</iconset>
+     <normaloff>image/ico/point.ico</normaloff>image/ico/point.ico</iconset>
    </property>
    <property name="text">
     <string>显示点</string>
@@ -699,7 +690,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>Resources/line.ico</normaloff>Resources/line.ico</iconset>
+     <normaloff>image/ico/line.ico</normaloff>image/ico/line.ico</iconset>
    </property>
    <property name="text">
     <string>显示线</string>
@@ -714,25 +705,16 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>Resources/face.ico</normaloff>Resources/face.ico</iconset>
+     <normaloff>image/ico/face.ico</normaloff>image/ico/face.ico</iconset>
    </property>
    <property name="text">
     <string>显示面</string>
    </property>
   </action>
-  <action name="action_GenerateModelPara">
-   <property name="icon">
-    <iconset>
-     <normaloff>Resources/generate.ico</normaloff>Resources/generate.ico</iconset>
-   </property>
-   <property name="text">
-    <string>生成模型参数</string>
-   </property>
-  </action>
   <action name="action_scatter">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/result.ico</normaloff>Resources/result.ico</iconset>
+     <normaloff>image/ico/result.ico</normaloff>image/ico/result.ico</iconset>
    </property>
    <property name="text">
     <string>散点折线图</string>
@@ -744,7 +726,7 @@
   <action name="action_saveResult">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/sava.ico</normaloff>Resources/sava.ico</iconset>
+     <normaloff>image/ico/save.ico</normaloff>image/ico/save.ico</iconset>
    </property>
    <property name="text">
     <string>保存仿真数据</string>
@@ -756,13 +738,17 @@
   <action name="action_loadResult">
    <property name="icon">
     <iconset>
-     <normaloff>Resources/data.ico</normaloff>Resources/data.ico</iconset>
+     <normaloff>image/ico/data.ico</normaloff>image/ico/data.ico</iconset>
    </property>
    <property name="text">
     <string>导入仿真数据</string>
    </property>
   </action>
   <action name="actionHelp">
+   <property name="icon">
+    <iconset>
+     <normaloff>image/ico/help.ico</normaloff>image/ico/help.ico</iconset>
+   </property>
    <property name="text">
     <string>用户手册</string>
    </property>
