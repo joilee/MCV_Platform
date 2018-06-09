@@ -506,7 +506,8 @@ void MainWindow::showScatterWidget()
 		QMessageBox::warning(NULL, "Error", QStringLiteral("缺少仿真数据，请先做仿真计算！"));
 		return;
 	}
-	if ((int)globalCtx->cptManager->getComputationPara()->computeEnum == 1)
+
+	if (globalCtx->visualManager->getContainer()->isDataExist() && (int)globalCtx->cptManager->getComputationPara()->computeEnum == 1)
 	{
 		QMessageBox::warning(NULL, "Info", QStringLiteral("基于仿真面的计算不能显示散点折线图！"));
 		return;

@@ -1,4 +1,3 @@
-
 #include <QtCore/QCoreApplication>
 
 #include <gl/freeglut.h>
